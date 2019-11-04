@@ -9,23 +9,23 @@ gameConfig.scenes.push(
 			game.delayAction(game => {
 				game.showTip([
 					"The morning after ...",
-					"As I contemplate the vast universe through the window of our room ...",
+					"As I contemplate the vast universe ...",
 				], game => {
 					game.sceneData.vanishTime = game.now;
 					game.showTip([
 						"I can feel my soul slowly vanish from existence ...",
 						"I will soon be gone ...",
-						"And nobody will ever know that I existed ...",
-						"I will live no trace in this world ...",
+						"And nobody will know that I ever existed ...",
+						"I will leave no trace in this world ...",
 						"and yet ...",
 						"something tells me that this time, perhaps ...",
 						"some part of me would remain ...",
 						"Good bye, Amari. Good bye, Yupa ...",
-						"You were the good part of my life ...",
+						"You were the best part of my life ...",
 					], game => {
 						game.fadeToScene("9-months", null, 5000);
-					}, 100);
-				}, 100);
+					}, 100, {y: 16, maxLines: 2});
+				}, 100, {y: 16, maxLines: 2});
 			}, 6000);
 		},
 		onSceneRefresh: game => {

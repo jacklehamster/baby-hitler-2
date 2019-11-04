@@ -264,6 +264,9 @@ const ASSETS = {
 	NEXT_SCENE: "assets/next-scene.png",
 	EVENING_DATE: "assets/evening-date.png",
 	DOCTOR_LOBBY: "assets/doctor-lobby.png",
+	DOCTOR_LOBBY_SARLIE: "assets/doctor-lobby-sarlie.png",
+	DOCTOR_LOBBY_AMARI: "assets/doctor-lobby-amari.png",
+	AMARI_BABY: "assets/amari-baby.png",
 };
 
 const SOUNDS = {
@@ -307,10 +310,13 @@ const SOUNDS = {
 	ANIMAL_CRY: 'sounds/animal-cry.mp3',
 	MUSETTE: 'sounds/musette.mp3',
 	WAITER: 'sounds/waiter.mp3',
+	YULA: 'sounds/yula.mp3',
+	BABY_CRY: "sounds/baby-cry.mp3",
+	GOLDMAN_THEME: "sounds/goldman.mp3",
 };
 
 const ALPHAS = (() => {
-	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.,?'#@!♪()[]/-+_“” "
+	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.,?'#@!♪()[]/-+_“”éè: "
    	   + new Array(10).fill(null).map((a, index) => String.fromCharCode(1000 + index)).join("");
 	const array = [];
 	for(let c = 0; c < letters.length; c++) {

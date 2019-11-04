@@ -15,12 +15,19 @@ gameConfig.scenes.push(
 
 				Coded in JavaScript
 				with Sublime Text
+
 				Art made with Piskel
+
 				Music made with BeepBox
+
 				Sound effects made with VoiceChanger.io and Brfx
 
-				This game is a sequel to Kill Baby Hitler. The first part of this game was releazed for
-				#LOWREZJAM\n2019\nas Escape from Labbyrithe.
+				Music covers:
+				“La Soupe aux Choux”
+				(Raymond Lefevre)
+
+				This game is a sequel to “Kill Baby Hitler”. The first part of this game was released for
+				#LOWREZJAM\n2019\nas “Escape from Labbyrithe”.
 
 				I worked more on this game to continue the story, until the point where you reach Baby Hitler.
 				
@@ -29,6 +36,7 @@ gameConfig.scenes.push(
 				(I'm kidding, it was the noble thing to do.)
 
 				Anyway, thanks for playing.
+
 				Please make sure to follow my games, share them, and say great things about them to your family and friends.
 
 				You have finished the game, with
@@ -42,7 +50,7 @@ gameConfig.scenes.push(
 
 				Who knows...
 
-				Thanks for playing.
+				Have a nice day!
 			`.split("\n").map((a, index) => index > 2 ? game.wordwrap(a.trim(), 9) : a).join("\n").split("\n");
 		},
 		onSceneRefresh: game => {
@@ -85,7 +93,7 @@ gameConfig.scenes.push(
 							"Letz be real. Ya curius abowt findin Baby Hitler, rite?",
 							"Juz hit dat tryagain buttun and letz go find da baby, for goat steak!!!",
 						], game => {
-							game.gameOver();
+							game.gameOver(" ");
 						}, null, {
 							talker: "yupa",
 						});

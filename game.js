@@ -1773,10 +1773,13 @@ const Game = (() => {
 			}
 		}
 
-		stopSound(src) {
+		stopSound(src, reset) {
 			if (src && soundStock[src]) {
 				const { audio } = soundStock[src];
 				audio.pause();
+				if (reset) {
+					audio.currentTime = 0;
+				}
 			}
 		}
 
@@ -2266,7 +2269,7 @@ const Game = (() => {
 
 		displayTextLine(ctx, {msg, x, y, spacing, alpha}) {
 			const letterTemplate = {
-				src: ASSETS.ALPHABET, col:10, row:10, size:[5,6],
+				src: ASSETS.ALPHABET, col:11, row:9, size:[5,6],
 				offsetX: 20, offsetY: 20,
 				index: game => Math.floor(game.now / 100) % 62,
 				isText: true,
@@ -2653,7 +2656,7 @@ const Game = (() => {
 			this.data.gameOver = false;
 		}
 
-		gameOver(message) {
+		gameOver(message, leaveTheme) {
 			if (!this.data.gameOver) {
 				this.waitCursor = true;
 				this.data.gameOver = this.now;
@@ -2663,7 +2666,9 @@ const Game = (() => {
 					this.waitCursor = false;
 				}, 1000);
 				this.useItem = null;
-				this.playTheme(null);
+				if (!leaveTheme) {
+					this.playTheme(null);
+				}
 			}
 		}
 

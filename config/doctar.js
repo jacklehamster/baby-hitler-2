@@ -314,7 +314,7 @@ gameConfig.scenes.push(
 								sprite.startTalk(game, "human4", [
 									"Oh no!",
 									"You mean I have to...",
-									"Let Baby Hitler become\nHITLER!    ",
+									"help Baby Hitler become\nHITLER!    ",
 								 ], game => {
 								 	game.sceneData.canGoNextScene = game.now;
 								 });

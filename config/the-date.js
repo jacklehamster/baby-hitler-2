@@ -13,7 +13,7 @@ gameConfig.scenes.push({
 				game.sceneData.eyesWideOpened = 0;
 				game.currentScene.startTalk(game, "shopkeepa", [
 					"So tell me,",
-					"what do you think about about Tammy Slow?",
+					"what do you think about Tammy Slow?",
 				], game => {
 					game.waitCursor = false;
 					game.currentScene.onDialog(game);
@@ -34,7 +34,7 @@ gameConfig.scenes.push({
 				], game => {
 					game.currentScene.startTalk(game, "shopkeepa", [
 						"Great, I'd like a hot bun with spicy hot sauce,",
-						"with hot pepper, crushberries, and lot's of honey!",
+						"with hot pepper, crushberries, and lots of honey!",
 					], game => {
 						game.currentScene.startTalk(game, "waiter", [
 							"Excellent choice, Miss.",
@@ -47,13 +47,13 @@ gameConfig.scenes.push({
 								"And for the gentleman?",
 							], game => {
 								game.currentScene.startTalk(game, "shopkeepa", [
-									"Order something...",
+									"Order something.",
 									"Tonight, it is my treat...",
 								], game => {
 									game.currentScene.startTalk(game, "human", [
 										"Huh... I don't know what to order.",
 										"Are you sure it's safe?",
-										"Earlier, they gave me a cake that was so corrosive,",
+										"Earlier, someone gave me a cake that was so corrosive,",
 										"it burned through metal when lit on fire.",
 									], game => {
 										game.currentScene.startTalk(game, "waiter", [
@@ -260,6 +260,7 @@ gameConfig.scenes.push({
 											"My name is\nAmari.",
 										], game => {
 											game.currentScene.startTalk(game, "human", [
+												"Amari",
 												"That's a pretty name...",
 												"What does it mean?",
 											], game => {
@@ -286,10 +287,13 @@ gameConfig.scenes.push({
 								], game => {
 									game.currentScene.startTalk(game, "shopkeepa", [
 										"Hum, I tried to, but the range of sound is so limited.",
-										"What kind of music do you like?",
 									], game => {
-										game.dialog.paused = false;
-										game.dialog.index ++;
+										game.currentScene.startTalk(game, "shopkeepa", [
+											"What kind of music do you like?",
+										], game => {
+											game.dialog.paused = false;
+											game.dialog.index ++;
+										});
 									});
 								});
 							},
@@ -344,9 +348,13 @@ gameConfig.scenes.push({
 										"Doctor Sarlie is nice too.",
 										"Sometimes I bring fruits to his office, and we like to chat around a cup of warm chutea.",
 									], game => {
+										game.delayAction(game => {
+											game.sceneData.neutral = game.now;
+										}, 1500);
 										game.currentScene.startTalk(game, "human", [
 											"Any... boyfriend?",
 										], game => {
+											game.sceneData.neutral = 0;
 											game.currentScene.laugh(game);
 											game.delayAction(game => {
 												game.sceneData.laughing = 0;
@@ -397,7 +405,7 @@ gameConfig.scenes.push({
 								], game => {
 									game.delayAction(game => {
 										game.currentScene.startTalk(game, "shopkeepa", [
-											"Hum... there's so many great planets to visit...",
+											"Hum... there are so many great planets to visit...",
 											"The snowy planet of Udan...",
 											"Or the peaceful desert of Solaris...",
 											"But there's really one place that I want to visit the most...",
@@ -456,13 +464,13 @@ gameConfig.scenes.push({
 												], game => {
 													game.currentScene.startTalk(game, "shopkeepa", [
 														"Haha, Mozart is actually an being from planet Zorxis.",
-														"He's stayed on Earth disguised as a human to make music you all.",
+														"He's stayed on Earth disguised as a human to make music for you all.",
 													], game => {
 														game.currentScene.laugh(game);
 														game.delayAction(game => {
 															game.sceneData.laughing = 0;
 															game.currentScene.startTalk(game, "shopkeepa", [
-																"Oh, the secret messages he put in his music.",
+																"Oh, the secret messages he puts in his music.",
 																"So funny!...",
 															], game => {
 																game.dialog.paused = false;
@@ -527,7 +535,7 @@ gameConfig.scenes.push({
 												game.currentScene.startTalk(game, "shopkeepa", [
 													"Taylor Swift?",
 													"With a name like that,",
-													"I'm sure she sings super fast, and jump up and down?",
+													"I'm sure she sings super fast, and jumps up and down?",
 												], game => {
 													game.currentScene.startTalk(game, "human", [
 														"Right! Exactly."

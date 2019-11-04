@@ -219,12 +219,20 @@ gameConfig.scenes.push(
 											hidden: game => !game.situation.gaveTicket,
 											msg: game => "Go to the party!",
 											onSelect: (game, dialog) => {
-												game.showTip([
-													"Alright ma friend",
-													"Ya we can go to the party.",
-													"Show me those tickets!"
-												],
-												null, pedroSpeed, { talker:"pedro" });
+												if (!game.getSituation("shopkeepa").askedWhereInSpace) {
+													game.showTip([
+														"Yeah we can go party!",
+														"But give me some time, I need to prepare",
+													],
+													null, pedroSpeed, { talker:"pedro" });													
+												} else {
+													game.showTip([
+														"Alright ma friend",
+														"Ya we can go to the party.",
+														"Show me those tickets!"
+													],
+													null, pedroSpeed, { talker:"pedro" });
+												}
 											},
 										},
 										{ msg: "LEAVE", onSelect: game => {
@@ -430,6 +438,7 @@ gameConfig.scenes.push(
 				combine: (item, game) => {
 					if (item === "photo") {
 						game.useItem = null;
+						game.playSound(SOUNDS.HUM);
 						game.showTip("Have you seen this baby?", game => {
 							game.showTip([
 								"Nah ma friend",
@@ -442,18 +451,42 @@ gameConfig.scenes.push(
 						return true;
 					} else if (item === "ticket") {
 						game.useItem = null;
+						if (!game.getSituation("shopkeepa").askedWhereInSpace) {
+							game.showTip([
+								"I'm not ready to go yet.",
+								"Need to prepare my boat.",
+								"Why don't you check out da shop!",
+								"Maybe you'll find something ya wanna buy",
+								"That way you know how much money ya need to win in Ecsta City!",
+							],
+							game => {
+								game.dialog = null;
+								game.sceneData.zoomOnPedro = 0;
+								game.situation.hitman.goal.y = 42;
+							}, 40, { talker:"pedro" });
+						} else {
+							game.showTip([
+								"Alright, ma friend",
+								"Let's go now!",
+								"Ecsta city, here we go!",
+							],
+							game => {
+								game.dialog = null;
+								console.log("TODO => GO TO ECSTA CITY");
+							}, 40, { talker:"pedro" });
+						}
+						return true;
+					} else if (item === "coin") {
+						game.useItem = null;
 						game.showTip([
-							"Alright, ma friend",
-							"Let's go now!",
-							"Ecsta city, here we go!",
-						],
-						game => {
-							console.log("TODO => GO TO ECSTA CITY");
-						}, 40, { talker:"pedro" });
+							"Oh dun worry,",
+							"For first timer, tickets are free!",
+							"After that its 500 coins ...",
+							"I'm willing to givaway for free",
+							"Cause I guarantee, you'll wanna come back!"],
+						null, 40, { talker:"pedro" });
 						return true;
 					}
-				},
-				onShoot: game => {
 				},
 				onRefresh: game => {
 					if (game.pendingTip && game.pendingTip.talker === "pedro" && game.pendingTip.progress < 1) {

@@ -10,7 +10,7 @@ gameConfig.scenes.push(
 					"I told her all the stories of my childhood ...",
 					"things I never told anyone ...",
 					"I really felt at peace ...",
-					"All my stress, all my anger ... everything started fading away ...",
+					"All my stress, all my anger ... everything started to fade away ...",
 					"At that moment, deep inside my heart, I knew only one thing for sure ...",
 					"I would be ...",
 					"without a shadow of a doubt ...",

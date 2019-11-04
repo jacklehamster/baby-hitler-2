@@ -34,39 +34,71 @@ gameConfig.scenes.push(
 						sprite.onRefresh(game, sprite);
 					}
 
-					game.delayAction(game => {
-						game.currentScene.startTalk(game, "yupa", [
-							`So, ${game.data.name||"hitman"}...`,
-							"I hope ya know what ya doing.",
-						], game => {
-							game.currentScene.startTalk(game, "human", [
-								"Hum, not really. Why?",
+					if (game.data.shot.shopkeepa) {
+						game.delayAction(game => {
+							game.currentScene.startTalk(game, "yupa", [
+								`So, ${game.data.name||"hitman"}...`,
+								"You know that shopkeepa that ya shot?",
 							], game => {
-								game.currentScene.startTalk(game, "yupa", [
-									"Welz... I dun really understand how da warp drave worx...",
-									"but I knaw if ya configure it bad,",
-									"wee culd go wrang diraxion...",
+								game.currentScene.startTalk(game, "human", [
+									"Yes, so what?",
 								], game => {
-									game.currentScene.startTalk(game, "human", [
-										"Well, we should be ok, right?",
-										"The shopkeeper configured it for us.",
+									game.currentScene.startTalk(game, "yupa", [
+										"Not sure if we shoulda trust her with\nconfiguring\nda warp drive.",
 									], game => {
-										game.currentScene.startTalk(game, "yupa", [
-											"Ya, but she waz nat happy duin it,",
-											"with us stealin da warp drave and all...",
+										game.currentScene.startTalk(game, "human", [
+											"Why not?",
 										], game => {
-											game.currentScene.startTalk(game, "human", [
-												"So... what do you suggest she might have done?...",
+											game.currentScene.startTalk(game, "yupa", [
+												"Cause she could send uz wrang diraxian...",
 											], game => {
-												game.sceneData.toPlanet = game.now;
-												game.playTheme(SOUNDS.GOGOL);
+												game.currentScene.startTalk(game, "human", [
+													"What? Couldn't you tell this to me earlier?!",
+												], game => {
+													game.sceneData.toPlanet = game.now;
+													game.playTheme(SOUNDS.GOGOL);
+												});
 											});
 										});
 									});
 								});
 							});
-						});
-					}, 5000);
+						}, 5000);
+					} else {
+						game.delayAction(game => {
+							game.currentScene.startTalk(game, "yupa", [
+								`So, ${game.data.name||"hitman"}...`,
+								"I hope ya know what ya duing.",
+							], game => {
+								game.currentScene.startTalk(game, "human", [
+									"Hum, not really. Why?",
+								], game => {
+									game.currentScene.startTalk(game, "yupa", [
+										"Welz... I dun really understand how da warp drave worx...",
+										"but I knaw if ya configure it badly,",
+										"wee culd go wrang diraxion...",
+									], game => {
+										game.currentScene.startTalk(game, "human", [
+											"Well, we should be ok, right?",
+											"The shopkeeper configured it for us.",
+										], game => {
+											game.currentScene.startTalk(game, "yupa", [
+												"Ya, but she waz nat happy duin it,",
+												"with us stealin da warp drave and all...",
+											], game => {
+												game.currentScene.startTalk(game, "human", [
+													"So... what do you suggest she might have done?...",
+												], game => {
+													game.sceneData.toPlanet = game.now;
+													game.playTheme(SOUNDS.GOGOL);
+												});
+											});
+										});
+									});
+								});
+							});
+						}, 5000);
+					}
 				},
 				onRefresh: (game, sprite) => {
 					const { sceneData, now, sceneTime } = game;

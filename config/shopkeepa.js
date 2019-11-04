@@ -9,6 +9,7 @@ gameConfig.scenes.push(
 			[ null, null, BAG ,  null, null ],
 		],
 		onSceneHoldItem: (game, item) => {
+			console.log(item);
 			if (item === "gun") {
 				game.useItem = null;
 				game.waitCursor = true;
@@ -24,6 +25,16 @@ gameConfig.scenes.push(
 						game.waitCursor = false;
 					});
 				}
+			} else if (game.situation.stoleWarpDrive) {
+				game.useItem = null;
+				game.currentScene.startTalk(game, "human", [
+					"Let's go Yupa,",
+					"We're going to find Baby Hitler.",
+				], game => {
+					game.hideCursor = true;
+					game.dialog = null;
+					game.fadeToScene("monster-in-space");
+				});
 			}
 		},
 		startTalk: (game, talker, msg, onDone, removeLock, speed) => {
@@ -34,11 +45,11 @@ gameConfig.scenes.push(
 				game.playSound(SOUNDS.HUM);
 			} else if (talker === "shopkeepa" || talker === "shopkeepa2" || talker === "shopkeepaphoto") {
 				x = 4;
-				y = 57;
+				y = 59;
 				game.playSound(SOUNDS.ANIMAL_CRY);
 			} else if (talker === "yupa" || talker === "yupa2") {
 				x = 2;
-				y = 55;
+				y = 58;
 				game.playSound(SOUNDS.YUPA);				
 			}
 			game.showTip(msg, onDone, speed || 80, { x, y, talker, removeLock });
@@ -460,7 +471,6 @@ gameConfig.scenes.push(
 									});
 								},
 							},
-							{},
 						],
 					},
 					{
@@ -519,6 +529,25 @@ gameConfig.scenes.push(
 								},
 							},
 							{
+								msg: "Money",
+								onSelect: game => {
+									game.currentScene.startTalk(game, "human", [
+										"I'm willing to sell.",
+									], game => {
+										game.currentScene.startTalk(game, "shopkeepa", [
+											"You know I can't afford the full price.",
+										], game => {
+											game.sceneData.shopkeepaSmiles = game.now;
+											game.currentScene.startTalk(game, "shopkeepa2", [
+												"But if you're willing to give me a big discount,",
+												"I can pay 142 coins!",
+											]);
+											game.dialog.index = 12;
+										});
+									});
+								},
+							},
+							{
 								msg: "A date",
 								hidden: game => game.situation.askedForDate && !game.situation.canAskAgain,
 								onSelect: game => {
@@ -555,25 +584,6 @@ gameConfig.scenes.push(
 											});
 										});
 									}
-								},
-							},
-							{
-								msg: "Money",
-								onSelect: game => {
-									game.currentScene.startTalk(game, "human", [
-										"I'm willing to sell.",
-									], game => {
-										game.currentScene.startTalk(game, "shopkeepa", [
-											"You know I can't afford the full price.",
-										], game => {
-											game.sceneData.shopkeepaSmiles = game.now;
-											game.currentScene.startTalk(game, "shopkeepa2", [
-												"But if you're willing to give me a big discount,",
-												"I can pay 142 coins!",
-											]);
-											game.dialog.index = 12;
-										});
-									});
 								},
 							},
 							{
@@ -706,7 +716,7 @@ gameConfig.scenes.push(
 												"Let's go to that concert together.",
 											], game => {
 												game.currentScene.startTalk(game, "shopkeepa2", [
-													"You're kidding me. You want to me to come with you to Ecsta City?",
+													"You're kidding me. You want me to come with you to Ecsta City?",
 												], game => {
 													game.delayAction(game => {
 														game.sceneData.yupaLookAtShopkeepa = 0;
@@ -822,7 +832,7 @@ gameConfig.scenes.push(
 						options: [
 							{
 								msg: "The warp drive",
-								hidden: game => game.situation.askedWhereInSpace,
+								hidden: game => !game.situation.askedWhereInSpace,
 								onSelect: game => {
 									const { sceneData } = game;
 									game.waitCursor = true;
@@ -831,40 +841,9 @@ gameConfig.scenes.push(
 										sceneData.yupaLookAtShopkeepa = game.now;
 										game.currentScene.startTalk(game, "shopkeepa", "You can't be serious.", game => {
 											sceneData.yupaLookAtShopkeepa = 0;
-											game.currentScene.startTalk(game, "human", [
-												"Oh, I'm very serious!",
-												"You wanna know how serious I am, I'll show you!",
-											], game => {
-												sceneData.yupaLookAtShopkeepa = game.now;
-												game.currentScene.startTalk(game, "shopkeepa", [
-													"Cut it out! I got the point.",
-													"Alright, here's the warpdrive.",
-													"I'll even\nconfigure the parameters for you.",
-												], game => {
-													game.situation.stoleWarpDrive = game.now;
-													game.waitCursor = false;
-													game.pickUp({item:"warpdrive", image:ASSETS.GRAB_WARP_DRIVE, message:"That's it! The warpdrive!", onPicked: game => {
-														game.waitCursor = true;
-														game.currentScene.startTalk(game, "shopkeepa", "I hope you're satisfied, now that you got what you want.", game => {
-															game.currentScene.startTalk(game, "human", [
-																"You gave me no choice",
-															], game => {
-																game.delayAction(game => {
-																	sceneData.yupaLookAtShopkeepa = 0;
-																}, 50);
-																game.currentScene.startTalk(game, "human", [
-																	"Let's go Yupa,",
-																	"We're going to find Baby Hitler.",
-																], game => {
-																	game.hideCursor = true;
-																	game.dialog = null;
-																	game.fadeToScene("monster-in-space");
-																});
-															});
-														});
-													}});					
-												});
-											});
+											game.waitCursor = false;
+											game.useItem = null;
+											game.dialog.index += 2;
 										});
 									});
 								},
@@ -904,7 +883,7 @@ gameConfig.scenes.push(
 														], game => {
 															game.delayAction(game => {
 																game.dialog = null;
-																game.fadeToScene("tammy-slow", null, 3000);
+																game.fadeToScene("concert", null, 3000);
 															}, 1000);
 														}, null, 200);
 													}, 2000);
@@ -942,7 +921,7 @@ gameConfig.scenes.push(
 														], game => {
 															game.delayAction(game => {
 																game.dialog = null;
-																game.fadeToScene("the-date", null, 3000);
+																game.fadeToScene("concert", null, 3000);
 															}, 1000);
 														}, null, 200);
 													}, 2000);
@@ -967,7 +946,58 @@ gameConfig.scenes.push(
 								},
 							},
 						],
-					}
+					},
+					{
+						options: [
+							{
+								msg: "Just kidding.",
+								onSelect: game => {
+									game.currentScene.startTalk(game, "human", "You're right, I was just joking.", game => {
+										game.currentScene.startTalk(game, "shopkeepa", "It was not very funny ...", game => {
+											game.dialog.index = 0;
+										});
+									});
+								},
+							},
+							{
+								msg: "I'm serious.",
+								onSelect: game => {
+									const { sceneData } = game;
+									game.useItem = "gun";
+									game.currentScene.startTalk(game, "human", [
+										"Oh, I'm very serious!",
+										"You wanna know how serious I am? I'll show you!",
+									], game => {
+										sceneData.yupaLookAtShopkeepa = game.now;
+										game.currentScene.startTalk(game, "shopkeepa", [
+											"Cut it out! I got the point.",
+											"Alright, here's the warpdrive",
+											"configured for Westrow X33, all ready for you.",
+										], game => {
+											game.situation.stoleWarpDrive = game.now;
+											game.pickUp({item:"warpdrive", image:ASSETS.GRAB_WARP_DRIVE, message:"That's it! The warpdrive!", onPicked: game => {
+												game.useItem = "gun";
+												game.waitCursor = true;
+												game.currentScene.startTalk(game, "shopkeepa", "I hope you're satisfied, now that you got what you want.", game => {
+													game.currentScene.startTalk(game, "human", [
+														"You gave me no choice",
+													], game => {
+														game.waitCursor = false;
+														game.delayAction(game => {
+															sceneData.yupaLookAtShopkeepa = 0;
+														}, 50);
+														game.dialog = null;
+													});
+												});
+											}});					
+										});
+									});
+								},
+							},
+							{
+							},
+						],
+					},
 				],
 			});
 		},
@@ -997,8 +1027,10 @@ gameConfig.scenes.push(
 		},
 		sprites: [
 			{
+				name: "shopkeepa",
 				src: ASSETS.SHOPKEEPA, col: 6, row: 6,
 				index: 23,
+				hidden: game => game.data.shot.shopkeepa,
 				combine: (item, game) => {
 					if (item === "photo") {
 						if (game.situation.explainedPhoto) {
@@ -1006,7 +1038,7 @@ gameConfig.scenes.push(
 							game.dialog.paused = true;
 							game.useItem = null;
 							game.delayAction(game => {
-								game.currentScene.startTalk(game, "shopkeepa2", ["What a cute baby...", "Look at that mustache!"], game => {
+								game.currentScene.startTalk(game, "shopkeepaphoto", ["What a cute baby...", "Look at that mustache!"], game => {
 									game.sceneData.sheTookPhoto = 0;
 									game.sceneData.returnPhoto = game.now;
 									game.delayAction(game => {
@@ -1040,7 +1072,7 @@ gameConfig.scenes.push(
 															game.sceneData.sheLookPhoto = 0;
 															game.currentScene.startTalk(game, "shopkeepa", [
 																"You'll never find your baby with this.",
-																"This photo was taken more than 15 years ago!",
+																"This photo was taken more than 15 years ago.",
 																"Your baby human is now at least a 15 years old!",
 															], game => {
 																game.sceneData.sheTookPhoto = 0;
@@ -1105,13 +1137,14 @@ gameConfig.scenes.push(
 									"Oh right, that's your first time here. Pedro must have given you a free pass.",
 								], game => {
 									game.currentScene.startTalk(game, "shopkeepa2", [
-										"I'm so envious! I really wanted to see...",
+										"I'm so envious! I really wanted to go this time and see...",
 										"TAMMY SLOW\nin concert!",
 									], game => {
 										game.useItem = null;
 										game.currentScene.startTalk(game, "shopkeepa", [
 											"But the tickets to Ecsta City are sooo\nexpensive!",
 											"If I miss her this time, I'm sure I'll never see her in concert.",
+											"Since she rarely comes to this planet ...",
 										], game => {
 											game.dialog.index = 9;
 										});
@@ -1131,7 +1164,12 @@ gameConfig.scenes.push(
 			{
 				src: ASSETS.SHOPKEEPA, col: 6, row: 6,
 				index: (game, sprite) => {
-					const { pendingTip, currentScene, now, sceneData } = game;
+					const { pendingTip, currentScene, now, sceneData, data } = game;
+					if (data.shot.shopkeepa) {
+						const frame = Math.floor((now - data.shot.shopkeepa) / 100);
+						return frame >= 3 ? 32 : 19 + frame;
+					}
+
 					if (sceneData.takeTicket) {
 						const frame = Math.floor((now - sceneData.takeTicket) / 200);
 						if (frame < 2) {
@@ -1188,6 +1226,7 @@ gameConfig.scenes.push(
 				},
 			},
 			{
+				name: "yupa",
 				src: ASSETS.YUPA_IN_SHOP, col: 3, row: 4,
 				index: (game, sprite) => {
 					const { pendingTip, currentScene, now, sceneData } = game;
@@ -1203,6 +1242,9 @@ gameConfig.scenes.push(
 					if (sceneData.yupaLookAtShopkeepa) {
 						return 4;
 					}
+					if (game.data.shot.shopkeepa && now - game.data.shot.shopkeepa < 3000) {
+						return 4;
+					}
 					const frame = Math.floor((game.now - game.sceneTime) / 100);
 					return frame > 2 ? 0 : frame + 8;
 				},
@@ -1210,6 +1252,14 @@ gameConfig.scenes.push(
 					game.useItem = null;
 					game.currentScene.startTalk(game, "yupa", "Show dat to da shopkeepa, nat me");
 					return true;
+				},
+				onRefresh: game => {
+					if (game.data.shot.yupa) {
+						game.data.shot.yupa = 0;
+						game.delayAction(game => {
+							game.currentScene.startTalk(game, "yupa", "Ya know dat thing haz no effact on me");
+						}, 500);
+					}
 				},
 			},
 			{
