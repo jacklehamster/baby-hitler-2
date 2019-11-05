@@ -27,7 +27,7 @@ gameConfig.scenes.push(
 			});
 
 			game.hideCursor = true;
-			game.sceneData.credits = `${game.title||" Where in Space is\n  BABY HITLER"}
+			game.sceneData.credits = `${game.title||" Where in Space is\n  BABY HITLER?"}
 
 				A game from
 				DOBUKI STUDIO

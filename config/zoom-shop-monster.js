@@ -11,31 +11,38 @@ gameConfig.scenes.push(
 					game.showTip("No way, not my gun!");
 					break;
 				case "coin":
+					game.playSound(SOUNDS.WAITER);
 					game.showTip("You can't sell money, dumb human!", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "water bottle": case "empty bottle":
 					game.dialog.index = 2;
 					game.sceneData.price = 1;
 					game.sceneData.forSale = item;
+					game.playSound(SOUNDS.WAITER);
 					game.showTip(`${item}... I'll give you one coin for that.`, null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "fruit?":
 					game.dialog.index = 2;
 					game.sceneData.price = 2;
 					game.sceneData.forSale = item;
+					game.playSound(SOUNDS.WAITER);
 					game.showTip(`Ah, that's a woompachuice. I'll take it for two coins.`, null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "lighter":
 					game.dialog.index = 2;
 					game.sceneData.price = 3;
 					game.sceneData.forSale = item;
+					game.playSound(SOUNDS.WAITER);
 					game.showTip(`A lighter. I'll give you three coins for it.`, null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "photo":
+					game.playSound(SOUNDS.WAITER);
 					game.showTip(["A photo of a newborn human?", "That's worthless!"], game => {
 						game.playSound(SOUNDS.HUM);
 						game.showTip("Actually, I just wanted to know if you've seen this baby before.", game => {
+							game.playSound(SOUNDS.WAITER);
 							game.showTip("All humans more or less look the same to me.", game => {
+								game.playSound(SOUNDS.WAITER);
 								game.showTip("But no, I've never seen a newborn human before.", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 							}, null, { x: 1, y: 15, speed: 60, talker:"monster" });							
 						});
@@ -45,15 +52,18 @@ gameConfig.scenes.push(
 					game.dialog.index = 2;
 					game.sceneData.price = 8;
 					game.sceneData.forSale = item;
+					game.playSound(SOUNDS.WAITER);
 					game.showTip("Oh, you found a key. I'll take it for 8 coins", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "access card":
 					game.dialog.index = 2;
 					game.sceneData.price = 10;
 					game.sceneData.forSale = item;
+					game.playSound(SOUNDS.WAITER);
 					game.showTip("An access card. You sure you want to sell it? I'll take it for 10 coins", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				default:
+					game.playSound(SOUNDS.WAITER);
 					game.showTip("That's worthless!", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 			}
@@ -129,6 +139,7 @@ gameConfig.scenes.push(
 									msg: "LEAVE",
 									onSelect: game => {
 										game.dialog = null;
+										game.playSound(SOUNDS.WAITER);
 										game.showTip("Come back soon!.", game => {
 											game.gotoScene("first-prison-cell");
 										}, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
@@ -166,6 +177,7 @@ gameConfig.scenes.push(
 											image: ASSETS.GRAB_COIN,
 										});
 										game.playSound(SOUNDS.PICKUP);
+										game.playSound(SOUNDS.WAITER);
 										game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 
 										const itemObj = game.situation.inventory.filter(({item})=>item===game.sceneData.forSale)[0];
@@ -217,6 +229,7 @@ gameConfig.scenes.push(
 												return;
 											} else {
 												game.pickUp({item, image:src, onPicked: game => {
+													game.playSound(SOUNDS.WAITER);
 													game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 												}});
 												const itemObj = game.situation.inventory.filter(obj=>obj.item===item)[0];
@@ -226,6 +239,7 @@ gameConfig.scenes.push(
 											}
 										} else {
 											game.playErrorSound();
+											game.playSound(SOUNDS.WAITER);
 											game.showTip("Hey, you don't have enough! Don't try to trick me.", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 										}
 
@@ -264,6 +278,7 @@ gameConfig.scenes.push(
 											"I don't know what else to say.",
 										];
 
+										game.playSound(SOUNDS.WAITER);
 										game.showTip(HINTS[Math.min(HINTS.length-1, game.situation.hints.locker||0)], null, null, { x: 1, y: 15, speed: 60, talker:"monster" });
 										game.situation.hints.locker = (game.situation.hints.locker||0) + 1;
 										dialog.index = 0;
@@ -282,6 +297,7 @@ gameConfig.scenes.push(
 											"Make sure to explore every corners of the maps.",
 											"I don't know what else to say.",
 										];
+										game.playSound(SOUNDS.WAITER);
 										game.showTip(HINTS[Math.min(HINTS.length-1, game.situation.hints.key||0)], null, null, { x: 1, y: 15, speed: 60, talker:"monster" });
 										game.situation.hints.key = (game.situation.hints.key||0) + 1;
 										dialog.index = 0;
@@ -301,6 +317,7 @@ gameConfig.scenes.push(
 											"You should level up yourself to fight better.",
 											"I don't know what else to say.",
 										];
+										game.playSound(SOUNDS.WAITER);
 										game.showTip(HINTS[Math.min(HINTS.length-1, game.situation.hints.battle||0)], null, null, { x: 1, y: 15, speed: 60, talker:"monster" });
 										game.situation.hints.battle = (game.situation.hints.battle||0) + 1;
 										dialog.index = 0;
@@ -318,6 +335,7 @@ gameConfig.scenes.push(
 			}
 
 			game.delayAction(game => {
+				game.playSound(SOUNDS.WAITER);
 				game.showTip(initialDialog, removeLock ? null : dialogCallback, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock });
 			}, 300);
 		},

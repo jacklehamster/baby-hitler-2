@@ -18,14 +18,22 @@ gameConfig.scenes.push(
 				game.sceneData.shakeTime = game.now;
 				game.playSound(SOUNDS.HIT_LAND);
 			}
-			if (!game.sceneData.yupaTalked && frame > 150) {
-				game.sceneData.yupaTalked = game.now;
-				game.playSound(SOUNDS.YUPA);
-
-				game.showTip("Whadda stupid...", game => {
+			if (game.data.yupa.inBottle) {
+				if (!game.sceneData.showGameOver && frame > 150) {
 					game.hideCursor = false;
-					game.gameOver();
-				}, null, { talker: "yupa" });
+					game.gameOver(" “You're not\n          Superman!”");
+				}
+			} else {
+				if (!game.sceneData.yupaTalked && frame > 150) {
+					game.sceneData.yupaTalked = game.now;
+
+					game.playSound(SOUNDS.YUPA);
+
+					game.showTip("Whadda stupid...", game => {
+						game.hideCursor = false;
+						game.gameOver();
+					}, null, { talker: "yupa" });
+				}
 			}
 		},
 		sprites: [

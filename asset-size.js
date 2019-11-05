@@ -166,6 +166,7 @@ const FILE_SIZE = {
    'next-scene.png' : 161,
    'no-hand.png' : 161,
    'operation-room.png' : 1135,
+   'origin-story.png' : 9408,
    'outdoor.png' : 133,
    'outside-bg.png' : 141,
    'outside-carnage.png' : 1635,

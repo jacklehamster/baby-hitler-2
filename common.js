@@ -267,6 +267,7 @@ const ASSETS = {
 	DOCTOR_LOBBY_SARLIE: "assets/doctor-lobby-sarlie.png",
 	DOCTOR_LOBBY_AMARI: "assets/doctor-lobby-amari.png",
 	AMARI_BABY: "assets/amari-baby.png",
+	ORIGIN_STORY: "assets/origin-story.png",
 };
 
 const SOUNDS = {
@@ -313,6 +314,8 @@ const SOUNDS = {
 	YULA: 'sounds/yula.mp3',
 	BABY_CRY: "sounds/baby-cry.mp3",
 	GOLDMAN_THEME: "sounds/goldman.mp3",
+	F1: "sounds/f1.mp3",
+	RANDOM: "sounds/random.mp3",
 };
 
 const ALPHAS = (() => {

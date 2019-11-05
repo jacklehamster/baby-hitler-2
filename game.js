@@ -187,6 +187,7 @@ const Game = (() => {
 				if (this.now - this.lastMouseCheck < 100) {
 					this.lastMouseCheck = 0;
 				}
+				this.lastMouseMove = this.now;
 				const { offsetWidth, offsetHeight } = currentTarget;
 				if (!this.mouse) {
 					this.mouse = {};
@@ -525,6 +526,7 @@ const Game = (() => {
 			this.pos = null;
 			this.rotation = 0;
 			this.lastMouseCheck = 0;
+			this.lastMouseMove = 0;
 			this.sceneByName = {};
 
 			this.prepareAssets();
@@ -1477,7 +1479,7 @@ const Game = (() => {
 				}
 				return;
 			}
-			if (this.hideCursor || this.waitCursor || this.sceneIntro || this.useItem) {
+			if (this.hideCursor || this.waitCursor || this.sceneIntro || this.useItem || this.pickedUp) {
 				return;
 			}
 			let hoveredTip = null;
@@ -2268,6 +2270,9 @@ const Game = (() => {
 		}
 
 		displayTextLine(ctx, {msg, x, y, spacing, alpha}) {
+			if (!imageStock[ASSETS.ALPHABET]) {
+				return;
+			}
 			const letterTemplate = {
 				src: ASSETS.ALPHABET, col:11, row:9, size:[5,6],
 				offsetX: 20, offsetY: 20,
@@ -2326,16 +2331,18 @@ const Game = (() => {
 				return;
 			}
 
-			const dialogTime = this.now - this.dialog.time;
-			const dialogShift = Math.round((dialogTime < 50 ? (50 - dialogTime) / 50 : 0) * 4);
-
 			if (!conversation[index]) {
 				throw new Error(`Dialog index ${index} out of bound.`);
 			}
 
-			const {options} = conversation[index];
+			const {options, offsetY} = conversation[index];
+			const offY = this.evaluate(offsetY, game) || 0;
+
+			const dialogTime = this.now - this.dialog.time;
+			const dialogShift = Math.round((dialogTime < 50 ? (50 - dialogTime) / 50 : 0) * 4) + offY;
+
 			const filteredOptions = options.filter(option => !option.hidden || !this.evaluate(option.hidden, option));
-			const y = this.mouse ? Math.floor((this.mouse.y - 43) / 7) : -1;
+			const y = this.mouse ? Math.floor((this.mouse.y - 43 - offY) / 7) : -1;
 			ctx.fillStyle = this.dialog.highlightColor || "#009988aa";
 			if (y >= 0 && y < filteredOptions.length) {
 				const { msg, cantSelect } = filteredOptions[y];
@@ -2607,9 +2614,9 @@ const Game = (() => {
 					this.replaceImage(src, this.data.images[src]);
 				}
 			}
-			if (!this.data.name) {
-				this.data.name = "Hitman";
-			}
+			// if (!this.data.name) {
+			// 	this.data.name = "Hitman";
+			// }
 		}
 
 		replaceImage(id, src) {

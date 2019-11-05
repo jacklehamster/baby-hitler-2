@@ -613,7 +613,7 @@ function standardBag() {
 			name: "self",
 			src: ASSETS.EATER, col:2, row:2,
 			offsetX: ({now, useItemTime}) => {
-				return -20 * Math.sqrt(1 - Math.max(0, now - useItemTime) / 500);
+				return Math.round(-20 * Math.sqrt(1 - Math.max(0, now - useItemTime) / 500));
 			},
 			index: (game, sprite) => game.hoverSprite === sprite ? Math.min(2, Math.floor((game.now - sprite.hoverTime) / 100)) : 0,
 			hidden: game => !consumable[game.useItem],
@@ -640,7 +640,11 @@ function standardBag() {
 					return false;
 				}
 				if (dialog) {
-					return dialog.conversation[dialog.index].options.filter(({hidden})=>!hidden || !game.evaluate(hidden)).length > 2 || dialog.paused;
+					const {options, offsetY} = dialog.conversation[dialog.index];
+					const offY = game.evaluate(offsetY) || 0;
+					const flag = options.filter(({hidden})=>!hidden || !game.evaluate(hidden)).length * 7 + offY > 2 * 7 || dialog.paused;
+					console.log(flag);
+					return flag;
 				}
 				if (arrow === "BAG") {
 					const door = game.frontDoor();

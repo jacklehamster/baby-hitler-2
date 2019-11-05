@@ -874,6 +874,7 @@ gameConfig.scenes.push(
 											game.currentScene.startTalk(game, "human", [
 												"So what do you say, will you join me this evening?",
 											], game => {
+												game.sceneData.yupaLookAtShopkeepa = game.now;
 												game.dialog.paused = true;
 												game.delayAction(game => {
 													game.sceneData.shopkeepaCuteSmile = game.now;
@@ -912,6 +913,7 @@ gameConfig.scenes.push(
 											game.currentScene.startTalk(game, "human", [
 												"So what do you say, will you join me this evening?",
 											], game => {
+												game.sceneData.yupaLookAtShopkeepa = game.now;
 												game.dialog.paused = true;
 												game.delayAction(game => {
 													game.sceneData.shopkeepaCuteSmile = game.now;

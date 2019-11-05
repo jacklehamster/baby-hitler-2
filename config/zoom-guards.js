@@ -26,6 +26,7 @@ gameConfig.scenes.push(
 					index: 0,
 					conversation: [
 						{
+//							offsetY: game => game.data.seen.writing && !game.data.seen.badguards ? -7 : 0,
 							options: [
 								{
 									msg: game => game.data.seen.badguards ? "Hey" : game.data.seen["writing"] && game.data.saidHelloToGuard ? "Hello again" : "Hello",
@@ -39,6 +40,18 @@ gameConfig.scenes.push(
 										});
 										dialog.index = 1;
 										game.data.saidHelloToGuard = game.now;
+									}
+								},
+								{
+									hidden: game => !game.data.seen.writing || game.data.seen.badguards,
+									msg: "My birthday!",
+									onSelect: (game, dialog) => {
+										game.playSound(SOUNDS.BIRTHDAY);
+										dialog.guardSpeaking = true;
+										game.waitCursor = true;
+										game.showTip("... did he\nunderstand? ...", game => {
+											game.gotoScene("bring-cake");
+										});
 									}
 								},
 								{ msg: "LEAVE", onSelect: game => game.gotoScene("jail-cell")},
@@ -105,14 +118,15 @@ gameConfig.scenes.push(
 				hidden: game => game.bagOpening || game.useItem || game.pendingTip,
 				index: game => Math.min(3, Math.floor((game.now - game.sceneTime) / 50)),
 			},
-			{
-				bag: true,
-				src: ASSETS.BAG_OUT,
-				index: game => game.frameIndex,
-				hidden: ({arrow, bagOpening, dialog}) => !bagOpening && (arrow !== BAG || dialog && dialog.conversation[dialog.index].options.length > 2),
-				alpha: game => game.emptyBag() ? .2 : 1,
-				onClick: game => game.clickBag(),
-			}
+			... standardBag(),
+			// {
+			// 	bag: true,
+			// 	src: ASSETS.BAG_OUT,
+			// 	index: game => game.frameIndex,
+			// 	hidden: ({arrow, bagOpening, dialog}) => !bagOpening && (arrow !== BAG || dialog && dialog.conversation[dialog.index].options.length > 2),
+			// 	alpha: game => game.emptyBag() ? .2 : 1,
+			// 	onClick: game => game.clickBag(),
+			// }
 		],
 	},
 );

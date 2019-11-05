@@ -5,7 +5,7 @@ gameConfig.scenes.push(
 			game.playTheme(null);
 			game.hideCursor = true;
 			game.playSound(SOUNDS.YUPA);
-			game.showTip([`Dont do it, ${game.data.name}!`, "I warn ya, ya ganna regret it!"], game => {
+			game.showTip([`Dont do it, ${game.data.name||"Hitman"}!`, "I warn ya, ya ganna regret it!"], game => {
 			}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
 		},
 		onSceneRefresh: game => {
@@ -32,6 +32,7 @@ gameConfig.scenes.push(
 								game.stopSound(SOUNDS.GOGOL);
 								game.playSound(SOUNDS.YUPA);
 								game.showTip("Yu are very stuped man", game => {
+									game.playSound(SOUNDS.HUM);
 									game.showTip("I know", game => {
 										game.gameOver(" “YUPA is not\n           YOPLAIT!”");
 									}, null, {x: 20, y: 30, speed: 100, talker: "human"});

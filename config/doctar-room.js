@@ -22,7 +22,7 @@ gameConfig.scenes.push(
 
 				game.sceneData.thoughts = [
 					"... so here we are ...",
-					"... and thinking killing Baby Hitler ...",
+					"... and to think killing Baby Hitler ...",
 					"... was the most difficult part ...",
 					"... I thought this was all behind ...",
 					"... avoiding the holocaust, spare the baby's life ...",

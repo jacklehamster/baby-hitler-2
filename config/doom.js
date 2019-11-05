@@ -21,7 +21,7 @@ gameConfig.scenes.push(
 				"My brain, my limbs, my genitals, everything in my body feels like it's being ripped apart by demons!!",
 				"The sensation of drenched in acide bath...",
 				"The feeling of being fried in burning oil...",
-				"The  of being impaled on a stick...",
+				"The pain of being impaled on a stick...",
 				"All those feelings overwhelm me at the same time.",
 				"This is worst than hell! Please get me out of here!",
 				"PUT ME OUT OF MY MISERY!!!!....",

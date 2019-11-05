@@ -97,10 +97,11 @@ gameConfig.scenes.push(
 												sprite.startTalk(game, "yupa2", "When was last tam ya remember usin it?", game => {
 													sprite.startTalk(game, "human2", "Well I... I don't remember.", games => {
 														sprite.startTalk(game, "yupa2", "Seee....?", game => {
-															sprite.startTalk(game, "human2", "But I don't recall missing a left hand!", game => {
+															sprite.startTalk(game, "human2", "But I don't recall ever missing a left hand!", game => {
 																sprite.startTalk(game, "yupa2", "I dun rememba ya miss a tail either, dun mean ya had one.", game => {
 																	sprite.startTalk(game, "human2", "Listen! We need to find out what happened to my left hand", game => {
-																		sprite.startTalk(game, "yupa2", ["Oke oke.. i know frend dat can halp ya", "Alectra!"], game => {
+																		sprite.startTalk(game, "yupa2", ["Oke oke.. i know frend dat can halp ya"], game => {
+																			sprite.startTalk(game, "yupa2", ["Alectra!"]);
 																		});
 																	});
 																});

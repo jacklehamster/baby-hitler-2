@@ -66,6 +66,7 @@ gameConfig.scenes.push(
 								msg: game => game.data.name ? `It's me ${game.data.name}` : "It's me...",
 								onSelect: (game, dialog) => {
 									if (game.data.name) {
+										game.playSound(SOUNDS.HUM);
 										game.showTip(`It's me, your friend ${game.data.name}!`, game => {
 											game.playSound(SOUNDS.YUPA);
 											game.showTip("A still don know youu", () => {
@@ -121,6 +122,7 @@ gameConfig.scenes.push(
 							{
 								msg: "Travel? How?",
 								onSelect: (game, dialog) => {
+									game.playSound(SOUNDS.HUM);
 									game.showTip("How can you travel? You were locked up?", () => {
 										game.playSound(SOUNDS.YUPA);
 										game.waitCursor = true;
@@ -148,10 +150,12 @@ gameConfig.scenes.push(
 							{
 								msg: "How long...",
 								onSelect: (game, dialog) => {
+									game.playSound(SOUNDS.HUM);
 									game.showTip("How long have you been in here?", () => {
 										game.playSound(SOUNDS.YUPA);
 										game.waitCursor = true;
 										game.showTip("Fiew monts? Fiew years. Dunt know.", () => {
+											game.playSound(SOUNDS.HUM);
 											game.showTip("A few years?!!!", () => {
 												game.waitCursor = false;
 											});
@@ -365,7 +369,7 @@ gameConfig.scenes.push(
 						switch (item) {
 							case "water bottle":
 								game.playSound(SOUNDS.YUPA);
-								game.showTip("I'm good now. Thanks.", null, null, { x: 1, y: 15, speed: 80, talker:"yupa"});
+								game.showTip("Im good naow. Thanx.", null, null, { x: 1, y: 15, speed: 80, talker:"yupa"});
 								break;
 							case "photo":
 								game.sceneData.yupa_photo = game.now;
@@ -374,7 +378,7 @@ gameConfig.scenes.push(
 								break;
 							default:
 								game.playSound(SOUNDS.YUPA);
-								game.showTip("I don't need that.", null, null, { x: 1, y: 15, speed: 80, talker:"yupa"});
+								game.showTip("I dunt need dat.", null, null, { x: 1, y: 15, speed: 80, talker:"yupa"});
 								break;
 						}
 					}
@@ -415,6 +419,7 @@ gameConfig.scenes.push(
 							"You diden know wat to do, so I save yo ass by taking you on my saucer.",
 							"And we kidnap baby hitler. Hahaha! So funney!",
 						], game => {
+							game.playSound(SOUNDS.HUM);
 							game.showTip([
 								"So you rememba me! That's great!",
 								"Do you know what happened to the baby?",
@@ -423,6 +428,7 @@ gameConfig.scenes.push(
 								game.showTip([
 									`I dun remembah which planet we left him on.`,
 								], game => {
+									game.playSound(SOUNDS.HUM);
 									game.showTip([
 										"I need to look for him.",
 										"Will you come with me? Let's escape from this prison together",
@@ -430,7 +436,7 @@ gameConfig.scenes.push(
 									], game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
-											`Sure my man ${game.data.name}!`,
+											`Sure my man ${game.data.name||"Hitman"}!`,
 											`I be rite behind ya.`,
 										], game => {
 											game.dialog = null;

@@ -81,8 +81,8 @@ gameConfig.scenes.push(
 						game.showTip([
 									"My brain... it hurts...",
 									"And my body is filled with bruises...",
-									"Where am I? I don't\nremember\nanything.",
-									"WHO am I?",
+									"What happened? I don't\nremember\nanything.",
+									"Where am I?",
 								], game => {
 							game.sceneIntro = false;
 							game.sceneData.beginTime = game.now;
@@ -196,7 +196,11 @@ gameConfig.scenes.push(
 					game.fade = game.sceneData.firstShot ? .9 * progress : 0;
 					game.fadeColor = "#990000";
 					if (progress >= 1 && !game.data.gameOver) {
-						game.gameOver("  “That was too\n       noticeable”");
+						if (game.data.shot.lamp) {
+							game.gameOver("  “A bit faster\n       next time?");
+						} else {
+							game.gameOver("  “That was too\n       noticeable”");
+						}
 					}
 				}
 			}
@@ -205,6 +209,7 @@ gameConfig.scenes.push(
 			{
 				src: ASSETS.EXIT_DOOR,
 				hidden: game => game.rotation !== 0,
+				tip: "Looks like the only way in",
 			},
 			{
 				src: ASSETS.JAIL, col:3, row:3,
@@ -220,6 +225,7 @@ gameConfig.scenes.push(
 				name: "lamp",
 				src: ASSETS.LAMP,
 				hidden: game => game.rotation !== 0 || game.data.shot.lamp,
+				tip: "That flickering, it's driving me crazy!",
 			},
 			{
 				name: "right guard",
