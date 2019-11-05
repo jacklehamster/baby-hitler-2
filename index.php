@@ -1,6 +1,6 @@
 <?php
 
-
+   $zipFilename = 'baby-hitler-2.zip';
    $dir    = 'ASSETS';
    $assets = scandir($dir);
 
@@ -30,7 +30,7 @@
 
       // Initialize archive object
       $zip = new ZipArchive();
-      $zip->open('baby-hitler-2.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+      $zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
       // Create recursive directory iterator
       /** @var SplFileInfo[] $files */
@@ -74,5 +74,8 @@
 	readfile("index.html");
 
   zipAll();
+
+  $md5 = md5_file($zipFilename);
+  file_put_contents('zip_version.txt', $md5);
 
 ?>
