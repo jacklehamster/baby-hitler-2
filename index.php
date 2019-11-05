@@ -24,7 +24,7 @@
         return (substr($string, 0, $len) === $startString); 
     } 
 
-    function zipAll() {
+    function zipAll($zipFilename) {
       // Get real path for our folder
       $rootPath = realpath('.');
 
@@ -73,7 +73,7 @@
 
 	readfile("index.html");
 
-  zipAll();
+  zipAll($zipFilename);
 
   $md5 = md5_file($zipFilename);
   file_put_contents('zip_version.txt', $md5);
