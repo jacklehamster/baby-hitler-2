@@ -76,6 +76,6 @@
   zipAll($zipFilename);
 
   $md5 = md5_file($zipFilename);
-  file_put_contents('zip_version.txt', $md5);
+  file_put_contents('zip_version.txt', "$md5\n");
 
 ?>

@@ -9,7 +9,6 @@ gameConfig.scenes.push(
 			[ null, null, BAG ,  null, null ],
 		],
 		onSceneHoldItem: (game, item) => {
-			console.log(item);
 			if (item === "gun") {
 				game.useItem = null;
 				game.waitCursor = true;
@@ -515,6 +514,7 @@ gameConfig.scenes.push(
 																		game.pickUp({item:"warpdrive", image:ASSETS.GRAB_WARP_DRIVE, message:"Finally got it.", onPicked: game => {
 																			game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find find Baby Hitler!", game => {
 																				game.dialog = null;
+																				game.gotoScene("space-adventure");
 																			});
 																		}});					
 																	});
@@ -624,14 +624,14 @@ gameConfig.scenes.push(
 								onSelect: game => {
 									game.situation.dateForWarpdrive = game.now;
 									game.currentScene.startTalk(game, "human", [
-										"I just really need that warpdrive.",
+										"I just really need that\nwarpdrive.",
 										"I thought maybe we could...",
 									], game => {
 										game.currentScene.startTalk(game, "shopkeepa", [
 											"Hey! I don't know how you do business on your planet,",
-											"but here, if you want something, you just say it!",
+											"but here, if you want\nsomething, you just say it!",
 											"If you want the warpdrive, we can talk about that,",
-											"but don't run around the bushes...",
+											"but don't run around the\nbushes...",
 											"... whatever that expression you earthlings have.",
 										], game => {
 											game.currentScene.startTalk(game, "human", [
@@ -1146,7 +1146,7 @@ gameConfig.scenes.push(
 										game.currentScene.startTalk(game, "shopkeepa", [
 											"But the tickets to Ecsta City are sooo\nexpensive!",
 											"If I miss her this time, I'm sure I'll never see her in concert.",
-											"Since she rarely comes to this planet ...",
+											"Since she rarely visits this planet ...",
 										], game => {
 											game.dialog.index = 9;
 										});

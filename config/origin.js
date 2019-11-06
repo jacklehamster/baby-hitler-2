@@ -4,13 +4,13 @@ gameConfig.scenes.push(
 		onScene: game => {
 			game.playTheme(SOUNDS.F1, {volume:.2});
 			game.sceneData.credits = `
-				In ${new Date().getFullYear()}, I was sent on a mission.
+				In ${new Date().getFullYear()}, I was sent on a mission:
 
-				I travelled back in time to 1889.
+				I was to travel back in time to 1889
 
-				To stop the holocaust.
+				and stop the holocaust
 
-				By killing a newborn baby named Adolf Hitler.
+				by killing the newborn baby named Adolf Hitler.
 
 				I failed the mission.
 
@@ -22,7 +22,7 @@ gameConfig.scenes.push(
 
 				We travelled the universe ever since.
 
-				That is the last thing I remember ..
+				That is the last thing I remember.
 
 			`.split("\n").map((a, index) => game.wordwrap(a.trim(), 9)).join("\n").split("\n");
 			game.delayAction(game => {

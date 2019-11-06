@@ -83,6 +83,7 @@ const FILE_SIZE = {
    'floor-ceiling.png' : 236,
    'further-side.png' : 511,
    'further-wall.png' : 198,
+   'game-thumbnail.png' : 37557,
    'gate-open.png' : 360,
    'gate.png' : 121,
    'grab-access-card.png' : 476,
