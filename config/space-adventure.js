@@ -163,7 +163,6 @@ gameConfig.scenes.push(
 					}
 
 				},
-//				hidden: game => game.now - game.sceneTime > 14000,
 			},
 			{
 				src: ASSETS.SPACESHIP, col: 1, row: 2,
