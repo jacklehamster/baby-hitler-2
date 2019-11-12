@@ -287,11 +287,17 @@ const Game = (() => {
 						this.arrow = this.getArrow(offsetX, offsetY, offsetWidth, offsetHeight);
 						switch(this.arrow) {
 							case LEFT: {
+								if (this.onSceneRotate(this, this.arrow)) {
+									return;
+								}
 								this.turnLeft(this.now);
 								this.actionDown = this.arrow;
 								break;
 							}
 							case RIGHT: {
+								if (this.onSceneRotate(this, this.arrow)) {
+									return;
+								}
 								this.turnRight(this.now);
 								this.actionDown = this.arrow;
 								break;
@@ -644,7 +650,8 @@ const Game = (() => {
 			}
 			const quadrantX = Math.min(4, Math.max(0, Math.floor(x / width * 5)));
 			const quadrantY = Math.min(4, Math.max(0, Math.floor(y / height * 5)));
-			return this.evaluate(this.arrowGrid[quadrantY][quadrantX]);
+			const arrow = this.evaluate(this.arrowGrid[quadrantY][quadrantX]);
+			return arrow;
 		}
 
 		evaluate(value, extra) {
@@ -988,7 +995,7 @@ const Game = (() => {
 									} else if (!combine || !combine(this.useItem, this, sprite)) {
 										if (this.useItem !== "gun") {
 											this.showTip(combineMessage && combineMessage(this.useItem, this) ||
-												(name ? `You can't use the ${this.useItem} on the ${name}.` : `You can't use ${this.useItem} like that.`),
+												(name ? `You can't use ~the ${this.useItem}~ on ~the ${name}~.` : `You can't use ~the ${this.useItem}~ like that.`),
 												() => {}, 70, {removeLock: true});
 											this.useItem = null;
 										}
@@ -1066,6 +1073,9 @@ const Game = (() => {
 		}
 
 		canMove({x, y}, direction) {
+			if (this.sceneData.freeFormMove) {
+				return true;
+			}
 			if (!this.map) {
 				return false;
 			}
@@ -1659,7 +1669,8 @@ const Game = (() => {
 		}
 
 		displayText(tip) {
-			const {text, time, fade, speed} = tip;
+			let {text} = tip;
+			const {time, fade, speed} = tip;
 			if (this.now < time) {
 				return;
 			}
@@ -1673,6 +1684,8 @@ const Game = (() => {
 				return;
 			}
 
+			text = this.processText(text);
+
 			const frame = Math.floor((this.now - (time||0)) / speed);
 			const fullWrappedText = this.wordwrap(text, 12);
 			tip.progress = Math.min(1, frame / fullWrappedText.length);
@@ -1680,7 +1693,7 @@ const Game = (() => {
 
 			tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
 			lines.forEach((msg, row) => {
-				this.displayTextLine(tempCtx, {msg, x: (tip.x || 2), y: (row - lines.length) * 7 + (tip.y || 60)});
+				this.displayTextLine(tempCtx, {msg, x: (tip.x || 2), y: (row - lines.length) * 7 + (tip.y || 60), noTranslate: true});
 			});
 			if (fade > 0) {
 				ctx.globalAlpha = 1 - fade;
@@ -1729,7 +1742,6 @@ const Game = (() => {
 		}
 
 		playTheme(song, options) {
-			console.log(song);
 			const {volume} = options || {};
 			if(this.data.theme && this.data.theme.song !== song) {
 				this.stopSound(this.data.theme.song);
@@ -2009,7 +2021,7 @@ const Game = (() => {
 		loadScene(scene, restoreMapInfo) {
 			this.initScene();
 			const { map, sprites, doors, arrowGrid, events, customCursor,
-				onScene, onSceneRefresh, onSceneShot, onSceneHoldItem, onSceneUseItem, onSceneForward, onSceneBackward, onSceneBattle, onScenePunch } = scene;
+				onScene, onSceneRefresh, onSceneShot, onSceneHoldItem, onSceneUseItem, onSceneForward, onSceneBackward, onSceneBattle, onScenePunch, onSceneRotate } = scene;
 			this.map = toMap(map);
 			if (!restoreMapInfo && this.map) {
 				const mapInfo = this.getMapInfo(this.map, this.door);
@@ -2032,6 +2044,7 @@ const Game = (() => {
 			this.onSceneBackward = onSceneBackward || nop;
 			this.onSceneBattle = onSceneBattle || nop;
 			this.onScenePunch = onScenePunch || nop;
+			this.onSceneRotate = onSceneRotate || nop;
 			this.customCursor = customCursor;
 		}
 
@@ -2181,7 +2194,7 @@ const Game = (() => {
 				if (this.sceneData.gameOverMessage) {
 					const lines = this.sceneData.gameOverMessage.split("\n");
 					lines.forEach((msg, index) => {
-						this.displayTextLine(tempCtx, {msg, x: 1, y: 15 + index * 7})
+						this.displayTextLine(tempCtx, {msg, x: 1, y: 15 + (index - lines.length/2) * 7})
 					});
 				} else {
 					this.displayTextLine(tempCtx, {msg: "GAME OVER",  x:11, y:20 });					
@@ -2269,49 +2282,87 @@ const Game = (() => {
 			}
 		}
 
-		displayTextLine(ctx, {msg, x, y, spacing, alpha}) {
+		processText(text, addOnly) {
+			if (text.indexOf("~") >= 0) {
+				text.split("~").forEach(a => this.processText(a, addOnly));
+				return text;
+			}
+
+			if (!this.translate) {
+				this.translate = {};
+			}
+			if (!this.translate[text]) {
+				this.translate[text] = {};
+				if (window.updateTranslationLink && !addOnly) {
+					const request = new XMLHttpRequest();
+			  		request.open("GET", `${window.updateTranslationLink}${encodeURIComponent(text)}`);
+					request.send();
+				}
+			}
+			return text;
+		}
+
+		displayTextLine(ctx, {msg, x, y, spacing, alpha, noTranslate}) {
 			if (!imageStock[ASSETS.ALPHABET]) {
 				return;
 			}
+
+			if (!noTranslate) {
+				msg = this.processText(msg);
+			}
+
 			const letterTemplate = {
-				src: ASSETS.ALPHABET, col:11, row:9, size:[5,6],
+				src: ASSETS.ALPHABET, col:10, row:10, size: ALPHA_SIZE,
 				offsetX: 20, offsetY: 20,
 				index: game => Math.floor(game.now / 100) % 62,
 				isText: true,
 				alpha,
-			};				
+			};
 			letterTemplate.offsetY = y;
 			let spaceX = x;
 			for (let c = 0; c < msg.length; c++) {
 				const code = msg.charCodeAt(c);
-				const ALPHA = ALPHAS[code] || ALPHAS[' '.charCodeAt(0)];
+				const ALPHA = ALPHAS[code] || ALPHAS[0];
 				const { index } = ALPHA;
 				letterTemplate.offsetX = spaceX;
 				letterTemplate.index = index;
 				this.displayImage(ctx, letterTemplate);
-				if (!ALPHA.width) {
+				if (typeof(ALPHA.width)==='undefined') {
 					maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
-					this.displayImage(maskCtx, letterTemplate);
 
-					const { offsetX, offsetY } = letterTemplate;
-					const { data } = maskCtx.getImageData(offsetX, offsetY, 5, 6);
+					this.displayImage(maskCtx, {
+						src: letterTemplate.src,
+						col: letterTemplate.col,
+						row: letterTemplate.row,
+						size: letterTemplate.size,
+						offsetX: 0, offsetY: 0,
+						index: letterTemplate.index,
+						isText: letterTemplate.isText,
+						alpha: 1,
+					});
 
-					let foundW = 0;
-					for (let w = 4; w >= 0; w--) {
-						for (let h = 5; h >= 0; h--) {
-							const offset = (h*5 + w)*4;
-							if (data[offset + 3] !== 0) {
+					const [ LETTER_WIDTH, LETTER_HEIGHT ] = letterTemplate.size;
+					const { data } = maskCtx.getImageData(0, 0, LETTER_WIDTH, LETTER_HEIGHT);
+
+					const PIXEL_SIZE = 4;
+					let foundW = -1;
+					for (let w = LETTER_WIDTH-1; w >= 0; w--) {
+						for (let h = LETTER_HEIGHT-1; h >= 0; h--) {
+							const offset = (h*LETTER_WIDTH + w) * PIXEL_SIZE;
+							if (data[offset + PIXEL_SIZE - 1] !== 0) {
 								foundW = w;
 								break;
 							}
 						}
-						if (foundW) {
+						if (foundW >= 0) {
 							break;
 						}
 					}
 					ALPHA.width = foundW + 1;
 				}
-				spaceX += ALPHA.width + (spacing || 1);
+				if (ALPHA.width) {
+					spaceX += ALPHA.width + (spacing || 1);
+				}
 			}
 			return spaceX - x;
 		}
@@ -2336,7 +2387,7 @@ const Game = (() => {
 			}
 
 			const {options, offsetY} = conversation[index];
-			const offY = this.evaluate(offsetY, game) || 0;
+			const offY = this.evaluate(offsetY, conversation[index]) || 0;
 
 			const dialogTime = this.now - this.dialog.time;
 			const dialogShift = Math.round((dialogTime < 50 ? (50 - dialogTime) / 50 : 0) * 4) + offY;
@@ -2804,7 +2855,7 @@ const Game = (() => {
 			let count = 0;
 			const scripts = document.querySelectorAll("script");
 			for (let i = 0; i < scripts.length; i++) {
-				if (scripts[i].src.indexOf("config/") >= 0) {
+				if (scripts[i].src.indexOf("config/") >= 0 && scripts[i].src.indexOf("config/config.js")<0) {
 					count++;
 				}
 			}

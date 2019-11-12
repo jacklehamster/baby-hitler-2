@@ -43,9 +43,6 @@ gameConfig.scenes.push(
 			}
 
 		},
-		// onSceneShot: game => {
-		// 	console.log("HERE");
-		// },
 		sprites: [
 			...getRoomMaze("_RED_1"),
 			{	//	Shopkeepa

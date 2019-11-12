@@ -268,6 +268,11 @@ const ASSETS = {
 	DOCTOR_LOBBY_AMARI: "assets/doctor-lobby-amari.png",
 	AMARI_BABY: "assets/amari-baby.png",
 	ORIGIN_STORY: "assets/origin-story.png",
+	HITLER: "assets/hitler.png|darken",
+	FINAL_PLANET: "assets/final-planet.png",
+	CRATER: "assets/crater.png",
+	MOUNTAINS: "assets/mountains.png|darken",
+	PLANET_ITEMS: "assets/planet-items.png",
 };
 
 const SOUNDS = {
@@ -316,6 +321,7 @@ const SOUNDS = {
 	GOLDMAN_THEME: "sounds/goldman.mp3",
 	F1: "sounds/f1.mp3",
 	RANDOM: "sounds/random.mp3",
+	MYSTICA_THEME: "sounds/mystica.mp3",
 };
 
 const ALPHAS = (() => {
@@ -326,8 +332,11 @@ const ALPHAS = (() => {
 		array[letters.charCodeAt(c)] = { char: letters[c], index: c };
 	}
 	array[" ".charCodeAt(0)].width = 1;
+	array[0] = { width:0, index: letters.length, char: '' };
 	return array;
 })();
+
+const ALPHA_SIZE = [ 10, 11 ];
 
 const ORIENTATIONS = ['N','NW','W','SW','S','SE','E','NE'];
 const ARROWS = [

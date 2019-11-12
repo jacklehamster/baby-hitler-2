@@ -232,7 +232,7 @@ gameConfig.scenes.push(
 							{
 								msg: "That's great!",
 								onSelect: (game, dialog) => {
-									game.currentScene.startTalk(game, "human", "Really, that's great!", game => {
+									game.currentScene.startTalk(game, "human", "Really? that's great!", game => {
 										game.currentScene.startTalk(game, "shopkeepa", "Why is that?", game => {
 											dialog.index += 1;
 										});

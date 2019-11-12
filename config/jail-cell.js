@@ -294,7 +294,7 @@ gameConfig.scenes.push(
 				name: "lock",
 				src: ASSETS.LOCK,
 				hidden: game => game.rotation !== 0 || game.data.cakelock,
-				combineMessage: (item, game) => `I can't pick the lock with a ${item}`,
+				combineMessage: (item, game) => `I can't pick the lock with ~a ${item}~.`,
 				combine: (item, game) => {
 					if (item === "cake") {
 						delete game.inventory[game.useItem];

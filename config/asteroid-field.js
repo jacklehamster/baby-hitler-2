@@ -1,10 +1,24 @@
 gameConfig.scenes.push(
 	{
 		name: "asteroid-field",
+		startTalk: (game, talker, msg, onDone, removeLock) => {
+			let x, y;
+			if (talker === "human") {
+				x = 7;
+				y = 58;
+				game.playSound(SOUNDS.HUM);
+			} else if (talker === "yupa") {
+				x = 2;
+				y = 22;
+				game.playSound(SOUNDS.YUPA);				
+			}
+			game.showTip(msg, onDone, 100, { x, y, talker, removeLock });
+		},
 		customCursor: (game, ctx) => {
-			return Cursor.NONE;
+			return game.sceneData.lives > 0 ? Cursor.NONE : null;
 		},
 		onScene: game => {
+			game.save();
 			game.delayAction(game => {
 				game.playTheme(SOUNDS.BATTLE_THEME, {volume: .8});
 			}, 1000);
@@ -17,12 +31,49 @@ gameConfig.scenes.push(
 			game.delayAction(game => {
 				console.log(game.sceneData.lives);
 			}, 90000);
+
+			game.delayAction(game => {
+				if (game.data.gameOver) {
+					return;
+				}
+				game.sceneData.asteroids = [];
+				game.sceneData.passed = game.now;
+				game.waitCursor = true;
+				game.currentScene.startTalk(game, "yupa", "Hey gud moaning? Wad happend?", game => {
+					game.currentScene.startTalk(game, "human", "Damnit Yupa! While you were dozing off, we just passed through\nan asteroid field!", game => {
+						game.currentScene.startTalk(game, "yupa", [
+							"Ya were drivin da ship?",
+							"Why not let Alectra do it? She can dodge asteroidz, itz piecea cake!",
+						], game => {
+							game.currentScene.startTalk(game, "human", [
+								"What?!! You're kidding me!",
+							], game => {
+								game.currentScene.startTalk(game, "yupa", [
+									"Hey next tam dhere prablem,",
+									"dunt try be a heru! Just wak me up!"
+								], game => {
+									game.currentScene.startTalk(game, "human", [
+										"Yupa, I'm gonna kill you!",
+									], game => {
+										game.sceneData.liftOff = game.now;
+										game.playSound(SOUNDS.DIVING);
+										game.delayAction(game => {
+											game.fadeToScene("final-planet");
+										}, 3000);
+									});
+								});
+							});
+						});
+					});
+				});
+
+			}, 85000);
 		},
 		onSceneRefresh: ({now, sceneData}) => {
 			const time = (sceneData.shakeTime - now);
 			if (time > 0) {
-				sceneData.shiftX = (Math.random() * time) / 200;
-				sceneData.shiftY = (Math.random() * time) / 200;
+				sceneData.shiftX = Math.round((Math.random() * time) / 200);
+				sceneData.shiftY = Math.round((Math.random() * time) / 200);
 			} else {
 				sceneData.shiftX = 0;
 				sceneData.shiftY = 0;
@@ -110,7 +161,10 @@ gameConfig.scenes.push(
 					}
 				},
 				onRefresh: (game, sprite) => {
-					const {sceneData, mouseDown, now} = game;
+					const {sceneData, mouseDown, now, data} = game;
+					if (data.gameOver) {
+						return;
+					}
 					const delay = 200;
 					if (mouseDown && now - sceneData.lastShot > delay) {
 						sprite.onClick(game);
@@ -174,14 +228,16 @@ gameConfig.scenes.push(
 					}
 				},
 				onRefresh: ({mouse, sceneData, now, sceneTime}) => {
-					if (mouse && now - sceneTime < 85000) {
+					if (mouse && !sceneData.liftOff) {
 						sceneData.ship.x += (mouse.x - sceneData.ship.x) / 2;
 						sceneData.ship.y += (mouse.y - sceneData.ship.y) / 2;
-					}
-					if (now - sceneTime >= 85000) {
-						const accel = (now - sceneTime) / 50000;
+					} else if (sceneData.liftOff) {
+						const accel = (now - sceneData.liftOff) / 500;
 						sceneData.ship.y -= accel;
 					}
+				},
+				hidden: game => {
+					return game.sceneData.lives <= 0;
 				},
 			},
 			{
@@ -238,13 +294,19 @@ gameConfig.scenes.push(
 						});
 
 						if (Math.abs(asteroid.x - sceneData.ship.x) < shipDist && Math.abs(asteroid.y - sceneData.ship.y) < shipDist) {
-							//	player collision
-							game.playSound(SOUNDS.PLAYER_HURT);
-							asteroid.destroyed = true;
-							const speed = Math.sqrt(asteroid.dx * asteroid.dx + asteroid.dy * asteroid.dy);
-							sceneData.shakeTime = Math.max(now + (asteroid.distance * speed * 400), sceneData.shakeTime||0);
-							game.currentScene.makeDust(game, asteroid, "#882200");
-							sceneData.lives-= (asteroid.distance * speed) / (sceneData.lives < sceneData.maxLives / 4 ? 2 : 1);
+							if (sceneData.lives > 0) {
+								//	player collision
+								game.playSound(SOUNDS.PLAYER_HURT);
+								asteroid.destroyed = true;
+								const speed = Math.sqrt(asteroid.dx * asteroid.dx + asteroid.dy * asteroid.dy);
+								sceneData.shakeTime = Math.max(now + (asteroid.distance * speed * 400), sceneData.shakeTime||0);
+								game.currentScene.makeDust(game, asteroid, "#882200");
+								sceneData.lives-= (asteroid.distance * speed) / (sceneData.lives < sceneData.maxLives / 4 ? 2 : 1);
+								if (sceneData.lives <= 0) {
+									game.currentScene.makeDust(game, asteroid, "#888888");
+									game.gameOver("    “The odds of\n    navigating an\n    asteroid field\n    is 3721 to 1”");
+								}
+							}
 						} else {
 							//	missile collision
 							sceneData.missiles.forEach(missile => {			
@@ -278,7 +340,7 @@ gameConfig.scenes.push(
 						return y >= -5 && y < 70 && x >= -5 && x < 70 && !destroyed;
 					});
 					const maxAsteroid = Math.min((now - sceneTime - 2000) / 2000, 25, 25 - (now - sceneTime - 70000) / 500);
-					if (sceneData.asteroids.length < maxAsteroid) {
+					if (sceneData.asteroids.length < maxAsteroid && !game.sceneData.passed) {
 						sceneData.asteroids.push(sprite.initialize(game, {}));
 					}
 				},
@@ -334,10 +396,10 @@ gameConfig.scenes.push(
 					ctx.fillRect( 5, 8, 56, 1);
 
 					ctx.globalAlpha = .5;
-					ctx.fillStyle = "#990000";
+					ctx.fillStyle = sceneData.lives / sceneData.maxLives < 1/4 && Math.floor(game.now/200) % 3 === 0 ? "#660000" : "#990000";
 					ctx.fillRect( 5, 5, 56, 1);
 
-					ctx.fillStyle = "#111111";
+					ctx.fillStyle = sceneData.shots <= 0 && Math.floor(game.now/200) % 3 === 0 ? "#888888" : "#111111";
 					ctx.fillRect( 5, 7, 56, 1);
 					ctx.globalAlpha = 1;
 
@@ -351,7 +413,7 @@ gameConfig.scenes.push(
 						ctx.fillRect( 5, 7, 56 * sceneData.shots / sceneData.maxShots, 1);
 					}
 				},
-				hidden: game => game.now - game.sceneTime > 83000,
+				hidden: game => game.now - game.sceneTime > 83000 || game.sceneData.lives <= 0,
 			},
 			{
 				custom: (game, sprite, ctx) => {

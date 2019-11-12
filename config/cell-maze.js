@@ -63,11 +63,11 @@ gameConfig.scenes.push(
 					{
 						options: [
 							{
-								msg: game => game.data.name ? `It's me ${game.data.name}` : "It's me...",
+								msg: game => game.data.name ? `It's me ~${game.data.name}` : "It's me...",
 								onSelect: (game, dialog) => {
 									if (game.data.name) {
 										game.playSound(SOUNDS.HUM);
-										game.showTip(`It's me, your friend ${game.data.name}!`, game => {
+										game.showTip(`It's me, your friend ~${game.data.name}~!`, game => {
 											game.playSound(SOUNDS.YUPA);
 											game.showTip("A still don know youu", () => {
 												game.waitCursor = false;
@@ -436,7 +436,7 @@ gameConfig.scenes.push(
 									], game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
-											`Sure my man ${game.data.name||"Hitman"}!`,
+											`Sure my man ~${game.data.name||"Hitman"}~!`,
 											`I be rite behind ya.`,
 										], game => {
 											game.dialog = null;

@@ -250,7 +250,7 @@ gameConfig.scenes.push({
 								game.situation.talked[msg] = game.now;
 								game.currentScene.startTalk(game, "human", [
 									"So, I never introduced myself.",
-									`I'm ${game.data.name || "Hitman"}`,
+									`I'm ~${game.data.name || "Hitman"}`,
 									"What is your name?",
 								], game => {
 									dialog.paused = true;

@@ -5,7 +5,7 @@ gameConfig.scenes.push(
 			game.playSound(SOUNDS.ANIMAL_CRY);
 			game.showTip([
 				`I will name you ...`,
-				`Baby\n${game.data.name||"Hitman"}!`,
+				`Baby\n~${game.data.name||"Hitman"}~!`,
 			], game => {
 				game.playTheme(null);
 				game.sceneData.cry = game.now;

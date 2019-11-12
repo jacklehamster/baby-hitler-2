@@ -106,7 +106,7 @@
 					style="position: absolute; width: 512px; height: 512px"
 				></canvas>
 		</div>
-		<div style="display:">
+		<div>
 			<div>
 				<input checked id="scanlines" type="checkbox"
 					onChange="setScanline(event.currentTarget.checked)">
@@ -122,15 +122,47 @@
 				</div>
 			</div>
 		</div>
+		<div id="error-div" style="display:none; background-color: #FF000033; color: #FFFFDD99; position: absolute; width: 100%; top: 0; left: 0; padding: 15px">
+		</div>
 </body>
+	<script src="lib/md5.min.js"></script>
 	<script src="common.js"></script>
-	<script src="config.js"></script>
-
+	<script src="config/config.js"></script>
 	<script src="asset-size.js"></script>
 	<script src="config/load-screen.js"></script>
 	<script src="game.js"></script>
 
 	<script>
+		function processTranslation() {
+			const request = new XMLHttpRequest();
+	  		request.open("GET", 'translation.json');
+	  		request.addEventListener("load", e => {
+	  			if (request.status === 200) {
+					const obj = JSON.parse(request.responseText);
+					for (let o in obj) {
+						game.processText(obj[o].text, true);
+					}
+	  			}
+	  		});
+
+			if (request.overrideMimeType) {
+			  request.overrideMimeType("application/json");
+			}
+			request.send();
+		}
+	</script>
+
+	<script>
+		const errorDiv = document.getElementById("error-div");
+		errorDiv.addEventListener("click", e => {
+			errorDiv.style.display = "none";
+		});	
+		function showError(error) {
+			const errorDiv = document.getElementById("error-div");
+			errorDiv.style.display = "";
+			errorDiv.innerText += error + "\n";
+		}
+
 		function setScanline(checked) {
 			const noise 	= document.getElementById("noise");
 			const scanline 	= document.getElementById("scanline");
@@ -156,6 +188,8 @@
 				ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 				ctx2.drawImage(canvas, 0, 0, canvas2.width, canvas2.height);
 			};
+
+			processTranslation();
 		});
 
 		if (DEMO) {
@@ -217,7 +251,6 @@
 					game.resume();
 				}
 			}
-			console.log(document.visibilityState);
 		});
 
 		const noiseCanvases = [];
@@ -279,6 +312,8 @@
 	<script src="config/final-credit.js" async></script>	
 	<script src="config/final-doom.js" async></script>	
 	<script src="config/final-exit.js" async></script>
+	<script src="config/final-planet.js" async></script>
+	<script src="config/final-planet-world.js" async></script>
 	<script src="config/final-title.js" async></script>
 	<script src="config/first-prison-cell.js" async></script>
 	<script src="config/guards-attack.js" async></script>
@@ -313,6 +348,7 @@
 	<script src="config/space-travel.js" async></script>
 	<script src="config/stars.js" async></script>
 	<script src="config/start-screen.js" async></script>
+	<script src="config/surface.js" async></script>
 	<script src="config/temp-end.js" async></script>
 	<script src="config/the-date.js" async></script>
 	<script src="config/tile-hole.js" async></script>

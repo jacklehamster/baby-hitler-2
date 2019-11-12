@@ -137,7 +137,7 @@ gameConfig.scenes.push(
 											game.sceneData.spoken2 = game.now;
 											game.waitCursor = true;
 											game.currentScene.startTalk(game, "human", "So, what do we do now?", game => {
-												game.currentScene.startTalk(game, "yupa", `Chill ${game.data.name||"Hitman"}, we jost chill.`, game => {
+												game.currentScene.startTalk(game, "yupa", `Chill ~${game.data.name||"Hitman"}~, we jost chill.`, game => {
 													game.currentScene.startTalk(game, "human", "Just chill? Forever?", game => {
 														game.currentScene.startTalk(game, "yupa", "Yuuup!...", game => {
 															game.waitCursor = false;

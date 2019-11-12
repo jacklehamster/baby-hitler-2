@@ -5,7 +5,7 @@ gameConfig.scenes.push(
 			game.playTheme(null);
 			game.hideCursor = true;
 			game.playSound(SOUNDS.YUPA);
-			game.showTip([`Dont do it, ${game.data.name||"Hitman"}!`, "I warn ya, ya ganna regret it!"], game => {
+			game.showTip([`Dont do it,\n~${game.data.name||"Hitman"}~!`, "I warn ya, ya ganna regret it!"], game => {
 			}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
 		},
 		onSceneRefresh: game => {

@@ -1,25 +1,41 @@
 <?php
 
-   $zipFilename = 'baby-hitler-2.zip';
-   $dir    = 'ASSETS';
-   $assets = scandir($dir);
-
-   $asset_source = "";
-
+    /**
+      * PREPARE ASSETS.
+      */
+    $dir    = 'ASSETS';
+    $assets = scandir($dir);
+    $asset_source = "";
     $asset_source .= "const FILE_SIZE = {\n";
     foreach ($assets as $file) {
-    	if (is_file("$dir/$file")) {
-    		$size = filesize("$dir/$file");
-    		$asset_source .= "   '$file' : $size,\n";
+      $filename = "$dir/$file";
+    	if (is_file($filename)) {
+        if(@exif_imagetype($filename)){
+          $size = filesize("$dir/$file");
+          $asset_source .= "   '$file' : $size,\n";
+        }
     	}
     }
     $asset_source .= "};";
 
     file_put_contents("asset-size.js", $asset_source);
 
+    ?>
+      <script>
+      //  window.updateTranslationLink = "updatetranslation.php?text=";
+      </script>
+    <?php
 
-    function startsWith ($string, $startString) 
-    { 
+
+    /**
+     *  SHOW GAME
+     */
+    readfile("index.html");
+
+    /**
+     *  ZIP GAME
+     */
+    function startsWith ($string, $startString) { 
         $len = strlen($startString); 
         return (substr($string, 0, $len) === $startString); 
     } 
@@ -54,6 +70,8 @@
                 case "DS_Store":
                 case "gdoc":
                 case "zip":
+                case "txt":
+                case "md":
                   break;
                 default:
                   if (!startsWith($relativePath, '.git')) {
@@ -69,12 +87,8 @@
       // Zip archive will be created only after closing object
       $zip->close();  
   }
-
-
-	readfile("index.html");
-
+  $zipFilename = 'baby-hitler-2.zip';
   zipAll($zipFilename);
-
   $md5 = md5_file($zipFilename);
   file_put_contents('zip_version.txt', "$md5\n");
 

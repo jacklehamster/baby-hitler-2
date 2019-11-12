@@ -167,7 +167,7 @@ gameConfig.scenes.push(
 											game.dialog.paused = 0;
 											game.dialog.index ++;
 											currentScene.startTalk(game, "yupa", [
-												`Ya know ${game.data.name||"hitman"},`,
+												`Ya know ~${game.data.name||"Hitman"}~,`,
 												"I know someone who killed a lat more peepol than Hitlah",
 											]);
 										});
@@ -224,9 +224,9 @@ gameConfig.scenes.push(
 										], game => {
 											game.sceneData.looking = 0;
 											currentScene.startTalk(game, "yupa", [
-												`${game.data.name||"Hitman"},`,
+												`${game.data.name||"Hitman"}~,`,
 												`yo rememba wat ya did before?`,
-												`Ya travel back in tam, from da year ${new Date().getFullYear()} to 1889`,
+												`Ya travel back in tam, from da year ~${new Date().getFullYear()}~ to 1889`,
 												"To kell da babi.",
 											], game => {
 												currentScene.startTalk(game, "human2", [
@@ -236,7 +236,7 @@ gameConfig.scenes.push(
 												], game => {
 													currentScene.startTalk(game, "yupa", [
 														"Rite, so wad da ya think happen",
-														`to 7 billionz humanz who wure living in ${new Date().getFullYear()}?`,
+														`to 7 billionz humanz who wure living in ~${new Date().getFullYear()}~?`,
 													], game => {
 														game.sceneData.hitmanSurprised = game.now;
 														game.delayAction(game => {
@@ -334,7 +334,7 @@ gameConfig.scenes.push(
 													game.dialog.paused = 0;
 													game.dialog.index ++;
 													currentScene.startTalk(game, "yupa", [
-														`Okai, ${game.data.name||"hitman"},`,
+														`Okai, ~${game.data.name||"hitman"}~,`,
 														"We let you go.",
 														"Just lay dawn on da bench, we'll giv ya somethin",
 														"To halp reduz da suffarin...",

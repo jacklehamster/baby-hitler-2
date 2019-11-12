@@ -22,7 +22,7 @@ gameConfig.scenes.push(
 													"What am I still doing here?",
 												], game => {
 													currentScene.startTalk(game, "yupa", [
-														`Ya diden die, ${game.data.name||"hitman"},`,
+														`Ya diden die, ~${game.data.name||"Hitman"}~,`,
 														"We gave ya nother chance tu change yo mind.",
 													], game => {
 														currentScene.startTalk(game, "doctar", [
@@ -47,7 +47,7 @@ gameConfig.scenes.push(
 													"It's hell isn't it? I'm sure it is...",
 												], game => {
 													currentScene.startTalk(game, "yupa", [
-														`It's not hell, ${game.data.name||"hitman"},`,
+														`It's not hell, ~${game.data.name||"Hitman"}~,`,
 														"You have ya nother chance at life.",
 													], game => {
 														currentScene.startTalk(game, "doctar", [
@@ -123,7 +123,7 @@ gameConfig.scenes.push(
 													], game => {
 														game.sceneData.looking = 0;
 														currentScene.startTalk(game, "yupa", [
-															`Ok, ${game.data.name || "hitman"}`,
+															`Ok, ~${game.data.name || "Hitman"}~`,
 															"It waz nice knowin ya.",
 															"Ya doing nobol sacriface for humanz,",
 															"... ya stuped human....",
@@ -144,7 +144,7 @@ gameConfig.scenes.push(
 													"Let's go Yupa, we're gonna find dat damn baby!"
 												], game => {
 													currentScene.startTalk(game, "yupa", [
-														`Sura think, ${game.data.name || "hitman"}`,
+														`Sura think, ~${game.data.name || "Hitman"}`,
 														"Letz stard wid da shopkeepa.",
 														"Docta said he knowz lotza piple.",
 													], game => {

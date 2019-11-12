@@ -63,8 +63,142 @@ gameConfig.scenes.push(
 					ctx.putImageData(imageData, 0, 0);
 				},
 				hidden: game => game.now - game.sceneTime > 1000,
-			},			
+			},
+			{
+				src: ASSETS.HITLER,
+				hidden: ({now, sceneData}) => !sceneData.about && !sceneData.notAbout || sceneData.notAbout && now - sceneData.notAbout >= 1000,
+				alpha: ({now, sceneData}) => Math.min(1, sceneData.notAbout ? 1 - (now - sceneData.notAbout)/1000 : (now - sceneData.about) / 1000),
+				onClick: game => {
+					if (!game.sceneData.notAbout) {
+						game.sceneData.notAbout = game.now;
+						game.sceneData.about = 0;
+						game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
+						game.currentScene.onStartDialog(game);
+					}
+				},
+			},
+			{
+				init: game => {
+					game.sceneData.credits = `
+						This game is the sequel to
+						“Kill Baby Hitler”
+						a game released in Jan 2019.
+
+						The first part of this game was released for\n#LOWREZJAM\n2019 in\nSeptember, then it was iterated on.
+
+						This is a\npoint-and-click\nadventure. Use the cursor to interact with items and pick them up. You have an inventory and stats that you can increase. Use your wits to solve puzzles.
+
+						There is one main ending and three alternate endings to unlock.
+					`.split("\n").map((a, index) => game.wordwrap(a.trim(), 13)).join("\n").split("\n");
+				},
+				custom: (game, sprite, ctx) => {
+					if (game.now - game.sceneData.scrollTime) {
+						ctx.fillStyle = "#000000";
+						ctx.globalAlpha = Math.min(.6, (game.now - game.sceneData.scrollTime) / 5000);
+						ctx.fillRect(0, 0, 64, 64);
+					}
+					ctx.globalAlpha = .8;
+
+					const shift = - (game.now - game.sceneData.scrollTime - 1000) / 200 + 50;
+					game.sceneData.credits.forEach((line, index) => {
+						const y = index * 7 + shift;
+						if (y > 0 && y < 55) {
+							game.displayTextLine(ctx, {
+								msg: line,
+								x:1, y: Math.round(y),
+								alpha: Math.max(0.05, Math.min(.8, y/5, (55 - y)/5)),
+							});
+						}
+					});
+				},
+				hidden: game => !game.sceneData.about,
+				onRefresh: game => {
+					if (game.sceneData.about) {
+						if (game.now - game.sceneData.scrollTime > 55000) {
+							game.sceneData.notAbout = game.now;
+							game.sceneData.about = 0;
+							game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
+							game.currentScene.onStartDialog(game);
+						}
+					}
+				},
+			},
 		],
+		onStartDialog: game => {
+			const backSelection = {
+				msg: "Back",
+				onSelect: (game, dialog) => dialog.index = 0,
+			};
+			game.startDialog({
+				time: game.now,
+				index: 0,
+				highlightColor: "#00998899",
+				conversation: [
+					{
+						options: [
+							{
+								hidden: ({sceneData}) => Object.keys(sceneData.loadSave).length,
+							},
+							{
+								msg: "New Game",
+								onSelect: game => {
+									game.dialog = null;
+									game.hideCursor = true;
+									const fadeDuration = 3000;
+									game.fadeOut(game.now, {duration:fadeDuration * 1.5, fadeDuration, color:"#000000", onDone: game => {
+										game.gotoScene("origin");
+									}});
+								}
+							},
+							{
+								hidden: ({sceneData}) => !Object.keys(sceneData.loadSave).length,
+								msg: "Load",
+								onSelect: (game, dialog) => dialog.index = 2,
+							},
+							{
+								msg: "Options",
+								onSelect: (game, dialog) => dialog.index = 1,
+							},
+						],
+					},
+					{
+						offsetY: (game, {options}) => (options.length - 3) * -7,
+						options: [
+							{
+								msg: "About this game",
+								onSelect: (game, dialog) => {
+									game.sceneData.about = game.now;
+									game.sceneData.notAbout = 0;
+									game.playTheme(SOUNDS.F1, {volume:.2});
+									game.sceneData.scrollTime = game.now;
+									game.dialog = null;
+								},
+							},
+							{
+								msg: game => `Sound ~${!game.mute?"ON":"OFF"}`,
+								onSelect: (game, dialog) => game.mute = !game.mute,
+							},
+							{
+								msg: () => `Retro mode ~${scanlines.checked?"ON":"OFF"}`,
+								onSelect: (game, dialog) => scanlines.click(),
+							},
+							{
+								msg: "Language",
+								onSelect: (game, dialog) => game.showTip("Option not yet available"),
+							},
+							backSelection,
+						],
+					},
+					{
+						options: [
+							{},
+							{},
+							backSelection,
+						],
+					}
+				],
+			});
+		},
 		onScene: game => {
 			game.delayAction(game => {
 				game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
@@ -79,69 +213,7 @@ gameConfig.scenes.push(
 					}
 				}
 
-				const backSelection = {
-					msg: "Back",
-					onSelect: (game, dialog) => dialog.index = 0,
-				};
-				game.startDialog({
-					time: game.now,
-					index: 0,
-					highlightColor: "#00998899",
-					conversation: [
-						{
-							options: [
-								{
-									hidden: ({sceneData}) => Object.keys(sceneData.loadSave).length,
-								},
-								{
-									msg: "New Game",
-									onSelect: game => {
-										game.dialog = null;
-										game.hideCursor = true;
-										const fadeDuration = 3000;
-										game.fadeOut(game.now, {duration:fadeDuration * 1.5, fadeDuration, color:"#000000", onDone: game => {
-											game.gotoScene("origin");
-										}});
-									}
-								},
-								{
-									hidden: ({sceneData}) => !Object.keys(sceneData.loadSave).length,
-									msg: "Load",
-									onSelect: (game, dialog) => dialog.index = 2,
-								},
-								{
-									msg: "Options",
-									onSelect: (game, dialog) => dialog.index = 1,
-								},
-							],
-						},
-						{
-							offsetY: -7,
-							options: [
-								{
-									msg: game => `Sound ${!game.mute?"ON":"OFF"}`,
-									onSelect: (game, dialog) => game.mute = !game.mute,
-								},
-								{
-									msg: () => `Retro mode ${scanlines.checked?"ON":"OFF"}`,
-									onSelect: (game, dialog) => scanlines.click(),
-								},
-								{
-									msg: "Language",
-									onSelect: (game, dialog) => game.showTip("Option not yet available"),
-								},
-								backSelection,
-							],
-						},
-						{
-							options: [
-								{},
-								{},
-								backSelection,
-							],
-						}
-					],
-				});
+				game.currentScene.onStartDialog(game);
 				game.gameLoaded = true;
 			}, 1000);
 		},

@@ -59,21 +59,14 @@ gameConfig.scenes.push(
 						ctx.fillRect(5, 35, 1 + progress * 50, 2);
 
 						game.displayTextLine(ctx, {
-							msg: "Loading." + (game.now % 1500 < 500 ? "" : game.now % 1500 < 1000 ? "." : ".."),
+							msg: "Loading~." + (game.now % 1500 < 500 ? "" : game.now % 1500 < 1000 ? "." : ".."),
 							x: 15, y: 26,
 						});
-						// ctx.font = "14px Trebuchet MS";
-						// ctx.strokeStyle = "#ffffff";
-						// ctx.strokeText("Loading." + (game.now % 1500 < 500 ? "" : game.now % 1500 < 1000 ? "." : ".."), 0, 30);
 						if (game.sceneData.estimate < 3600000 && Math.floor(game.sceneData.estimate / 1000) > 0) {
-							game.displayTextLine(ctx, {msg:Math.floor(game.sceneData.estimate / 1000) + " sec", x:18, y:40});
-	//						ctx.strokeText(Math.floor(game.sceneData.estimate / 1000) + " sec", 8, 50);
+							game.displayTextLine(ctx, {msg:Math.floor(game.sceneData.estimate / 1000) + "~ sec", x:18, y:40});
 						}
 					}
 				},
-				// onClick: game => {
-				// 	game.gotoScene("start-screen");
-				// },
 			},
 			{
 				hidden: game => {

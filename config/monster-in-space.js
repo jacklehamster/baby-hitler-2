@@ -37,7 +37,7 @@ gameConfig.scenes.push(
 					if (game.data.shot.shopkeepa) {
 						game.delayAction(game => {
 							game.currentScene.startTalk(game, "yupa", [
-								`So, ${game.data.name||"hitman"}...`,
+								`So, ~${game.data.name||"Hitman"}~...`,
 								"You know that shopkeepa that ya shot?",
 							], game => {
 								game.currentScene.startTalk(game, "human", [
@@ -67,7 +67,7 @@ gameConfig.scenes.push(
 					} else {
 						game.delayAction(game => {
 							game.currentScene.startTalk(game, "yupa", [
-								`So, ${game.data.name||"hitman"}...`,
+								`So, ~${game.data.name||"Hitman"}~...`,
 								"I hope ya know what ya duing.",
 							], game => {
 								game.currentScene.startTalk(game, "human", [

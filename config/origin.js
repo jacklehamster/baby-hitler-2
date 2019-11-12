@@ -4,7 +4,7 @@ gameConfig.scenes.push(
 		onScene: game => {
 			game.playTheme(SOUNDS.F1, {volume:.2});
 			game.sceneData.credits = `
-				In ${new Date().getFullYear()}, I was sent on a mission:
+				In ~${new Date().getFullYear()}~, I was sent on a mission:
 
 				I was to travel back in time to 1889
 
