@@ -177,7 +177,7 @@ const FILE_SIZE = {
    'outside.png' : 2076,
    'pedro.png' : 977,
    'photo.png' : 387,
-   'planet-items.png' : 843,
+   'planet-items.png' : 8180,
    'poor-hitman-back.png' : 224,
    'poor-hitman-guard.png' : 384,
    'poor-hitman.png' : 608,

@@ -123,14 +123,18 @@ gameConfig.scenes.push(
 			},
 			{
 				custom: (game, sprite, ctx) => {
+					const [ moonX, moonY ] = [ 0 - game.pos.x, -1000 - game.pos.y ];
+					const dist = Math.sqrt(moonX*moonX + moonY*moonY);
+					const size = 5 * 1000 / dist;
+					const outline = size / 5 * 7;
 					const rot = game.rotation - 4;
 					ctx.fillStyle = "#ffffff11";
 					ctx.beginPath();
-					ctx.arc(20 + rot * 32, 20, 7, 0, 2 * Math.PI);
+					ctx.arc(20 + rot * 32, 20, outline, 0, 2 * Math.PI);
 					ctx.fill();
 					ctx.fillStyle = "#ffffff";
 					ctx.beginPath();
-					ctx.arc(20 + rot * 32, 20, 5, 0, 2 * Math.PI);
+					ctx.arc(20 + rot * 32, 20, size, 0, 2 * Math.PI);
 					ctx.fill();
 				},
 			},
@@ -184,7 +188,7 @@ gameConfig.scenes.push(
 									displayTemplate.index = index;
 									displayTemplate.alpha = scale;
 									displayTemplate.scale = scale / 2;
-									displayTemplate.offsetX = 32 - 32 * displayTemplate.scale + scale * dx * 10 * 4;
+									displayTemplate.offsetX = 32 - 32 * displayTemplate.scale + scale * dx * 10 * 5;
 									displayTemplate.offsetY = 40 - 32 * displayTemplate.scale + scale * 10;
 									game.displayImage(ctx, displayTemplate);
 								}
@@ -198,7 +202,7 @@ gameConfig.scenes.push(
 				scale: game => game.sceneData.spaceshipTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.spaceshipTemplate;
-					return 32 - 32 * scale/2 + scale * dx * 10 * 4;
+					return 32 - 32 * scale/2 + scale * dx * 10 * 5;
 				},
 				offsetY: game => {
 					const { dx, dy, scale } = game.sceneData.spaceshipTemplate;
@@ -217,11 +221,11 @@ gameConfig.scenes.push(
 				tip: "We landed in the middle of nowhere!",
 			},
 			{
-				src: ASSETS.PLANET_ITEMS, col: 2, row: 2, size: [128,128],
+				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
 				scale: game => game.sceneData.signTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.signTemplate;
-					return 32 - 64 * scale/2 + scale * dx * 10 * 4;
+					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
 				},
 				offsetY: game => {
 					const { dx, dy, scale } = game.sceneData.signTemplate;
@@ -241,11 +245,11 @@ gameConfig.scenes.push(
 				},
 			},
 			{
-				src: ASSETS.PLANET_ITEMS, col: 2, row: 2, size: [128,128],
+				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
 				scale: game => game.sceneData.nomadTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
-					return 32 - 64 * scale/2 + scale * dx * 10 * 4;
+					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
 				},
 				offsetY: game => {
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
@@ -265,11 +269,11 @@ gameConfig.scenes.push(
 				},
 			},
 			{
-				src: ASSETS.PLANET_ITEMS, col: 2, row: 2, size: [128,128],
+				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
 				scale: game => game.sceneData.templeTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
-					return 32 - 64 * scale/2 + scale * dx * 10 * 4;
+					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
 				},
 				offsetY: game => {
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
@@ -285,7 +289,7 @@ gameConfig.scenes.push(
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
-					return dy >= 2 ? -1 : 2;
+					return dy >= 2 ? -1 : 6;
 				},
 			},
 			...standardMenu(),

@@ -8,11 +8,11 @@ gameConfig.scenes.push(
 
 				I was to travel back in time to 1889
 
-				and stop the holocaust
+				and undo the holocaust
 
 				by killing the newborn baby named Adolf Hitler.
 
-				I failed the mission.
+				I failed that mission.
 
 				I was not capable of shooting the baby.
 
