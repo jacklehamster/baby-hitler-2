@@ -1,0 +1,150 @@
+canvas {  
+    cursor: none;
+}
+
+.canvas-overlay {
+    pointer-events:none;
+}
+
+.crisp {
+    image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -webkit-crisp-edges;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+    image-rendering: optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;				
+}
+
+.scanline {
+    filter: alpha(opacity=20);
+    -moz-opacity: 0.2;
+    -khtml-opacity: 0.2;
+    opacity: 0.2;				
+    background: url(assets/scanline.png);
+    background-size: 8px;
+    pointer-events:none;
+}
+
+.noise {
+    pointer-events:none;
+}
+
+html, body {
+    height: 100%;
+    background-color: black;
+    color: silver;
+    touch-action: none;
+}
+body {
+    margin: 0;
+}
+.game-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: col;
+}
+.row {
+    width: auto;
+}
+.flex-item {
+    text-align: center;
+}
+button {
+	min-height: 10px;
+}
+
+pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
+.string { color: darkgreen; }
+.number { color: blue; }
+.boolean { color: darkblue; }
+.null { color: gray; }
+.key { font-weight: bold; color: black; }
+
+.touch {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: col;
+    -webkit-animation: expand .5s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: expand .5s; /* Firefox < 16 */
+        -ms-animation: expand .5s; /* Internet Explorer */
+         -o-animation: expand .5s; /* Opera < 12.1 */
+            animation: expand .5s;    
+}
+
+@keyframes expand {
+    from { height: 0; }
+    to   { height: 40%; }
+}
+
+
+.touch-container {
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 40px solid black;
+    margin: 40px;
+    background-color: black;
+}
+
+/*.touch-button {
+	font-family: monospace;
+	font-size: 60px;
+	padding: 60px 100px;
+	border-radius: 100px;
+	background-color: #008800;
+	color: black;
+	margin: 5px 0 10px 0;
+	box-shadow: 3px;
+}
+
+.touch-button:active {
+	background-color: #aaFF00;
+	margin: 10px 0 5px 0;
+	box-shadow: 1px black;
+}
+*/
+
+.game-size {
+    width: 512px;
+    height: 512px;
+}
+
+.game-size.full {
+    width: calc(100vw - 80px);
+    height: calc(100vw - 80px);
+}
+
+.touch-size {
+    width: 512px;
+    height: 256px;
+}
+
+.rounded-screen {	
+	border-radius: 60px;
+	border: 40px solid #000000;
+}
+
+

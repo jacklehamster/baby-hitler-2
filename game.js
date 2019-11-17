@@ -184,191 +184,15 @@ const Game = (() => {
 			});
 
 			canvas.addEventListener("mousemove", ({currentTarget, offsetX, offsetY}) => {
-				if (this.now - this.lastMouseCheck < 100) {
-					this.lastMouseCheck = 0;
-				}
-				this.lastMouseMove = this.now;
 				const { offsetWidth, offsetHeight } = currentTarget;
-				if (!this.mouse) {
-					this.mouse = {};
-				}
-				this.mouse.x = offsetX / offsetWidth * canvas.width;
-				this.mouse.y = offsetY / offsetHeight * canvas.height;
-
-				if (this.pendingTip && (this.pendingTip.progress < 1 || this.pendingTip.moreText) && !this.pendingTip.removeLock || this.waitCursor || this.hideCursor) {
-					return;
-				}
-				if (this.pickedUp && this.pickedUp.tip && this.pickedUp.tip.progress < 1) {
-					return;
-				}
-
-				if (this.arrowGrid) {
-					this.arrow = this.getArrow(offsetX, offsetY, offsetWidth, offsetHeight);
-					if (this.mouseDown) {
-						this.actionDown = this.arrow;
-					}
-				}
+				this.actionMove(offsetX, offsetY, offsetWidth, offsetHeight);
 			});
 
 			canvas.addEventListener("mousedown", e => {
-				this.lastMouseCheck = 0;
 				e.preventDefault();
-				const {currentTarget, offsetX, offsetY} = e;
-				if (this.battle && !this.bagOpening) {
-					if (!this.blocking() && !this.battle.playerHit && !this.battle.playerBlock && this.arrow !== BAG  && !(this.battle.dummyBattle && (this.arrow===LEFT || this.arrow===RIGHT)) && !this.battle.playerLeftAttack && !this.battle.playerRightAttack) {
-						if (this.onScenePunch(this, this.battle)) {
-							if (this.battle.fist === LEFT && !this.battle.playerLeftAttack) {
-								this.battle.playerLeftAttack = this.now;
-								this.battle.playerAttackLanded = 0;
-								this.battle.foeBlock = 0;
-							} else if (this.battle.fist === RIGHT && !this.battle.playerRightAttack) {
-								this.battle.playerRightAttack = this.now;
-								this.battle.playerAttackLanded = 0;
-								this.battle.foeBlock = 0;
-							}
-						}
-					}
-				}
-				if (this.pendingTip && (this.pendingTip.progress < 1 || this.pendingTip.moreText) && !this.pendingTip.removeLock || this.waitCursor || this.hideCursor) {
-					return;
-				}
-				if (this.useItem === "gun" && (!this.hoverSprite || !this.hoverSprite.bag && !this.hoverSprite.menu)) {
-					if (this.countItem('bullet') > 0) {
-						const { bullet } = this.inventory;
-						this.removeFromInventory('bullet');
-						this.gunFired = this.now;
-						game.playSound(SOUNDS.GUN_SHOT);
-					} else {
-						this.gunFired = 0;
-						game.playSound(SOUNDS.DUD)
-					}
-					this.mouseDown = this.now;
-					return;
-				}
-				if (this.pickedUp) {
-					const { item, onPicked, tip, image } = this.pickedUp;
-					if (tip.progress >= 1) {
-						this.pickedUp = null;
-						this.tips = {};
-						this.openBag(this.now, onPicked);
-					}
-					return;
-				}
-				if (this.useItem) {
-					const { image, item, message, col, row } = this.inventory[this.useItem];
-					if (game.isMouseHover({ src: image, index: 3, col, row }, 0, this.mouse)) {
-						this.pickUp({item, image, message:message||"", justLooking: true});
-						return;
-					}
-				}				
-				if (this.dialog && this.dialog.hovered) {
-					if (this.dialog.hovered.onSelect) {
-						this.dialog.hovered.onSelect(this, this.dialog, this.dialog.conversation[this.dialog.index], this.dialog.hovered);
-					}
-					return;
-				}
-				if (this.data.gameOver) {
-					const selection = Math.floor(this.mouse.y / 10) - 4;
-					if (selection >= 0 && selection <= 1) {
-						if (selection == 0) {
-							this.load();
-						} else {
-							this.restart();
-						}
-						return;
-					}
-				}
-
-				this.mouseDown = this.now;
-
-				if (!this.hoverSprite || this.hoverSprite.bag || this.hoverSprite.menu) {
-					const { offsetWidth, offsetHeight } = currentTarget;
-					if (this.arrowGrid && !this.useItem && !this.bagOpening && !game.sceneData.showStats) {
-						this.arrow = this.getArrow(offsetX, offsetY, offsetWidth, offsetHeight);
-						switch(this.arrow) {
-							case LEFT: {
-								if (this.onSceneRotate(this, this.arrow)) {
-									return;
-								}
-								this.turnLeft(this.now);
-								this.actionDown = this.arrow;
-								break;
-							}
-							case RIGHT: {
-								if (this.onSceneRotate(this, this.arrow)) {
-									return;
-								}
-								this.turnRight(this.now);
-								this.actionDown = this.arrow;
-								break;
-							}
-							case DOOR: {
-								const { x, y } = this.pos;
-								if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
-									const cell = this.frontCell();
-									const door = this.frontDoor();
-									if (!door) {
-										console.error("You need doors!");
-									} else if (door.lock && (!this.situation.unlocked || !this.situation.unlocked[cell])) {
-										this.showTip("It's locked.", null, null, {removeLock:true});
-										this.playErrorSound();
-									} else {
-										if (!this.doorOpening) {
-											this.performAction(this.now);
-										} else if (this.doors[cell].exit) {
-											if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
-												this.playSteps();
-											}
-											this.doors[cell].exit(this, this.doors[cell]);
-										} else {
-											this.actionDown = this.arrow;
-										}
-									}
-								} else {
-									this.actionDown = this.arrow;
-								}
-								break;
-							}
-							case FORWARD: {
-								if (this.onSceneForward(this)) {
-									return;
-								}
-								if (!this.pos) {
-									this.actionDown = this.arrow;
-									return;
-								}
-								const { x, y } = this.pos;
-								if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
-									if (!this.doorOpening) {
-										this.performAction(this.now);
-									} else if (this.doors) {
-										const cell = getCell(this.map, ... Game.getPosition(x,y,0,1,this.orientation));
-										if (this.doors[cell].exit) {
-											if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
-												this.playSteps();
-											}
-											this.doors[cell].exit(this, this.doors[cell]);
-										} else {
-											this.actionDown = this.arrow;
-										}
-									} else {
-										console.error("You need doors!");
-									}
-								} else {
-									this.actionDown = this.arrow;
-								}
-								break;
-							}
-							case BACKWARD: {
-								if (this.onSceneBackward(this)) {
-									return;
-								}
-								this.actionDown = this.arrow;
-								break;
-							}
-						}
-					}
-				}
+				const { currentTarget, offsetX, offsetY} = e;
+				const { offsetWidth, offsetHeight } = currentTarget;
+				this.actionClick(offsetX, offsetY, offsetWidth, offsetHeight);
 			});
 
 			canvas.addEventListener("mouseleave", () => {
@@ -399,7 +223,254 @@ const Game = (() => {
 				}
 			});
 
+			const self = this;
+			let touchActive = false;
+			canvas.addEventListener('touchend', function activateMotion(e) {
+				touchActive= true;
+				const { currentTarget, changedTouches } = e;
+				const [ touch ] = changedTouches;
+				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
+				self.actionClick(touch.clientX - offsetLeft,
+					touch.clientY - offsetTop,
+					offsetWidth, offsetHeight, true);
+
+				canvas.removeEventListener('touchend', activateMotion);
+			});
+
+			const touchCanvas = document.getElementById("touch-canvas");
+			document.addEventListener('touchend', e => {
+				if (!touchActive) {
+					return;
+				}
+				if (e.target != canvas && e.target != touchCanvas && !event.touches.length) {
+					this.mouse = null;
+				}
+			});
+
+			canvas.addEventListener('touchmove', e => {
+				const { currentTarget, changedTouches } = e;
+				const [ touch ] = changedTouches;
+				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
+				this.actionMove(touch.clientX - offsetLeft,
+					touch.clientY - offsetTop,
+					offsetWidth, offsetHeight, true);
+			});
+
+			canvas.addEventListener('touchstart', e => {
+				if (!touchActive) {
+					return;
+				}
+				const { currentTarget, changedTouches } = e;
+				const [ touch ] = changedTouches;
+				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
+				this.actionClick(touch.clientX - offsetLeft,
+					touch.clientY - offsetTop,
+					offsetWidth, offsetHeight, true);
+			});
+
+			canvas.addEventListener('touchend', e => e.preventDefault());
+
 			this.createLoop(this.refresh.bind(this));
+		}
+
+		actionMove(x, y, offsetWidth, offsetHeight, fromTouch) {
+			if (this.isTouchDevice()) {
+				return;
+			}
+			if (this.now - this.lastMouseCheck < 100) {
+				this.lastMouseCheck = 0;
+			}
+			this.lastMouseMove = this.now;
+			if (!this.mouse) {
+				this.mouse = {};
+			}
+			this.mouse.x = x / offsetWidth * canvas.width;
+			this.mouse.y = y / offsetHeight * canvas.height;
+			this.mouse.fromTouch = fromTouch;
+
+			if (this.pendingTip && (this.pendingTip.progress < 1 || this.pendingTip.moreText) && !this.pendingTip.removeLock || this.waitCursor || this.hideCursor) {
+				return;
+			}
+			if (this.pickedUp && this.pickedUp.tip && this.pickedUp.tip.progress < 1) {
+				return;
+			}
+
+			if (this.arrowGrid) {
+				this.arrow = this.getArrow(x, y, offsetWidth, offsetHeight);
+				if (this.mouseDown) {
+					this.actionDown = this.arrow;
+				}
+			}			
+		}
+
+		actionClick(x, y, offsetWidth, offsetHeight, fromTouch) {
+			if (!this.mouse) {
+				this.mouse = {};
+			}
+			this.mouse.x = x / offsetWidth * canvas.width;
+			this.mouse.y = y / offsetHeight * canvas.height;
+			this.mouse.fromTouch = fromTouch;
+
+			this.lastMouseCheck = 0;
+			if (this.battle && !this.bagOpening) {
+				if (!this.blocking() && !this.battle.playerHit && !this.battle.playerBlock && this.arrow !== BAG  && !(this.battle.dummyBattle && (this.arrow===LEFT || this.arrow===RIGHT)) && !this.battle.playerLeftAttack && !this.battle.playerRightAttack) {
+					if (this.onScenePunch(this, this.battle)) {
+						if (this.battle.fist === LEFT && !this.battle.playerLeftAttack) {
+							this.battle.playerLeftAttack = this.now;
+							this.battle.playerAttackLanded = 0;
+							this.battle.foeBlock = 0;
+						} else if (this.battle.fist === RIGHT && !this.battle.playerRightAttack) {
+							this.battle.playerRightAttack = this.now;
+							this.battle.playerAttackLanded = 0;
+							this.battle.foeBlock = 0;
+						}
+					}
+				}
+			}
+			if (this.pendingTip && (this.pendingTip.progress < 1 || this.pendingTip.moreText) && !this.pendingTip.removeLock || this.waitCursor || this.hideCursor) {
+				return;
+			}
+			if (this.useItem === "gun" && (!this.hoverSprite || !this.hoverSprite.bag && !this.hoverSprite.menu)) {
+				if (this.countItem('bullet') > 0) {
+					const { bullet } = this.inventory;
+					this.removeFromInventory('bullet');
+					this.gunFired = this.now;
+					game.playSound(SOUNDS.GUN_SHOT);
+				} else {
+					this.gunFired = 0;
+					game.playSound(SOUNDS.DUD)
+				}
+				this.mouseDown = this.now;
+				return;
+			}
+			if (this.pickedUp) {
+				const { item, onPicked, tip, image } = this.pickedUp;
+				if (tip.progress >= 1) {
+					this.pickedUp = null;
+					this.tips = {};
+					this.openBag(this.now, onPicked);
+				}
+				return;
+			}
+			if (this.useItem) {
+				const { image, item, message, col, row } = this.inventory[this.useItem];
+				if (game.isMouseHover({ src: image, index: 3, col, row }, 0, this.mouse)) {
+					this.pickUp({item, image, message:message||"", justLooking: true});
+					return;
+				}
+			}				
+			if (this.dialog) {
+				this.checkHoveredDialog();
+				if (this.dialog.hovered) {
+					if (this.dialog.hovered.onSelect) {
+						this.dialog.hovered.onSelect(this, this.dialog, this.dialog.conversation[this.dialog.index], this.dialog.hovered);
+					}
+					return;
+				}
+			}
+			if (this.data.gameOver) {
+				const selection = Math.floor(this.mouse.y / 10) - 4;
+				if (selection >= 0 && selection <= 1) {
+					if (selection == 0) {
+						this.load();
+					} else {
+						this.restart();
+					}
+					return;
+				}
+			}
+
+			this.mouseDown = this.now;
+
+			if (!this.hoverSprite || this.hoverSprite.bag || this.hoverSprite.menu) {
+				if (this.arrowGrid && !this.useItem && !this.bagOpening && !game.sceneData.showStats) {
+					this.arrow = this.getArrow(x, y, offsetWidth, offsetHeight);
+					switch(this.arrow) {
+						case LEFT: {
+							if (this.onSceneRotate(this, this.arrow)) {
+								return;
+							}
+							this.turnLeft(this.now);
+							this.actionDown = this.arrow;
+							break;
+						}
+						case RIGHT: {
+							if (this.onSceneRotate(this, this.arrow)) {
+								return;
+							}
+							this.turnRight(this.now);
+							this.actionDown = this.arrow;
+							break;
+						}
+						case DOOR: {
+							const { x, y } = this.pos;
+							if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
+								const cell = this.frontCell();
+								const door = this.frontDoor();
+								if (!door) {
+									console.error("You need doors!");
+								} else if (door.lock && (!this.situation.unlocked || !this.situation.unlocked[cell])) {
+									this.showTip("It's locked.", null, null, {removeLock:true});
+									this.playErrorSound();
+								} else {
+									if (!this.doorOpening) {
+										this.performAction(this.now);
+									} else if (this.doors[cell].exit) {
+										if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
+											this.playSteps();
+										}
+										this.doors[cell].exit(this, this.doors[cell]);
+									} else {
+										this.actionDown = this.arrow;
+									}
+								}
+							} else {
+								this.actionDown = this.arrow;
+							}
+							break;
+						}
+						case FORWARD: {
+							if (this.onSceneForward(this)) {
+								return;
+							}
+							if (!this.pos) {
+								this.actionDown = this.arrow;
+								return;
+							}
+							const { x, y } = this.pos;
+							if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
+								if (!this.doorOpening) {
+									this.performAction(this.now);
+								} else if (this.doors) {
+									const cell = getCell(this.map, ... Game.getPosition(x,y,0,1,this.orientation));
+									if (this.doors[cell].exit) {
+										if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
+											this.playSteps();
+										}
+										this.doors[cell].exit(this, this.doors[cell]);
+									} else {
+										this.actionDown = this.arrow;
+									}
+								} else {
+									console.error("You need doors!");
+								}
+							} else {
+								this.actionDown = this.arrow;
+							}
+							break;
+						}
+						case BACKWARD: {
+							if (this.onSceneBackward(this)) {
+								return;
+							}
+							this.actionDown = this.arrow;
+							break;
+						}
+					}
+				}
+			}
+
+			this.checkMouseHover(true);
 		}
 
 		fadeToScene(index, entrance, fadeDuration, afterScene) {
@@ -967,7 +1038,7 @@ const Game = (() => {
 			dialog.index = dialog.index || 0;
 		}
 
-		checkMouseHover() {
+		checkMouseHover(checkClick) {
 			if (this.now - this.lastMouseCheck < 300) {
 				return;
 			}
@@ -1000,7 +1071,7 @@ const Game = (() => {
 											this.useItem = null;
 										}
 									}
-								} else if (sprite.onClick) {
+								} else if (sprite.onClick && checkClick) {
 									sprite.onClick(this, sprite);
 								} else if (sprite.tip) {
 									const hoveredTip = this.evaluate(sprite.tip);
@@ -1560,7 +1631,7 @@ const Game = (() => {
 				return;
 			}
 			if (this.mouse) {
-				const { x, y } = this.mouse;
+				const { x, y, fromTouch } = this.mouse;
 				const px = Math.floor(x)+.5, py = Math.floor(y)+.5;
 
 				const customCursor = this.customCursor ? this.customCursor(this, ctx) : null;
@@ -2021,7 +2092,9 @@ const Game = (() => {
 		loadScene(scene, restoreMapInfo) {
 			this.initScene();
 			const { map, sprites, doors, arrowGrid, events, customCursor,
-				onScene, onSceneRefresh, onSceneShot, onSceneHoldItem, onSceneUseItem, onSceneForward, onSceneBackward, onSceneBattle, onScenePunch, onSceneRotate } = scene;
+				onScene, onSceneRefresh, onSceneShot, onSceneHoldItem, onSceneUseItem,
+				onSceneForward, onSceneBackward, onSceneBattle, onScenePunch, onSceneRotate,
+			} = scene;
 			this.map = toMap(map);
 			if (!restoreMapInfo && this.map) {
 				const mapInfo = this.getMapInfo(this.map, this.door);
@@ -2367,10 +2440,49 @@ const Game = (() => {
 			return spaceX - x;
 		}
 
+		checkHoveredDialog() {
+			if (!this.dialog) {
+				return;
+			}
+			const { pendingTip} = this;
+			if (pendingTip && !pendingTip.talker) {
+				return;
+			}
+			const { index, conversation, time } = this.dialog;
+			const frame = Math.min(3, Math.floor((this.now - time) / 80));
+			if (this.bagOpening || this.useItem || this.pendingTip && !this.pendingTip.removeLock || this.dialog.paused) {
+				this.dialog.hovered = null;
+				return;
+			}
+
+			if (!conversation[index]) {
+				throw new Error(`Dialog index ${index} out of bound.`);
+			}
+
+			const {options, offsetY} = conversation[index];
+			const offY = this.evaluate(offsetY, conversation[index]) || 0;
+
+			const filteredOptions = options.filter(option => !option.hidden || !this.evaluate(option.hidden, option));
+			const y = this.mouse ? Math.floor((this.mouse.y - 43 - offY) / 7) : -1;
+			ctx.fillStyle = this.dialog.highlightColor || "#009988aa";
+			if (y >= 0 && y < filteredOptions.length) {
+				const { msg, cantSelect } = filteredOptions[y];
+				if (this.evaluate(msg) && !this.evaluate(cantSelect)) {
+					this.dialog.hovered = filteredOptions[y];
+				} else {
+					this.dialog.hovered = null;
+				}
+			} else {
+				this.dialog.hovered = null;
+			}			
+		}
+
 		displayDialog() {
 			if (!this.dialog) {
 				return;
 			}
+			this.checkHoveredDialog();
+
 			const { pendingTip} = this;
 			if (pendingTip && !pendingTip.talker) {
 				return;
@@ -2398,13 +2510,8 @@ const Game = (() => {
 			if (y >= 0 && y < filteredOptions.length) {
 				const { msg, cantSelect } = filteredOptions[y];
 				if (this.evaluate(msg) && !this.evaluate(cantSelect)) {
-					this.dialog.hovered = filteredOptions[y];
 					ctx.fillRect(0, dialogShift + y * 7 + 42, 64, 7);
-				} else {
-					this.dialog.hovered = null;
 				}
-			} else {
-				this.dialog.hovered = null;
 			}
 
 			tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
@@ -2665,9 +2772,6 @@ const Game = (() => {
 					this.replaceImage(src, this.data.images[src]);
 				}
 			}
-			// if (!this.data.name) {
-			// 	this.data.name = "Hitman";
-			// }
 		}
 
 		replaceImage(id, src) {
@@ -2860,6 +2964,10 @@ const Game = (() => {
 				}
 			}
 			return count;
+		}
+
+		isTouchDevice() {
+			return this.isTouch;
 		}
 	}
 

@@ -1,6 +1,9 @@
 gameConfig.scenes.push(
 	{
 		name: "start-screen",
+		touchScreen: game => {
+			return "start";
+		},
 		sprites: [
 			{
 				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height),
@@ -179,8 +182,8 @@ gameConfig.scenes.push(
 								onSelect: (game, dialog) => game.mute = !game.mute,
 							},
 							{
-								msg: () => `Retro mode ~${scanlines.checked?"ON":"OFF"}`,
-								onSelect: (game, dialog) => scanlines.click(),
+								msg: () => `Retro mode ~${scanlines[0].checked?"ON":"OFF"}`,
+								onSelect: (game, dialog) => toggleScanlines(),
 							},
 							{
 								msg: "Language",

@@ -22,7 +22,7 @@
 
     ?>
       <script>
-      //  window.updateTranslationLink = "updatetranslation.php?text=";
+        window.debugMode = true;
       </script>
     <?php
 
