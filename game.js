@@ -226,21 +226,23 @@ const Game = (() => {
 
 			const self = this;
 			let touchActive = false;
+
+			//	FIRST TIME SONG ACTIVATION
 			document.addEventListener('touchend', function activateMotion(e) {
 				touchActive = true;
 				if (e.target === canvas) {
 					const { target, changedTouches } = e;
 					const [ touch ] = changedTouches;
 					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = target;
-					self.actionClick(touch.clientX - offsetLeft,
-						touch.clientY - offsetTop,
-						offsetWidth, offsetHeight, true);
+					self.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
 				}
 
 				document.removeEventListener('touchend', activateMotion);
 			});
 
 			const touchCanvas = document.getElementById("touch-canvas");
+
+			//	SONG ACTIVATION
 			document.addEventListener('touchend', e => {
 				if (game.data.theme && game.soundStock[game.data.theme.song]) {
 					const audio = game.soundStock[game.data.theme.song].audio;
@@ -250,6 +252,11 @@ const Game = (() => {
 						console.log("Unblocking song");
 					}
 				}
+			});
+
+			////////////////////////////////
+			//	CURSOR MODE
+			document.addEventListener('touchend', e => {
 				if (!touchActive) {
 					return;
 				}
@@ -267,9 +274,7 @@ const Game = (() => {
 				const { currentTarget, changedTouches } = e;
 				const [ touch ] = changedTouches;
 				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
-				this.actionMove(touch.clientX - offsetLeft,
-					touch.clientY - offsetTop,
-					offsetWidth, offsetHeight, true);
+				this.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
 			});
 
 			canvas.addEventListener('touchstart', e => {
@@ -279,9 +284,7 @@ const Game = (() => {
 				const { currentTarget, changedTouches } = e;
 				const [ touch ] = changedTouches;
 				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
-				this.actionClick(touch.clientX - offsetLeft,
-					touch.clientY - offsetTop,
-					offsetWidth, offsetHeight, true);
+				this.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
 			});
 
 			canvas.addEventListener('touchend', e => e.preventDefault());
@@ -334,7 +337,8 @@ const Game = (() => {
 					this.clicking = false;					
 				}
 			});
-
+			//	END CURSOR MODE
+			///////////////////////////////////
 
 			document.addEventListener("fullscreenchange", () => {
 				const minSize = Math.min(innerWidth, innerHeight) - 80;
