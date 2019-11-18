@@ -25,26 +25,30 @@
 	</head>
 
 	<body style="margin: 0;">
-		<div style="display: flex; flex-direction: column; height: 100%">
+		<div id="viewport" style="display: flex; flex-direction: column; height: 100%">
 			<div class="game-container">
-					<canvas class="screen-view game-size flex-item crisp" id="canvas" width=64 height=64 style="background-color: black;"></canvas>
-					<canvas class="screen-view game-size flex-item canvas-overlay rounded-screen screen-copy" id="canvas2" width=128 height=128 style="background-color: black; position: absolute;"></canvas>
-					<div id="scanline" class="screen-view game-size scanline" style="position: absolute;"></div>
-					<canvas class="screen-view game-size noise" id="noise" width=640 height=640
-						style="position: absolute;"></canvas>
+				<canvas class="screen-view game-size flex-item crisp" id="canvas" width=64 height=64 style="background-color: black; margin: 40px; display:none"></canvas>
+				<canvas class="screen-view game-size flex-item canvas-overlay rounded-screen screen-copy" id="canvas2" width=128 height=128 style="background-color: black; position: absolute;"></canvas>
+				<div id="scanline" class="screen-view game-size scanline" style="position: absolute;"></div>
+				<canvas class="screen-view game-size noise" id="noise" width=640 height=640
+					style="position: absolute;"></canvas>
+				<script>
+					document.getElementById("canvas").style.display = "";
+				</script>
 			</div>
 			<div class="touch" style="display: none; height: 40%; border-top: 1px solid #222;">
 				<div class="touch-container touch-size rounded-screen">
-					<canvas class="screen-view touch-size flex-item crisp" id="touch-canvas" width=64 height=32 style="background-color: black;"></canvas>
-					<canvas class="screen-view touch-size flex-item canvas-overlay rounded-screen screen-copy" id="touch-canvas2" width=128 height=64 style="background-color: #001122; position: absolute;"></canvas>
+					<canvas class="screen-view touch-size flex-item crisp" id="touch-canvas" width=64 height=32 style="display:none"></canvas>
+					<canvas class="screen-view touch-size flex-item canvas-overlay rounded-screen screen-copy" id="touch-canvas2" width=128 height=64 style="position: absolute;"></canvas>
 					<div id="touch-scanline" class="screen-view touch-size scanline" style="position: absolute;"></div>
 					<canvas class="screen-view touch-size noise" id="touch-noise" width=640 height=320 style="position: absolute;"></canvas>	
 				</div>
 				<script>
+					document.getElementById("touch-canvas").style.display = "";					
 					window.addEventListener('touchstart', function touchStart(event) {
 						document.querySelector(".touch").style.display = "";
 						document.querySelectorAll(".game-size").forEach(div => {
-							div.classList.add("full");
+							div.classList.add("touched");
 						});
 						event.preventDefault();
 						window.removeEventListener('touchstart', touchStart);
@@ -80,7 +84,6 @@
 	<script src="asset-size.js"></script>
 	<script src="config/load-screen.js"></script>
 	<script src="game.js"></script>
-	<script src="touchscreen.js"></script>
 
 	<script>
 		function processTranslation() {
@@ -110,7 +113,7 @@
 		function showError(error) {
 			const errorDiv = document.getElementById("error-div");
 			errorDiv.style.display = "";
-			errorDiv.innerText += error + "\n";
+			errorDiv.innerHTML += error + "\n";
 		}
 
 		const noises = document.querySelectorAll(".noise");

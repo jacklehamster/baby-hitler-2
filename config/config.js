@@ -658,7 +658,7 @@ function standardBag() {
 						return false;
 					}
 				}
-				return arrow !== BAG && (!sceneData.showStats || now - sceneData.showStats < 400) && game.useItem !== "gun";
+				return arrow !== BAG && (!sceneData.showStats || now - sceneData.showStats < 400) && game.useItem === null;
 			},
 			alpha: game => game.emptyBag() ? .2 : 1,
 			onClick: game => game.clickBag(),
@@ -680,8 +680,7 @@ function standardMenu() {
 			src: ASSETS.STATS,
 			index: ({now, sceneData}) => Math.min(3, Math.floor((now - sceneData.showStats)/100)),
 			hidden: game => !game.sceneData.showStats,
-			onClick: game => {
-			},
+			onClick: game => {},
 		},
 		{
 			custom: (game, sprite, ctx) => {

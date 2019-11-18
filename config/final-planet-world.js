@@ -1,13 +1,6 @@
 gameConfig.scenes.push(
 	{		
 		name: "final-planet-world",
-		// arrowGrid: [
-		// 	[ null, null, MENU,  null, null ],
-		// 	[],
-		// 	[ LEFT, null, s(11), null, RIGHT ],
-		// 	[ LEFT, s(7), s(11), s(7), RIGHT ],
-		// 	[ LEFT, s(7), s(9),  s(7), RIGHT ],
-		// ],
 		arrowGrid: [
 			[ null, null, MENU,  null, null ],
 			[],
@@ -19,16 +12,9 @@ gameConfig.scenes.push(
 			game.save();
 			game.playTheme(SOUNDS.MYSTICA_THEME, {volume: .6});
 			game.pos = { x: 0, y: 0 };
-//			game.sceneData.goal = { x: 0, y: 0 };
 			game.sceneData.forwardUnlocked = true;
 			game.sceneData.freeFormMove = true;
-			// addEventListener("keydown", e => {
-			// 	if (e.keyCode === 37) {
-			// 		game.rotation = ((game.rotation - .2) + 8) % 8;
-			// 	} else if (e.keyCode === 39) {
-			// 		game.rotation = ((game.rotation + .2) + 8) % 8;
-			// 	}
-			// });
+			game.sceneData.finalTarget = { x: 230, y: -350 };
 		},
 		onSceneRefresh: game => {
 			if (game.mouseDown) {
@@ -70,25 +56,11 @@ gameConfig.scenes.push(
 						break;
 				}
 			}
-			// game.pos.x += (game.sceneData.goal.x - game.pos.x) / 10;
-			// game.pos.y += (game.sceneData.goal.y - game.pos.y) / 10;
 		},
 		onSceneForward: game => {
-			// const angle = game.rotation / 8 * Math.PI * 2;
-			// const rx = Math.cos(angle), ry = Math.sin(angle);
-			// const mx = - 1 * ry;
-			// const my = + 1 * rx;
-			// game.sceneData.goal.x = game.pos.x + mx;
-			// game.sceneData.goal.y = game.pos.y + my;
 			return true;
 		},		
 		onSceneBackward: game => {
-			// const angle = game.rotation / 8 * Math.PI * 2;
-			// const rx = Math.cos(angle), ry = Math.sin(angle);
-			// const mx = + 1 * ry;
-			// const my = - 1 * rx;
-			// game.sceneData.goal.x = game.pos.x + mx;
-			// game.sceneData.goal.y = game.pos.y + my;
 			return true;
 		},
 		onSceneRotate: (game, arrow) => {
@@ -109,17 +81,27 @@ gameConfig.scenes.push(
 			{
 				src: ASSETS.FINAL_PLANET, col: 1, row: 2,
 				index: 1,
-				offsetX: game => 32 * (game.rotation % 2) + 64,
+				offsetX: game => 64 * (game.rotation % 2) + 128,
 			},
 			{
 				src: ASSETS.FINAL_PLANET, col: 1, row: 2,
 				index: 1,
-				offsetX: game => 32 * (game.rotation % 2),
+				offsetX: game => 64 * (game.rotation % 2) + 64,
 			},
 			{
 				src: ASSETS.FINAL_PLANET, col: 1, row: 2,
 				index: 1,
-				offsetX: game => 32 * (game.rotation % 2) - 64,
+				offsetX: game => 64 * (game.rotation % 2),
+			},
+			{
+				src: ASSETS.FINAL_PLANET, col: 1, row: 2,
+				index: 1,
+				offsetX: game => 64 * (game.rotation % 2) - 64,
+			},
+			{
+				src: ASSETS.FINAL_PLANET, col: 1, row: 2,
+				index: 1,
+				offsetX: game => 64 * (game.rotation % 2) - 128,
 			},
 			{
 				custom: (game, sprite, ctx) => {
@@ -130,11 +112,11 @@ gameConfig.scenes.push(
 					const rot = game.rotation - 4;
 					ctx.fillStyle = "#ffffff11";
 					ctx.beginPath();
-					ctx.arc(20 + rot * 32, 20, outline, 0, 2 * Math.PI);
+					ctx.arc(20 + rot * 64, 20, outline, 0, 2 * Math.PI);
 					ctx.fill();
 					ctx.fillStyle = "#ffffff";
 					ctx.beginPath();
-					ctx.arc(20 + rot * 32, 20, size, 0, 2 * Math.PI);
+					ctx.arc(20 + rot * 64, 20, size, 0, 2 * Math.PI);
 					ctx.fill();
 				},
 			},
@@ -145,7 +127,7 @@ gameConfig.scenes.push(
 				index: 0,
 				offsetX: game => {
 					const rot = game.rotation;
-					return 32 * ((rot + 4) % 8 - 4) - 32;
+					return 64 * ((rot + 4) % 8 - 4) - 64;
 				}
 			},
 			{
@@ -155,12 +137,11 @@ gameConfig.scenes.push(
 				index: 1,
 				offsetX: game => {
 					const rot = game.rotation;
-					return 32 * ((rot + 6) % 8 - 4) - 32;
+					return 64 * ((rot + 6) % 8 - 4) - 64;
 				}
 			},
 			{
-				init: game => {
-				},
+				init: game => {},
 				getTileIndex: (game, x, y) => {
 					return Math.floor((Math.sin(x) + Math.cos(y)) * 1000000) % 17;
 				},
@@ -197,6 +178,45 @@ gameConfig.scenes.push(
 					}
 				},
 			},
+			// {
+			// 	init: game => {},
+			// 	getTileIndex: (game, x, y) => {
+			// 		return Math.floor((Math.sin(x) + Math.cos(y)) * 1000000) % 17;
+			// 	},
+			// 	displayTemplate: {
+			// 		src: ASSETS.PLANET_ITEMS,
+			// 		col: 3, row: 4, size: [128, 128],
+			// 	},
+			// 	custom: (game, sprite, ctx) => {
+			// 		const { pos } = game;
+
+			// 		const { displayTemplate } = sprite;
+			// 		const angle = game.rotation / 8 * Math.PI * 2;
+			// 		const rx = Math.cos(angle), ry = Math.sin(angle);
+
+			// 		const commonTemplate = game.currentScene.getTemplate(game, Math.round(pos.x / 20) * 20, Math.round((pos.y-5) / 20) * 20 + 5);
+
+			// 		for (let y = Math.floor(pos.y-5); y < pos.y+5; y++) {
+			// 			for (let x = Math.floor(pos.x-5); x < pos.x+5; x++) {
+			// 				const index = sprite.getTileIndex(game, x, y);
+			// 				if (index <= 11) {
+			// 					const absoluteDx = x - pos.x;
+			// 					const absoluteDy = y - pos.y;
+			// 					const dx = rx * absoluteDx + ry * absoluteDy;
+			// 					const dy = ry * absoluteDx - rx * absoluteDy + 2;
+			// 					if (dy < 2) {									
+			// 						const scale = Math.pow(2, dy);
+			// 						displayTemplate.index = index;
+			// 						displayTemplate.scale = commonTemplate.scale / 2;
+			// 						displayTemplate.offsetX = 32 - 32 * displayTemplate.scale + scale * dx * 10 * 5;
+			// 						displayTemplate.offsetY = 40 - 32 * displayTemplate.scale + scale * 10;
+			// 						game.displayImage(ctx, displayTemplate);
+			// 					}
+			// 				}
+			// 			}
+			// 		}
+			// 	},
+			// },
 			{
 				src: ASSETS.SPACESHIP, col: 1, row: 2,
 				scale: game => game.sceneData.spaceshipTemplate.scale / 2,
@@ -231,17 +251,29 @@ gameConfig.scenes.push(
 					const { dx, dy, scale } = game.sceneData.signTemplate;
 					return 40 - 64 * scale/2 + scale * (10 - 30);
 				},
-				onRefresh: game => {
+				getLocation: (game, x, y) => {
+					return [ Math.round(x / 20) * 20, Math.round((y-5) / 20) * 20 + 5 ];
+				},
+				onRefresh: (game, sprite) => {
 					const { pos } = game;
 					const { x, y } = pos;
-					game.sceneData.signTemplate = game.currentScene.getTemplate(game, Math.round(x / 20) * 20, Math.round((y-5) / 20) * 20 + 5);
+					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+					game.sceneData.signTemplate = game.currentScene.getTemplate(game, xLoc, yLoc);
 				},
 				init: (game, sprite) => {
-					sprite.onRefresh(game);
+					sprite.onRefresh(game, sprite);
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.signTemplate;
 					return dy >= 2 ? -1 : 0;
+				},
+				tip: (game, sprite) => {
+					const { pos } = game;
+					const { x, y } = pos;
+					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+					const dx = game.sceneData.finalTarget.x - xLoc;
+					const dy = game.sceneData.finalTarget.y - yLoc;
+					return `“Westrow's tavern is ${Math.abs(dx)}m ${dx<0?"West":"East"} and ${Math.abs(dy)}m ${dy<0?"South":"North"} from here”`;
 				},
 			},
 			{
@@ -255,17 +287,61 @@ gameConfig.scenes.push(
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
 					return 40 - 64 * scale/2 + scale * (10 - 30);
 				},
+				onRefresh: (game, sprite) => {
+					const { pos } = game;
+					const { x, y } = pos;
+					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+					game.sceneData.nomadTemplate = game.currentScene.getTemplate(game, xLoc, yLoc);
+				},
+				init: (game, sprite) => {
+					sprite.onRefresh(game, sprite);
+				},
+				index: game => {
+					const { dx, dy, scale } = game.sceneData.nomadTemplate;
+					return dy >= 2 ? -1 : 1;
+				},
+				getLocation: (game, x, y) => {
+					return [ Math.round((x-10) / 30) * 30 + 10, Math.round((y-5) / 30) * 30 + 5 ];
+				},
+				discussionTopics: [
+					game => `You are currently facing ${game.getOrientationText()}.`,
+					"That bright shiny object is the sky is Westrow's moon. You can see it by looking south.",
+					"I'm a nomad. Few people settle around here, mostly around Westrow's tavern.",
+					"You can't get inside Westrow's tavern without the password. Unfortunately I don't know it.",
+				],
+				tip: (game, sprite) => {
+					const { pos } = game;
+					const { x, y } = pos;
+					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+
+					const rand = (Math.abs(xLoc * 77 + yLoc * 1333)) % sprite.discussionTopics.length;
+					const discussion = sprite.discussionTopics[rand];
+
+					return game.evaluate(discussion, sprite);
+				},
+			},
+			{
+				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
+				scale: game => game.sceneData.treeTemplate.scale / 2,
+				offsetX: game => {
+					const { dx, dy, scale } = game.sceneData.treeTemplate;
+					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
+				},
+				offsetY: game => {
+					const { dx, dy, scale } = game.sceneData.treeTemplate;
+					return 40 - 64 * scale/2 + scale * (10 - 30);
+				},
 				onRefresh: game => {
 					const { pos } = game;
 					const { x, y } = pos;
-					game.sceneData.nomadTemplate = game.currentScene.getTemplate(game, Math.round((x-10) / 30) * 30 + 10, Math.round((y-5) / 30) * 30 + 5);
+					game.sceneData.treeTemplate = game.currentScene.getTemplate(game, Math.round((x) / 30) * 30, Math.round((y-15) / 30) * 30 + 15);
 				},
 				init: (game, sprite) => {
 					sprite.onRefresh(game);
 				},
 				index: game => {
-					const { dx, dy, scale } = game.sceneData.nomadTemplate;
-					return dy >= 2 ? -1 : 1;
+					const { dx, dy, scale } = game.sceneData.treeTemplate;
+					return dy >= 2 ? -1 : 6;
 				},
 			},
 			{
@@ -282,14 +358,14 @@ gameConfig.scenes.push(
 				onRefresh: game => {
 					const { pos } = game;
 					const { x, y } = pos;
-					game.sceneData.templeTemplate = game.currentScene.getTemplate(game, Math.round((x) / 30) * 30, Math.round((y-15) / 30) * 30 + 15);
+					game.sceneData.templeTemplate = game.currentScene.getTemplate(game, game.sceneData.finalTarget.x, game.sceneData.finalTarget.y);
 				},
 				init: (game, sprite) => {
 					sprite.onRefresh(game);
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
-					return dy >= 2 ? -1 : 6;
+					return dy >= 2 ? -1 : 2;
 				},
 			},
 			...standardMenu(),

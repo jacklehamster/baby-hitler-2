@@ -197,6 +197,7 @@ const Game = (() => {
 
 			canvas.addEventListener("mouseleave", () => {
 				this.arrow = 0;
+				this.lastMousePos = null;
 				this.mouse = null;
 				this.mouseDown = 0;
 				this.actionDown = 0;
@@ -225,26 +226,41 @@ const Game = (() => {
 
 			const self = this;
 			let touchActive = false;
-			canvas.addEventListener('touchend', function activateMotion(e) {
-				touchActive= true;
-				const { currentTarget, changedTouches } = e;
-				const [ touch ] = changedTouches;
-				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
-				self.actionClick(touch.clientX - offsetLeft,
-					touch.clientY - offsetTop,
-					offsetWidth, offsetHeight, true);
+			document.addEventListener('touchend', function activateMotion(e) {
+				touchActive = true;
+				if (e.target === canvas) {
+					const { target, changedTouches } = e;
+					const [ touch ] = changedTouches;
+					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = target;
+					self.actionClick(touch.clientX - offsetLeft,
+						touch.clientY - offsetTop,
+						offsetWidth, offsetHeight, true);
+				}
 
-				canvas.removeEventListener('touchend', activateMotion);
+				document.removeEventListener('touchend', activateMotion);
 			});
 
 			const touchCanvas = document.getElementById("touch-canvas");
 			document.addEventListener('touchend', e => {
+				if (game.data.theme && game.soundStock[game.data.theme.song]) {
+					const audio = game.soundStock[game.data.theme.song].audio;
+					if (!audio.played.length) {
+						//	play blocked song
+						audio.play();
+						console.log("Unblocking song");
+					}
+				}
 				if (!touchActive) {
 					return;
 				}
 				if (e.target != canvas && e.target != touchCanvas && !event.touches.length) {
+					if (this.mouse)
+						this.lastMousePos = this.mouse;
 					this.mouse = null;
 				}
+				this.actionDown = 0;
+				this.mouseDown = 0;
+				this.clicking = false;
 			});
 
 			canvas.addEventListener('touchmove', e => {
@@ -270,23 +286,92 @@ const Game = (() => {
 
 			canvas.addEventListener('touchend', e => e.preventDefault());
 
+
+			const touches = [];
+			touchCanvas.addEventListener("touchstart", ({changedTouches}) => {
+				Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
+					delete touches[identifier];
+				});
+				if (!this.mouse) {
+					this.mouse = this.lastMousePos ? this.lastMousePos : {
+						x: canvas.width / 2,
+						y: canvas.height / 2,
+						fromTouch: true,
+					};
+				}
+				this.lastMouseMove = this.now;
+			});
+			touchCanvas.addEventListener("touchmove", ({changedTouches})  => {
+				Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
+					if (!touches[identifier]) {
+						touches[identifier] = {
+							pageX,
+							pageY,
+						};
+					} else {
+						if (this.mouse) {
+							const diffX = (pageX - touches[identifier].pageX);
+							const diffY = (pageY - touches[identifier].pageY);
+							const dist = Math.sqrt(diffX * diffX + diffY * diffY);
+							const dx = diffX * canvas.width / canvas.offsetWidth * dist;
+							const dy = diffY * canvas.height / canvas.offsetHeight * dist;
+							this.mouse.x = Math.max(0, Math.min(canvas.width, this.mouse.x + dx));
+							this.mouse.y = Math.max(0, Math.min(canvas.height, this.mouse.y + dy));
+							this.mouse.fromTouch = true;
+							this.actionMoveMouse();
+						}
+						touches[identifier].pageX = pageX;
+						touches[identifier].pageY = pageY;
+					}
+				});
+			});
+			touchCanvas.addEventListener("click", ({changedTouches}) => {
+				if (this.mouse) {
+					this.mouse.fromTouch = true;
+					this.actionClickAtMouse();
+					this.actionDown = 0;
+					this.mouseDown = 0;
+					this.clicking = false;					
+				}
+			});
+
+
+			document.addEventListener("fullscreenchange", () => {
+				const minSize = Math.min(innerWidth, innerHeight) - 80;
+				if (!document.fullscreenElement) {
+					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
+						style.width = ``;
+						style.height = ``;
+						classList.remove("full");
+					});
+				} else {
+					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
+						style.width = `${minSize}px`;
+						style.height = `${minSize}px`;
+						classList.add("full");
+					});
+				}
+			});
+
+
 			this.createLoop(this.refresh.bind(this));
 		}
 
 		actionMove(x, y, offsetWidth, offsetHeight, fromTouch) {
-			if (this.isTouchDevice()) {
-				return;
-			}
-			if (this.now - this.lastMouseCheck < 100) {
-				this.lastMouseCheck = 0;
-			}
-			this.lastMouseMove = this.now;
 			if (!this.mouse) {
 				this.mouse = {};
 			}
 			this.mouse.x = x / offsetWidth * canvas.width;
 			this.mouse.y = y / offsetHeight * canvas.height;
 			this.mouse.fromTouch = fromTouch;
+			this.actionMoveMouse();
+		}
+
+		actionMoveMouse() {
+			if (this.now - this.lastMouseCheck < 100) {
+				this.lastMouseCheck = 0;
+			}
+			this.lastMouseMove = this.now;
 
 			if (this.pendingTip && (this.pendingTip.progress < 1 || this.pendingTip.moreText) && !this.pendingTip.removeLock || this.waitCursor || this.hideCursor) {
 				return;
@@ -296,7 +381,7 @@ const Game = (() => {
 			}
 
 			if (this.arrowGrid) {
-				this.arrow = this.getArrow(x, y, offsetWidth, offsetHeight);
+				this.arrow = this.getArrow(this.mouse.x, this.mouse.y, canvas.width, canvas.height);
 				if (this.mouseDown) {
 					this.actionDown = this.arrow;
 				}
@@ -311,6 +396,11 @@ const Game = (() => {
 			this.mouse.y = y / offsetHeight * canvas.height;
 			this.mouse.fromTouch = fromTouch;
 
+			this.actionClickAtMouse();
+		}
+
+		actionClickAtMouse() {
+			this.lastMouseMove = this.now;
 			this.lastMouseCheck = 0;
 			if (this.battle && !this.bagOpening) {
 				if (!this.blocking() && !this.battle.playerHit && !this.battle.playerBlock && this.arrow !== BAG  && !(this.battle.dummyBattle && (this.arrow===LEFT || this.arrow===RIGHT)) && !this.battle.playerLeftAttack && !this.battle.playerRightAttack) {
@@ -384,7 +474,7 @@ const Game = (() => {
 
 			if (!this.hoverSprite || this.hoverSprite.bag || this.hoverSprite.menu) {
 				if (this.arrowGrid && !this.useItem && !this.bagOpening && !game.sceneData.showStats) {
-					this.arrow = this.getArrow(x, y, offsetWidth, offsetHeight);
+					this.arrow = this.getArrow(this.mouse.x, this.mouse.y, canvas.width, canvas.height);
 					switch(this.arrow) {
 						case LEFT: {
 							if (this.onSceneRotate(this, this.arrow)) {
@@ -596,6 +686,8 @@ const Game = (() => {
 			};
 			this.setupStats();
 			this.config = null;
+			if (this.mouse)
+				this.lastMousePos = this.mouse;
 			this.mouse = null;
 			this.timeOffset = 0;
 			this.paused = false;
@@ -1039,7 +1131,7 @@ const Game = (() => {
 		}
 
 		checkMouseHover(checkClick) {
-			if (this.now - this.lastMouseCheck < 300) {
+			if (this.now - this.lastMouseCheck < 300 && !checkClick) {
 				return;
 			}
 			this.lastMouseCheck = this.now;
@@ -1048,10 +1140,9 @@ const Game = (() => {
 				let hovered = null;
 				for (let i = this.sprites.length - 1; i >= 0; i--) {
 					const sprite = this.sprites[i];
-					if ((sprite.onClick || sprite.onHover || sprite.onShot || this.evaluate(sprite.tip) || this.useItem && sprite.name || this.useItem && sprite.combine) && !this.actionDown) {
+					if ((sprite.onClick || sprite.onHover || sprite.onShot || this.evaluate(sprite.tip, sprite) || this.useItem && sprite.name || this.useItem && sprite.combine) && !this.actionDown) {
 						if (this.isMouseHover(sprite, 0, this.mouse)) {
 							if (this.mouseDown && !this.clicking) {
-								this.clicking = true;
 								if (this.useItem && !sprite.bag && !sprite.menu) {
 									const { combine, combineMessage, name, onShot } = sprite;
 									if (this.useItem === "gun" && this.gunFired) {
@@ -1074,7 +1165,7 @@ const Game = (() => {
 								} else if (sprite.onClick && checkClick) {
 									sprite.onClick(this, sprite);
 								} else if (sprite.tip) {
-									const hoveredTip = this.evaluate(sprite.tip);
+									const hoveredTip = this.evaluate(sprite.tip, sprite);
 									if (hoveredTip) {
 										const tip = this.tips[hoveredTip];
 										if (tip) {
@@ -1123,17 +1214,33 @@ const Game = (() => {
 
 		isMouseHover(sprite, outline, mouse) {
 			const { x, y } = mouse;
-			maskCtx.clearRect(0,0,maskCanvas.width, maskCanvas.height);
+			if (!this.clickCtx) {
+				this.clickCtx = document.createElement("canvas").getContext("2d");
+				this.clickCtx.canvas.width = 3;
+				this.clickCtx.canvas.height = 3;
+			}
+			const { clickCtx } = this;
+
+
+			clickCtx.clearRect(0, 0, clickCtx.canvas.width, clickCtx.canvas.height);
 
 			if (outline) {
-				maskCtx.shadowBlur = outline;
+				clickCtx.shadowBlur = outline;
 			}
-			this.displayImage(maskCtx, sprite);
+			const spriteForDisplay = { ... sprite };
+			spriteForDisplay.offsetX = (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1;
+			spriteForDisplay.offsetY = (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1;
+			this.displayImage(clickCtx, spriteForDisplay);
 			if (outline) {
-				maskCtx.shadowBlur = 0;
+				clickCtx.shadowBlur = 0;
 			}
-			const pixel = maskCtx.getImageData(Math.floor(x), Math.floor(y), 1, 1).data;
-			return pixel[3] > 0;
+			const pixels = clickCtx.getImageData(0, 0, 3, 3).data;
+			for (let i = 0; i < pixels.length; i += 4) {
+				if (pixels[i + 3] > 0) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		canTurn(direction) {
@@ -1565,7 +1672,7 @@ const Game = (() => {
 			}
 			let hoveredTip = null;
 			if (this.hoverSprite) {
-				hoveredTip = this.evaluate(this.hoverSprite.tip);
+				hoveredTip = this.evaluate(this.hoverSprite.tip, this.hoverSprite);
 				if (hoveredTip) {
 					const tip = this.tips[hoveredTip];
 					if (!tip) {
@@ -1658,7 +1765,7 @@ const Game = (() => {
 					ctx.lineTo(64, py);
 					ctx.stroke();
 				} else {
-					const tipReady = this.hoverSprite && this.evaluate(this.hoverSprite.tip);
+					const tipReady = this.hoverSprite && this.evaluate(this.hoverSprite.tip, this.hoverSprite);
 					const canClick = this.hoverSprite && this.hoverSprite.onClick && !this.evaluate(this.hoverSprite.preventClick);
 					const noHighlight = this.hoverSprite && this.evaluate(this.hoverSprite.noHighlight);
 					const canCombine = this.hoverSprite && this.useItem && (this.hoverSprite.name || this.hoverSprite.combine || this.hoverSprite.combineMessage);
@@ -1834,7 +1941,11 @@ const Game = (() => {
 					audio.volume = volume || 1;
 					audio.loop = true;
 					if (!this.mute) {
-						audio.play();
+						try {
+							audio.play();
+						} catch(e) {
+							console.log("sound blocked", e);
+						}
 					}
 				} else {
 					if (!playing) {
@@ -1844,7 +1955,11 @@ const Game = (() => {
 					soundBite.volume = volume || .5;
 					soundBite.loop = false;
 					if (!this.mute) {
-						soundBite.play();
+						try {
+							soundBite.play();
+						} catch(e) {
+							console.log("sound blocked", e);
+						}
 					}
 				}
 			} else {
@@ -1852,7 +1967,11 @@ const Game = (() => {
 					soundStock[src] = audio;
 					audio.volume = volume || 1;
 					if (!this.mute) {
-						audio.play();
+						try {
+							audio.play();
+						} catch(e) {
+							console.log("sound blocked", e);
+						}
 					}
 				})
 			}
@@ -2674,12 +2793,13 @@ const Game = (() => {
 				} else {
 					for (let i in this.inventory) {
 						const { item, image, col, row } = this.inventory[i];
-						if (this.isMouseHover({src:image, index:this.frameIndex-1, col, row}, 1, this.mouse)) {
+						if (this.isMouseHover({src:image, index:this.frameIndex-1, col, row}, 0, this.mouse)) {
 							this.useItem = item;
 							this.useItemTime = this.now;
 						}
 					}
 				}
+				this.arrow = 0;
 			}
 			this.openBag(this.now, game => {
 				this.onSceneHoldItem(game, this.useItem);
@@ -2809,8 +2929,37 @@ const Game = (() => {
 			}
 		}
 
+		checkIsBrave(callback) {
+			const timeout = setTimeout(() => {
+				request.cancel();
+				callback(false);
+			}, 3000);	
+
+
+			const request = new XMLHttpRequest()
+			request.open('GET', 'https://api.duckduckgo.com/?q=useragent&format=json', true)
+			request.addEventListener("load", e => {
+				clearTimeout(timeout);
+				callback(request.responseText.toLowerCase().indexOf("brave")>=0);
+			});
+			request.addEventListener("error", e => {
+				clearTimeout(timeout);
+				callback(false);
+			});
+			request.send();	
+		}
+
 		getSaveList() {
-			return JSON.parse(localStorage.getItem(SAVES_LOCATION) || "{}");
+			try {
+				return JSON.parse(localStorage.getItem(SAVES_LOCATION) || "{}");
+			} catch(e) {
+				this.checkIsBrave(isBrave => {
+					showError(isBrave
+						? `Game blocked. Please disable Brave's Shield Protection for this site (Next to the URL bar).<br><img style="width:133px; height:38px; margin:10px" src="assets/brave-shield.png">`
+						: "Browser not supported. Please try a different one.");
+				});
+				return {};
+			}
 		}
 
 		restart() {
@@ -2968,6 +3117,36 @@ const Game = (() => {
 
 		isTouchDevice() {
 			return this.isTouch;
+		}
+
+		getOrientationText() {
+			switch(ORIENTATIONS[Math.floor(game.rotation)]) {
+				case "N":
+					return "North";
+					break;
+				case "NE":
+					return "North East";
+					break;
+				case "E":
+					return "East";
+					break;
+				case "SE":
+					return "South East";
+					break;
+				case "S":
+					return "South";
+					break;
+				case "SW":
+					return "South West";
+					break;
+				case "W":
+					return "West";
+					break;
+				case "NW":
+					return "North West";
+					break;
+			}
+			return "Nowhere";
 		}
 	}
 

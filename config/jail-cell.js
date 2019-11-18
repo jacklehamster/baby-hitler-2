@@ -393,7 +393,7 @@ gameConfig.scenes.push(
 				src: ASSETS.WRITING, col:3, row:3,
 				index: game => (game.rotation + 8) % 8,
 				hidden: game => game.rotation === 0,
-				preventClick: game => game.rotation !== 6,
+				preventClick: game => game.rotation !== 6 && game.rotation !== 4,
 				onClick: game => game.gotoScene("birthday"),
 				tip: ({rotation, data}) => rotation === 4 || data.seen["writing"] ? null : "How long was I in this cell?",
 			},

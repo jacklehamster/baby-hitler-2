@@ -189,6 +189,16 @@ gameConfig.scenes.push(
 								msg: "Language",
 								onSelect: (game, dialog) => game.showTip("Option not yet available"),
 							},
+							{
+								msg: game => document.fullscreenElement ? "Exit Full Screen" : "Full Screen",
+								onSelect: (game, dialog) => {
+									if (document.fullscreenElement) {
+										document.exitFullscreen();
+									} else {
+										document.querySelector("#viewport").requestFullscreen();										
+									}
+								},
+							},
 							backSelection,
 						],
 					},
@@ -222,3 +232,18 @@ gameConfig.scenes.push(
 		},
 	},
 );
+
+function toggleFullScreen() {
+  var doc = window.document;
+  var docEl = doc.documentElement;
+
+  var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+  var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+  if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    requestFullScreen.call(docEl);
+  }
+  else {
+    cancelFullScreen.call(doc);
+  }
+}
