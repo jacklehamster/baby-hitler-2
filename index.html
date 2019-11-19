@@ -24,12 +24,13 @@
 		<link rel="stylesheet" type="text/css" href="game.css">
 		<link rel="manifest" href="/manifest.json">
 
+		<meta name="mobile-web-app-capable" content="yes">
 	</head>
 
 	<body style="margin: 0;">
 		<div id="viewport" style="display: flex; flex-direction: column; height: 100%">
 			<div class="game-container">
-				<canvas class="screen-view game-size flex-item crisp" id="canvas" width=64 height=64 style="background-color: black; margin: 40px; display:none"></canvas>
+				<canvas class="screen-view game-size flex-item crisp" id="canvas" width=64 height=64 style="background-color: black; display:none"></canvas>
 				<canvas class="screen-view game-size flex-item canvas-overlay rounded-screen screen-copy" id="canvas2" width=128 height=128 style="background-color: black; position: absolute;"></canvas>
 				<div id="scanline" class="screen-view game-size scanline" style="position: absolute;"></div>
 				<canvas class="screen-view game-size noise" id="noise" width=640 height=640

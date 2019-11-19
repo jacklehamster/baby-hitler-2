@@ -142,7 +142,7 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
     max-height: calc(100vh - 5%);
     width: calc(100vw - 5%);
     height: calc(100vw - 5%);
-    margin: 0;
+    margin: 0 0 0 0;
 }
 
 .touch-size {
@@ -153,6 +153,7 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 .touch-size.full {
     width: calc(100vw - 5%);
     height: calc(100vh - 100vw - 5%);
+    margin: 0;
 }
 
 #touch-canvas {
@@ -168,4 +169,7 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 	border: 40px solid #000000;
 }
 
+.round-screen.full {
+    border-width: 5%;
+}
 

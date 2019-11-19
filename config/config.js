@@ -642,7 +642,7 @@ function standardBag() {
 				}
 				if (dialog) {
 					const {options, offsetY} = dialog.conversation[dialog.index];
-					const offY = game.evaluate(offsetY) || 0;
+					const offY = game.evaluate(offsetY, dialog.conversation[dialog.index]) || 0;
 					const flag = options.filter(({hidden})=>!hidden || !game.evaluate(hidden)).length * 7 + offY > 2 * 7 || dialog.paused;
 					return flag;
 				}
@@ -858,6 +858,66 @@ function standardMenu() {
 			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot) || !game.mute,
 			alpha: ({hoverSprite}, sprite) => hoverSprite === sprite ? 1 : .5,
 			onClick: game => game.mute = false,
+			onHoverOut: (game, sprite, hovered) => { if (game.menuOpening > 0 && (!hovered || !hovered.menu_item && !hovered.menu)) game.openMenu(game.now); },
+			combine: (item, game) => {
+				game.useItem = null;
+				return true;
+			},
+		},
+		{
+			menu_item: true,
+			name: "options",
+			src: ASSETS.MENU_OPTIONS,
+			index: game => game.frameIndex,
+			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot),
+			alpha: ({hoverSprite}, sprite) => hoverSprite === sprite ? 1 : .5,
+			onClick: game => {
+				game.openMenu(game.now);
+				game.startDialog({
+					time: game.now,
+					index: 0,
+					highlightColor: "#00998899",
+					conversation: [
+						{
+							offsetY: (game, {options}) => (options.length - 3) * -7,
+							options: [
+								{
+									msg: game => `Sound ~${!game.mute?"ON":"OFF"}`,
+									onSelect: (game, dialog) => {
+										game.mute = !game.mute;
+									},
+								},
+								{
+									msg: () => `Retro mode ~${scanlines[0].checked?"ON":"OFF"}`,
+									onSelect: (game, dialog) => {
+										toggleScanlines();
+									}
+								},
+								{
+									msg: "Language",
+									onSelect: (game, dialog) => {
+										game.showTip("Option not yet available");
+										game.dialog = null;
+									}
+								},
+								{
+									msg: game => document.fullscreenElement ? "Exit Full Screen" : "Full Screen",
+									onSelect: (game, dialog) => {
+										game.toggleFullScreen();
+										game.dialog = null;
+									},
+								},
+								{
+									msg: "Close",
+									onSelect: (game, dialog) => game.dialog = null,
+								},								
+							],
+						}
+					],
+				});
+
+				return true;
+			},
 			onHoverOut: (game, sprite, hovered) => { if (game.menuOpening > 0 && (!hovered || !hovered.menu_item && !hovered.menu)) game.openMenu(game.now); },
 			combine: (item, game) => {
 				game.useItem = null;

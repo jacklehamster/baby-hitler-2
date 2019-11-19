@@ -135,19 +135,6 @@ const Game = (() => {
 			return this.inventory[item] ? this.inventory[item].count || 1 : 0;
 		}
 
-		// set sceneIndex(index) {
-		// 	if (index !== this.sceneIndex) {
-		// 		this.data.scene = {
-		// 			index,
-		// 		};
-		// 		console.log("SCENE", this.data.scene);
-		// 	}
-		// }
-
-		// get sceneIndex() {
-		// 	return this.data.scene ? this.data.scene.index || 0 : 0;
-		// }
-
 		set sceneName(name) {
 			if (name !== this.sceneName) {
 				this.data.scene = {
@@ -228,6 +215,13 @@ const Game = (() => {
 			let touchActive = false;
 
 			//	FIRST TIME SONG ACTIVATION
+			// document.addEventListener('touchend', function makeFull(e) {
+			// 	touchActive = true;
+			// 	self.toggleFullScreen(true);
+			// 	e.preventDefault();
+			// 	document.removeEventListener('touchend', makeFull);
+			// });
+
 			document.addEventListener('touchend', function activateMotion(e) {
 				touchActive = true;
 				if (e.target === canvas) {
@@ -236,7 +230,6 @@ const Game = (() => {
 					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = target;
 					self.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
 				}
-
 				document.removeEventListener('touchend', activateMotion);
 			});
 
@@ -1060,7 +1053,6 @@ const Game = (() => {
 							}
 							action.active = false;
 						}
-						console.log("ROTATION", this.rotation);			
 						break;
 					}
 					case "fadeOut": {
@@ -1237,13 +1229,17 @@ const Game = (() => {
 			if (outline) {
 				clickCtx.shadowBlur = outline;
 			}
-			const spriteForDisplay = { ... sprite };
-			spriteForDisplay.offsetX = (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1;
-			spriteForDisplay.offsetY = (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1;
-			this.displayImage(clickCtx, spriteForDisplay);
+			const shift = {
+				offsetX: (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1,
+				offsetY: (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1,
+			};
+			console.log(shift);
+			clickCtx.translate(shift.offsetX, shift.offsetY);
+			this.displayImage(clickCtx, sprite);
 			if (outline) {
 				clickCtx.shadowBlur = 0;
 			}
+			clickCtx.resetTransform();
 			const pixels = clickCtx.getImageData(0, 0, 3, 3).data;
 			for (let i = 0; i < pixels.length; i += 4) {
 				if (pixels[i + 3] > 0) {
@@ -1677,7 +1673,7 @@ const Game = (() => {
 				}
 				return;
 			}
-			if (this.hideCursor || this.waitCursor || this.sceneIntro || this.useItem || this.pickedUp) {
+			if (this.hideCursor || this.waitCursor || this.sceneIntro || this.useItem || this.pickedUp || this.dialog && !this.dialog.paused) {
 				return;
 			}
 			let hoveredTip = null;
@@ -3159,9 +3155,11 @@ const Game = (() => {
 			return "Nowhere";
 		}
 
-		toggleFullScreen() {
+		toggleFullScreen(forceFull) {
 			if (document.fullscreenElement) {
-				document.exitFullscreen();
+				if (!forceFull) {
+					document.exitFullscreen();
+				}
 			} else {
 				document.body.requestFullscreen();
 //				document.querySelector("#viewport").requestFullscreen();										
