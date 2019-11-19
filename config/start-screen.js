@@ -192,11 +192,7 @@ gameConfig.scenes.push(
 							{
 								msg: game => document.fullscreenElement ? "Exit Full Screen" : "Full Screen",
 								onSelect: (game, dialog) => {
-									if (document.fullscreenElement) {
-										document.exitFullscreen();
-									} else {
-										document.querySelector("#viewport").requestFullscreen();										
-									}
+									game.toggleFullScreen();
 								},
 							},
 							backSelection,

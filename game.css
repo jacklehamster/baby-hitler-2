@@ -130,11 +130,6 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
     height: 512px;
 }
 
-.game-size.full {
-    max-width: calc(100vw - 80px);
-    max-height: calc(100vh - 80px);
-}
-
 .game-size.touched {
     max-width: calc(100vw - 80px);
     max-height: calc(100vh - 80px);
@@ -142,9 +137,22 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
     height: calc(100vw - 80px);
 }
 
+.game-size.full {
+    max-width: calc(100vw - 5%);
+    max-height: calc(100vh - 5%);
+    width: calc(100vw - 5%);
+    height: calc(100vw - 5%);
+    margin: 0;
+}
+
 .touch-size {
     width: calc(100vw - 80px);
     height: calc(100vh - 100vw - 80px);
+}
+
+.touch-size.full {
+    width: calc(100vw - 5%);
+    height: calc(100vh - 100vw - 5%);
 }
 
 #touch-canvas {

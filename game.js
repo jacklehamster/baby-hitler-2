@@ -340,8 +340,14 @@ const Game = (() => {
 			//	END CURSOR MODE
 			///////////////////////////////////
 
+
+			document.addEventListener('fullscreenerror', (event) => {
+			  	console.error('an error occurred changing into fullscreen', event);
+			});
 			document.addEventListener("fullscreenchange", () => {
-				const minSize = Math.min(innerWidth, innerHeight) - 80;
+				const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+				const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);				
+				const minSize = Math.min(w, h);
 				if (!document.fullscreenElement) {
 					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
 						style.width = ``;
@@ -3151,6 +3157,15 @@ const Game = (() => {
 					break;
 			}
 			return "Nowhere";
+		}
+
+		toggleFullScreen() {
+			if (document.fullscreenElement) {
+				document.exitFullscreen();
+			} else {
+				document.body.requestFullscreen();
+//				document.querySelector("#viewport").requestFullscreen();										
+			}			
 		}
 	}
 

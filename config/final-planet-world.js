@@ -18,44 +18,45 @@ gameConfig.scenes.push(
 		},
 		onSceneRefresh: game => {
 			if (game.mouseDown) {
-				const { mouse } = game;
-				const mx = mouse.x - 32;
-				const my = mouse.y - 40;
-				game.rotation -= mx * .002;
-				game.rotation = (game.rotation + 8) % 8;
+				if (game.dialog === null && (!game.hoverSprite || !game.hoverSprite.blockMove)) {
+					const { mouse } = game;
+					const mx = mouse.x - 32;
+					const my = mouse.y - 40;
+					game.rotation -= mx * .002;
+					game.rotation = (game.rotation + 8) % 8;
 
-				const angle = game.rotation / 8 * Math.PI * 2;
-				const rx = Math.cos(angle), ry = Math.sin(angle);
+					const angle = game.rotation / 8 * Math.PI * 2;
+					const rx = Math.cos(angle), ry = Math.sin(angle);
 
-				const mov = my * .002;
-				game.pos.x += mov * ry;
-				game.pos.y += -mov * rx;
-
-			}
-
-			if (game.arrow && game.mouseDown) {
-				const angle = game.rotation / 8 * Math.PI * 2;
-				const rx = Math.cos(angle), ry = Math.sin(angle);
-
-				switch(game.arrow) {
-					case FORWARD:
-						game.pos.x -= .05 * ry;
-						game.pos.y -= -.05 * rx;
-						break;
-					case BACKWARD:
-						game.pos.x += .05 * ry;
-						game.pos.y += -.05 * rx;
-						break;
-					case LEFT:
-						game.rotation += .05;
-						game.rotation = (game.rotation + 8) % 8;
-						break;
-					case RIGHT:
-						game.rotation -= .05;
-						game.rotation = (game.rotation + 8) % 8;
-						break;
+					const mov = my * .002;
+					game.pos.x += mov * ry;
+					game.pos.y += -mov * rx;
 				}
 			}
+
+			// if (game.arrow && game.mouseDown) {
+			// 	const angle = game.rotation / 8 * Math.PI * 2;
+			// 	const rx = Math.cos(angle), ry = Math.sin(angle);
+
+			// 	switch(game.arrow) {
+			// 		case FORWARD:
+			// 			game.pos.x -= .05 * ry;
+			// 			game.pos.y -= -.05 * rx;
+			// 			break;
+			// 		case BACKWARD:
+			// 			game.pos.x += .05 * ry;
+			// 			game.pos.y += -.05 * rx;
+			// 			break;
+			// 		case LEFT:
+			// 			game.rotation += .05;
+			// 			game.rotation = (game.rotation + 8) % 8;
+			// 			break;
+			// 		case RIGHT:
+			// 			game.rotation -= .05;
+			// 			game.rotation = (game.rotation + 8) % 8;
+			// 			break;
+			// 	}
+			// }
 		},
 		onSceneForward: game => {
 			return true;
@@ -281,11 +282,11 @@ gameConfig.scenes.push(
 				scale: game => game.sceneData.nomadTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
-					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
+					return 32 - 64 * scale / 2 + scale * dx * 10 * 5;
 				},
 				offsetY: game => {
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
-					return 40 - 64 * scale/2 + scale * (10 - 30);
+					return 40 - 64 * scale / 2 + scale * (10 - 30);
 				},
 				onRefresh: (game, sprite) => {
 					const { pos } = game;
@@ -295,29 +296,148 @@ gameConfig.scenes.push(
 				},
 				init: (game, sprite) => {
 					sprite.onRefresh(game, sprite);
+					if (!game.situation.talkedAbout) {
+						game.situation.talkedAbout = {};
+					}
+					if (!game.sceneData.seenNomad) {
+						game.sceneData.seenNomad = {};
+					}
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
 					return dy >= 2 ? -1 : 1;
 				},
 				getLocation: (game, x, y) => {
-					return [ Math.round((x-10) / 30) * 30 + 10, Math.round((y-5) / 30) * 30 + 5 ];
+					return [ Math.round((x-10) / 23) * 23 + 10, Math.round((y-5) / 23) * 23 + 5 ];
 				},
-				discussionTopics: [
-					game => `You are currently facing ${game.getOrientationText()}.`,
-					"That bright shiny object is the sky is Westrow's moon. You can see it by looking south.",
-					"I'm a nomad. Few people settle around here, mostly around Westrow's tavern.",
-					"You can't get inside Westrow's tavern without the password. Unfortunately I don't know it.",
-				],
-				tip: (game, sprite) => {
+				hidden: (game, sprite) => {
 					const { pos } = game;
 					const { x, y } = pos;
 					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
-
-					const rand = (Math.abs(xLoc * 77 + yLoc * 1333)) % sprite.discussionTopics.length;
-					const discussion = sprite.discussionTopics[rand];
-
-					return game.evaluate(discussion, sprite);
+					return game.sceneData.seenNomad[`${xLoc}_${yLoc}`];
+				},
+				onClick: (game, sprite) => {
+					game.pendingTip = null;
+					game.startDialog({
+						time: game.now,
+						index: 0,
+						conversation: [
+							{
+								options: [
+									{
+										msg: "Ask direction",
+										onSelect: game => {
+											game.showTip(`You are currently facing ${game.getOrientationText()}.`, null, null, {removeLock:true});
+											game.dialog = null;
+										},
+									},
+									{
+										msg: "Ask info",
+										onSelect: game => {
+											game.dialog.index ++;
+										}
+									},
+									{
+										msg: "LEAVE", onSelect: game => {
+											game.dialog = null;
+										}
+									},
+								],
+							},
+							{
+								options: [
+									{
+										msg: "The moon...",
+										onSelect: game => {
+											game.showTip([
+													"That bright shiny object is the sky is Westrow's moon.",
+													"You can see it by looking south.",
+												], game => {
+													const { pos } = game;
+													const { x, y } = pos;
+													const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+													game.sceneData.seenNomad[`${xLoc}_${yLoc}`] = game.now;
+												}, null, {removeLock:true}
+											);
+											game.dialog = null;
+										},
+									},
+									{
+										msg: "Nomads...",
+										hidden: game => game.situation.talkedAbout.tavern,
+										onSelect: game => {
+											game.showTip([
+													"That bright shiny object is the sky is Westrow's moon.",
+													"You can see it by looking south.",
+												], game => {
+													const { pos } = game;
+													const { x, y } = pos;
+													const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+													game.sceneData.seenNomad[`${xLoc}_${yLoc}`] = game.now;
+													game.situation.talkedAbout.tavern = game.now;
+												}, null, {removeLock:true}
+											);
+											game.dialog = null;
+										},
+									},
+									{
+										msg: "The Tavern...",
+										hidden: game => !game.situation.talkedAbout.tavern || game.situation.talkedAbout.password,
+										onSelect: game => {
+											game.showTip([
+													"You can't get inside Westrow's tavern without the password.",
+													"Unfortunately I don't know it.",
+												], game => {
+													const { pos } = game;
+													const { x, y } = pos;
+													const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+													game.sceneData.seenNomad[`${xLoc}_${yLoc}`] = game.now;
+													game.situation.talkedAbout.password = game.now;
+												}, null, {removeLock:true}
+											);
+											game.dialog = null;
+										},
+									},
+									{
+										msg: "Tavern Password",
+										hidden: game => !game.situation.talkedAbout.password || game.situation.talkedAbout.blackCloth,
+										onSelect: game => {
+											game.showTip([
+													"I don't know the password.",
+													"I think one of the nomad does though.",
+													"He likes to dress in a pitch black cloth.",
+												], game => {
+													const { pos } = game;
+													const { x, y } = pos;
+													const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+													game.sceneData.seenNomad[`${xLoc}_${yLoc}`] = game.now;
+													game.situation.talkedAbout.blackCloth = game.now;
+												}, null, {removeLock:true}
+											);
+											game.dialog = null;
+										},
+									},
+									{
+										msg: "Black cloth nomad",
+										hidden: game => !game.situation.talkedAbout.blackCloth,
+										onSelect: game => {
+											game.showTip([
+													`I think I've seen him, near the tavern.`,
+													"I think he lives near the east",
+												], game => {
+													const { pos } = game;
+													const { x, y } = pos;
+													const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+													game.sceneData.seenNomad[`${xLoc}_${yLoc}`] = game.now;
+												}, null, {removeLock:true}
+											);
+											game.dialog = null;
+										},										
+									},
+								],
+							},
+						],
+					});
 				},
 			},
 			{
