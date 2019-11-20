@@ -12,7 +12,7 @@ gameConfig.scenes.push(
 					custom: ({sceneData}, {index}, ctx) => {
 						if (sceneData.loadSave) {
 							const { img } = sceneData.loadSave[index];
-							ctx.drawImage(img, 2 + index % 2 * 32, 2 + Math.floor(index / 2) * 32);
+							ctx.drawImage(img, 2 + index % 2 * 32, 0 + Math.floor(index / 2) * 32);
 						}
 					},
 					hidden: ({sceneData}, sprite) => !sceneData.loadSave || !sceneData.loadSave[sprite.index],
@@ -25,7 +25,7 @@ gameConfig.scenes.push(
 					custom: ({sceneData}, {index, hoverTime}, ctx) => {
 						if (sceneData.loadSave) {
 							const left = 2 + index % 2 * 32;
-							const top = 2 + Math.floor(index / 2) * 32;
+							const top = 0 + Math.floor(index / 2) * 32;
 							const width = 28, height = 28;
 							const x = left + width/2 - 6;
 							const y = top + height / 2 - 8;
@@ -42,7 +42,7 @@ gameConfig.scenes.push(
 						const {sceneData} = game;
 						game.load(index);
 					},
-					hidden: ({sceneData}, sprite) => !sceneData.loadSave || !sceneData.loadSave[sprite.index],
+					hidden: ({sceneData}, {index}) => !sceneData.loadSave || !sceneData.loadSave[index] || sceneData.currentSaves[index],
 				};
 			})),
 			... (new Array(4).fill(null).map((a, index) => {
@@ -52,7 +52,7 @@ gameConfig.scenes.push(
 					custom: ({sceneData}, {index, hoverTime}, ctx) => {
 						if (sceneData.loadSave) {
 							const left = 2 + index % 2 * 32;
-							const top = 2 + Math.floor(index / 2) * 32;
+							const top = 0 + Math.floor(index / 2) * 32;
 							const width = 28, height = 28;
 							const x = left + width/2 - 10;
 							const y = top + height / 2 + 6;
@@ -66,12 +66,13 @@ gameConfig.scenes.push(
 						}
 					},
 					onClick: (game, {index}) => {
-						const returnScene = game.sceneData.returnScene;
-						const screenshot = game.sceneData.screenshot;
+						if (!game.sceneData.currentSaves[index]) {
+							game.sceneData.undoes[index] = game.getLoadData(index);
+						} else {
+							delete game.sceneData.currentSaves[index];
+						}
 						game.deleteSave(index);
-						game.gotoScene("disk-screen");
-						game.sceneData.returnScene = returnScene;
-						game.sceneData.screenshot = screenshot;
+						game.currentScene.refreshImages(game);
 					},
 					hidden: ({sceneData}, sprite) => !sceneData.loadSave || !sceneData.loadSave[sprite.index],
 				};
@@ -82,14 +83,14 @@ gameConfig.scenes.push(
 					isSaveFile: true,
 					custom: ({sceneData}, {index, hoverTime}, ctx) => {
 						const left = 2 + index % 2 * 32;
-						const top = 2 + Math.floor(index / 2) * 32;
+						const top = 0 + Math.floor(index / 2) * 32;
 						const width = 28, height = 28;
 						const x = left + width/2 - 5;
 						const y = top + height / 2 - 3;
 						ctx.beginPath();
 						ctx.lineWidth = "3px"
 						ctx.strokeStyle = "#334444";
-						ctx.rect(3 + index % 2 * 32 + 1, 3 + Math.floor(index / 2) * 32 + 1, 24, 24);
+						ctx.rect(2 + left, 2 + top, 24, 24);
 						ctx.stroke();
 					},
 					hidden: ({sceneData}, sprite) => !sceneData.loadSave || sceneData.loadSave[sprite.index],
@@ -101,10 +102,31 @@ gameConfig.scenes.push(
 					isSaveFile: true,
 					custom: ({sceneData}, {index, hoverTime}, ctx) => {
 						const left = 2 + index % 2 * 32;
-						const top = 2 + Math.floor(index / 2) * 32;
+						const top = 0 + Math.floor(index / 2) * 32;
+						const width = 28, height = 28;
+						const x = left + 1;
+						const y = top + 1;
+						ctx.beginPath();
+						ctx.lineWidth = "4px"
+						ctx.strokeStyle = "#88FF99";
+						ctx.rect(x, y, 26, 26);
+						ctx.stroke();
+					},
+					hidden: ({sceneData}, sprite) => !sceneData.currentSaves || !sceneData.currentSaves[sprite.index],
+				};
+			})),
+			... (new Array(4).fill(null).map((a, index) => {
+				return {
+					index,
+					isSaveFile: true,
+					custom: ({sceneData}, {index, hoverTime}, ctx) => {
+						const hasUndo = sceneData.undoes[index];
+
+						const left = 2 + index % 2 * 32;
+						const top = 0 + Math.floor(index / 2) * 32;
 						const width = 28, height = 28;
 						const x = left + width/2 - 7;
-						const y = top + height / 2 - 3;
+						const y = top + height / 2 - (hasUndo ? 8 : 3);
 
 						ctx.fillStyle = hoverTime ? "#88cc88" : "#008800bb";
 						ctx.fillRect(x-1, y-1, 16, 7);
@@ -114,14 +136,47 @@ gameConfig.scenes.push(
 						});
 					},
 					onClick: (game, {index}) => {
+						delete game.sceneData.undoes[index];
+						const savedData = game.sceneData.savedData;
 						const screenshot = game.sceneData.screenshot;
-						game.gotoScene(game.sceneData.returnScene, null, true);
-						game.save(index, screenshot);
+						game.saveData(index, screenshot, savedData);
+						game.sceneData.currentSaves[index] = true;
+						game.currentScene.refreshImages(game);
 					},
 					hidden: ({sceneData}, sprite) => !sceneData.loadSave || sceneData.loadSave[sprite.index],
 				};
-			})),		],
-		onScene: game => {
+			})),
+			... (new Array(4).fill(null).map((a, index) => {
+				return {
+					index,
+					isSaveFile: true,
+					custom: ({sceneData}, {index, hoverTime}, ctx) => {
+						if (sceneData.loadSave) {
+							const left = 2 + index % 2 * 32;
+							const top = 0 + Math.floor(index / 2) * 32;
+							const width = 28, height = 28;
+							const x = left + width/2 - 7;
+							const y = top + height / 2 + 4;
+
+							ctx.fillStyle = hoverTime ? "#cc88bb" : "#880066bb";
+							ctx.fillRect(x-1, y-1, 17, 7);
+							game.displayTextLine(ctx, {
+								msg: "undo",
+								x, y,
+							});
+						}
+					},
+					onClick: (game, {index}) => {
+						const undo = game.sceneData.undoes[index];
+						game.saveData(index, null, undo);
+						delete game.sceneData.undoes[index];
+						game.currentScene.refreshImages(game);
+					},
+					hidden: ({sceneData}, sprite) => !sceneData.undoes || !sceneData.undoes[sprite.index],
+				};
+			})),
+		],
+		refreshImages: game => {
 			const list = game.getSaveList();
 			game.sceneData.loadSave = {};
 			for (let name in list) {
@@ -132,6 +187,12 @@ gameConfig.scenes.push(
 					game.sceneData.loadSave[name] = { img, name, };
 				}
 			}
+		},
+		onScene: game => {
+			game.sceneData.currentSaves = {};
+			game.sceneData.undoes = {};
+
+			game.currentScene.refreshImages(game);
 
 			game.startDialog({
 				time: game.now,

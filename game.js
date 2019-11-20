@@ -14,6 +14,9 @@ const Game = (() => {
 	tempCanvas.height = canvas.height;
 	tempCtx = tempCanvas.getContext("2d");
 
+	const touchCanvas = document.getElementById("touch-canvas");
+	const touchCtx = touchCanvas.getContext("2d");
+
 	const letterCanvas = document.createElement("canvas");
 	letterCanvas.width = canvas.width;
 	letterCanvas.height = canvas.height;
@@ -212,7 +215,7 @@ const Game = (() => {
 			});
 
 			const self = this;
-			let touchActive = false;
+			this.touchActive = false;
 
 			//	FIRST TIME SONG ACTIVATION
 			// document.addEventListener('touchend', function makeFull(e) {
@@ -223,7 +226,7 @@ const Game = (() => {
 			// });
 
 			document.addEventListener('touchend', function activateMotion(e) {
-				touchActive = true;
+				self.touchActive = true;
 				if (e.target === canvas) {
 					const { target, changedTouches } = e;
 					const [ touch ] = changedTouches;
@@ -250,7 +253,7 @@ const Game = (() => {
 			////////////////////////////////
 			//	CURSOR MODE
 			document.addEventListener('touchend', e => {
-				if (!touchActive) {
+				if (!this.touchActive) {
 					return;
 				}
 				if (e.target != canvas && e.target != touchCanvas && !event.touches.length) {
@@ -271,7 +274,7 @@ const Game = (() => {
 			});
 
 			canvas.addEventListener('touchstart', e => {
-				if (!touchActive) {
+				if (!this.touchActive) {
 					return;
 				}
 				const { currentTarget, changedTouches } = e;
@@ -297,6 +300,7 @@ const Game = (() => {
 				}
 				this.lastMouseMove = this.now;
 			});
+
 			touchCanvas.addEventListener("touchmove", ({changedTouches})  => {
 				Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
 					if (!touches[identifier]) {
@@ -321,6 +325,7 @@ const Game = (() => {
 					}
 				});
 			});
+
 			touchCanvas.addEventListener("click", ({changedTouches}) => {
 				if (this.mouse) {
 					this.mouse.fromTouch = true;
@@ -762,6 +767,7 @@ const Game = (() => {
 			this.customCursor = null;
 			this.chest = null;
 			this.moving = 0;
+			this.turning = 0;
 		}
 
 		markPickedUp(item) {
@@ -1047,11 +1053,15 @@ const Game = (() => {
 								throw new Error("invalid direction");
 							}
 							this.rotation = (action.rotation + dr * (frame + 1) + 8) % 8;
+							if (!this.turning) {
+								this.turning = this.now;
+							}
 						} else {
 							if (onDone) {
 								onDone(this, action);
 							}
 							action.active = false;
+							this.turning = 0;
 						}
 						break;
 					}
@@ -1229,12 +1239,9 @@ const Game = (() => {
 			if (outline) {
 				clickCtx.shadowBlur = outline;
 			}
-			const shift = {
-				offsetX: (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1,
-				offsetY: (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1,
-			};
-			console.log(shift);
-			clickCtx.translate(shift.offsetX, shift.offsetY);
+			const shiftX = (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1;
+			const shiftY = (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1;
+			clickCtx.translate(shiftX, shiftY);
 			this.displayImage(clickCtx, sprite);
 			if (outline) {
 				clickCtx.shadowBlur = 0;
@@ -1250,6 +1257,9 @@ const Game = (() => {
 		}
 
 		canTurn(direction) {
+			if (!this.arrowGrid) {
+				return false;
+			}
 			if (this.dialog) {
 				return false;
 			}
@@ -1259,6 +1269,9 @@ const Game = (() => {
 		canMove({x, y}, direction) {
 			if (this.sceneData.freeFormMove) {
 				return true;
+			}
+			if (!this.arrowGrid) {
+				return false;
 			}
 			if (!this.map) {
 				return false;
@@ -2368,6 +2381,7 @@ const Game = (() => {
 				this.displayCursor();
 				this.displayTips();
 				this.displayInventoryTips();
+				this.displayTouchscreen();
 				this.cleanupData();
 			}
 			if (this.refreshCallback) {
@@ -2789,6 +2803,40 @@ const Game = (() => {
 			}
 		}
 
+		displayTouchscreen() {
+			if (this.touchActive) {
+				touchCtx.clearRect(0, 0, 64, 32);
+				if (this.canTurn("left")) {
+					this.displayImage(touchCtx, {
+						src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
+						index: game => game.turning ? 1 : 0,
+						side: LEFT,
+					});
+				}
+				if (this.canTurn("right")) {
+					this.displayImage(touchCtx, {
+						src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
+						index: game => game.turning ? 1 : 0,
+						side: RIGHT,
+					});
+				}
+				if (this.pos) {
+					if (this.canMove(this.pos, 1)) {
+						this.displayImage(touchCtx, {
+							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
+							index: game => 2 + (game.moving ? 1 : 0),
+						});
+					}
+					if (this.canMove(this.pos, -1)) {
+						this.displayImage(touchCtx, {
+							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
+							index: game => 4 + (game.moving ? 1 : 0),
+						});
+					}
+				}
+			}
+		}
+
 		clickBag() {
 			if (this.emptyBag()) {
 				return;
@@ -2853,13 +2901,17 @@ const Game = (() => {
 		}
 
 		save(name, image) {
+			this.saveData(name, image, this.data);
+		}
+
+		saveData(name, image, data) {
 			if (typeof(name)==='undefined') {
 				name = LAST_CONTINUE;
 			}
 			const saves = JSON.parse(localStorage.getItem(SAVES_LOCATION) || "{}");
-			saves[name] = JSON.parse(JSON.stringify(this.data));
-			saves[name].image = image || this.screenshot();
-			localStorage.setItem("saves", JSON.stringify(saves));
+			saves[name] = JSON.parse(JSON.stringify(data));
+			saves[name].image = image || data.image || this.screenshot();
+			localStorage.setItem("saves", JSON.stringify(saves));			
 		}
 
 		deleteSave(name) {
@@ -2870,14 +2922,18 @@ const Game = (() => {
 			}
 		}
 
-		load(name) {
+		getLoadData(name) {
 			if (typeof(name)==='undefined') {
 				name = LAST_CONTINUE;
 			}
+			const saves = JSON.parse(localStorage.getItem(SAVES_LOCATION) || "{}");
+			return saves[name];			
+		}
+
+		load(name) {
 			this.playTheme(null);
 			const triedAgain = this.data.gameOver;
-			const saves = JSON.parse(localStorage.getItem(SAVES_LOCATION) || "{}");
-			this.data = saves[name];
+			this.data = this.getLoadData(name);
 			this.setupStats();
 			if (triedAgain) {
 				this.data.stats.life = Math.max(this.data.stats.maxLife / 2, this.data.stats.life)

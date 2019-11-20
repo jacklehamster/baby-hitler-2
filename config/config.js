@@ -825,7 +825,9 @@ function standardMenu() {
 				game.openMenu(game.now, game => {
 					const currentSceneName = game.sceneName;
 					const currentScreenshot = game.screenshot();
+					const currentData = JSON.parse(JSON.stringify(game.data));
 					game.gotoScene("disk-screen");
+					game.sceneData.savedData = currentData;
 					game.sceneData.returnScene = currentSceneName;
 					game.sceneData.screenshot = currentScreenshot;
 				});
