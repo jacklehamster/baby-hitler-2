@@ -136,7 +136,7 @@ gameConfig.scenes.push(
 				},
 				custom: (game, sprite, ctx) => {
 					ctx.fillStyle = "#000022";
-					ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+					ctx.fillRect(0, 0, 64, 64);
 					ctx.fillStyle = "#FFFFFF";
 					const { sceneData } = game;
 					sceneData.stars.forEach(({x, y, size}) => {

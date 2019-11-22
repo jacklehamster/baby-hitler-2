@@ -352,14 +352,27 @@ const Game = (() => {
 						style.height = ``;
 						classList.remove("full");
 					});
+					document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
+						classList.remove("full");
+					});
 				} else {
 					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
 						style.width = `${minSize}px`;
 						style.height = `${minSize}px`;
 						classList.add("full");
 					});
+					document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
+						classList.add("full");
+					});
 				}
 			});
+
+
+			window.oncontextmenu = function(event) {
+			     event.preventDefault();
+			     event.stopPropagation();
+			     return false;
+			};
 
 
 			this.createLoop(this.refresh.bind(this));
@@ -599,6 +612,19 @@ const Game = (() => {
 			this.loadScene(this.config.scenes[index], restoreMapInfo);
 		}
 
+		checkMotionAvailable() {
+			this.motionAvailable = false;
+			if (this.arrowGrid) {
+				this.arrowGrid.forEach(line => {
+					line.forEach(cell => {
+						if (cell && cell !== BAG && cell !== MENU) {
+							this.motionAvailable = true;
+						}
+					});
+				});
+			}
+		}
+
 		get currentScene() {
 			if (typeof (this.sceneByName[this.sceneName]) != 'undefined') {
 				return this.sceneByName[this.sceneName];
@@ -705,6 +731,10 @@ const Game = (() => {
 			this.lastMouseCheck = 0;
 			this.lastMouseMove = 0;
 			this.sceneByName = {};
+			
+			this.clickCtx = document.createElement("canvas").getContext("2d");
+			this.clickCtx.canvas.width = 3;
+			this.clickCtx.canvas.height = 3;
 
 			this.prepareAssets();
 			this.prepareSounds();
@@ -1152,7 +1182,7 @@ const Game = (() => {
 				let hovered = null;
 				for (let i = this.sprites.length - 1; i >= 0; i--) {
 					const sprite = this.sprites[i];
-					if ((sprite.onClick || sprite.onHover || sprite.onShot || this.evaluate(sprite.tip, sprite) || this.useItem && sprite.name || this.useItem && sprite.combine) && !this.actionDown) {
+					if ((sprite.onClick || sprite.onHover || sprite.onShot || this.evaluate(sprite.tip, sprite) || this.useItem && sprite.name || this.useItem && sprite.combine) && !this.actionDown && !this.evaluate(sprite.blockMouse, sprite)) {
 						if (this.isMouseHover(sprite, 0, this.mouse)) {
 							if (this.mouseDown && !this.clicking) {
 								if (this.useItem && !sprite.bag && !sprite.menu) {
@@ -1216,8 +1246,10 @@ const Game = (() => {
 		checkUseItem() {
 			if (this.mouseDown && !this.actionDown && !this.clicking) {
 				this.clicking = true;
-				if (this.useItem === "gun" && this.gunFiredWithin(100)) {
-					this.onSceneShot(this, this.useItem);
+				if (this.useItem === "gun") {
+					if (this.gunFiredWithin(100)) {
+						this.onSceneShot(this, this.useItem);
+					}
 				} else if (this.useItem) {
 					this.onSceneUseItem(this, this.useItem);
 				}
@@ -1225,15 +1257,12 @@ const Game = (() => {
 		}
 
 		isMouseHover(sprite, outline, mouse) {
-			const { x, y } = mouse;
-			if (!this.clickCtx) {
-				this.clickCtx = document.createElement("canvas").getContext("2d");
-				this.clickCtx.canvas.width = 3;
-				this.clickCtx.canvas.height = 3;
+			if (this.evaluate(sprite.hidden, sprite)) {
+				return false;
 			}
+			const { x, y } = mouse;
+
 			const { clickCtx } = this;
-
-
 			clickCtx.clearRect(0, 0, clickCtx.canvas.width, clickCtx.canvas.height);
 
 			if (outline) {
@@ -1257,7 +1286,7 @@ const Game = (() => {
 		}
 
 		canTurn(direction) {
-			if (!this.arrowGrid) {
+			if (!this.motionAvailable) {
 				return false;
 			}
 			if (this.dialog) {
@@ -1270,7 +1299,7 @@ const Game = (() => {
 			if (this.sceneData.freeFormMove) {
 				return true;
 			}
-			if (!this.arrowGrid) {
+			if (!this.motionAvailable) {
 				return false;
 			}
 			if (!this.map) {
@@ -2257,6 +2286,8 @@ const Game = (() => {
 			this.onScenePunch = onScenePunch || nop;
 			this.onSceneRotate = onSceneRotate || nop;
 			this.customCursor = customCursor;
+
+			this.checkMotionAvailable();
 		}
 
 		get now() {
@@ -2806,32 +2837,34 @@ const Game = (() => {
 		displayTouchscreen() {
 			if (this.touchActive) {
 				touchCtx.clearRect(0, 0, 64, 32);
-				if (this.canTurn("left")) {
-					this.displayImage(touchCtx, {
-						src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
-						index: game => game.turning ? 1 : 0,
-						side: LEFT,
-					});
-				}
-				if (this.canTurn("right")) {
-					this.displayImage(touchCtx, {
-						src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
-						index: game => game.turning ? 1 : 0,
-						side: RIGHT,
-					});
-				}
-				if (this.pos) {
-					if (this.canMove(this.pos, 1)) {
+				if (!this.hideCursor && !this.waitCursor) {
+					if (this.canTurn("left")) {
 						this.displayImage(touchCtx, {
-							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
-							index: game => 2 + (game.moving ? 1 : 0),
+							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+							index: game => game.turning ? 1 : 0,
+							side: LEFT,
 						});
 					}
-					if (this.canMove(this.pos, -1)) {
+					if (this.canTurn("right")) {
 						this.displayImage(touchCtx, {
-							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3,
-							index: game => 4 + (game.moving ? 1 : 0),
+							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+							index: game => game.turning ? 1 : 0,
+							side: RIGHT,
 						});
+					}
+					if (this.pos) {
+						if (this.canMove(this.pos, 1)) {
+							this.displayImage(touchCtx, {
+								src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+								index: game => 2 + (game.moving ? 1 : 0),
+							});
+						}
+						if (this.canMove(this.pos, -1)) {
+							this.displayImage(touchCtx, {
+								src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+								index: game => 4 + (game.moving ? 1 : 0),
+							});
+						}
 					}
 				}
 			}

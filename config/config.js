@@ -296,7 +296,7 @@ function getCommonMaze(modifier) {
 		{
 			custom: ({map, sceneData,pos, events}, sprite, ctx) => {
 				const mapWidth = map[0].length, mapHeight = map.length;
-				const mapXCenter = ctx.canvas.width / 2, mapYCenter = ctx.canvas.height / 2;
+				const mapXCenter = 64 / 2, mapYCenter = 64 / 2;
 				const key = `${pos.x}_${pos.y}`;
 				if (!sceneData.canvases || !sceneData.canvases[key]) {
 					if (!sceneData.canvases) {
@@ -564,7 +564,7 @@ function getRoomMaze(modifier) {
 		{
 			custom: ({map, sceneData,pos}, sprite, ctx) => {
 				const mapWidth = map[0].length, mapHeight = map.length;
-				const mapXCenter = ctx.canvas.width / 2, mapYCenter = ctx.canvas.height / 2;
+				const mapXCenter = 64 / 2, mapYCenter = 64 / 2;
 				const key = `${pos.x}_${pos.y}`;
 				if (!sceneData.canvases || !sceneData.canvases[key]) {
 					if (!sceneData.canvases) {
@@ -631,7 +631,7 @@ function standardBag() {
 		{
 			bag: true,
 			src: ASSETS.BAG_OUT,
-			index: game => game.frameIndex,
+			index: game => game.bagOpening ? game.frameIndex : 0,
 			hidden: game => {
 				const {arrow, bagOpening, dialog, data, battle, pickedUp, sceneData, now} = game;
 				if (data.gameOver) {
@@ -646,7 +646,7 @@ function standardBag() {
 					const flag = options.filter(({hidden})=>!hidden || !game.evaluate(hidden)).length * 7 + offY > 2 * 7 || dialog.paused;
 					return flag;
 				}
-				if (arrow === "BAG") {
+				if (arrow === "BAG" || game.touchActive) {
 					const door = game.frontDoor();
 					if (door && door.lock && game.frameIndex === 0 && game.rotation % 2 === 0) {
 						const cell = game.frontCell();
@@ -658,7 +658,7 @@ function standardBag() {
 						return false;
 					}
 				}
-				return arrow !== BAG && (!sceneData.showStats || now - sceneData.showStats < 400) && game.useItem === null;
+				return (arrow !== BAG && !game.touchActive) && (!sceneData.showStats || now - sceneData.showStats < 400) && game.useItem === null;
 			},
 			alpha: game => game.emptyBag() ? .2 : 1,
 			onClick: game => game.clickBag(),
@@ -808,8 +808,8 @@ function standardMenu() {
 		{
 			menu: true,
 			src: ASSETS.MENU_OUT,
-			index: game => game.frameIndex,
-			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot) || game.hideCursor && game.frameIndex === 0 || game.battle && !game.battle.foeDefeated || game.currentEvent() && game.currentEvent().noMenu,
+			index: game => game.menuOpening ? game.frameIndex : 0,
+			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU && !game.touchActive || game.sceneData.firstShot) || game.hideCursor && game.frameIndex === 0 || game.battle && !game.battle.foeDefeated || game.currentEvent() && game.currentEvent().noMenu,
 			onClick: game => game.clickMenu(),
 			onHoverOut: (game, sprite, hovered) => { if (game.menuOpening > 0 && game.frameIndex === 3 && (!hovered || !hovered.menu_item && !hovered.menu)) game.openMenu(game.now); },
 		},

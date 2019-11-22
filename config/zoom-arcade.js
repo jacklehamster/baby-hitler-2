@@ -240,7 +240,7 @@ gameConfig.scenes.push(
 			{
 				custom: (game, sprite, ctx) => {
 					ctx.fillStyle = "#7E7A18";
-					ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+					ctx.fillRect(0, 0, 64, 64);
 				},
 				onClick: ({sceneData, situation}) => {
 					const { gameStarted } = sceneData;

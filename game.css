@@ -128,6 +128,7 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 .game-size {
     width: 512px;
     height: 512px;
+    z-index: 2;
 }
 
 .game-size.touched {
@@ -148,12 +149,17 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 .touch-size {
     width: calc(100vw - 80px);
     height: calc(100vh - 100vw - 80px);
+    z-index: 1;
 }
 
 .touch-size.full {
     width: calc(100vw - 5%);
     height: calc(100vh - 100vw - 5%);
     margin: 0;
+}
+
+.touch-container.full {
+    border: 5% solid black;
 }
 
 #touch-canvas {
@@ -169,7 +175,7 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 	border: 40px solid #000000;
 }
 
-.round-screen.full {
-    border-width: 5%;
+.rounded-screen.full {
+    border-width: 21px;
 }
 

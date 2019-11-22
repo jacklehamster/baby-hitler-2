@@ -144,7 +144,7 @@ gameConfig.scenes.push(
 			{
 				custom: (game, sprite, ctx) => {
 					ctx.fillStyle = "#000011";
-					ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+					ctx.fillRect(0, 0, 64, 64);
 				},
 				onClick: game => {
 					const {sceneData, now} = game;

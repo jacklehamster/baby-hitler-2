@@ -195,7 +195,7 @@ gameConfig.scenes.push(
 		},
 		sprites: [
 			{
-				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height),
+				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, 64, 64),
 			},
 			...getCommonMaze("_1"),
 			makeFoe('guard', ASSETS.GUARD_2),

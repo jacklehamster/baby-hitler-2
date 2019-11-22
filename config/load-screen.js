@@ -41,7 +41,7 @@ gameConfig.scenes.push(
 			},
 			{
 				custom: (game, sprite, ctx) => {
-					ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+					ctx.clearRect(0, 0, 64, 64);
 					ctx.globalAlpha = .05;
 					for (let i= 0; i < 10; i++) {
 						game.displayTextLine(ctx, {

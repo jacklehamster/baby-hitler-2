@@ -8,7 +8,7 @@ gameConfig.scenes.push(
 		},
 		sprites: [
 			{
-				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height),
+				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, 64, 64),
 			},
 			{
 				ending: true,

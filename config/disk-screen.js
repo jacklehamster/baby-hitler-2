@@ -3,7 +3,7 @@ gameConfig.scenes.push(
 		name: "disk-screen",
 		sprites: [
 			{
-				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height),
+				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, 64, 64),
 			},
 			... (new Array(4).fill(null).map((a, index) => {
 				return {

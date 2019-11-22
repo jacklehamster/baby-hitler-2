@@ -209,7 +209,10 @@ gameConfig.scenes.push(
 			{
 				src: ASSETS.EXIT_DOOR,
 				hidden: game => game.rotation !== 0,
-				tip: "Looks like the only way in",
+				tip: "Looks like the only way out",
+				blockMouse: game => {
+					return game.situation.explode;
+				},
 			},
 			{
 				src: ASSETS.JAIL, col:3, row:3,
@@ -250,7 +253,10 @@ gameConfig.scenes.push(
 						game.useItem = item;
 					}
 					return true;
-				}
+				},
+				blockMouse: game => {
+					return game.data.shot["right guard"];
+				},
 			},
 			{
 				name: "left guard",
@@ -275,7 +281,10 @@ gameConfig.scenes.push(
 						game.useItem = item;
 					}
 					return true;
-				}
+				},
+				blockMouse: game => {
+					return game.data.shot["left guard"];
+				},
 			},
 			{
 				name: "tilehole",
