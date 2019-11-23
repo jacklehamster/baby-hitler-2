@@ -3309,6 +3309,8 @@ const Game = (() => {
 						document.body.mozRequestFullScreen();
 					} else if(document.body.requestFullscreen) {
 						document.body.requestFullscreen();
+					} else {
+						this.disableFullScreen = true;						
 					}
 				} catch(e) {
 					this.disableFullScreen = true;
