@@ -2124,8 +2124,10 @@ const Game = (() => {
 				};
 
 				audio.addEventListener("loadeddata", onReady);
-				audio.addEventListener("canplay", onReady);
+				audio.addEventListener("loadedmetadata", onReady);
+
 				audio.addEventListener("error", () => {
+					console.error(`Error: ${src}`);
 					delete soundStock[src];
 					this.loadPending = false;
 				});
