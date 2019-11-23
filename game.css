@@ -35,6 +35,7 @@ html, body {
     background-color: black;
     color: silver;
     touch-action: none;
+    overflow: hidden;
 }
 body {
     margin: 0;
