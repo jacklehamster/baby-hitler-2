@@ -2126,6 +2126,7 @@ const Game = (() => {
 				});
 				stock.audio = audio;
 				soundStock[src] = stock;
+				audio.load();
 			}
 		}
 
