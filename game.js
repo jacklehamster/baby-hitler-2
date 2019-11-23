@@ -2113,13 +2113,18 @@ const Game = (() => {
 					stock.playing = false;
 				});
 				this.loadPending = true;
-				audio.addEventListener("loadeddata", () => {
-					stock.loaded = true;
-					this.loadPending = false;
-					if (callback) {
-						callback(stock);
+				const onReady = () => {
+					if (!stock.loaded) {
+						stock.loaded = true;
+						this.loadPending = false;
+						if (callback) {
+							callback(stock);
+						}
 					}
-				});
+				};
+
+				audio.addEventListener("loadeddata", onReady);
+				audio.addEventListener("canplay", onReady);
 				audio.addEventListener("error", () => {
 					delete soundStock[src];
 					this.loadPending = false;
