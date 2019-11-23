@@ -191,7 +191,8 @@ gameConfig.scenes.push(
 								onSelect: (game, dialog) => game.showTip("Option not yet available"),
 							},
 							{
-								msg: game => document.fullscreenElement ? "Exit Full Screen" : "Full Screen",
+								cantSelect: game => game.disableFullScreen,
+								msg: game => game.disableFullScreen ? "Full screen not supported" : document.fullscreenElement ? "Exit Full Screen" : "Full Screen",
 								onSelect: (game, dialog) => {
 									game.toggleFullScreen();
 								},
