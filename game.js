@@ -2124,6 +2124,7 @@ const Game = (() => {
 					}
 				};
 
+				audio.addEventListener("loadstart", console.log);
 				audio.addEventListener("loadeddata", onReady);
 				audio.addEventListener("loadedmetadata", onReady);
 
