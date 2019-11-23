@@ -3302,7 +3302,13 @@ const Game = (() => {
 					document.exitFullscreen();
 				}
 			} else {
-				document.body.requestFullscreen();
+				if (document.body.webkitEnterFullScreen) {
+				  document.body.webkitEnterFullScreen();
+				} else if (document.body.mozRequestFullScreen) {
+					document.body.mozRequestFullScreen();
+				} else if(document.body.requestFullscreen) {
+					document.body.requestFullscreen();
+				}
 //				document.querySelector("#viewport").requestFullscreen();										
 			}			
 		}
