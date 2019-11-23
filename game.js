@@ -26,6 +26,39 @@ const Game = (() => {
 	const SAVES_LOCATION = "saves";
 	const LAST_CONTINUE = "last";
 
+	const TOUCH_ARROW_SPRITES = {
+		LEFT: {
+			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+			index: game => game.actionDown === LEFT && game.turning ? 1 : 0,
+			side: LEFT,
+			hidden: game => !game.canTurn("left"),
+			onClick: game => game.processArrow(LEFT),
+			alpha: .5,
+		},
+		RIGHT: {
+			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+			index: game => game.actionDown === RIGHT && game.turning ? 1 : 0,
+			side: RIGHT,
+			hidden: game => !game.canTurn("right"),
+			onClick: game => game.processArrow(RIGHT),
+			alpha: .5,
+		},
+		FORWARD: {
+			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+			index: game => 2 + (game.actionDown === FORWARD && game.moving ? 1 : 0),
+			hidden: game => !game.pos || !game.canMove(game.pos, 1),
+			onClick: game => game.processArrow(FORWARD),
+			alpha: .5,
+		},
+		BACKWARD: {
+			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
+			index: game => 4 + (game.actionDown === BACKWARD && game.moving ? 1 : 0),
+			hidden: game => !game.pos || !game.canMove(game.pos, -1),
+			onClick: game => game.processArrow(BACKWARD),
+			alpha: .5,
+		},
+	};
+
 	function nop() {}
 
 	function toMap(string) {
@@ -88,9 +121,7 @@ const Game = (() => {
 							if (this.matchCell(map,col,row,0,1,ORIENTATIONS[rotation],'','X12345')) {
 								const [ x, y ] = Game.getPosition(col, row, 0, 1, ORIENTATIONS[rotation]);
 								return {
-									pos: {
-										x, y,
-									},
+									pos: { x, y },
 									rotation,
 								};
 							}
@@ -280,7 +311,12 @@ const Game = (() => {
 				const { currentTarget, changedTouches } = e;
 				const [ touch ] = changedTouches;
 				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
+				this.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight);
+				this.checkMouseHover(true);
 				this.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
+				if (this.pendingTip) {
+					this.pendingTip.time -= 500;
+				}
 			});
 
 			canvas.addEventListener('touchend', e => e.preventDefault());
@@ -288,9 +324,25 @@ const Game = (() => {
 
 			const touches = [];
 			touchCanvas.addEventListener("touchstart", ({changedTouches}) => {
-				Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
-					delete touches[identifier];
-				});
+				for (let i = 0; i < changedTouches.length; i++) {
+					const {identifier, pageX, pageY} = changedTouches[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;
+					const pos = { x: px, y: py };
+					for (let arrow in TOUCH_ARROW_SPRITES) {
+						const sprite = TOUCH_ARROW_SPRITES[arrow];
+						if (this.isMouseHover(sprite, pos) && sprite.onClick) {
+							sprite.onClick(game, sprite);
+							this.mouse = null;
+							return;
+						}
+					}
+				}
+
+				for (let i = 0 ; i < changedTouches.length; i++) {
+					delete touches[changedTouches[i].identifier];					
+				}
+
 				if (!this.mouse) {
 					this.mouse = this.lastMousePos ? this.lastMousePos : {
 						x: canvas.width / 2,
@@ -298,6 +350,7 @@ const Game = (() => {
 						fromTouch: true,
 					};
 				}
+				this.mouse.time = this.now;
 				this.lastMouseMove = this.now;
 			});
 
@@ -326,13 +379,16 @@ const Game = (() => {
 				});
 			});
 
-			touchCanvas.addEventListener("click", ({changedTouches}) => {
+			touchCanvas.addEventListener("touchend", ({changedTouches}) => {
 				if (this.mouse) {
-					this.mouse.fromTouch = true;
-					this.actionClickAtMouse();
-					this.actionDown = 0;
-					this.mouseDown = 0;
-					this.clicking = false;					
+					if (this.now - this.mouse.time < 400) {
+						this.mouse.fromTouch = true;
+						this.actionClickAtMouse();
+						this.checkMouseHover(true);
+						this.actionDown = 0;
+						this.mouseDown = 0;
+						this.clicking = false;
+					}
 				}
 			});
 			//	END CURSOR MODE
@@ -355,6 +411,7 @@ const Game = (() => {
 					document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
 						classList.remove("full");
 					});
+					document.querySelector(".game-container").classList.remove("full");
 				} else {
 					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
 						style.width = `${minSize}px`;
@@ -364,6 +421,7 @@ const Game = (() => {
 					document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
 						classList.add("full");
 					});
+					document.querySelector(".game-container").classList.add("full");
 				}
 			});
 
@@ -402,7 +460,7 @@ const Game = (() => {
 			}
 
 			if (this.arrowGrid) {
-				this.arrow = this.getArrow(this.mouse.x, this.mouse.y, canvas.width, canvas.height);
+				this.arrow = this.getArrow(this.mouse.x, this.mouse.y, 64, 64);
 				if (this.mouseDown) {
 					this.actionDown = this.arrow;
 				}
@@ -465,7 +523,7 @@ const Game = (() => {
 			}
 			if (this.useItem) {
 				const { image, item, message, col, row } = this.inventory[this.useItem];
-				if (game.isMouseHover({ src: image, index: 3, col, row }, 0, this.mouse)) {
+				if (game.isMouseHover({ src: image, index: 3, col, row }, this.mouse)) {
 					this.pickUp({item, image, message:message||"", justLooking: true});
 					return;
 				}
@@ -473,8 +531,15 @@ const Game = (() => {
 			if (this.dialog) {
 				this.checkHoveredDialog();
 				if (this.dialog.hovered) {
-					if (this.dialog.hovered.onSelect) {
-						this.dialog.hovered.onSelect(this, this.dialog, this.dialog.conversation[this.dialog.index], this.dialog.hovered);
+					if (this.dialog.hovered.onSelect && !this.dialog.tapped) {
+						this.dialog.tapped = this.now;
+						this.playSound(SOUNDS.SELECT, {volume: .5});
+						const hovered = game.dialog.hovered;
+						const dialog = game.dialog;
+						this.delayAction(game => {
+							dialog.tapped = 0;
+							hovered.onSelect(game, dialog, dialog.conversation[dialog.index], hovered);
+						}, 180);
 					}
 					return;
 				}
@@ -495,94 +560,97 @@ const Game = (() => {
 
 			if (!this.hoverSprite || this.hoverSprite.bag || this.hoverSprite.menu) {
 				if (this.arrowGrid && !this.useItem && !this.bagOpening && !game.sceneData.showStats) {
-					this.arrow = this.getArrow(this.mouse.x, this.mouse.y, canvas.width, canvas.height);
-					switch(this.arrow) {
-						case LEFT: {
-							if (this.onSceneRotate(this, this.arrow)) {
-								return;
-							}
-							this.turnLeft(this.now);
-							this.actionDown = this.arrow;
-							break;
-						}
-						case RIGHT: {
-							if (this.onSceneRotate(this, this.arrow)) {
-								return;
-							}
-							this.turnRight(this.now);
-							this.actionDown = this.arrow;
-							break;
-						}
-						case DOOR: {
-							const { x, y } = this.pos;
-							if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
-								const cell = this.frontCell();
-								const door = this.frontDoor();
-								if (!door) {
-									console.error("You need doors!");
-								} else if (door.lock && (!this.situation.unlocked || !this.situation.unlocked[cell])) {
-									this.showTip("It's locked.", null, null, {removeLock:true});
-									this.playErrorSound();
-								} else {
-									if (!this.doorOpening) {
-										this.performAction(this.now);
-									} else if (this.doors[cell].exit) {
-										if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
-											this.playSteps();
-										}
-										this.doors[cell].exit(this, this.doors[cell]);
-									} else {
-										this.actionDown = this.arrow;
-									}
-								}
-							} else {
-								this.actionDown = this.arrow;
-							}
-							break;
-						}
-						case FORWARD: {
-							if (this.onSceneForward(this)) {
-								return;
-							}
-							if (!this.pos) {
-								this.actionDown = this.arrow;
-								return;
-							}
-							const { x, y } = this.pos;
-							if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
-								if (!this.doorOpening) {
-									this.performAction(this.now);
-								} else if (this.doors) {
-									const cell = getCell(this.map, ... Game.getPosition(x,y,0,1,this.orientation));
-									if (this.doors[cell].exit) {
-										if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
-											this.playSteps();
-										}
-										this.doors[cell].exit(this, this.doors[cell]);
-									} else {
-										this.actionDown = this.arrow;
-									}
-								} else {
-									console.error("You need doors!");
-								}
-							} else {
-								this.actionDown = this.arrow;
-							}
-							break;
-						}
-						case BACKWARD: {
-							if (this.onSceneBackward(this)) {
-								return;
-							}
-							this.actionDown = this.arrow;
-							break;
-						}
-					}
+					this.arrow = this.getArrow(this.mouse.x, this.mouse.y, 64, 64);
+					this.processArrow(this.arrow);
 				}
 			}
-
 			this.checkMouseHover(true);
 		}
+
+		processArrow(arrow) {
+			switch(arrow) {
+				case LEFT: {
+					if (this.onSceneRotate(this, arrow)) {
+						return;
+					}
+					this.turnLeft(this.now);
+					this.actionDown = arrow;
+					break;
+				}
+				case RIGHT: {
+					if (this.onSceneRotate(this, arrow)) {
+						return;
+					}
+					this.turnRight(this.now);
+					this.actionDown = arrow;
+					break;
+				}
+				case DOOR: {
+					const { x, y } = this.pos;
+					if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
+						const cell = this.frontCell();
+						const door = this.frontDoor();
+						if (!door) {
+							console.error("You need doors!");
+						} else if (door.lock && (!this.situation.unlocked || !this.situation.unlocked[cell])) {
+							this.showTip("It's locked.", null, null, {removeLock:true});
+							this.playErrorSound();
+						} else {
+							if (!this.doorOpening) {
+								this.performAction(this.now);
+							} else if (this.doors[cell].exit) {
+								if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
+									this.playSteps();
+								}
+								this.doors[cell].exit(this, this.doors[cell]);
+							} else {
+								this.actionDown = arrow;
+							}
+						}
+					} else {
+						this.actionDown = arrow;
+					}
+					break;
+				}
+				case FORWARD: {
+					if (this.onSceneForward(this)) {
+						return;
+					}
+					if (!this.pos) {
+						this.actionDown = arrow;
+						return;
+					}
+					const { x, y } = this.pos;
+					if (this.matchCell(this.map,x,y,0,1,this.orientation,"12345",[])) {
+						if (!this.doorOpening) {
+							this.performAction(this.now);
+						} else if (this.doors) {
+							const cell = getCell(this.map, ... Game.getPosition(x,y,0,1,this.orientation));
+							if (this.doors[cell].exit) {
+								if (this.doors[cell].wayUp || this.doors[cell].wayDown) {
+									this.playSteps();
+								}
+								this.doors[cell].exit(this, this.doors[cell]);
+							} else {
+								this.actionDown = arrow;
+							}
+						} else {
+							console.error("You need doors!");
+						}
+					} else {
+						this.actionDown = arrow;
+					}
+					break;
+				}
+				case BACKWARD: {
+					if (this.onSceneBackward(this)) {
+						return;
+					}
+					this.actionDown = arrow;
+					break;
+				}
+			}			
+		}		
 
 		fadeToScene(index, entrance, fadeDuration, afterScene) {
 			if (!fadeDuration) {
@@ -1183,7 +1251,7 @@ const Game = (() => {
 				for (let i = this.sprites.length - 1; i >= 0; i--) {
 					const sprite = this.sprites[i];
 					if ((sprite.onClick || sprite.onHover || sprite.onShot || this.evaluate(sprite.tip, sprite) || this.useItem && sprite.name || this.useItem && sprite.combine) && !this.actionDown && !this.evaluate(sprite.blockMouse, sprite)) {
-						if (this.isMouseHover(sprite, 0, this.mouse)) {
+						if (this.isMouseHover(sprite, this.mouse)) {
 							if (this.mouseDown && !this.clicking) {
 								if (this.useItem && !sprite.bag && !sprite.menu) {
 									const { combine, combineMessage, name, onShot } = sprite;
@@ -1256,7 +1324,7 @@ const Game = (() => {
 			}
 		}
 
-		isMouseHover(sprite, outline, mouse) {
+		isMouseHover(sprite, mouse) {
 			if (this.evaluate(sprite.hidden, sprite)) {
 				return false;
 			}
@@ -1265,16 +1333,11 @@ const Game = (() => {
 			const { clickCtx } = this;
 			clickCtx.clearRect(0, 0, clickCtx.canvas.width, clickCtx.canvas.height);
 
-			if (outline) {
-				clickCtx.shadowBlur = outline;
-			}
 			const shiftX = (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1;
 			const shiftY = (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1;
 			clickCtx.translate(shiftX, shiftY);
 			this.displayImage(clickCtx, sprite);
-			if (outline) {
-				clickCtx.shadowBlur = 0;
-			}
+
 			clickCtx.resetTransform();
 			const pixels = clickCtx.getImageData(0, 0, 3, 3).data;
 			for (let i = 0; i < pixels.length; i += 4) {
@@ -1674,6 +1737,9 @@ const Game = (() => {
 		}
 
 		displayArrows() {
+			if (this.touchActive) {
+				return;
+			}
 			const { useItem, bagOpening, hideArrows, pickedUp, hideCursor } = this;
 			if (useItem || bagOpening || hideArrows || pickedUp || hideCursor) {
 				return;
@@ -1756,7 +1822,7 @@ const Game = (() => {
 				for (let i in this.inventory) {
 					if (i !== this.useItem && (!this.pickedUp || i !== this.pickedUp.item)) {
 						const { item, image, count, col, row } = this.inventory[i];	
-						if (this.isMouseHover({ src: image, index: this.frameIndex-1, col, row }, 0, this.mouse)) {
+						if (this.isMouseHover({ src: image, index: this.frameIndex-1, col, row }, this.mouse)) {
 							tipItem = i;
 						}
 					}
@@ -2676,7 +2742,7 @@ const Game = (() => {
 
 			const filteredOptions = options.filter(option => !option.hidden || !this.evaluate(option.hidden, option));
 			const y = this.mouse ? Math.floor((this.mouse.y - 43 - offY) / 7) : -1;
-			ctx.fillStyle = this.dialog.highlightColor || "#009988aa";
+			ctx.fillStyle = this.dialog.tapped && Math.floor(this.now / 50) % 2 === 0 ? "#00443355" : (this.dialog.highlightColor || "#009988aa");
 			if (y >= 0 && y < filteredOptions.length) {
 				const { msg, cantSelect } = filteredOptions[y];
 				if (this.evaluate(msg) && !this.evaluate(cantSelect)) {
@@ -2838,34 +2904,10 @@ const Game = (() => {
 			if (this.touchActive) {
 				touchCtx.clearRect(0, 0, 64, 32);
 				if (!this.hideCursor && !this.waitCursor) {
-					if (this.canTurn("left")) {
-						this.displayImage(touchCtx, {
-							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
-							index: game => game.turning ? 1 : 0,
-							side: LEFT,
-						});
-					}
-					if (this.canTurn("right")) {
-						this.displayImage(touchCtx, {
-							src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
-							index: game => game.turning ? 1 : 0,
-							side: RIGHT,
-						});
-					}
-					if (this.pos) {
-						if (this.canMove(this.pos, 1)) {
-							this.displayImage(touchCtx, {
-								src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
-								index: game => 2 + (game.moving ? 1 : 0),
-							});
-						}
-						if (this.canMove(this.pos, -1)) {
-							this.displayImage(touchCtx, {
-								src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
-								index: game => 4 + (game.moving ? 1 : 0),
-							});
-						}
-					}
+					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.LEFT);
+					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.RIGHT);
+					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.FORWARD);
+					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.BACKWARD);
 				}
 			}
 		}
@@ -2880,7 +2922,7 @@ const Game = (() => {
 				} else {
 					for (let i in this.inventory) {
 						const { item, image, col, row } = this.inventory[i];
-						if (this.isMouseHover({src:image, index:this.frameIndex-1, col, row}, 0, this.mouse)) {
+						if (this.isMouseHover({src:image, index:this.frameIndex-1, col, row}, this.mouse)) {
 							this.useItem = item;
 							this.useItemTime = this.now;
 						}

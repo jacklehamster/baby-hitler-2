@@ -25,6 +25,9 @@
 		<link rel="manifest" href="/manifest.json">
 
 		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="viewport" content="minimal-ui, user-scalable=no">
+
 	</head>
 
 	<body style="margin: 0;">
@@ -272,6 +275,10 @@
 			requestAnimationFrame(noise);
 		}
 		startNoiseStatic();
+
+
+		screen.orientation.lock('portrait').catch(function(error) {
+		});
 	</script>
 
 	<script src="config/9-months.js" async></script>

@@ -15,10 +15,18 @@ gameConfig.scenes.push(
 			} else if (frame < 35) {
 				game.sceneData.frame = 2;
 			} else if (frame < 70) {
+				if (!game.sceneData.ate) {
+					game.sceneData.ate = game.now;
+					game.playSound(SOUNDS.EAT);					
+				}
 				game.sceneData.frame = 3 + frame % 3;
 			} else if (frame < 75) {
 				game.sceneData.frame = 3;
 			} else if (frame < 90) {
+				if (!game.sceneData.ache) {
+					game.sceneData.ache = game.now;
+					game.playSound(SOUNDS.DRINK);					
+				}
 				game.sceneData.frame = 6;
 			} else if (frame < 120) {
 				game.sceneData.frame = 6 + Math.min(4, Math.floor((frame - 90)));

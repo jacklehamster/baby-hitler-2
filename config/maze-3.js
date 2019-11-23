@@ -8,7 +8,7 @@ gameConfig.scenes.push(
 		arrowGrid: [
 			[null, null,  MENU, null, null ],
 			[],
-			[ LEFT, null, s(2), null, RIGHT ],
+			[ LEFT, null, s(1), null, RIGHT ],
 			[ LEFT, s(7), s(8), s(7), RIGHT ],
 			[ LEFT, s(7), s(3), s(7), RIGHT ],
 		],
@@ -29,7 +29,7 @@ gameConfig.scenes.push(
 			{
 				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, 64, 64),
 			},
-			...getCommonMaze("_BLUE_1"),
+			...getCommonMaze("_1"),
 			makeFoe('slimar', ASSETS.SLIMAR),
 			makeYupa(),
 			...standardBattle(),

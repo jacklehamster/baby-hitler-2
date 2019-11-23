@@ -27,6 +27,7 @@ gameConfig.scenes.push(
 					},
 					onClick: (game, {index}) => {
 						const {sceneData} = game;
+						game.playSound(SOUNDS.SELECT);
 						game.load(sceneData.loadSave[index].name);
 					},
 					hidden: ({sceneData, dialog}, sprite) => !dialog || dialog.index !== 2 || !sceneData.loadSave || !sceneData.loadSave[sprite.index],

@@ -614,16 +614,30 @@ function standardBag() {
 			name: "self",
 			src: ASSETS.EATER, col:2, row:2,
 			offsetX: ({now, useItemTime}) => {
-				return Math.round(-20 * Math.sqrt(1 - Math.max(0, now - useItemTime) / 500));
+				return Math.round(-12 * Math.sqrt(1 - Math.max(0, now - useItemTime) / 300));
 			},
-			index: (game, sprite) => game.hoverSprite === sprite ? Math.min(2, Math.floor((game.now - sprite.hoverTime) / 100)) : 0,
+			index: (game, sprite) => {
+				if (game.sceneData.eatTime) {
+					if (game.now - game.sceneData.eatTime < 500) {
+						return Math.min(2, Math.floor((game.now - game.sceneData.eatTime ) / 100))
+					}
+				}
+				return game.hoverSprite === sprite ? Math.min(2, Math.floor((game.now - sprite.hoverTime) / 100)) : 0;
+			},
 			hidden: game => !consumable[game.useItem],
 			combine: (item, game) => {
 				if (consumable[game.useItem]) {
+					game.sceneData.eatTime = game.now;
+					const wasHideCursor = game.hideCursor;
+					game.hideCursor = true;
+					game.delayAction(game => {
+					game.hideCursor = wasHideCursor;
 					if (consumable[game.useItem](game)) {
-						game.removeFromInventory(item);
-						game.useItem = null;
-					}
+							game.sceneData.eatTime = 0;
+							game.removeFromInventory(item);
+							game.useItem = null;
+						}
+					}, 500);
 					return true;
 				}
 			},
@@ -658,7 +672,8 @@ function standardBag() {
 						return false;
 					}
 				}
-				return (arrow !== BAG && !game.touchActive) && (!sceneData.showStats || now - sceneData.showStats < 400) && game.useItem === null;
+				const touchOverride = game.touchActive && (!game.pos || !game.canMove(game.pos, -1));
+				return (arrow !== BAG && !touchOverride) && (!sceneData.showStats || now - sceneData.showStats < 400) && game.useItem === null;
 			},
 			alpha: game => game.emptyBag() ? .2 : 1,
 			onClick: game => game.clickBag(),
@@ -884,6 +899,12 @@ function standardMenu() {
 							offsetY: (game, {options}) => (options.length - 3) * -7,
 							options: [
 								{
+									msg: "Exit to menu",
+									onSelect: (game, dialog) => {
+										dialog.index++;
+									},
+								},
+								{
 									msg: game => `Sound ~${!game.mute?"ON":"OFF"}`,
 									onSelect: (game, dialog) => {
 										game.mute = !game.mute;
@@ -912,6 +933,27 @@ function standardMenu() {
 								{
 									msg: "Close",
 									onSelect: (game, dialog) => game.dialog = null,
+								},								
+							],
+						},
+						{
+							options: [
+								{
+									msg: "Do you wanna exit?",
+									cantSelect: true,
+								},
+								{
+									msg: "Confirm Exit",
+									onSelect: (game, dialog) => {
+										const fadeDuration = 1000;
+										game.fadeOut(game.now, {duration:fadeDuration * 1.5, fadeDuration, color:"#000000", onDone: game => {
+											game.restart();
+										}});
+									},
+								},
+								{
+									msg: "Cancel",
+									onSelect: (game, dialog) => dialog.index--,
 								},								
 							],
 						}

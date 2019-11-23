@@ -324,6 +324,7 @@ const SOUNDS = {
 	F1: "sounds/f1.mp3",
 	RANDOM: "sounds/random.mp3",
 	MYSTICA_THEME: "sounds/mystica.mp3",
+	SELECT: "sounds/select.mp3",
 };
 
 const ALPHAS = (() => {

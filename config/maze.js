@@ -6,9 +6,9 @@ gameConfig.scenes.push(
 			game.save();
 		},
 		arrowGrid: [
-			[null, null,  MENU, null, null ],
-			[],
-			[ LEFT, null, s(2),     null, RIGHT ],
+			[ null, null, MENU, null, null ],
+			[ null, null, null,     null, null  ],
+			[ LEFT, null, s(1),     null, RIGHT ],
 			[ LEFT, null, s(1),     null, RIGHT ],
 			[ LEFT, null, BACKWARD, null, RIGHT ],
 		],
