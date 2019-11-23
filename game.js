@@ -2115,6 +2115,7 @@ const Game = (() => {
 				this.loadPending = true;
 				const onReady = () => {
 					if (!stock.loaded) {
+						console.log(`Loaded: ${src}`);
 						stock.loaded = true;
 						this.loadPending = false;
 						if (callback) {
