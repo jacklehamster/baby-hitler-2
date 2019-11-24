@@ -14,13 +14,13 @@ gameConfig.scenes.push(
 		],
 		map: `
 			XXXXXXXXXXXXXXX
-			XXX.........XXX
+			XXX........_XXX
 			XXX.XXXXXXX.XXX
-			XMX.XX3.....XXX
+			XMX.XX3...._XXX
 			X.X.XXXXXXX.XMX
-			X..sX.........X
+			X..sX......_..X
 			X.X.X.XX.XX.XXX
-			X!X.X1XX.XX.XXX
+			X!X.X1XX.XX_XXX
 			XXX.XXXX.XX.XXX
 			XXX......XX2XXX
 			XXXXXXXXXXXXXXX

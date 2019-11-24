@@ -229,6 +229,11 @@ function getCommonMaze(modifier) {
 			hidden: game => game.rotation % 2 === 1 || game.closeWall() || game.farWall() || !game.mazeMap({direction: RIGHT, distance: FURTHER}),
 		},
 		{
+			src: ASSETS.FAR_FLOOR,
+			index: game => game.doorOpening || game.bagOpening || game.menuOpening ? 0 : game.frameIndex,
+			hidden: game => game.rotation % 2 == 1 || game.closeWall() || game.farWall() || !game.mazeFloor(2),
+		},
+		{
 			src: ASSETS[`CLOSE_WALL${modifier}`],
 			index: game => game.doorOpening || game.bagOpening || game.menuOpening ? 0 : game.frameIndex,
 			hidden: game => game.rotation % 2 === 1 || !game.closeWall(),
@@ -294,6 +299,16 @@ function getCommonMaze(modifier) {
 			hidden: game => game.rotation % 2 === 1 || !game.closeMap(),
 		},
 		{
+			src: ASSETS.FLOOR,
+			index: game => game.doorOpening || game.bagOpening || game.menuOpening ? 0 : game.frameIndex,
+			hidden: game => game.rotation % 2 == 1 || game.closeWall() || !game.mazeFloor(1),
+		},
+		{
+			src: ASSETS.CLOSE_FLOOR,
+			index: game => game.doorOpening || game.bagOpening || game.menuOpening ? 0 : game.frameIndex,
+			hidden: game => game.rotation % 2 == 1 || !game.mazeFloor(0),
+		},
+		{
 			custom: ({map, sceneData,pos, events}, sprite, ctx) => {
 				const mapWidth = map[0].length, mapHeight = map.length;
 				const mapXCenter = 64 / 2, mapYCenter = 64 / 2;
@@ -318,7 +333,7 @@ function getCommonMaze(modifier) {
 							imageData.data[i] = 50;
 							imageData.data[i+1] = 150;
 							imageData.data[i+2] = 255;
-						} else if (cell==='.' || events && events[cell] && !events[cell].blockMap) {
+						} else if (cell==='.' || cell==='_' || events && events[cell] && !events[cell].blockMap) {
 							imageData.data[i] = 0;
 							imageData.data[i+1] = 0;
 							imageData.data[i+2] = 0;
@@ -1674,9 +1689,13 @@ function standardBattle() {
 						return;
 					}
 				}
-				if (chest && !chest.opened) {
-					chest.opened = now;
-					game.playSound(SOUNDS.DOOR);
+				if (chest) {
+					if (!chest.opened) {
+						chest.opened = now;
+						game.playSound(SOUNDS.DOOR);
+					} else if(game.now - chest.opened > 2000) {
+						game.battle = null;
+					}
 				}
 			},
 			index: game => {

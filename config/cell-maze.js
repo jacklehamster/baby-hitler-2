@@ -21,16 +21,16 @@ gameConfig.scenes.push(
 			XXXXXXXXXXX
 			XXXXXXXX5XX
 			XYXXMXXX.XX
-			X4.......XX
+			X4.._....XX
 			XQXX.XXXXXX
 			XXXX.XXXXXX
-			X^1....1öXX
+			X^1._..1öXX
 			XXXX.XXXXXX
 			XXXX.XXX8XX
-			X3......1XX
+			X3.._...1XX
 			XCXX.XXXXXX
 			XXXX.XXXXXX
-			X2...XXXXXX
+			X2.._XXXXXX
 			XXXXXXXXXXX
 		`,
 		onDialog: game => {

@@ -15,10 +15,10 @@ gameConfig.scenes.push(
 			XXXXXXXXXXXXXXXXX
 			X...TXXXXXXXXXXXX
 			X.XXXXXXXXXXXXXXX
-			X.........:5XXXXX
+			X_._._._._:5XXXXX
 			X.XXXXXXXXXXXXXXX
 			X.XMXXXXXXXXXXXXX
-			X..............2X
+			X_._._._._._...2X
 			XXX.XXXXXXX:XXXXX
 			XXX...3XXXX.XXXXX
 			XXX.XXXXXXX.XMXXX

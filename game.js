@@ -1024,6 +1024,10 @@ const Game = (() => {
 		}
 
 		openBag(now, onClose) {
+			if (this.processingBag) {
+				return;
+			}
+			this.processingBag = true;
 			this.actions.push({
 				time: now,
 				command: "openbag",
@@ -1037,6 +1041,7 @@ const Game = (() => {
 					} else if (game.bagOpening > 0 && game.useItem) {
 						game.useItem = null;
 					}
+					this.processingBag = false;
 				},
 				active: true,
 				started: false,
@@ -1740,6 +1745,14 @@ const Game = (() => {
 			const dx = direction === LEFT ? -1 : direction === RIGHT ? 1 : 0;
 			const dy = distance === FURTHER ? 2 : distance === FAR ? 1 : distance === CLOSE ? 0 : 0;
 			return this.matchCell(this.map,x,y,dx,dy,this.orientation,"M",[]);			
+		}
+
+		mazeFloor(distance) {
+			if (!this.pos) {
+				return false;
+			}
+			const { x, y } = this.pos;
+			return this.matchCell(this.map,x,y,0,distance,this.orientation,'_',[]);
 		}
 
 		farWall() {
@@ -2953,6 +2966,9 @@ const Game = (() => {
 		}
 
 		clickBag() {
+			if (this.processingBag) {
+				return;
+			}
 			if (this.emptyBag()) {
 				return;
 			}

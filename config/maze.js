@@ -14,9 +14,9 @@ gameConfig.scenes.push(
 		],
 		map: `
 			XXXXXXXXX
-			XT......3
+			XT...._.3
 			XXX.XX.XX
-			XXX1XX.XX
+			XXX1XX_XX
 			XXXXXX2XX
 			XXXXXXXXX
 		`,

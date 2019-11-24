@@ -276,6 +276,9 @@ const ASSETS = {
 	PLANET_ITEMS: "assets/planet-items.png",
 	TOUCH_ARROWS: "assets/touch-arrows.png",
 	TOUCH_PUNCH: "assets/touch-punch.png",
+	FAR_FLOOR: "assets/far-floor.png",
+	FLOOR: "assets/floor.png",
+	CLOSE_FLOOR: "assets/close-floor.png",
 };
 
 const SOUNDS = {
