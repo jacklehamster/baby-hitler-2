@@ -20,9 +20,9 @@ gameConfig.scenes.push(
 			X.XMXXXXXXXXXXXXX
 			X..............2X
 			XXX.XXXXXXX:XXXXX
-			XXP...3XXXX.XXXXX
-			XXP.XXXXXXX.XMXXX
-			XXP...4XX1....XXX
+			XXX...3XXXX.XXXXX
+			XXX.XXXXXXX.XMXXX
+			XXX...4XX1....XXX
 			XXXXXXXXXXXXXXXXX
 		`,
 		sprites: [
