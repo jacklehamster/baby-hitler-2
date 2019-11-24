@@ -275,6 +275,7 @@ const ASSETS = {
 	MOUNTAINS: "assets/mountains.png|darken",
 	PLANET_ITEMS: "assets/planet-items.png",
 	TOUCH_ARROWS: "assets/touch-arrows.png",
+	TOUCH_PUNCH: "assets/touch-punch.png",
 };
 
 const SOUNDS = {

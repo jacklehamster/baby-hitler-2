@@ -315,7 +315,7 @@ gameConfig.scenes.push(
 						return true;
 					}
 				},
-				tip: game => game.sceneData.leftShot && game.sceneData.rightShot ? "There must be a way to bust this lock..." : "There must be a way to bust this lock, when noone's watching...",
+				tip: game => game.data.shot['left guard'] && game.data.shot['right guard'] ? "There must be a way to bust this lock..." : "There must be a way to bust this lock, when noone's watching...",
 			},
 			{
 				name: "cakelock",

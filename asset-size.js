@@ -224,6 +224,7 @@ const FILE_SIZE = {
    'toilets.png' : 295,
    'top-5.png' : 229,
    'touch-arrows.png' : 1242,
+   'touch-punch.png' : 1812,
    'treasure-chest.png' : 421,
    'vending-machine-apple.png' : 245,
    'vending-machine-bottle.png' : 242,

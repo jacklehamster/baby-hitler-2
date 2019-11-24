@@ -26,7 +26,7 @@ const Game = (() => {
 	const SAVES_LOCATION = "saves";
 	const LAST_CONTINUE = "last";
 
-	const TOUCH_ARROW_SPRITES = {
+	const TOUCH_SPRITES = {
 		LEFT: {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => game.actionDown === LEFT && game.turning ? 1 : 0,
@@ -56,6 +56,18 @@ const Game = (() => {
 			hidden: game => !game.pos || !game.canMove(game.pos, -1),
 			onClick: game => game.processArrow(BACKWARD),
 			alpha: .5,
+		},
+		PUNCH: {
+			src: ASSETS.TOUCH_PUNCH, col: 1, row: 2, size: [64, 32],
+			index: game => game.mouseDown && !game.arrow ? 1 : 0,
+			side: LEFT,
+			hidden: game => !game.battle || game.battle.foeDefeated,
+		},
+		BLOCK: {
+			src: ASSETS.TOUCH_PUNCH, col: 1, row: 2, size: [64, 32],
+			index: game => game.mouseDown && game.arrow === BLOCK ? 1 : 0,
+			side: RIGHT,
+			hidden: game => !game.battle || game.battle.foeDefeated,
 		},
 	};
 
@@ -214,6 +226,10 @@ const Game = (() => {
 				const { currentTarget, offsetX, offsetY} = e;
 				const { offsetWidth, offsetHeight } = currentTarget;
 				this.actionClick(offsetX, offsetY, offsetWidth, offsetHeight);
+
+				if (this.pendingTip) {
+					this.pendingTip.time -= 400;
+				}
 			});
 
 			canvas.addEventListener("mouseleave", () => {
@@ -295,6 +311,7 @@ const Game = (() => {
 				this.actionDown = 0;
 				this.mouseDown = 0;
 				this.clicking = false;
+				this.arrow = null;
 			});
 
 			canvas.addEventListener('touchmove', e => {
@@ -311,11 +328,12 @@ const Game = (() => {
 				const { currentTarget, changedTouches } = e;
 				const [ touch ] = changedTouches;
 				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
+
 				this.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight);
 				this.checkMouseHover(true);
 				this.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
 				if (this.pendingTip) {
-					this.pendingTip.time -= 500;
+					this.pendingTip.time -= 400;
 				}
 			});
 
@@ -329,8 +347,21 @@ const Game = (() => {
 					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
 					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;
 					const pos = { x: px, y: py };
-					for (let arrow in TOUCH_ARROW_SPRITES) {
-						const sprite = TOUCH_ARROW_SPRITES[arrow];
+
+					if (this.battle && !this.battle.foeDefeated) {
+						if (pos.x < 32) {
+							this.arrow = null;
+						} else {
+							this.arrow = BLOCK;
+						}	
+						this.mouse = null;
+						this.actionClickAtMouse();
+						return;
+					}
+
+
+					for (let arrow in TOUCH_SPRITES) {
+						const sprite = TOUCH_SPRITES[arrow];
 						if (this.isMouseHover(sprite, pos) && sprite.onClick) {
 							sprite.onClick(game, sprite);
 							this.mouse = null;
@@ -558,10 +589,12 @@ const Game = (() => {
 
 			this.mouseDown = this.now;
 
-			if (!this.hoverSprite || this.hoverSprite.bag || this.hoverSprite.menu) {
-				if (this.arrowGrid && !this.useItem && !this.bagOpening && !game.sceneData.showStats) {
-					this.arrow = this.getArrow(this.mouse.x, this.mouse.y, 64, 64);
-					this.processArrow(this.arrow);
+			if (this.mouse) {
+				if (!this.hoverSprite || this.hoverSprite.bag || this.hoverSprite.menu) {
+					if (this.arrowGrid && !this.useItem && !this.bagOpening && !game.sceneData.showStats) {
+						this.arrow = this.getArrow(this.mouse.x, this.mouse.y, 64, 64);
+						this.processArrow(this.arrow);
+					}
 				}
 			}
 			this.checkMouseHover(true);
@@ -2115,7 +2148,6 @@ const Game = (() => {
 				this.loadPending = true;
 				const onReady = () => {
 					if (!stock.loaded) {
-						console.log(`Loaded: ${src}`);
 						stock.loaded = true;
 						this.loadPending = false;
 						if (callback) {
@@ -2124,7 +2156,6 @@ const Game = (() => {
 					}
 				};
 
-				audio.addEventListener("loadstart", console.log);
 				audio.addEventListener("loadeddata", onReady);
 				audio.addEventListener("loadedmetadata", onReady);
 
@@ -2914,10 +2945,9 @@ const Game = (() => {
 			if (this.touchActive) {
 				touchCtx.clearRect(0, 0, 64, 32);
 				if (!this.hideCursor && !this.waitCursor) {
-					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.LEFT);
-					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.RIGHT);
-					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.FORWARD);
-					this.displayImage(touchCtx, TOUCH_ARROW_SPRITES.BACKWARD);
+					for (let i in TOUCH_SPRITES) {
+						this.displayImage(touchCtx, TOUCH_SPRITES[i]);
+					}
 				}
 			}
 		}
