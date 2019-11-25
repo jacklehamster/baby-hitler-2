@@ -21,14 +21,14 @@ gameConfig.scenes.push(
 				if (game.dialog === null && (!game.hoverSprite || !game.hoverSprite.blockMove)) {
 					const { mouse } = game;
 					const mx = mouse.x - 32;
-					const my = mouse.y - 40;
+					const my = mouse.y - 50;
 					game.rotation -= mx * .002;
 					game.rotation = (game.rotation + 8) % 8;
 
 					const angle = game.rotation / 8 * Math.PI * 2;
 					const rx = Math.cos(angle), ry = Math.sin(angle);
 
-					const mov = my * .002;
+					const mov = Math.max(-.1, Math.min(.1, my * .010));
 					game.pos.x += mov * ry;
 					game.pos.y += -mov * rx;
 				}
@@ -274,7 +274,7 @@ gameConfig.scenes.push(
 					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
 					const dx = game.sceneData.finalTarget.x - xLoc;
 					const dy = game.sceneData.finalTarget.y - yLoc;
-					return `“Westrow's tavern is ${Math.abs(dx)}m ${dx<0?"West":"East"} and ${Math.abs(dy)}m ${dy<0?"South":"North"} from here”`;
+					return `“Westrow tavern is ${Math.abs(dx)}m ${dx<0?"West":"East"} and ${Math.abs(dy)}m ${dy<0?"South":"North"} from here”`;
 				},
 			},
 			{
@@ -328,11 +328,10 @@ gameConfig.scenes.push(
 										msg: "Ask direction",
 										onSelect: game => {
 											game.showTip(`You are currently facing ${game.getOrientationText()}.`, null, null, {removeLock:true});
-											game.dialog = null;
 										},
 									},
 									{
-										msg: "Ask info",
+										msg: "Ask info...",
 										onSelect: game => {
 											game.dialog.index ++;
 										}
@@ -367,8 +366,8 @@ gameConfig.scenes.push(
 										hidden: game => game.situation.talkedAbout.tavern,
 										onSelect: game => {
 											game.showTip([
-													"That bright shiny object is the sky is Westrow's moon.",
-													"You can see it by looking south.",
+													"Us nomads roam around Westrow's desert.",
+													"Other humans gather around a village near Westrow's tavern.",
 												], game => {
 													const { pos } = game;
 													const { x, y } = pos;
@@ -404,7 +403,7 @@ gameConfig.scenes.push(
 										onSelect: game => {
 											game.showTip([
 													"I don't know the password.",
-													"I think one of the nomad does though.",
+													"I think one of the nomads does though.",
 													"He likes to dress in a pitch black cloth.",
 												], game => {
 													const { pos } = game;
@@ -423,7 +422,7 @@ gameConfig.scenes.push(
 										onSelect: game => {
 											game.showTip([
 													`I think I've seen him, near the tavern.`,
-													"I think he lives near the east",
+													"Near the east",
 												], game => {
 													const { pos } = game;
 													const { x, y } = pos;
@@ -433,6 +432,12 @@ gameConfig.scenes.push(
 											);
 											game.dialog = null;
 										},										
+									},
+									{
+										msg: "Back",
+										onSelect: game => {
+											game.dialog.index --;
+										},
 									},
 								],
 							},

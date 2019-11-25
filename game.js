@@ -1371,11 +1371,13 @@ const Game = (() => {
 			const { clickCtx } = this;
 			clickCtx.clearRect(0, 0, clickCtx.canvas.width, clickCtx.canvas.height);
 
-			const shiftX = (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1;
-			const shiftY = (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1;
+			// const shiftX = (game.evaluate(sprite.offsetX, sprite) || 0) - x + 1;
+			// const shiftY = (game.evaluate(sprite.offsetY, sprite) || 0) - y + 1;
+
+			const shiftX = - x + 1;
+			const shiftY = - y + 1;
 			clickCtx.translate(shiftX, shiftY);
 			this.displayImage(clickCtx, sprite);
-
 			clickCtx.resetTransform();
 			const pixels = clickCtx.getImageData(0, 0, 3, 3).data;
 			for (let i = 0; i < pixels.length; i += 4) {
