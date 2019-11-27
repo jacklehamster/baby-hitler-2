@@ -4,9 +4,9 @@ gameConfig.scenes.push(
 		arrowGrid: [
 			[ null, null, MENU,  null, null ],
 			[],
-			[],
-			[],
-			[ null, null, BAG, null, null ],
+			[ null, null, null, null, null ],
+			[ null, s(7), s(7), s(7), null ],
+			[ null, s(7), BAG,  s(7), null ],
 		],
 		onScene: game => {
 			game.save();
@@ -15,22 +15,33 @@ gameConfig.scenes.push(
 			game.sceneData.forwardUnlocked = true;
 			game.sceneData.freeFormMove = true;
 			game.sceneData.finalTarget = { x: 230, y: -350 };
+			game.sceneData.nextFoe = 100;
 		},
 		onSceneRefresh: game => {
-			if (game.mouseDown) {
-				if (game.dialog === null && (!game.hoverSprite || !game.hoverSprite.blockMove)) {
-					const { mouse } = game;
+			if (game.mouseDown && !game.dialog && !game.pendingTip) {
+				if (!game.hoverSprite || game.hoverSprite.allowMove) {
+					const { mouse, pos } = game;
 					const mx = mouse.x - 32;
 					const my = mouse.y - 50;
-					game.rotation -= mx * .002;
-					game.rotation = (game.rotation + 8) % 8;
+					if (mx && game.canTurn(mx < 0 ? "left" : "right")) {
+						game.rotation -= mx * .002;
+						game.rotation = (game.rotation + 8) % 8;
+					}
 
-					const angle = game.rotation / 8 * Math.PI * 2;
-					const rx = Math.cos(angle), ry = Math.sin(angle);
+					if (my && game.canMove(pos, my<0 ? -1 : +1)) {
+						const angle = game.rotation / 8 * Math.PI * 2;
+						const rx = Math.cos(angle), ry = Math.sin(angle);
 
-					const mov = Math.max(-.1, Math.min(.1, my * .010));
-					game.pos.x += mov * ry;
-					game.pos.y += -mov * rx;
+						const mov = Math.max(-.1, Math.min(.1, my * .010));
+						game.pos.x += mov * ry;
+						game.pos.y += -mov * rx;
+						game.sceneData.nextFoe -= Math.abs(mov);
+						if (game.sceneData.nextFoe < 0) {
+							const monsters = ["m", "b"];
+							game.triggerEvent(monsters[Math.floor(Math.random() * monsters.length)]);
+							game.sceneData.nextFoe = 10 + Math.random() * 200;
+						}
+					}
 				}
 			}
 
@@ -138,7 +149,7 @@ gameConfig.scenes.push(
 				index: 1,
 				offsetX: game => {
 					const rot = game.rotation;
-					return 64 * ((rot + 6) % 8 - 4) - 64;
+					return 64 * ((rot + 5) % 8 - 4) - 64;
 				}
 			},
 			{
@@ -165,7 +176,7 @@ gameConfig.scenes.push(
 								const absoluteDy = y - pos.y;
 								const dx = rx * absoluteDx + ry * absoluteDy;
 								const dy = ry * absoluteDx - rx * absoluteDy + 2;
-								if (dy < 2) {
+								if (dy < 2 && dy > -1.5) {
 									const scale = Math.pow(2, dy);
 									displayTemplate.index = index;
 									displayTemplate.alpha = scale;
@@ -240,6 +251,7 @@ gameConfig.scenes.push(
 					return dy >= 2 ? -1 : 0;
 				},
 				tip: "We landed in the middle of nowhere!",
+				allowMove: true,
 			},
 			{
 				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
@@ -276,6 +288,7 @@ gameConfig.scenes.push(
 					const dy = game.sceneData.finalTarget.y - yLoc;
 					return `“Westrow tavern is ${Math.abs(dx)}m ${dx<0?"West":"East"} and ${Math.abs(dy)}m ${dy<0?"South":"North"} from here”`;
 				},
+				allowMove: true,
 			},
 			{
 				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
@@ -312,11 +325,24 @@ gameConfig.scenes.push(
 				},
 				hidden: (game, sprite) => {
 					const { pos } = game;
+					if (!pos) {
+						return false;
+					}
 					const { x, y } = pos;
 					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
 					return game.sceneData.seenNomad[`${xLoc}_${yLoc}`];
 				},
+				noHighlight: (game, sprite) => {
+					const { pos } = game;
+					const { x, y } = pos;
+					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
+					return (Math.abs(x - xLoc) >= 1.5 || Math.abs(y - yLoc) >= 1.5);
+				},
 				onClick: (game, sprite) => {
+					if (game.evaluate(sprite.noHighlight, sprite)) {
+						return;
+					}
+
 					game.pendingTip = null;
 					game.startDialog({
 						time: game.now,
@@ -352,13 +378,8 @@ gameConfig.scenes.push(
 													"That bright shiny object is the sky is Westrow's moon.",
 													"You can see it by looking south.",
 												], game => {
-													const { pos } = game;
-													const { x, y } = pos;
-													const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
-													game.sceneData.seenNomad[`${xLoc}_${yLoc}`] = game.now;
 												}, null, {removeLock:true}
 											);
-											game.dialog = null;
 										},
 									},
 									{
@@ -444,6 +465,7 @@ gameConfig.scenes.push(
 						],
 					});
 				},
+				allowMove: true,
 			},
 			{
 				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
@@ -468,6 +490,7 @@ gameConfig.scenes.push(
 					const { dx, dy, scale } = game.sceneData.treeTemplate;
 					return dy >= 2 ? -1 : 6;
 				},
+				allowMove: true,
 			},
 			{
 				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
@@ -492,9 +515,120 @@ gameConfig.scenes.push(
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return dy >= 2 ? -1 : 2;
 				},
+				allowMove: true,
 			},
+			makeFoe('monster', ASSETS.MONSTER),
+			makeFoe('brusalien', ASSETS.BRUSALIEN),
+			...standardBattle(),
 			...standardMenu(),
 			...standardBag(),		
 		],
+		... makeOnSceneBattle(),
+		events: {
+			'm': {
+				foe: "monster",
+				foeLife: 150,
+				foeBlockChance: .8,
+				attackSpeed: 1500,
+				riposteChance: .6,
+				attackPeriod: 100,
+				foeDamage: 7,
+				foeDefense: 12,
+				xp: 12,
+				belowTheBelt: false,
+				blocking: true,
+				blockMap: true,
+				chest: true,
+				onEvent: (game, {foe, foeLife, foeBlockChance, foeDefense, attackSpeed, riposteChance, attackPeriod, foeDamage, onWin, xp, belowTheBelt}) => {
+					const {data, now} = game;
+					game.chest = null;
+					const theme = game.data.theme.song;
+					game.playTheme(SOUNDS.BATTLE_THEME, {volume:.8});
+					if (!data.battle) {
+						data.battle = {
+							time: now,
+							foe,
+							fist: LEFT,
+							attackSpeed,
+							playerHit: 0,
+							playerBlock: 0,
+							foeBlockChance,
+							playerLeftAttack: 0,
+							playerRightAttack: 0,
+							playerAttackLanded: 0,
+							playerAttackPeriod: 50,
+							foeLife,
+							foeMaxLife: foeLife,
+							foeBlock: 0,
+							foeDefense,
+							foeDefeated: 0,
+							attackPeriod,
+							riposteChance,
+							foeDamage,
+							onWin,
+							xp,
+							belowTheBelt,
+							theme,
+						};
+					}
+					return true;
+				},
+				onWin: game => game.findChest(game.now + 2000, {
+					item:"bullet", count: 3, image:ASSETS.GRAB_GUN, message: "I found three bullets for my gun.",
+				}),
+			},
+			'b': {
+				foe: "brusalien",
+				foeLife: 180,
+				foeBlockChance: .9,
+				attackSpeed: 2000,
+				riposteChance: .3,
+				attackPeriod: 100,
+				foeDamage: 8,
+				foeDefense: 12,
+				xp: 15,
+				belowTheBelt: false,
+				blocking: true,
+				blockMap: true,
+				chest: true,
+				onEvent: (game, {foe, foeLife, foeBlockChance, foeDefense, attackSpeed, riposteChance, attackPeriod, foeDamage, onWin, xp, belowTheBelt}) => {
+					const {data, now} = game;
+					game.chest = null;
+					const theme = game.data.theme.song;
+					game.playTheme(SOUNDS.BATTLE_THEME, {volume:.8});
+					if (!data.battle) {
+						data.battle = {
+							time: now,
+							foe,
+							fist: LEFT,
+							attackSpeed,
+							playerHit: 0,
+							playerBlock: 0,
+							foeBlockChance,
+							playerLeftAttack: 0,
+							playerRightAttack: 0,
+							playerAttackLanded: 0,
+							playerAttackPeriod: 50,
+							foeLife,
+							foeMaxLife: foeLife,
+							foeBlock: 0,
+							foeDefense,
+							foeDefeated: 0,
+							attackPeriod,
+							riposteChance,
+							foeDamage,
+							onWin,
+							xp,
+							belowTheBelt,
+							theme,
+						};
+					}
+					return true;
+				},
+				onWin: game => game.findChest(game.now + 2000, {
+					item:"bullet", count: 5, image:ASSETS.GRAB_GUN, message: "I found five bullets for my gun.",
+				}),
+			},
+		},
 	},
 );

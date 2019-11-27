@@ -641,7 +641,7 @@ function standardBag() {
 			},
 			hidden: game => !consumable[game.useItem],
 			combine: (item, game) => {
-				if (consumable[game.useItem]) {
+				if (consumable[item]) {
 					game.sceneData.eatTime = game.now;
 					const wasHideCursor = game.hideCursor;
 					game.hideCursor = true;
@@ -1708,8 +1708,8 @@ function standardBattle() {
 					const frame = Math.floor((now - chest.opened) / 100);
 					if (frame > 4 && !chest.checked) {
 						chest.checked = now;
-						const { item, image, message } = chest;
-						game.pickUp({item, image, message:message || "", onPicked: game => {
+						const { item, count, image, message } = chest;
+						game.pickUp({item, count, image, message:message || "", onPicked: game => {
 							if (game.battle) {
 								if (!game.battle.chest) {
 									game.chest = null;

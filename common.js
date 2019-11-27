@@ -279,6 +279,7 @@ const ASSETS = {
 	FAR_FLOOR: "assets/far-floor.png",
 	FLOOR: "assets/floor.png",
 	CLOSE_FLOOR: "assets/close-floor.png",
+	BRUSALIEN: "assets/brusalien.png",
 };
 
 const SOUNDS = {

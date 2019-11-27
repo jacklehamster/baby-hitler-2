@@ -24,6 +24,7 @@ const FILE_SIZE = {
    'bottom.png' : 323,
    'brave-shield.png' : 3238,
    'bring-cake.png' : 716,
+   'brusalien.png' : 7887,
    'cafee.png' : 248,
    'cage-opened.png' : 299,
    'cage.png' : 874,

@@ -85,6 +85,7 @@ const Game = (() => {
 	function getCell(map, x, y) {
 		if (!map) {
 			console.error("You need a map!");
+			return;
 		}
 		if (y < 0 || y >= map.length || !map[y] || x < 0 || x >= map[y].length) {
 			return 'X';
@@ -559,7 +560,7 @@ const Game = (() => {
 					return;
 				}
 			}				
-			if (this.dialog) {
+			if (this.dialog && !this.pendingTip) {
 				this.checkHoveredDialog();
 				if (this.dialog.hovered) {
 					if (this.dialog.hovered.onSelect && !this.dialog.tapped) {
@@ -818,6 +819,7 @@ const Game = (() => {
 				mute: false,
 				stats: null,
 				joined: null,
+				ship: {},
 			};
 			this.setupStats();
 			this.config = null;
@@ -1366,6 +1368,9 @@ const Game = (() => {
 			if (this.evaluate(sprite.hidden, sprite)) {
 				return false;
 			}
+			if (this.evaluate(sprite.mouseHovered, sprite)) {
+				return true;
+			}
 			const { x, y } = mouse;
 
 			const { clickCtx } = this;
@@ -1389,6 +1394,12 @@ const Game = (() => {
 		}
 
 		canTurn(direction) {
+			if (this.battle) {
+				return false;
+			}
+			if (this.sceneData.freeFormMove) {
+				return true;
+			}
 			if (!this.motionAvailable) {
 				return false;
 			}
@@ -1399,6 +1410,9 @@ const Game = (() => {
 		}
 
 		canMove({x, y}, direction) {
+			if (this.battle) {
+				return false;
+			}
 			if (this.sceneData.freeFormMove) {
 				return true;
 			}
@@ -1453,20 +1467,27 @@ const Game = (() => {
 		}
 
 		currentEvent() {
-			const { events } = this;
+			const { events, map } = this;
 			if (!events) {
 				return null;
 			}
+			if (this.sceneData.currentEventCell && events[this.sceneData.currentEventCell]) {
+				return events[this.sceneData.currentEventCell];
+			}
+			if (!map) {
+				return null;
+			}
+
 			const { pos, orientation } = this;
 			const { x, y } = pos;
-			const mapPosition = Game.getPosition(x,y,0,0,orientation);
+			const mapPosition = Game.getPosition(x, y, 0, 0, orientation);
 			const cell = getCell(this.map, ... mapPosition);
 			return events[cell];			
 		}
 
 		facingEvent() {
-			const { events } = this;
-			if (!events) {
+			const { events, map } = this;
+			if (!events || !map) {
 				return null;
 			}
 			const mapPosition = this.facingPosition();
@@ -1493,21 +1514,37 @@ const Game = (() => {
 		}
 
 		checkEvents() {
-			const { events } = this;
+			const { events, map } = this;
 			if (events) {
-				const mapPosition = this.facingPosition();
-				const cell = getCell(this.map, ... mapPosition);
-				if (events[cell]) {
-					const visitTag = mapPosition.join("_");
-					if (!this.sceneData.visited[visitTag]) {
-						const { onEvent } = events[cell];
-						if (onEvent && onEvent(this, events[cell])) {
-							this.setVisited(true);
+				if (this.sceneData.currentEventCell) {
+					this.triggerEvent(this.sceneData.currentEventCell);
+					this.sceneData.currentEventTriggered = this.now;
+					return;
+				}
+
+				if (map) {
+					const mapPosition = this.facingPosition();
+					const cell = getCell(map, ... mapPosition);
+					if (events[cell]) {
+						const visitTag = mapPosition.join("_");
+						if (!this.sceneData.visited[visitTag]) {
+							if (this.triggerEvent(cell)) {
+								this.setVisited(true);							
+							}
 						}
 					}
 				}
 			}
 			return false;
+		}
+
+		triggerEvent(cell) {
+			const { events } = this;
+			if (!events[cell]) {
+				return false;
+			}
+			const { onEvent } = events[cell];
+			return onEvent && onEvent(this, events[cell]);
 		}
 
 		move(now, direction) {
@@ -1929,7 +1966,7 @@ const Game = (() => {
 				} else {
 					const tipReady = this.hoverSprite && this.evaluate(this.hoverSprite.tip, this.hoverSprite);
 					const canClick = this.hoverSprite && this.hoverSprite.onClick && !this.evaluate(this.hoverSprite.preventClick);
-					const noHighlight = this.hoverSprite && this.evaluate(this.hoverSprite.noHighlight);
+					const noHighlight = this.hoverSprite && this.evaluate(this.hoverSprite.noHighlight, this.hoverSprite);
 					const canCombine = this.hoverSprite && this.useItem && (this.hoverSprite.name || this.hoverSprite.combine || this.hoverSprite.combineMessage);
 					const canOpen = this.map && this.arrow === DOOR && this.matchCell(this.map,this.pos.x,this.pos.y,0,1,this.orientation,"12345",[]) && !this.doorOpening;
 
@@ -3222,6 +3259,9 @@ const Game = (() => {
 					}
 					this.battle.onWin(this, this.battle);
 				}
+
+				this.sceneData.currentEventCell = null;
+				this.sceneData.currentEventTriggered = null;
 			}
 		}
 
@@ -3234,11 +3274,12 @@ const Game = (() => {
 			return Math.max(2, Math.ceil(Math.log(xp))) - 1;
 		}
 
-		findChest(found, { item, image, cleared, message }) {
+		findChest(found, { item, count, image, cleared, message }) {
 			this.chest = {
 				found,
 				opened: 0,
 				checked: 0,
+				count,
 				item,
 				image,
 				cleared,

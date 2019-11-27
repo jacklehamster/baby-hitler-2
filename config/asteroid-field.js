@@ -39,7 +39,7 @@ gameConfig.scenes.push(
 				game.sceneData.asteroids = [];
 				game.sceneData.passed = game.now;
 				game.waitCursor = true;
-				game.currentScene.startTalk(game, "yupa", "Hey gud moaning? Wad happend?", game => {
+				game.currentScene.startTalk(game, "yupa", "Hey good moaning? Wad happan?", game => {
 					game.currentScene.startTalk(game, "human", "Damnit Yupa! While you were dozing off, we just passed through\nan asteroid field!", game => {
 						game.currentScene.startTalk(game, "yupa", [
 							"Ya were drivin da ship?",
@@ -68,6 +68,8 @@ gameConfig.scenes.push(
 				});
 
 			}, 85000);
+			game.data.ship.superGun = true;
+			game.data.ship.superShield = true;
 		},
 		onSceneRefresh: ({now, sceneData}) => {
 			const time = (sceneData.shakeTime - now);
@@ -79,9 +81,9 @@ gameConfig.scenes.push(
 				sceneData.shiftY = 0;
 			}
 		},
-		drawAsteroid: (game, ctx, { rads, rotation, distance, x, y }) => {
+		drawAsteroid: (game, ctx, { rads, rotation, distance, x, y, heating, cooling }) => {
 			const { shiftX, shiftY } = game.sceneData;
-			ctx.fillStyle = "#444444";
+			ctx.fillStyle = cooling ? "#554444" : heating ? "#884444" : "#444444";
 			ctx.beginPath();
 			rads.forEach((dist, index) => {
 				const angle = Math.PI * 2 * (index / rads.length + rotation * game.now / 1000);
@@ -96,7 +98,7 @@ gameConfig.scenes.push(
 			ctx.closePath();
 			ctx.fill();
 
-			ctx.fillStyle = "#555555";
+			ctx.fillStyle = cooling ? "#665555" : heating ? "#aa5555" :  "#555555";
 			ctx.beginPath();
 			rads.forEach((dist, index) => {
 				const angle = Math.PI / 3 + Math.PI * 2 * (index / rads.length + rotation * game.now / 1000);
@@ -111,7 +113,7 @@ gameConfig.scenes.push(
 			ctx.closePath();
 			ctx.fill();
 
-			ctx.fillStyle = "#666666";
+			ctx.fillStyle = cooling ? "#886666" : heating ? "#bb6666" :  "#666666";
 			ctx.beginPath();
 			rads.forEach((dist, index) => {
 				const angle = Math.PI / 2 + Math.PI * 2 * (index / rads.length + rotation * game.now / 1000);
@@ -146,6 +148,9 @@ gameConfig.scenes.push(
 					ctx.fillStyle = "#000011";
 					ctx.fillRect(0, 0, 64, 64);
 				},
+			},
+			{
+				mouseHovered: true,
 				onClick: game => {
 					const {sceneData, now} = game;
 					if (sceneData.shots > 0) {
@@ -172,6 +177,7 @@ gameConfig.scenes.push(
 						sceneData.lastShot = 0;
 					}
 				},
+				hidden: game => game.data.ship.superGun,
 			},
 			{
 				init: game => {
@@ -205,6 +211,43 @@ gameConfig.scenes.push(
 					});
 					ctx.putImageData(imageData, 0, 0);
 				},
+			},
+			{
+				custom: ({now, sceneTime, sceneData, mouseDown}, sprite, ctx) => {
+					if (now - sceneTime > 1000 && sceneData.ship && mouseDown && sceneData.shots > 0) {
+						const { x, y } = sceneData.ship;
+						const rx = Math.round(x), ry = Math.round(y);
+						ctx.fillStyle = "#ffdddd";
+						ctx.fillRect(rx-3, ry-64, 6, 64);
+					}
+				},
+				onRefresh: (game, sprite) => {
+					const {sceneData, mouseDown, now, data} = game;
+					if (data.gameOver) {
+						return;
+					}
+					const delay = 150;
+					let didShoot = false;
+					if (mouseDown && now - sceneData.lastShot > delay) {
+						if (sceneData.shots > 0) {
+							game.playSound(SOUNDS.LAZER);
+							sceneData.shots -= 2.5;
+							didShoot = true;
+						} else {
+							game.playSound(SOUNDS.ERROR);
+						}
+						sceneData.lastShot = now;
+					} else if (!mouseDown) {
+						sceneData.lastShot = 0;
+					}
+					if (!didShoot) {
+						if (!sceneData.lastRecharge || now - sceneData.lastRecharge > delay) {
+							sceneData.shots = Math.min(game.sceneData.maxShots, sceneData.shots + 1);
+							sceneData.lastRecharge = now;
+						}
+					}
+				},				
+				hidden: game => !game.data.ship.superGun,
 			},
 			{
 				init: game => {
@@ -263,8 +306,29 @@ gameConfig.scenes.push(
 						game.currentScene.drawAsteroid(game, ctx, asteroid);
 					});
 				},
+				destroyAsteroid: (asteroid, game, sprite) => {
+					asteroid.destroyed = game.now;
+					game.playSound(SOUNDS.HIT_LAND);
+
+					if (asteroid.distance > 2) {
+						const debris = [
+							sprite.initialize(game, {}),
+							sprite.initialize(game, {}),
+						];
+						debris.forEach(debris => {
+							debris.x = asteroid.x;
+							debris.y = asteroid.y;
+							debris.dx = asteroid.dx + Math.random() - .5;
+							debris.dy = asteroid.dy /2;
+							debris.distance = asteroid.distance / 2;
+							game.sceneData.asteroids.push(debris);
+						});
+					}
+
+					game.currentScene.makeDust(game, asteroid);
+				},
 				onRefresh: (game, sprite) => {
-					const {sceneData, now, sceneTime} = game;
+					const {sceneData, now, sceneTime, mouseDown} = game;
 					sceneData.asteroids.forEach((asteroid, index) => {
 						const shipDist = 2 + asteroid.distance;
 						const hitDist = 4 + asteroid.distance;
@@ -296,12 +360,15 @@ gameConfig.scenes.push(
 						if (Math.abs(asteroid.x - sceneData.ship.x) < shipDist && Math.abs(asteroid.y - sceneData.ship.y) < shipDist) {
 							if (sceneData.lives > 0) {
 								//	player collision
-								game.playSound(SOUNDS.PLAYER_HURT);
+								game.playSound(game.data.ship.superShield ? SOUNDS.DUD : SOUNDS.PLAYER_HURT);
 								asteroid.destroyed = true;
 								const speed = Math.sqrt(asteroid.dx * asteroid.dx + asteroid.dy * asteroid.dy);
-								sceneData.shakeTime = Math.max(now + (asteroid.distance * speed * 400), sceneData.shakeTime||0);
+								if (!game.data.ship.superShield) {
+									sceneData.shakeTime = Math.max(now + (asteroid.distance * speed * 400), sceneData.shakeTime||0);
+								}
 								game.currentScene.makeDust(game, asteroid, "#882200");
-								sceneData.lives-= (asteroid.distance * speed) / (sceneData.lives < sceneData.maxLives / 4 ? 2 : 1);
+								const damage = (asteroid.distance * speed) / (sceneData.lives < sceneData.maxLives / 4 ? 2 : 1);
+								sceneData.lives -= game.data.ship.superShield ? Math.sqrt(damage) : damage;
 								if (sceneData.lives <= 0) {
 									game.currentScene.makeDust(game, asteroid, "#888888");
 									game.gameOver("    “The odds of\n    navigating an\n    asteroid field\n    is 3721 to 1”");
@@ -312,28 +379,41 @@ gameConfig.scenes.push(
 							sceneData.missiles.forEach(missile => {			
 								const { x, y } = missile;			
 								if (Math.abs(asteroid.x - x)<=hitDist && Math.abs(asteroid.y - y)<=hitDist) {
-									asteroid.destroyed = game.now;
 									missile.destroyed = game.now;
-									game.playSound(SOUNDS.HIT_LAND);
-
-									if (asteroid.distance > 2) {
-										const debris = [
-											sprite.initialize(game, {}),
-											sprite.initialize(game, {}),
-										];
-										debris.forEach(debris => {
-											debris.x = asteroid.x;
-											debris.y = asteroid.y;
-											debris.dx = asteroid.dx + Math.random() - .5;
-											debris.dy = asteroid.dy /2;
-											debris.distance = asteroid.distance / 2;
-											sceneData.asteroids.push(debris);
-										});
-									}
-
-									game.currentScene.makeDust(game, asteroid);
+									sprite.destroyAsteroid(asteroid, game, sprite);
 								}
 							});
+
+							let shot = false;
+							//	superLazer collision
+							if (game.data.ship.superGun && mouseDown && sceneData.shots > 0) {
+								const { x, y } = sceneData.ship;
+								if (Math.abs(asteroid.x - x) < hitDist && asteroid.y < y) {
+									//	push
+									const intensity = hitDist / Math.max(1, Math.max(asteroid.x - x));
+									const direction = asteroid.x < x ? -1 : 1;
+									asteroid.dx += direction * intensity / 50;
+									asteroid.dy -= .1;
+									shot = true;
+
+									if (Math.random() < .15) {
+										if (!asteroid.destroyed) {
+											sprite.destroyAsteroid(asteroid, game, sprite);
+										}
+									}
+
+									if (!asteroid.heating) {
+										asteroid.heating = game.now;
+										asteroid.cooling = 0;
+									}
+								}
+							}
+							if (!shot) {								
+								if (asteroid.heating && !asteroid.cooling) {
+									asteroid.heating = 0;
+									asteroid.cooling = game.now;
+								}
+							}
 						}
 					});
 					sceneData.asteroids = sceneData.asteroids.filter(({x, y, destroyed})=>{
@@ -404,7 +484,7 @@ gameConfig.scenes.push(
 					ctx.globalAlpha = 1;
 
 					if (sceneData.lives > 0) {
-						ctx.fillStyle = "#44bb44";
+						ctx.fillStyle = game.data.ship.superShield ? "#88bbaa" : "#44bb44";
 						ctx.fillRect( 5, 5, 56 * sceneData.lives / sceneData.maxLives, 1);
 					}
 
