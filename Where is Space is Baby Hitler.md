@@ -1,9 +1,9 @@
-## Where is Space is Baby Hitler?
+# Where is Space is Baby Hitler?
 
 
 
 
-# Game feedback:
+## Game feedback:
 
 - Change text when options different. ⭐
 - Make it obvious time matters
@@ -31,7 +31,7 @@
 
 
 
-# Game TODO:
+## Game TODO:
 
 - Add option for exit to main menu ⭐
 - Make maze more distinctive  ⭐
@@ -40,6 +40,6 @@
 - ground tile lighter
 
 
-
+## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
 - https://stackoverflow.com/questions/20694848/how-do-i-keep-a-mobile-browser-awake
