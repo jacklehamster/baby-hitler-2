@@ -33,3 +33,8 @@ Add escape button for battles
 Game TODO:
 Add option for exit to main menu ⭐
 Make maze more distinctive  ⭐
+
+
+
+https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
+https://stackoverflow.com/questions/20694848/how-do-i-keep-a-mobile-browser-awake
