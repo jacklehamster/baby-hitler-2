@@ -1,25 +1,25 @@
-Where is Space is Baby Hitler?
+##Where is Space is Baby Hitler?
 
 
 
 
-Game feedback:
+#Game feedback:
 
-Change text when options different. ⭐
-Make it obvious time matters
-Persist lighter. ⭐
-Make obvious there’s a lock. Add hint about it. ⭐
-Add rat as first enemy (to show blocking).
-Add more feedback during combat
-Add hint when user is stuck
-Death hints ⭐
-Pondering hints
-Restore life after death ⭐
+- Change text when options different. ⭐
+- Make it obvious time matters
+- Persist lighter. ⭐
+- Make obvious there’s a lock. Add hint about it. ⭐
+- Add rat as first enemy (to show blocking).
+- Add more feedback during combat
+- Add hint when user is stuck
+- Death hints ⭐
+- Pondering hints
+- Restore life after death ⭐
 
 TouchScreen TODO:
 
-TouchScreen battle ⭐
-TouchScreen arcade
+- TouchScreen battle ⭐
+- TouchScreen arcade
 Make arrows functional ⭐
 Handle landscape ⭐
 Asteroids
