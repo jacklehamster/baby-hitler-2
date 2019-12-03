@@ -24,6 +24,10 @@ Make arrows functional ⭐
 Handle landscape ⭐
 Asteroids
 Make dialog friendly
+show arrows on practice battle
+Add escape button for battles
+
+
 
 
 Game TODO:
