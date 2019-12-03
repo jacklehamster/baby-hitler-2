@@ -25,16 +25,20 @@ Handle landscape ⭐
 Asteroids
 Make dialog friendly
 show arrows on practice battle
-Add escape button for battles
+Fullscreen on tap
+🐞 Tap doesn't accelerate all tips
 
 
 
 
 Game TODO:
-Add option for exit to main menu ⭐
-Make maze more distinctive  ⭐
 
-Autosave
+- Add option for exit to main menu ⭐
+- Make maze more distinctive  ⭐
+- Add escape button for battles
+- Autosave
+- ground tile lighter
+
 
 
 https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
