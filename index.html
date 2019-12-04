@@ -154,9 +154,9 @@
 		let game;
 		document.addEventListener("DOMContentLoaded", e => {
 			const ctx = document.getElementById("canvas").getContext("2d");
-			const ctx2 	= document.getElementById("canvas2").getContext("2d");
+			const ctx2 	= document.getElementById("canvas2").getContext("2d",{ alpha: false });
 			const touchCtx = document.getElementById("touch-canvas").getContext("2d");
-			const touchCtx2 = document.getElementById("touch-canvas2").getContext("2d");
+			const touchCtx2 = document.getElementById("touch-canvas2").getContext("2d",{ alpha: false });
 			game = Game.start(gameConfig);
 			updateSaves();
 

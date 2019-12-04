@@ -102,6 +102,7 @@ gameConfig.scenes.push(
 						game.playTheme(null);
 					} else if(!situation.showHighScore) {
 						sceneData.gameStarted = 0;
+						sceneData.joy = 0;
 						if (!ship.lives && ship.destroyed && sceneData.score <= situation.highscores[situation.highscores.length-1].score) {
 							game.showTip(`Darn it! I can do better. I wanna play again`);
 							game.playTheme(null);
@@ -366,6 +367,19 @@ gameConfig.scenes.push(
 						}
 					}
 				},
+				onRefresh: (game, sprite) => {
+					const { sceneData, situation, now, mouseDown } = game;
+					const { gameScreen, ship, gameStarted, missiles } = sceneData;
+					if (gameStarted) {
+						if (mouseDown) {
+							if (now - ship.lastShot > 200) {
+								sprite.onClick(game);
+							}
+						} else {
+							ship.lastShot = 0;
+						}
+					}
+				},
 				tip: ({sceneData}) => sceneData.gameStarted ? null : "That looks like a fun game!",
 			},
 			{
@@ -437,6 +451,7 @@ gameConfig.scenes.push(
 					if (situation.coin > 0 && !sceneData.gameStarted) {
 						const splashTime = 2500;
 						sceneData.gameStarted = now + splashTime;
+						sceneData.joy = game.now;
 						sceneData.score = 0;
 						situation.coin --;
 						ship.destroyed = 0;
@@ -452,14 +467,18 @@ gameConfig.scenes.push(
 					} else if (situation.showHighScore) {
 						ship.lastShot = now;
 						game.playSound(SOUNDS.ERROR);
-						if (situation.initial === 2) {
+						if (situation.initial === 3) {
 							situation.showHighScore = 0;
 							situation.initial = 0;
 							ship.destroyed = 0;
 							sceneData.gameStarted = 0;
+							sceneData.joy = 0;
 						} else {
 							situation.initial = (situation.initial||0) + 1;
 						}
+					} else if (situation.gotHighScore) {
+						situation.showHighScore = game.now;
+						situation.initial = 3;
 					}
 				},
 			},
@@ -564,6 +583,9 @@ gameConfig.scenes.push(
 			{
 				src: ASSETS.TOP_5, col: 3, row: 4,
 				index: ({now, situation}) => {
+					if (situation.initial === 3) {
+						return 9;
+					}
 					const index = 4 + (situation.initial||0) * 2;
 					return Math.floor(now / 200) % 2 + index;
 				},
@@ -593,10 +615,10 @@ gameConfig.scenes.push(
 						if (hand.lastMove && now - hand.lastMove < 50) {
 							return hand.dy < 0 ? 0 : hand.dy > 0 ? 2 : 1;
 						}
-					} else if ((coin || showHighScore) && sceneData.hoverScreen) {
+					} else if ((coin || showHighScore && situation.initial < 3) && sceneData.hoverScreen) {
 						const diff = now - sceneData.hoverScreen;
 						return Math.max(0, 40 - diff / 5);
-					} else if ((coin || showHighScore) && sceneData.hoverOutScreen) {
+					} else if ((coin || showHighScore && situation.initial < 3) && sceneData.hoverOutScreen) {
 						const diff = now - sceneData.hoverOutScreen;
 						return Math.max(0, diff / 5);
 					} else {
@@ -620,10 +642,10 @@ gameConfig.scenes.push(
 					const buttonDown = ship.lastShot && now - ship.lastShot < 100 ? 1 : 0;
 					if (sceneData.gameStarted) {
 						return buttonDown;
-					} else if ((coin || showHighScore) && sceneData.hoverScreen) {
+					} else if ((coin || showHighScore && situation.initial < 3) && sceneData.hoverScreen) {
 						const diff = now - sceneData.hoverScreen;
 						return Math.max(0, 40 - diff / 5) + buttonDown;
-					} else if ((coin || showHighScore) && sceneData.hoverOutScreen) {
+					} else if ((coin || showHighScore && situation.initial < 3) && sceneData.hoverOutScreen) {
 						const diff = now - sceneData.hoverOutScreen;
 						return Math.max(0, diff / 5);
 					} else {

@@ -20,6 +20,7 @@ gameConfig.scenes.push(
 		onScene: game => {
 			game.save();
 			game.delayAction(game => {
+				game.sceneData.joy = game.now;
 				game.playTheme(SOUNDS.BATTLE_THEME, {volume: .8});
 			}, 1000);
 			game.sceneData.missiles = [];

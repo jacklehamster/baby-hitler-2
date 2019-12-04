@@ -16,11 +16,12 @@ gameConfig.scenes.push(
 
 			/** remove useless items */
 			delete game.inventory["access card"];
-			delete game.inventory["empty bottle"];
-			delete game.inventory["fruit?"];
+			// delete game.inventory["empty bottle"];
+			// delete game.inventory["fruit?"];
 			delete game.inventory["key"];
-			delete game.inventory["lighter"];
-			delete game.inventory["water bottle"];
+			// delete game.inventory["lighter"];
+			// delete game.inventory["water bottle"];
+
 			/** restore health */
 			game.data.stats.life = game.data.stats.maxLife;
 

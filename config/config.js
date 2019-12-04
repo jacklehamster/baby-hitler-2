@@ -1041,6 +1041,7 @@ function standardMenu() {
 					if (progress >= 2) {
 						game.frameIndex = 0;
 						game.menuOpening = 0;
+						game.sceneData.lifeIncrease = null;
 					}
 				}
 			},
@@ -1709,19 +1710,35 @@ function standardBattle() {
 					if (frame > 4 && !chest.checked) {
 						chest.checked = now;
 						const { item, count, image, message } = chest;
-						game.pickUp({item, count, image, message:message || "", onPicked: game => {
-							if (game.battle) {
-								if (!game.battle.chest) {
-									game.chest = null;
+						if (item) {
+							game.pickUp({item, count, image, message:message || "", onPicked: game => {
+								if (game.battle) {
+									if (!game.battle.chest) {
+										game.chest = null;
+									}
+									game.battle = null;
+								} else {
+									if (!situation.chestCleared) {
+										situation.chestCleared = {};
+									}
+									situation.chestCleared[game.frontCell()] = now;
 								}
-								game.battle = null;
-							} else {
-								if (!situation.chestCleared) {
-									situation.chestCleared = {};
-								}
-								situation.chestCleared[game.frontCell()] = now;
-							}
-						}});
+							}});
+						} else {
+							game.showTip(message||null, game => {
+								if (game.battle) {
+									if (!game.battle.chest) {
+										game.chest = null;
+									}
+									game.battle = null;
+								} else {
+									if (!situation.chestCleared) {
+										situation.chestCleared = {};
+									}
+									situation.chestCleared[game.frontCell()] = now;
+								}								
+							});
+						}
 					}
 				}
 			},

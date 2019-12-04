@@ -69,6 +69,101 @@ const Game = (() => {
 			side: RIGHT,
 			hidden: game => !game.battle || game.battle.foeDefeated,
 		},
+		JOYPAD: {
+			hidden: game => !game.sceneData.joy,
+			custom: (game, sprite, ctx) => {
+				const cx = 50, cy = 18;
+				ctx.fillStyle = "#888888";
+				ctx.beginPath();
+				ctx.arc(cx, cy, 10, 0, Math.PI * 2);
+				ctx.fill();
+				ctx.fillStyle = "#555555";
+				ctx.beginPath();
+				ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+				ctx.fill();
+				ctx.fillStyle = "#bbbbbb";
+				ctx.beginPath();
+				ctx.arc(cx, cy, 2, 0, Math.PI * 2);
+				ctx.fill();
+
+				let jx = 0, jy = 0;
+				for (let i = 0; i < game.touchList.length; i++) {
+					const { pageX, pageY } = game.touchList[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
+					const djx = (px - cx);
+					const djy = (py - cy);
+					if (px > 32) {
+						const dist = Math.sqrt(djx * djx + djy * djy);
+						jx = djx / dist * Math.min(dist, 5);
+						jy = djy / dist * Math.min(dist, 5);
+					}
+				}
+
+				const joyTop = 6;
+				ctx.fillStyle = "#bbbbbb";
+				ctx.beginPath();
+				ctx.moveTo(cx - 2, cy);
+				ctx.lineTo(cx + 2, cy);
+				ctx.lineTo(cx + jx + 2, cy + jy - joyTop);
+				ctx.lineTo(cx + jx - 2, cy + jy - joyTop);
+				ctx.lineTo(cx - 2, cy);
+				ctx.closePath();
+				ctx.fill();
+
+				ctx.strokeStyle = "#ffffff";
+				ctx.beginPath();
+				ctx.moveTo(cx - 1, cy);
+				ctx.lineTo(cx + jx -1, cy + jy - joyTop);
+				ctx.stroke();
+
+
+				ctx.fillStyle = "#77bb77";
+				ctx.beginPath();
+				ctx.arc(cx + jx, cy + jy - joyTop, 6, 0, Math.PI * 2);
+				ctx.fill();				
+				ctx.fillStyle = "#FFFFFF";
+				ctx.beginPath();
+				ctx.arc(cx + jx - 2, cy + jy - joyTop - 2, 2, 0, Math.PI * 2);
+				ctx.fill();				
+			},
+		},
+		JOYBUTTON: {
+			hidden: game => !game.sceneData.joy,
+			custom: (game, sprite, ctx) => {
+				const cx = 16, cy = 18;
+				ctx.fillStyle = "#888888";
+				ctx.beginPath();
+				ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+				ctx.fill();
+				ctx.fillStyle = "#222222";
+				ctx.beginPath();
+				ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+				ctx.fill();
+
+				ctx.fillStyle = "#bb5555";
+				ctx.beginPath();
+				ctx.arc(cx, cy+1, 6, 0, Math.PI * 2);
+				ctx.fill();				
+	
+				let joyTop = 4;
+				for (let i = 0; i < game.touchList.length; i++) {
+					const { pageX, pageY } = game.touchList[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
+					const djx = (px - cx);
+					const djy = (py - cy);
+					if (px < 32) {
+						joyTop = 1;
+					}
+				}
+
+				ctx.fillStyle = "#ff7777";
+				ctx.beginPath();
+				ctx.arc(cx, cy - joyTop, 6, 0, Math.PI * 2);
+				ctx.fill();				
+			},			
+		},
 	};
 
 	function nop() {}
@@ -275,188 +370,216 @@ const Game = (() => {
 
 			document.addEventListener('touchend', function activateMotion(e) {
 				self.touchActive = true;
-				if (e.target === canvas) {
-					const { target, changedTouches } = e;
-					const [ touch ] = changedTouches;
-					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = target;
-					self.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
+
+				if (!document.fullscreenElement && !self.disableFullScreen) {
+					self.toggleFullScreen();
+					e.preventDefault();
+					e.stopPropagation();
+				} else {
+					if (e.target === canvas) {
+						const { target, changedTouches } = e;
+						const [ touch ] = changedTouches;
+						const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = target;
+						self.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
+					}
 				}
 				document.removeEventListener('touchend', activateMotion);
+
+				registerAllTouchEvents(self);
 			});
 
 			const touchCanvas = document.getElementById("touch-canvas");
+			function registerAllTouchEvents(game) {
 
-			//	SONG ACTIVATION
-			document.addEventListener('touchend', e => {
-				if (game.data.theme && game.soundStock[game.data.theme.song]) {
-					const audio = game.soundStock[game.data.theme.song].audio;
-					if (!audio.played.length) {
-						//	play blocked song
-						audio.play();
-						console.log("Unblocking song");
+				//	SONG ACTIVATION
+				document.addEventListener('touchend', e => {
+					if (game.data.theme && game.soundStock[game.data.theme.song]) {
+						const audio = game.soundStock[game.data.theme.song].audio;
+						if (!audio.played.length) {
+							//	play blocked song
+							audio.play();
+							console.log("Unblocking song");
+						}
 					}
-				}
-			});
+					if (!document.fullscreenElement && !self.disableFullScreen) {
+						self.toggleFullScreen();
+						e.preventDefault();
+						e.stopPropagation();
+					}
+				});
 
-			////////////////////////////////
-			//	CURSOR MODE
-			document.addEventListener('touchend', e => {
-				if (!this.touchActive) {
-					return;
-				}
-				if (e.target != canvas && e.target != touchCanvas && !event.touches.length) {
-					if (this.mouse)
-						this.lastMousePos = this.mouse;
-					this.mouse = null;
-				}
-				this.actionDown = 0;
-				this.mouseDown = 0;
-				this.clicking = false;
-				this.arrow = null;
-			});
+				////////////////////////////////
+				//	CURSOR MODE
+				document.addEventListener('touchend', e => {
+					if (!game.touchActive) {
+						return;
+					}
+					if (!document.fullscreenElement && !self.disableFullScreen) {
+						return;
+					}
+					if (e.target != canvas && e.target != touchCanvas && !event.touches.length) {
+						if (game.mouse)
+							game.lastMousePos = game.mouse;
+						game.mouse = null;
+					}
+					game.actionDown = 0;
+					game.mouseDown = 0;
+					game.clicking = false;
+					game.arrow = null;
+				});
 
-			canvas.addEventListener('touchmove', e => {
-				const { currentTarget, changedTouches } = e;
-				const [ touch ] = changedTouches;
-				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
-				this.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
-			});
+				canvas.addEventListener('touchmove', e => {
+					const { currentTarget, changedTouches } = e;
+					const [ touch ] = changedTouches;
+					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
+					game.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
+				});
 
-			canvas.addEventListener('touchstart', e => {
-				if (!this.touchActive) {
-					return;
-				}
-				const { currentTarget, changedTouches } = e;
-				const [ touch ] = changedTouches;
-				const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
-
-				this.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight);
-				this.checkMouseHover(true);
-				this.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
-				if (this.pendingTip) {
-					this.pendingTip.time -= 400;
-				}
-			});
-
-			canvas.addEventListener('touchend', e => e.preventDefault());
-
-
-			const touches = [];
-			touchCanvas.addEventListener("touchstart", ({changedTouches}) => {
-				for (let i = 0; i < changedTouches.length; i++) {
-					const {identifier, pageX, pageY} = changedTouches[i];
-					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
-					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;
-					const pos = { x: px, y: py };
-
-					if (this.battle && !this.battle.foeDefeated) {
-						if (pos.x < 32) {
-							this.arrow = null;
-						} else {
-							this.arrow = BLOCK;
-						}	
-						this.mouse = null;
-						this.actionClickAtMouse();
+				canvas.addEventListener('touchstart', e => {
+					if (!game.touchActive) {
+						return;
+					}
+					if (!document.fullscreenElement && !self.disableFullScreen) {
 						return;
 					}
 
+					const { currentTarget, changedTouches } = e;
+					const [ touch ] = changedTouches;
+					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
 
-					for (let arrow in TOUCH_SPRITES) {
-						const sprite = TOUCH_SPRITES[arrow];
-						if (this.isMouseHover(sprite, pos) && sprite.onClick) {
-							sprite.onClick(game, sprite);
-							this.mouse = null;
-							return;
-						}
-					}
-				}
-
-				for (let i = 0 ; i < changedTouches.length; i++) {
-					delete touches[changedTouches[i].identifier];					
-				}
-
-				if (!this.mouse) {
-					this.mouse = this.lastMousePos ? this.lastMousePos : {
-						x: canvas.width / 2,
-						y: canvas.height / 2,
-						fromTouch: true,
-					};
-				}
-				this.mouse.time = this.now;
-				this.lastMouseMove = this.now;
-			});
-
-			touchCanvas.addEventListener("touchmove", ({changedTouches})  => {
-				Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
-					if (!touches[identifier]) {
-						touches[identifier] = {
-							pageX,
-							pageY,
-						};
-					} else {
-						if (this.mouse) {
-							const diffX = (pageX - touches[identifier].pageX);
-							const diffY = (pageY - touches[identifier].pageY);
-							const dist = Math.sqrt(diffX * diffX + diffY * diffY);
-							const dx = diffX * canvas.width / canvas.offsetWidth * dist;
-							const dy = diffY * canvas.height / canvas.offsetHeight * dist;
-							this.mouse.x = Math.max(0, Math.min(canvas.width, this.mouse.x + dx));
-							this.mouse.y = Math.max(0, Math.min(canvas.height, this.mouse.y + dy));
-							this.mouse.fromTouch = true;
-							this.actionMoveMouse();
-						}
-						touches[identifier].pageX = pageX;
-						touches[identifier].pageY = pageY;
+					game.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight);
+					game.checkMouseHover(true);
+					game.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
+					if (game.pendingTip) {
+						game.pendingTip.time -= 400;
 					}
 				});
-			});
 
-			touchCanvas.addEventListener("touchend", ({changedTouches}) => {
-				if (this.mouse) {
-					if (this.now - this.mouse.time < 400) {
-						this.mouse.fromTouch = true;
-						this.actionClickAtMouse();
-						this.checkMouseHover(true);
-						this.actionDown = 0;
-						this.mouseDown = 0;
-						this.clicking = false;
+				canvas.addEventListener('touchend', e => e.preventDefault());
+
+				self.touchList = {length:0};
+
+				self.touchesSaved = [];
+				touchCanvas.addEventListener("touchstart", ({changedTouches, touches}) => {
+					self.touchList = touches;
+					for (let i = 0; i < changedTouches.length; i++) {
+						const {identifier, pageX, pageY} = changedTouches[i];
+						const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+						const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;
+						const pos = { x: px, y: py };
+
+						if (game.battle && !game.battle.foeDefeated) {
+							if (pos.x < 32) {
+								game.arrow = null;
+							} else {
+								game.arrow = BLOCK;
+							}	
+							game.mouse = null;
+							game.actionClickAtMouse();
+							return;
+						}
+
+
+						for (let arrow in TOUCH_SPRITES) {
+							const sprite = TOUCH_SPRITES[arrow];
+							if (game.isMouseHover(sprite, pos) && sprite.onClick) {
+								sprite.onClick(game, sprite);
+								game.mouse = null;
+								return;
+							}
+						}
 					}
-				}
-			});
-			//	END CURSOR MODE
-			///////////////////////////////////
+
+					for (let i = 0 ; i < changedTouches.length; i++) {
+						delete self.touchesSaved[changedTouches[i].identifier];					
+					}
+
+					if (!game.mouse) {
+						game.mouse = game.lastMousePos ? game.lastMousePos : {
+							x: canvas.width / 2,
+							y: canvas.height / 2,
+							fromTouch: true,
+						};
+					}
+					game.mouse.time = game.now;
+					game.lastMouseMove = game.now;
+				});
+
+				touchCanvas.addEventListener("touchmove", e  => {
+					const {changedTouches, touches} = e;
+					self.touchList = touches;
+					Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
+						if (!self.touchesSaved[identifier]) {
+							self.touchesSaved[identifier] = {
+								pageX,
+								pageY,
+							};
+						} else {
+							if (game.mouse) {
+								const diffX = (pageX - self.touchesSaved[identifier].pageX);
+								const diffY = (pageY - self.touchesSaved[identifier].pageY);
+								const dist = Math.sqrt(diffX * diffX + diffY * diffY);
+								const dx = diffX * canvas.width / canvas.offsetWidth * dist;
+								const dy = diffY * canvas.height / canvas.offsetHeight * dist;
+								game.mouse.x = Math.max(0, Math.min(canvas.width, game.mouse.x + dx));
+								game.mouse.y = Math.max(0, Math.min(canvas.height, game.mouse.y + dy));
+								game.mouse.fromTouch = true;
+								game.actionMoveMouse();
+							}
+							self.touchesSaved[identifier].pageX = pageX;
+							self.touchesSaved[identifier].pageY = pageY;
+						}
+					});
+				});
+
+				touchCanvas.addEventListener("touchend", ({changedTouches, touches}) => {
+					self.touchList = touches;
+					if (game.mouse) {
+						if (game.now - game.mouse.time < 400) {
+							game.mouse.fromTouch = true;
+							game.actionClickAtMouse();
+							game.checkMouseHover(true);
+							game.actionDown = 0;
+							game.mouseDown = 0;
+							game.clicking = false;
+						}
+					}
+				});
+				//	END CURSOR MODE
+				///////////////////////////////////
 
 
-			document.addEventListener('fullscreenerror', (event) => {
-			  	console.error('an error occurred changing into fullscreen', event);
-			});
-			document.addEventListener("fullscreenchange", () => {
-				const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-				const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);				
-				const minSize = Math.min(w, h);
-				if (!document.fullscreenElement) {
-					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
-						style.width = ``;
-						style.height = ``;
-						classList.remove("full");
-					});
-					document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
-						classList.remove("full");
-					});
-					document.querySelector(".game-container").classList.remove("full");
-				} else {
-					document.querySelectorAll(".game-size").forEach(({classList, style}) => {
-						style.width = `${minSize}px`;
-						style.height = `${minSize}px`;
-						classList.add("full");
-					});
-					document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
-						classList.add("full");
-					});
-					document.querySelector(".game-container").classList.add("full");
-				}
-			});
+				document.addEventListener('fullscreenerror', (event) => {
+				  	console.error('an error occurred changing into fullscreen', event);
+				});
+				document.addEventListener("fullscreenchange", () => {
+					const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+					const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);				
+					const minSize = Math.min(w, h);
+					if (!document.fullscreenElement) {
+						document.querySelectorAll(".game-size").forEach(({classList, style}) => {
+							style.width = ``;
+							style.height = ``;
+							classList.remove("full");
+						});
+						document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
+							classList.remove("full");
+						});
+						document.querySelector(".game-container").classList.remove("full");
+					} else {
+						document.querySelectorAll(".game-size").forEach(({classList, style}) => {
+							style.width = `${minSize}px`;
+							style.height = `${minSize}px`;
+							classList.add("full");
+						});
+						document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
+							classList.add("full");
+						});
+						document.querySelector(".game-container").classList.add("full");
+					}
+				});
 
+			}
 
 			window.oncontextmenu = function(event) {
 			     event.preventDefault();
@@ -848,7 +971,7 @@ const Game = (() => {
 		}
 
 		get granular_orientation() {
-			return ORIENTATIONS[Math.floor(this.rotation)];
+			return ORIENTATIONS[Math.round(this.rotation) % 8];
 		}
 
 		initScene() {
@@ -3001,6 +3124,16 @@ const Game = (() => {
 						this.displayImage(touchCtx, TOUCH_SPRITES[i]);
 					}
 				}
+				for (let i = 0; i < this.touchList.length; i++) {
+					const {identifier, pageX, pageY, force} = this.touchList[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;
+
+					touchCtx.beginPath();
+					touchCtx.strokeStyle = "#33336666";
+					touchCtx.arc(px, py, force*4, 0, Math.PI * 2);
+					touchCtx.stroke();
+				}
 			}
 		}
 
@@ -3257,7 +3390,7 @@ const Game = (() => {
 							}, 2000);
 						}
 					}
-					this.battle.onWin(this, this.battle);
+					this.battle.onWin(this, this.battle, shot);
 				}
 
 				this.sceneData.currentEventCell = null;

@@ -231,7 +231,7 @@ gameConfig.scenes.push(
 			// },
 			{
 				src: ASSETS.SPACESHIP, col: 1, row: 2,
-				scale: game => game.sceneData.spaceshipTemplate.scale / 2,
+				scale: game => game.sceneData.spaceshipTemplate ? game.sceneData.spaceshipTemplate.scale / 2 : 1,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.spaceshipTemplate;
 					return 32 - 32 * scale/2 + scale * dx * 10 * 5;
@@ -251,10 +251,11 @@ gameConfig.scenes.push(
 					return dy >= 2 ? -1 : 0;
 				},
 				tip: "We landed in the middle of nowhere!",
+				hidden: game => game.battle,
 				allowMove: true,
 			},
 			{
-				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
+				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
 				scale: game => game.sceneData.signTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.signTemplate;
@@ -282,17 +283,21 @@ gameConfig.scenes.push(
 				},
 				tip: (game, sprite) => {
 					const { pos } = game;
+					if (!pos) {
+						return;
+					}
 					const { x, y } = pos;
 					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
 					const dx = game.sceneData.finalTarget.x - xLoc;
 					const dy = game.sceneData.finalTarget.y - yLoc;
 					return `“Westrow tavern is ${Math.abs(dx)}m ${dx<0?"West":"East"} and ${Math.abs(dy)}m ${dy<0?"South":"North"} from here”`;
 				},
+				hidden: game => game.battle,
 				allowMove: true,
 			},
 			{
-				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
-				scale: game => game.sceneData.nomadTemplate.scale / 2,
+				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
+				scale: game => game.sceneData.nomadTemplate ? game.sceneData.nomadTemplate.scale / 2 : 1,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.nomadTemplate;
 					return 32 - 64 * scale / 2 + scale * dx * 10 * 5;
@@ -325,6 +330,9 @@ gameConfig.scenes.push(
 				},
 				hidden: (game, sprite) => {
 					const { pos } = game;
+					if (!game.sceneData.nomadTemplate || game.battle) {
+						return true;
+					}
 					if (!pos) {
 						return false;
 					}
@@ -455,6 +463,16 @@ gameConfig.scenes.push(
 										},										
 									},
 									{
+										msg: "Where are we?",
+										onSelect: game => {
+											game.showTip([
+												"This is the wastland of Westrow.",
+												"It's also the game scene with the most buggy implementation.",
+												"You gotta forgive the creator...",
+											], null, null, {removeLock: true});
+										},
+									},
+									{
 										msg: "Back",
 										onSelect: game => {
 											game.dialog.index --;
@@ -467,9 +485,9 @@ gameConfig.scenes.push(
 				},
 				allowMove: true,
 			},
-			{
-				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
-				scale: game => game.sceneData.treeTemplate.scale / 2,
+			{	//	tree
+				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
+				scale: game => game.sceneData.treeTemplate ? game.sceneData.treeTemplate.scale / 2 : 1,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.treeTemplate;
 					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
@@ -492,8 +510,85 @@ gameConfig.scenes.push(
 				},
 				allowMove: true,
 			},
-			{
-				src: ASSETS.PLANET_ITEMS, col: 3, row: 4, size: [128,128],
+			{	//	tree fruit
+				src: ASSETS.GRAB_APPLE,
+				scale: game => game.sceneData.treeTemplate ? game.sceneData.treeTemplate.scale / 2 : 1,
+				offsetX: game => {
+					const { dx, dy, scale } = game.sceneData.treeTemplate;
+					return 32 - 64 * scale/2 + scale * (dx * 10 * 5 + 10);
+				},
+				offsetY: game => {
+					const { dx, dy, scale } = game.sceneData.treeTemplate;
+					return 40 - 64 * scale/2 + scale * (10 - 30);
+				},
+				onRefresh: game => {
+					const { pos } = game;
+					const { x, y } = pos;
+					game.sceneData.treeTemplate = game.currentScene.getTemplate(game, Math.round((x) / 30) * 30, Math.round((y-15) / 30) * 30 + 15);
+				},
+				init: (game, sprite) => {
+					sprite.onRefresh(game);
+				},
+				index: game => {
+					const { dx, dy, scale } = game.sceneData.treeTemplate;
+					return dy >= 2 ? -1 : 1;
+				},
+				tip: "There's a fruit on that tree.",
+				allowMove: true,
+				hidden : game => {
+					return game.sceneData.grabbedFruit && game.now - game.sceneData.grabbedFruit < 100000;
+				},
+				onClick: game => {
+					game.sceneData.grabbedFruit = game.now;
+					game.pickUp({item:"fruit?", image:ASSETS.GRAB_APPLE});					
+				},
+			},
+			{	//	fountain
+				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
+				scale: game => game.sceneData.fountainTemplate ? game.sceneData.fountainTemplate.scale / 4 : 1,
+				offsetX: game => {
+					if (!game.sceneData.fountainTemplate) {
+						return 0;
+					}
+					const { dx, dy, scale } = game.sceneData.fountainTemplate;
+					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
+				},
+				offsetY: game => {
+					if (!game.sceneData.fountainTemplate) {
+						return 0;
+					}
+					const { dx, dy, scale } = game.sceneData.fountainTemplate;
+					return 40 - 64 * scale/2 + scale * (10 - 5);
+				},
+				onRefresh: game => {
+					const { pos } = game;
+					const { x, y } = pos;
+					game.sceneData.fountainTemplate = game.currentScene.getTemplate(game, Math.round((x) / 39) * 39, Math.round((y-15) / 39) * 39 + 7);
+				},
+				init: (game, sprite) => {
+					sprite.onRefresh(game);
+				},
+				index: game => {
+					if (!game.sceneData.fountainTemplate) {
+						return -1;
+					}
+					const { dx, dy, scale } = game.sceneData.fountainTemplate;
+					return dy >= 2 ? -1 : 3;
+				},
+				combine: game => {
+					if (item === "empty bottle") {
+						game.removeFromInventory("empty bottle");
+						game.useItem = null;
+						game.pickUp({item:"water bottle", image:ASSETS.GRAB_WATER_BOTTLE, message:"It does look like water... so far."});
+						return true;
+					}
+				},
+				tip: "There's water pouring out of this fountain.",
+				hidden: game => game.battle,
+				allowMove: true,
+			},
+			{	//	temple
+				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
 				scale: game => game.sceneData.templeTemplate.scale / 2,
 				offsetX: game => {
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
@@ -515,15 +610,103 @@ gameConfig.scenes.push(
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return dy >= 2 ? -1 : 2;
 				},
+				tip: "This is it! Westrow's tavern!",
 				allowMove: true,
 			},
 			makeFoe('monster', ASSETS.MONSTER),
 			makeFoe('brusalien', ASSETS.BRUSALIEN),
+			{
+				init: ({sceneData}) => {
+					sceneData.compassRotation = game.rotation;
+					sceneData.compassRotationDirection = 0;
+				},
+				onRefresh: game => {
+				},
+				custom: (game, sprite, ctx) => {
+					const x = 54, y = 57;
+					ctx.strokeStyle = "#aaaaaa";
+					ctx.fillStyle = "#222233";
+					ctx.beginPath();
+					ctx.ellipse(x, y, 8, 4, 0, 0, 2 * Math.PI);
+					ctx.fill();
+					ctx.stroke();
+
+					const angle = game.rotation / 8 * Math.PI * 2;
+					ctx.strokeWidth = 3;
+					ctx.strokeStyle = "#9999aa";
+					ctx.beginPath();
+					ctx.moveTo(x, y+1);
+					ctx.lineTo(x - Math.sin(angle) * 6, y + Math.cos(angle) * 3);
+					ctx.stroke();
+					ctx.strokeStyle = "#aa0000";
+					ctx.beginPath();
+					ctx.moveTo(x, y+1);
+					ctx.lineTo(x + Math.sin(angle) * 6, y - Math.cos(angle) * 3);
+					ctx.stroke();
+
+					const orientation = game.granular_orientation;
+					game.displayTextLine(ctx, {msg: orientation, x: y-5 + (orientation.length === 1 ? 3 : 0), y: y-2});
+
+					ctx.fillStyle = "#cccccc55";
+					ctx.beginPath();
+					ctx.ellipse(x-1, y-1, 3, 1, 0, 0, 2 * Math.PI);
+					ctx.fill();					
+				},
+				hidden: game => !game.inventory.compass || game.battle || game.dialog || game.useItem === "compass",
+			},
 			...standardBattle(),
 			...standardMenu(),
 			...standardBag(),		
 		],
 		... makeOnSceneBattle(),
+		openChest: (game, battle, shot) => {
+			if (game.now - game.sceneData > 360000 && !game.inventory.compass) {
+				game.findChest(game.now + 2000, {
+					item:"compass", image:ASSETS.GRAB_COMPASS, message: "A compass!",
+				});						
+				return;
+			}
+
+
+			const rand = Math.floor(Math.random() * 10000000);
+			switch(rand % 10) {
+				case 0: 
+				case 1: 
+					game.findChest(game.now + 2000, {
+						item:"bullet", count: 5, image:ASSETS.GRAB_GUN, message: "I found five bullets for my gun.",
+					});
+					break;
+				case 2:
+				case 3:
+				case 4:
+					game.findChest(game.now + 2000, {
+						item:"fruit?", image:ASSETS.GRAB_APPLE,
+					});
+					break;
+				case 5:
+					if (!game.inventory.compass && game.now - game.sceneData > 120000) {
+						game.findChest(game.now + 2000, {
+							item:"compass", image:ASSETS.GRAB_COMPASS, message: "A compass!",
+						});						
+					} else {
+						game.findChest(game.now + 2000, {
+							item:"bullet", count: 1, image:ASSETS.GRAB_GUN, message: "I found one bullet for my gun.",
+						});						
+					}
+					break;
+				default:
+					if (shot) {
+						game.findChest(game.now + 2000, {
+							item: null, message: "The chest is empty!",
+						});
+					} else {
+						game.findChest(game.now + 2000, {
+							item:"bullet", count: 1, image:ASSETS.GRAB_GUN, message: "I found one bullet for my gun.",
+						});						
+					}
+					break;
+			}
+		},
 		events: {
 			'm': {
 				foe: "monster",
@@ -573,9 +756,7 @@ gameConfig.scenes.push(
 					}
 					return true;
 				},
-				onWin: game => game.findChest(game.now + 2000, {
-					item:"bullet", count: 3, image:ASSETS.GRAB_GUN, message: "I found three bullets for my gun.",
-				}),
+				onWin: (game, battle, shot) => game.currentScene.openChest(game, battle, shot),
 			},
 			'b': {
 				foe: "brusalien",
@@ -625,9 +806,7 @@ gameConfig.scenes.push(
 					}
 					return true;
 				},
-				onWin: game => game.findChest(game.now + 2000, {
-					item:"bullet", count: 5, image:ASSETS.GRAB_GUN, message: "I found five bullets for my gun.",
-				}),
+				onWin: (game, battle, shot) => game.currentScene.openChest(game, battle, shot),
 			},
 		},
 	},
