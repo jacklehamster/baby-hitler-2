@@ -175,6 +175,7 @@ const FILE_SIZE = {
    'moon-base-guard.png' : 311,
    'moon-base.png' : 1174,
    'mountains.png' : 262,
+   'multi-arrows.png' : 516,
    'next-scene.png' : 161,
    'no-hand.png' : 161,
    'operation-room.png' : 1135,

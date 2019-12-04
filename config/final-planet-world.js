@@ -589,12 +589,18 @@ gameConfig.scenes.push(
 			},
 			{	//	temple
 				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
-				scale: game => game.sceneData.templeTemplate.scale / 2,
+				scale: game => game.sceneData.templeTemplate ? game.sceneData.templeTemplate.scale / 2 : 1,
 				offsetX: game => {
+					if (!game.sceneData.templeTemplate) {
+						return 0;
+					}
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
 				},
 				offsetY: game => {
+					if (!game.sceneData.templeTemplate) {
+						return 0;
+					}
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return 40 - 64 * scale/2 + scale * (10 - 30);
 				},

@@ -281,6 +281,7 @@ const ASSETS = {
 	CLOSE_FLOOR: "assets/close-floor.png",
 	BRUSALIEN: "assets/brusalien.png",
 	GRAB_COMPASS: "assets/grab-compass.png",
+	MULTI_ARROWS: "assets/multi-arrows.png",
 };
 
 const SOUNDS = {

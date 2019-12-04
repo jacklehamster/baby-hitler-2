@@ -31,7 +31,7 @@ const Game = (() => {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => game.actionDown === LEFT && game.turning ? 1 : 0,
 			side: LEFT,
-			hidden: game => !game.canTurn("left"),
+			hidden: game => game.sceneData.freeFormMove || !game.canTurn("left"),
 			onClick: game => game.processArrow(LEFT),
 			alpha: .5,
 		},
@@ -39,21 +39,21 @@ const Game = (() => {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => game.actionDown === RIGHT && game.turning ? 1 : 0,
 			side: RIGHT,
-			hidden: game => !game.canTurn("right"),
+			hidden: game => game.sceneData.freeFormMove || !game.canTurn("right"),
 			onClick: game => game.processArrow(RIGHT),
 			alpha: .5,
 		},
 		FORWARD: {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => 2 + (game.actionDown === FORWARD && game.moving ? 1 : 0),
-			hidden: game => !game.pos || !game.canMove(game.pos, 1),
+			hidden: game => game.sceneData.freeFormMove || !game.pos || !game.canMove(game.pos, 1),
 			onClick: game => game.processArrow(FORWARD),
 			alpha: .5,
 		},
 		BACKWARD: {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => 4 + (game.actionDown === BACKWARD && game.moving ? 1 : 0),
-			hidden: game => !game.pos || !game.canMove(game.pos, -1),
+			hidden: game => game.sceneData.freeFormMove || !game.pos || !game.canMove(game.pos, -1),
 			onClick: game => game.processArrow(BACKWARD),
 			alpha: .5,
 		},
@@ -69,8 +69,56 @@ const Game = (() => {
 			side: RIGHT,
 			hidden: game => !game.battle || game.battle.foeDefeated,
 		},
+		MULTI_ARROWS: {
+			src: ASSETS.MULTI_ARROWS, size: [64, 32],
+			hidden: game => game.battle || !game.sceneData.freeFormMove,
+		},
 		JOYPAD: {
 			hidden: game => !game.sceneData.joy,
+			onRefresh: (game, sprite) => {
+				const { sceneData } = game;
+				if (!sceneData.joystick) {
+					sceneData.joystick = {};
+				}
+				const cx = 50, cy = 18;
+				let jx = 0, jy = 0;
+				for (let i = 0; i < game.touchList.length; i++) {
+					const { pageX, pageY } = game.touchList[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
+					const djx = (px - cx);
+					const djy = (py - cy);
+					if (px > 32) {
+						const dist = Math.sqrt(djx * djx + djy * djy);
+						jx = djx / dist * Math.min(dist, 5);
+						jy = djy / dist * Math.min(dist, 5);
+					}
+				}
+				sceneData.joystick.jx = jx;
+				sceneData.joystick.jy = jy;
+
+				if (!game.mouse) {
+					game.mouse = game.lastMousePos ? game.lastMousePos : {
+						x: canvas.width / 2,
+						y: canvas.height / 2,
+						fromTouch: true,
+					};
+				}
+				const dist = Math.sqrt(jx*jx + jy*jy);
+
+				const { gameScreen } = sceneData;
+				const limitLeft = gameScreen ? gameScreen.x + 1 : 0;
+				const limitTop = gameScreen ? gameScreen.y + 1 : 0;
+				const limitBottom = gameScreen ? gameScreen.y + gameScreen.height - 2 : canvas.height;
+				const limitRight = gameScreen ? gameScreen.x + gameScreen.width - 2 : canvas.height;
+				const speed = gameScreen ? .3 : 1;
+				if (dist) {
+					game.mouse.x = game.mouse.x + jx / dist * speed;
+					game.mouse.y = game.mouse.y + jy / dist * speed;
+				}
+				game.mouse.x = Math.max(limitLeft, Math.min(limitRight, game.mouse.x));
+				game.mouse.y = Math.max(limitTop, Math.min(limitBottom, game.mouse.y));
+			},
 			custom: (game, sprite, ctx) => {
 				const cx = 50, cy = 18;
 				ctx.fillStyle = "#888888";
@@ -86,19 +134,7 @@ const Game = (() => {
 				ctx.arc(cx, cy, 2, 0, Math.PI * 2);
 				ctx.fill();
 
-				let jx = 0, jy = 0;
-				for (let i = 0; i < game.touchList.length; i++) {
-					const { pageX, pageY } = game.touchList[i];
-					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
-					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
-					const djx = (px - cx);
-					const djy = (py - cy);
-					if (px > 32) {
-						const dist = Math.sqrt(djx * djx + djy * djy);
-						jx = djx / dist * Math.min(dist, 5);
-						jy = djy / dist * Math.min(dist, 5);
-					}
-				}
+				const { jx, jy } = game.sceneData.joystick;
 
 				const joyTop = 6;
 				ctx.fillStyle = "#bbbbbb";
@@ -117,7 +153,6 @@ const Game = (() => {
 				ctx.lineTo(cx + jx -1, cy + jy - joyTop);
 				ctx.stroke();
 
-
 				ctx.fillStyle = "#77bb77";
 				ctx.beginPath();
 				ctx.arc(cx + jx, cy + jy - joyTop, 6, 0, Math.PI * 2);
@@ -130,6 +165,21 @@ const Game = (() => {
 		},
 		JOYBUTTON: {
 			hidden: game => !game.sceneData.joy,
+			onRefresh: (game, sprite) => {
+				if (!game.sceneData.joystick) {
+					game.sceneData.joystick = {};
+				}
+				game.sceneData.joystick.pressed = 0;
+				for (let i = 0; i < game.touchList.length; i++) {
+					const { pageX, pageY } = game.touchList[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
+					if (px < 32) {
+						game.sceneData.joystick.pressed = game.now;
+					}
+				}
+				game.mouseDown = game.sceneData.joystick.pressed;
+			},
 			custom: (game, sprite, ctx) => {
 				const cx = 16, cy = 18;
 				ctx.fillStyle = "#888888";
@@ -145,18 +195,9 @@ const Game = (() => {
 				ctx.beginPath();
 				ctx.arc(cx, cy+1, 6, 0, Math.PI * 2);
 				ctx.fill();				
-	
-				let joyTop = 4;
-				for (let i = 0; i < game.touchList.length; i++) {
-					const { pageX, pageY } = game.touchList[i];
-					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
-					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
-					const djx = (px - cx);
-					const djy = (py - cy);
-					if (px < 32) {
-						joyTop = 1;
-					}
-				}
+
+				const { pressed } = game.sceneData.joystick;	
+				const joyTop = pressed ? 1 : 4;
 
 				ctx.fillStyle = "#ff7777";
 				ctx.beginPath();
@@ -462,6 +503,10 @@ const Game = (() => {
 				self.touchesSaved = [];
 				touchCanvas.addEventListener("touchstart", ({changedTouches, touches}) => {
 					self.touchList = touches;
+					if (game.sceneData.joy) {
+						return;
+					}
+
 					for (let i = 0; i < changedTouches.length; i++) {
 						const {identifier, pageX, pageY} = changedTouches[i];
 						const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
@@ -508,6 +553,10 @@ const Game = (() => {
 				touchCanvas.addEventListener("touchmove", e  => {
 					const {changedTouches, touches} = e;
 					self.touchList = touches;
+					if (game.sceneData.joy) {
+						return;
+					}
+
 					Array.prototype.slice.call(changedTouches).forEach(({identifier, pageX, pageY}) => {
 						if (!self.touchesSaved[identifier]) {
 							self.touchesSaved[identifier] = {
@@ -534,6 +583,10 @@ const Game = (() => {
 
 				touchCanvas.addEventListener("touchend", ({changedTouches, touches}) => {
 					self.touchList = touches;
+					if (game.sceneData.joy) {
+						return;
+					}
+
 					if (game.mouse) {
 						if (game.now - game.mouse.time < 400) {
 							game.mouse.fromTouch = true;
@@ -3118,6 +3171,16 @@ const Game = (() => {
 
 		displayTouchscreen() {
 			if (this.touchActive) {
+				for (let i in TOUCH_SPRITES) {
+					const { onRefresh, hidden } = TOUCH_SPRITES[i];
+					if (!this.evaluate(hidden)) {
+						if (onRefresh) {
+							onRefresh(game, TOUCH_SPRITES[i]);
+						}
+					}
+				}
+
+
 				touchCtx.clearRect(0, 0, 64, 32);
 				if (!this.hideCursor && !this.waitCursor) {
 					for (let i in TOUCH_SPRITES) {

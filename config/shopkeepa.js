@@ -1012,7 +1012,11 @@ gameConfig.scenes.push(
 					{ item: "bullet", 		name: "bullet", 		cost: 5,	src: ASSETS.GRAB_GUN,			available:true,
 						msg: "A bit expensive, but it'll help you out in a fight.",
 					},
-					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,			available:false,
+					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available:false,
+						msg: "Travel to planets lightyears away!",
+					},
+					{ item: "compass",		name: "compass",		cost: 50,	src: ASSETS.GRAB_COMPASS,		available:true,
+						msg: "The red arrow always points to the north.",
 					},
 				];
 			}
