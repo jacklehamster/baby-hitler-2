@@ -10,7 +10,7 @@
 - Persist lighter. ⭐
 - Make obvious there’s a lock. Add hint about it. ⭐
 - Add rat as first enemy (to show blocking).
-- Add more feedback during combat
+- Add more feedback during combat ⭐
 - Add hint when user is stuck
 - Death hints ⭐
 - Pondering hints
@@ -19,13 +19,13 @@
 ## TouchScreen TODO:
 
 - TouchScreen battle ⭐
-- TouchScreen arcade
+- TouchScreen arcade ⭐
 - Make arrows functional ⭐
 - Handle landscape ⭐
-- Asteroids / arcade
+- Asteroids / arcade ⭐
 - Make dialog friendly
 - show arrows on practice battle
-- Fullscreen on tap
+- Fullscreen on tap ⭐
 - 🐞 Tap doesn't accelerate all tips
 
 
