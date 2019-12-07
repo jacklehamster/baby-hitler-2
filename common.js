@@ -114,6 +114,7 @@ const ASSETS = {
 	COIN_1: "assets/coin-1.png",
 	COIN_2: "assets/coin-2.png",
 	GRAB_COIN: "assets/grab-coin.png",
+	GRAB_COIN_DARKER: "assets/grab-coin.png|darken",
 	VENDING_MACHINE_CLOSEUP: "assets/vending-machine-close.png",
 	VENDING_MACHINE_GLASS: "assets/vending-machine-glass.png",
 	VENDING_MACHINE_APPLE: "assets/vending-machine-apple.png",
@@ -283,6 +284,8 @@ const ASSETS = {
 	GRAB_COMPASS: "assets/grab-compass.png",
 	MULTI_ARROWS: "assets/multi-arrows.png",
 	MISSING_HAND_PUNCH: "assets/missing-hand-punch.png",
+	HOOK_PUNCH: "assets/hook-punch.png",
+	SUPER_PUNCH: "assets/super-punch.png",
 };
 
 const SOUNDS = {
@@ -337,7 +340,7 @@ const SOUNDS = {
 };
 
 const ALPHAS = (() => {
-	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.,?'#@!♪()[]/-+_“”éè: "
+	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.,?'#@!♪()[]/-+_“”éè:© "
    	   + new Array(10).fill(null).map((a, index) => String.fromCharCode(1000 + index)).join("");
 	const array = [];
 	for(let c = 0; c < letters.length; c++) {

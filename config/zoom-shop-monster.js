@@ -371,12 +371,12 @@ gameConfig.scenes.push(
 					game.situation.inventory.forEach(({item, name, cost, src, available}, index) => {
 						if (available) {
 							const yLine = 8 + count*6;
+							game.displayImage(ctx, {src: ASSETS.GRAB_COIN_DARKEN, index:1, offsetX: 41, offsetY: -38 + count*6});
 							if (mouse && mouse.y >= yLine && mouse.y < yLine+6 && mouse.x >= 4 && mouse.x <= 60) {
 								ctx.fillRect(4, yLine, 56, 5);
 							}
 							game.displayTextLine(ctx, {msg: name, x:5, y:yLine });
 							game.displayTextLine(ctx, {msg: ""+cost, x:43, y:yLine });
-							game.displayImage(ctx, {src: ASSETS.GRAB_COIN, index:1, offsetX: 41, offsetY: -38 + count*6});
 							count ++;
 						}
 					});

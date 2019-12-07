@@ -22,7 +22,7 @@ gameConfig.scenes.push(
 			// delete game.inventory["lighter"];
 			// delete game.inventory["water bottle"];
 
-			game.data.noLeftHand = game.now;
+			game.data.leftHand = "none";
 
 			/** restore health */
 			game.data.stats.life = game.data.stats.maxLife;

@@ -42,7 +42,7 @@ gameConfig.scenes.push(
 			{
 				custom: (game, sprite, ctx) => {
 					ctx.clearRect(0, 0, 64, 64);
-					ctx.globalAlpha = .05;
+					ctx.globalAlpha = .08;
 					for (let i= 0; i < 10; i++) {
 						game.displayTextLine(ctx, {
 							msg: "dobuki studio game",

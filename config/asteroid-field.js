@@ -69,8 +69,8 @@ gameConfig.scenes.push(
 				});
 
 			}, 85000);
-			game.data.ship.superGun = true;
-			game.data.ship.superShield = true;
+			// game.data.ship.superGun = true;
+			// game.data.ship.superShield = true;
 		},
 		onSceneRefresh: ({now, sceneData}) => {
 			const time = (sceneData.shakeTime - now);
@@ -252,7 +252,11 @@ gameConfig.scenes.push(
 			},
 			{
 				init: game => {
-					game.sceneData.ship = { x: 32, y: 32 };
+					if (!game.sceneData.ship) {
+						game.sceneData.ship = {  };
+					}
+					game.sceneData.ship.x = 32;
+					game.sceneData.ship.y = 32;
 				},
 				custom: ({now, sceneTime, sceneData}, sprite, ctx) => {
 					if (now - sceneTime > 1000) {

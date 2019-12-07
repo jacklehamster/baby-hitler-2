@@ -736,7 +736,7 @@ const Game = (() => {
 					return;
 				}
 			}				
-			if (this.dialog && !this.pendingTip) {
+			if (this.dialog && (!this.pendingTip || this.pendingTip.removeLock)) {
 				this.checkHoveredDialog();
 				if (this.dialog.hovered) {
 					if (this.dialog.hovered.onSelect && !this.dialog.tapped) {
@@ -2890,7 +2890,7 @@ const Game = (() => {
 			}
 
 			const letterTemplate = {
-				src: ASSETS.ALPHABET, col:10, row:10, size: ALPHA_SIZE,
+				src: ASSETS.ALPHABET, col:10, row:11, size: ALPHA_SIZE,
 				offsetX: 20, offsetY: 20,
 				index: game => Math.floor(game.now / 100) % 62,
 				isText: true,

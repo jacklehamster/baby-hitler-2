@@ -148,7 +148,7 @@ gameConfig.scenes.push(
 							{
 								msg: game => game.sceneData.itemToBuy && game.sceneData.itemToBuy.item === "tip" ? "Yes, help me!" : "Sure",
 								onSelect: (game, dialog) => {
-									const {item, name, cost, src, available, msg} = game.sceneData.itemToBuy;
+									const {item, name, cost, src, available, msg, onBuy, count} = game.sceneData.itemToBuy;
 									if (cost <= game.countItem("coin")) {
 										game.removeFromInventory("coin", cost);
 										if (item === "tip") {
@@ -161,11 +161,16 @@ gameConfig.scenes.push(
 												game.situation.hints = {};
 											}
 											return;
+										} else if (!src && onBuy) {
+											game.playSound(SOUNDS.PICKUP);
+											onBuy(game, game => {
+												game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
+											});
 										} else {
-											game.pickUp({item, image:src, onPicked: game => {
+											game.pickUp({item, image:src, count, onPicked: game => {
 												game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
 											}});
-											const itemObj = game.situation.inventory.filter(obj=>obj.item===item)[0];
+											const itemObj = game.situation.inventory.filter(obj=>obj.item === item)[0];
 											if (itemObj && itemObj.unique) {
 												itemObj.available = false;
 											}
@@ -382,9 +387,9 @@ gameConfig.scenes.push(
 													"It can take you there a couple days!",
 													"It is quite costly, but if you can afford it...",
 												], game => {
-													game.situation.inventory.filter(({item}) => item==="warpdrive").forEach(item => {
-														item.available = true;
-													});
+													// game.situation.inventory.filter(({item}) => item==="warpdrive").forEach(item => {
+													// 	item.available = true;
+													// });
 													game.situation.askedWhereInSpace = game.now;
 													if (game.situation.askedWhereInSpace && game.situation.askedHowHeLookedLike) {
 														dialog.index = 0;
@@ -1006,17 +1011,66 @@ gameConfig.scenes.push(
 		onScene: game => {
 			if (!game.situation.inventory) {
 				game.situation.inventory = [
-					{ item: "tip",			name: "tip",			cost: 1,									available:true,
-						msg: "Don't know what to do? I can give you a hint.",
+					// { item: "tip",			name: "tip",			cost: 1,									available:true,
+					// 	msg: "Don't know what to do? I can give you a hint.",
+					// },
+					{ item: "bullet", 		name: "10 bullets", 	cost: 40,	src: ASSETS.GRAB_GUN,			available:true,
+						count: 10,
+						msg: "We sell amunition for your gun in packs of 10.",
 					},
-					{ item: "bullet", 		name: "bullet", 		cost: 5,	src: ASSETS.GRAB_GUN,			available:true,
-						msg: "A bit expensive, but it'll help you out in a fight.",
-					},
-					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available:false,
+					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available: game => game.situation.askedWhereInSpace,
 						msg: "Travel to planets lightyears away!",
 					},
 					{ item: "compass",		name: "compass",		cost: 50,	src: ASSETS.GRAB_COMPASS,		available:true,
 						msg: "The red arrow always points to the north.",
+					},
+					{ item: "superarm",	name: "superarm",			cost: 500,	available: game => game.data.leftHand !== "super",
+						msg: "This can replace your missing left hand. It delivers a powerful punch.",
+						onBuy: (game, callback) => {
+							game.data.leftHand = "super";
+							game.sceneData.showLeftArm = game.now;
+							game.dialog.paused = true;
+							game.delayAction(game => {
+								game.dialog.paused = false;
+								game.sceneData.showLeftArm = 0;
+								callback(game);
+							}, 3000);
+						},
+					},
+					{ item: "hook",	name: "hook",					cost: 50,	available: game => game.data.leftHand !== "hook",
+						msg: "This can replace your missing left hand.",
+						onBuy: (game, callback) => {
+							game.data.leftHand = "hook";
+							game.sceneData.showLeftArm = game.now;
+							game.dialog.paused = true;
+							game.delayAction(game => {
+								game.dialog.paused = false;
+								game.sceneData.showLeftArm = 0;
+								callback(game);
+							}, 3000);
+						},
+					},
+					{ item: "shipgun", name: "X-canon", cost: 400, available: game => !game.data.ship || !game.data.ship.superGun,
+						msg: "This is a great canon for your ship. It blasts a continuous powerful lazer that recharges.",
+						onBuy: (game, callback) => {
+							if (!game.data.ship) {
+								game.data.ship = {};
+							}
+							game.data.ship.superGun = true;
+							game.playSound(SOUNDS.JINGLE);
+							callback(game);
+						},
+					},
+					{ item: "shipshield", name: "X-shield", cost: 300, available: game => !game.data.ship || !game.data.ship.superShield,
+						msg: "This is a sturdy rechargeable shield for your ship.",
+						onBuy: (game, callback) => {
+							if (!game.data.ship) {
+								game.data.ship = {};
+							}
+							game.data.ship.superShield = true;
+							game.playSound(SOUNDS.JINGLE);
+							callback(game);
+						}
 					},
 				];
 			}
@@ -1287,14 +1341,21 @@ gameConfig.scenes.push(
 					const { mouse } = game;
 					ctx.fillStyle = "#889933";
 					game.situation.inventory.forEach(({item, name, cost, src, available}, index) => {
-						if (available) {
+						if (game.evaluate(available)) {
 							const yLine = 8 + count*6;
-							if (mouse && mouse.y >= yLine && mouse.y < yLine+6 && mouse.x >= 4 && mouse.x <= 60) {
+							const hovered = mouse && mouse.y >= yLine && mouse.y < yLine+6 && mouse.x >= 4 && mouse.x <= 60;
+							game.displayImage(ctx, {src: ASSETS.GRAB_COIN_DARKER, index:1, offsetX: 41, offsetY: -38 + count*6});
+							if (hovered) {
 								ctx.fillRect(4, yLine, 56, 5);
 							}
 							game.displayTextLine(ctx, {msg: name, x:5, y:yLine });
-							game.displayTextLine(ctx, {msg: ""+cost, x:43, y:yLine });
-							game.displayImage(ctx, {src: ASSETS.GRAB_COIN, index:1, offsetX: 41, offsetY: -38 + count*6});
+							if (cost > game.countItem("coin")) {
+								ctx.globalAlpha = .3;								
+							}
+							game.displayTextLine(ctx, {msg: (cost >= 1000 && cost%1000===0) ? (cost/1000) + "k" : ""+cost, x:43, y:yLine, });
+							if (cost > game.countItem("coin")) {
+								ctx.globalAlpha = 1;								
+							}
 							count ++;
 						}
 					});
@@ -1302,7 +1363,7 @@ gameConfig.scenes.push(
 				onClick: game => {
 					let count = 0;
 					const { mouse } = game;
-					game.situation.inventory.forEach((itemToBuy, index) => {
+					game.situation.inventory.filter(({available}) => game.evaluate(available)).forEach((itemToBuy, index) => {
 						const {item, name, cost, src, available, msg} = itemToBuy;
 						if (available) {
 							const yLine = 8 + count*6;
@@ -1322,8 +1383,28 @@ gameConfig.scenes.push(
 			},			
 			{
 				src: ASSETS.SPEECH_OUT,
-				hidden: game => game.bagOpening || game.useItem || game.pendingTip || game.sceneData.showStats || !game.dialog || game.dialog.paused,
+				hidden: game => game.bagOpening || game.useItem || game.pendingTip && !game.pendingTip.removeLock || game.sceneData.showStats || !game.dialog || game.dialog.paused|| game.sceneData.showLeftArm,
 				index: game => Math.min(3, Math.floor((game.now - game.sceneTime) / 50)),
+			},
+			{
+				src: ({data}) => {
+					switch(data.leftHand) {
+						case "none":
+							return ASSETS.MISSING_HAND_PUNCH;
+						case "hook":
+							return ASSETS.HOOK_PUNCH;
+						case "super":
+							return ASSETS.SUPER_PUNCH;
+					}
+					return ASSETS.PUNCH;
+				}, col: 4, row: 4,
+				side: LEFT,
+				index: 12,
+				offsetY: game => {
+					const time = game.now - game.sceneData.showLeftArm;
+					return Math.max(0, 10 - time / 50);
+				},
+				hidden: game => !game.sceneData.showLeftArm,
 			},
 			{
 				bag: true,

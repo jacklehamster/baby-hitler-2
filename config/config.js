@@ -1568,15 +1568,21 @@ function makeOnSceneBattle() {
 					battle.playerAttackLanded = now;
 					game.damageFoe(1000);
 				} else if (frame === 3 && !battle.playerAttackLanded && !battle.foeBlock) {
-					if (game.data.noLeftHand && battle.playerLeftAttack) {
+					if (game.data.leftHand==="none" && battle.playerLeftAttack) {
 						game.playSound(SOUNDS.WEAKPUNCH, {volume: .2});
 						battle.playerLeftAttack = 0;
 						battle.fist = RIGHT;
-					} else if ((now >= battle.nextAttack || Math.random() * (isCritical ? 2 : 1)>=battle.foeBlockChance) && !battle.invincible) {
+					} else if ((now >= battle.nextAttack || Math.random() * (isCritical ? 1.5 : 1)>=battle.foeBlockChance) && !battle.invincible) {
 						battle.nextAttack = null;
-						game.playSound(SOUNDS.HIT);
 						battle.playerAttackLanded = now;
-						game.damageFoe(isCritical ? data.stats.damage * 2 : data.stats.damage);
+						const superPunch = game.data.leftHand==="super" && battle.playerLeftAttack;
+						if (superPunch) {
+							game.playSound(SOUNDS.PLAYER_HURT);
+							game.playSound(SOUNDS.WEAKPUNCH, {volume: .2});
+						} else {
+							game.playSound(SOUNDS.HIT);
+						}
+						game.damageFoe(isCritical || superPunch ? data.stats.damage * 2 : data.stats.damage);
 					} else if (!battle.foeBlock) {
 						game.playSound(SOUNDS.DUD);
 						battle.foeBlock = now;
@@ -1609,7 +1615,17 @@ function makeOnSceneBattle() {
 function standardBattle() {
 	return [
 		{
-			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,
+			src: ({data}) => {
+				switch(data.leftHand) {
+					case "none":
+						return ASSETS.MISSING_HAND_PUNCH;
+					case "hook":
+						return ASSETS.HOOK_PUNCH;
+					case "super":
+						return ASSETS.SUPER_PUNCH;
+				}
+				return ASSETS.PUNCH;
+			}, col: 4, row: 4,
 			side: ({battle}) => !battle.playerRightAttack ? RIGHT : 0,
 			offsetX: ({now, battle}) => Math.cos((now-Math.PI) / 100) + 1 + 3,
 			offsetY: ({now, battle}) => Math.sin((now-Math.PI) / 100) + 1 + (battle.playerLeftAttack?10:0),
@@ -1627,7 +1643,17 @@ function standardBattle() {
 			},
 		},
 		{
-			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,
+			src: ({data}) => {
+				switch(data.leftHand) {
+					case "none":
+						return ASSETS.MISSING_HAND_PUNCH;
+					case "hook":
+						return ASSETS.HOOK_PUNCH;
+					case "super":
+						return ASSETS.SUPER_PUNCH;
+				}
+				return ASSETS.PUNCH;
+			}, col: 4, row: 4,
 			side: ({battle}) => !battle.playerLeftAttack ? LEFT : 0,
 			offsetX: ({now, battle}) => Math.sin(now / 100) - 1 - 3,
 			offsetY: ({now, battle}) => Math.cos(now / 100) + 1 + (battle.playerRightAttack?10:0),
@@ -1645,7 +1671,17 @@ function standardBattle() {
 			},
 		},
 		{
-			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,	// KICK
+			src: ({data}) => {
+				switch(data.leftHand) {
+					case "none":
+						return ASSETS.MISSING_HAND_PUNCH;
+					case "hook":
+						return ASSETS.HOOK_PUNCH;
+					case "super":
+						return ASSETS.SUPER_PUNCH;
+				}
+				return ASSETS.PUNCH;
+			}, col: 4, row: 4,
 			index: ({battle, now}) => {
 				const { playerAttackPeriod, playerLeftAttack, playerRightAttack } = battle;
 				if (!playerLeftAttack && !playerRightAttack) {
@@ -1660,7 +1696,17 @@ function standardBattle() {
 			},			
 		},
 		{
-			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,
+			src: ({data}) => {
+				switch(data.leftHand) {
+					case "none":
+						return ASSETS.MISSING_HAND_PUNCH;
+					case "hook":
+						return ASSETS.HOOK_PUNCH;
+					case "super":
+						return ASSETS.SUPER_PUNCH;
+				}
+				return ASSETS.PUNCH;
+			}, col: 4, row: 4,
 			offsetY: ({battle, now}) => battle.playerBlock && now - battle.playerBlock < 50 ? 5 : 0,
 			index: 13,
 			hidden: game => {

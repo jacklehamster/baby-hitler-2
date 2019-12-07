@@ -38,6 +38,8 @@
 - Add escape button for battles
 - Autosave
 - ground tile lighter
+- Warp drive: go Westrow after bought
+- Test all ship purchases.
 
 
 ## Links

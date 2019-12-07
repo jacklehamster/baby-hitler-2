@@ -31,8 +31,8 @@ gameConfig.scenes.push(
 													], game => {
 														game.currentScene.startTalk(game, "doctar", [
 															"You might start with the island's shopkeeper.",
-															"He knows a lot of people.",
-															"Maybe he knows someone who saw your baby.",
+															"Many people drop by that shop.",
+															"Maybe someone metionned something about your baby.",
 														], game => {
 															game.currentScene.startTalk(game, "human", [
 																"Thanks doctor.",
