@@ -86,11 +86,13 @@ gameConfig.scenes.push(
 					game.sceneData.credits = `
 						This game is the sequel to
 						“Kill Baby Hitler”
-						a game released in Jan 2019.
+						a game published january 2019.
 
-						The first part of this game was released for\n#LOWREZJAM\n2019 in\nSeptember, then it was iterated on.
+						The first part of this game was released as an entry for september's\n#LOWREZJAM\n2019, a jam to make a game\nentirely fit a 64x64 pixels screen.
 
-						This is a\npoint-and-click\nadventure. Use the cursor to interact with items and pick them up. You have an inventory and stats that you can increase. Use your wits to solve puzzles.
+						The game was then iterated on.
+
+						This is a\npoint-and-click\nadventure.\nUse the cursor to interact with items and pick them up.\nYou have an\ninventory and stats that you can increase. Use your wits to solve puzzles.
 
 						There is one main ending and three alternate endings to unlock.
 					`.split("\n").map((a, index) => game.wordwrap(a.trim(), 13)).join("\n").split("\n");
@@ -118,7 +120,7 @@ gameConfig.scenes.push(
 				hidden: game => !game.sceneData.about,
 				onRefresh: game => {
 					if (game.sceneData.about) {
-						if (game.now - game.sceneData.scrollTime > 55000) {
+						if (game.now - game.sceneData.scrollTime > 60000) {
 							game.sceneData.notAbout = game.now;
 							game.sceneData.about = 0;
 							game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});

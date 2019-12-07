@@ -4,13 +4,11 @@ gameConfig.scenes.push(
 		onScene: game => {
 			game.playTheme(SOUNDS.F1, {volume:.2});
 			game.sceneData.credits = `
-				In ~${new Date().getFullYear()}~, I was sent on a mission:
+				I'm a\nprofessional hitman.
 
-				I was to travel back in time to 1889
+				In ~${new Date().getFullYear()}~, I was sent on a mission to undo the holocaust.
 
-				and undo the holocaust
-
-				by killing the newborn baby named Adolf Hitler.
+				by travelling back in time to 1889, in order to kill Baby Hitler.
 
 				I failed that mission.
 
