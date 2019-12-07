@@ -170,6 +170,7 @@ const FILE_SIZE = {
    'menu-profile.png' : 113,
    'menu-sound-off.png' : 111,
    'menu-sound-on.png' : 117,
+   'missing-hand-punch.png' : 4605,
    'monster-planet.png' : 1057,
    'monster.png' : 2780,
    'moon-base-guard.png' : 311,

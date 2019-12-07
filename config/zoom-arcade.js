@@ -172,7 +172,7 @@ gameConfig.scenes.push(
 									color: "#cc6699",
 								});
 							}
-							if (Math.random() < .5) {
+							if (Math.random() < .4) {
 								sceneData.alienMissiles.push({
 									x: alien.x,
 									y: alien.y,

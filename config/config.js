@@ -643,18 +643,18 @@ function standardBag() {
 			combine: (item, game) => {
 				if (consumable[item]) {
 					game.sceneData.eatTime = game.now;
-					const wasHideCursor = game.hideCursor;
 					game.hideCursor = true;
 					game.delayAction(game => {
-					game.hideCursor = wasHideCursor;
-					if (consumable[game.useItem](game)) {
-							game.sceneData.eatTime = 0;
-							game.removeFromInventory(item);
-							game.useItem = null;
+						game.hideCursor = false;
+						if (consumable[game.useItem](game)) {
+								game.sceneData.eatTime = 0;
+								game.removeFromInventory(item);
+								game.useItem = null;
 						}
 					}, 500);
 					return true;
 				}
+				game.useItem = null;
 			},
 		},
 		{
@@ -1568,7 +1568,11 @@ function makeOnSceneBattle() {
 					battle.playerAttackLanded = now;
 					game.damageFoe(1000);
 				} else if (frame === 3 && !battle.playerAttackLanded && !battle.foeBlock) {
-					if ((now >= battle.nextAttack || Math.random() * (isCritical ? 2 : 1)>=battle.foeBlockChance) && !battle.invincible) {
+					if (game.data.noLeftHand && battle.playerLeftAttack) {
+						game.playSound(SOUNDS.WEAKPUNCH, {volume: .2});
+						battle.playerLeftAttack = 0;
+						battle.fist = RIGHT;
+					} else if ((now >= battle.nextAttack || Math.random() * (isCritical ? 2 : 1)>=battle.foeBlockChance) && !battle.invincible) {
 						battle.nextAttack = null;
 						game.playSound(SOUNDS.HIT);
 						battle.playerAttackLanded = now;
@@ -1581,7 +1585,6 @@ function makeOnSceneBattle() {
 						}
 						if (Math.random() <= battle.riposteChance) {
 							battle.nextAttack = Math.min(battle.nextAttack, now + 50);
-							console.log(now - battle.nextAttack);
 						}
 					}
 				}
@@ -1606,7 +1609,7 @@ function makeOnSceneBattle() {
 function standardBattle() {
 	return [
 		{
-			src: ASSETS.PUNCH, col: 4, row: 4,
+			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,
 			side: ({battle}) => !battle.playerRightAttack ? RIGHT : 0,
 			offsetX: ({now, battle}) => Math.cos((now-Math.PI) / 100) + 1 + 3,
 			offsetY: ({now, battle}) => Math.sin((now-Math.PI) / 100) + 1 + (battle.playerLeftAttack?10:0),
@@ -1624,7 +1627,7 @@ function standardBattle() {
 			},
 		},
 		{
-			src: ASSETS.PUNCH, col: 4, row: 4,
+			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,
 			side: ({battle}) => !battle.playerLeftAttack ? LEFT : 0,
 			offsetX: ({now, battle}) => Math.sin(now / 100) - 1 - 3,
 			offsetY: ({now, battle}) => Math.cos(now / 100) + 1 + (battle.playerRightAttack?10:0),
@@ -1642,7 +1645,7 @@ function standardBattle() {
 			},
 		},
 		{
-			src: ASSETS.PUNCH, col: 4, row: 4,	// KICK
+			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,	// KICK
 			index: ({battle, now}) => {
 				const { playerAttackPeriod, playerLeftAttack, playerRightAttack } = battle;
 				if (!playerLeftAttack && !playerRightAttack) {
@@ -1657,7 +1660,7 @@ function standardBattle() {
 			},			
 		},
 		{
-			src: ASSETS.PUNCH, col: 4, row: 4,
+			src: ({data}) => data.noLeftHand ? ASSETS.MISSING_HAND_PUNCH : ASSETS.PUNCH, col: 4, row: 4,
 			offsetY: ({battle, now}) => battle.playerBlock && now - battle.playerBlock < 50 ? 5 : 0,
 			index: 13,
 			hidden: game => {
@@ -1812,7 +1815,7 @@ const consumable = {
 	"water bottle": game => {
 		const { stats } = game.data;
 		if (game.data.stats.state.drank && !game.battle) {
-			game.showTip("I'm not thirsty.");
+			game.showTip(["I'm not thirsty.", "Physical exercise usually gets me thirsty."]);
 			return false;
 		} else {
 			game.playSound(SOUNDS.DRINK);

@@ -282,6 +282,7 @@ const ASSETS = {
 	BRUSALIEN: "assets/brusalien.png",
 	GRAB_COMPASS: "assets/grab-compass.png",
 	MULTI_ARROWS: "assets/multi-arrows.png",
+	MISSING_HAND_PUNCH: "assets/missing-hand-punch.png",
 };
 
 const SOUNDS = {
@@ -332,6 +333,7 @@ const SOUNDS = {
 	RANDOM: "sounds/random.mp3",
 	MYSTICA_THEME: "sounds/mystica.mp3",
 	SELECT: "sounds/select.mp3",
+	WEAKPUNCH: "sounds/weakpunch.mp3",
 };
 
 const ALPHAS = (() => {
