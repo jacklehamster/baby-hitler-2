@@ -40,7 +40,7 @@
 - ground tile lighter
 - Warp drive: go Westrow after bought
 - Test all ship purchases.
-
+- chest not restored after menu-save 🐞
 
 ## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
