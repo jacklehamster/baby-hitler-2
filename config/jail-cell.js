@@ -419,7 +419,7 @@ gameConfig.scenes.push(
 				src: ASSETS.TILE, col:3, row:3,
 				index: game => (game.rotation + 8) % 8,
 				hidden: game => game.rotation === 0 || game.data.pickedUp.tile,
-				onClick: game => game.showTip("I can't lift it with my fingers. I need some kind of lever."),
+				onClick: game => game.showTip("I can't lift this tile with my fingers. I need some kind of lever."),
 				tip: "The tile seems loose.",
 				combineMessage: (item, game) => "That doesn't work as a lever.",
 				combine: (item, game) => {

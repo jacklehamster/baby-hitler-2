@@ -36,6 +36,7 @@ gameConfig.scenes.push(
 					game.sceneData.gameStarted = game.now;
 					game.delayAction(game => {
 						game.gotoScene("start-screen");
+						game.save("clear");
 					}, 1000);
 				}
 			},

@@ -20,7 +20,7 @@ gameConfig.scenes.push(
 						game.waitCursor = false;
 					});
 				} else {
-					game.showTip("I don't want to hurt anyone.", () => {
+					game.showTip("I don't want to scare anyone.", () => {
 						game.waitCursor = false;
 					});
 				}
@@ -75,8 +75,16 @@ gameConfig.scenes.push(
 								msg: "LEAVE",
 								onSelect: game => {
 									game.dialog = null;
-									game.currentScene.startTalk(game, "shopkeepa", "Hope to see you soon.", game => {
-										game.gotoScene("shop");
+									game.currentScene.startTalk(game, "shopkeepa", game.countItem("warpdrive") ? "Have a good trip to Westrow!" : "Hope to see you soon.", game => {
+										if (game.countItem("warpdrive")) {
+											game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find find Baby Hitler!", game => {
+												game.dialog = null;
+												game.fadeToScene("space-adventure", null, 3000);
+											});											
+										} else {
+											game.dialog = null;
+											game.gotoScene("shop");
+										}
 									});
 								}
 							},
@@ -384,12 +392,9 @@ gameConfig.scenes.push(
 												game.currentScene.startTalk(game, "shopkeepa", [
 													"Well, we happen to be selling a very advanced warp drive.",
 													"The top notch for space travel.",
-													"It can take you there a couple days!",
+													"It can take you there in a couple days!",
 													"It is quite costly, but if you can afford it...",
 												], game => {
-													// game.situation.inventory.filter(({item}) => item==="warpdrive").forEach(item => {
-													// 	item.available = true;
-													// });
 													game.situation.askedWhereInSpace = game.now;
 													if (game.situation.askedWhereInSpace && game.situation.askedHowHeLookedLike) {
 														dialog.index = 0;
@@ -519,7 +524,7 @@ gameConfig.scenes.push(
 																		game.pickUp({item:"warpdrive", image:ASSETS.GRAB_WARP_DRIVE, message:"Finally got it.", onPicked: game => {
 																			game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find find Baby Hitler!", game => {
 																				game.dialog = null;
-																				game.gotoScene("space-adventure");
+																				game.fadeToScene("space-adventure", null, 3000);
 																			});
 																		}});					
 																	});
@@ -1018,9 +1023,6 @@ gameConfig.scenes.push(
 						count: 10,
 						msg: "We sell amunition for your gun in packs of 10.",
 					},
-					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available: game => game.situation.askedWhereInSpace,
-						msg: "Travel to planets lightyears away!",
-					},
 					{ item: "compass",		name: "compass",		cost: 50,	src: ASSETS.GRAB_COMPASS,		available:true,
 						msg: "The red arrow always points to the north.",
 					},
@@ -1072,6 +1074,9 @@ gameConfig.scenes.push(
 							callback(game);
 						}
 					},
+					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available: game => game.situation.askedWhereInSpace,
+						msg: "Travel to planets lightyears away!",
+					},
 				];
 			}
 
@@ -1092,6 +1097,9 @@ gameConfig.scenes.push(
 				index: 23,
 				hidden: game => game.data.shot.shopkeepa,
 				combine: (item, game) => {
+					if (game.dialog.paused) {
+						return true;
+					}
 					if (item === "photo") {
 						if (game.situation.explainedPhoto) {
 							game.sceneData.sheTookPhoto = game.now;
@@ -1112,9 +1120,9 @@ gameConfig.scenes.push(
 							}, 1000);
 						} else {
 							game.situation.explainedPhoto = game.now;
+							game.dialog.paused = true;
 							game.currentScene.startTalk(game, "shopkeepa", "We don't buy back items in this shop.", game => {
 								game.currentScene.startTalk(game, "human", "Actually, we're looking for this baby. Have you seen him?", game => {
-									game.dialog.paused = true;
 									game.currentScene.startTalk(game, "shopkeepa", "Oh, ok... let me see the photo.", game => {
 										game.sceneData.sheTookPhoto = game.now;
 										game.useItem = null;
@@ -1131,6 +1139,7 @@ gameConfig.scenes.push(
 														game.delayAction(game => {
 															game.sceneData.sheLookPhoto = 0;
 															game.currentScene.startTalk(game, "shopkeepa", [
+																"As I suspected...",
 																"You'll never find your baby with this.",
 																"This photo was taken more than 15 years ago.",
 																"Your baby human is now at least a 15 years old!",
@@ -1344,15 +1353,16 @@ gameConfig.scenes.push(
 						if (game.evaluate(available)) {
 							const yLine = 8 + count*6;
 							const hovered = mouse && mouse.y >= yLine && mouse.y < yLine+6 && mouse.x >= 4 && mouse.x <= 60;
-							game.displayImage(ctx, {src: ASSETS.GRAB_COIN_DARKER, index:1, offsetX: 41, offsetY: -38 + count*6});
+							const cantAfford = cost > game.countItem("coin");
+							game.displayImage(ctx, {src: ASSETS.GRAB_COIN_DARKER, index:1, offsetX: 41, offsetY: -38 + count*6, alpha: cantAfford?.3:1});
 							if (hovered) {
 								ctx.fillRect(4, yLine, 56, 5);
 							}
 							game.displayTextLine(ctx, {msg: name, x:5, y:yLine });
-							if (cost > game.countItem("coin")) {
+							if (cantAfford) {
 								ctx.globalAlpha = .3;								
 							}
-							game.displayTextLine(ctx, {msg: (cost >= 1000 && cost%1000===0) ? (cost/1000) + "k" : ""+cost, x:43, y:yLine, });
+							game.displayTextLine(ctx, {msg: "" + cost, x:42, y:yLine, });
 							if (cost > game.countItem("coin")) {
 								ctx.globalAlpha = 1;								
 							}
@@ -1410,7 +1420,7 @@ gameConfig.scenes.push(
 				bag: true,
 				src: ASSETS.BAG_OUT,
 				index: game => game.frameIndex,
-				hidden: ({arrow, bagOpening, dialog}) => !bagOpening && (arrow !== BAG || dialog && dialog.conversation[dialog.index].options.length > 2),
+				hidden: ({arrow, bagOpening, dialog}) => !bagOpening && (arrow !== BAG || dialog && dialog.conversation[dialog.index].options.length > 2) || dialog && dialog.paused,
 				alpha: game => game.emptyBag() ? .2 : 1,
 				onClick: game => game.clickBag(),
 			}

@@ -366,6 +366,8 @@ const Game = (() => {
 
 				if (this.pendingTip) {
 					this.pendingTip.time -= 400;
+					this.playSound(SOUNDS.BOP, {volume: .2});
+					this.sceneData.flashTip = this.now;
 				}
 			});
 
@@ -493,6 +495,8 @@ const Game = (() => {
 					game.actionClick(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
 					if (game.pendingTip) {
 						game.pendingTip.time -= 400;
+						game.playSound(SOUNDS.BOP, {volume: .2});
+						game.sceneData.flashTip = game.now;
 					}
 				});
 
@@ -690,7 +694,11 @@ const Game = (() => {
 			this.lastMouseMove = this.now;
 			this.lastMouseCheck = 0;
 			if (this.battle && !this.bagOpening) {
-				if (!this.blocking() && !this.battle.playerHit && !this.battle.playerBlock && this.arrow !== BAG  && !(this.battle.dummyBattle && (this.arrow===LEFT || this.arrow===RIGHT)) && !this.battle.playerLeftAttack && !this.battle.playerRightAttack) {
+				if (!this.blocking() && !this.battle.playerHit && !this.battle.playerBlock
+						&& this.arrow !== BAG 
+						&& !(this.battle.dummyBattle && (this.arrow===LEFT || this.arrow===RIGHT))
+						&& !this.battle.playerLeftAttack && !this.battle.playerRightAttack
+						&& (!this.hoverSprite || !this.hoverSprite.noPunch)) {
 					if (this.onScenePunch(this, this.battle)) {
 						if (this.battle.fist === LEFT && !this.battle.playerLeftAttack) {
 							this.battle.playerLeftAttack = this.now;
@@ -978,7 +986,7 @@ const Game = (() => {
 			}
 		}
 
-		initGame() {
+		clearData() {
 			this.data = {
 				time: 0,
 				name: null,
@@ -997,7 +1005,12 @@ const Game = (() => {
 				joined: null,
 				ship: {},
 			};
-			this.setupStats();
+			this.setupStats();			
+		}
+
+		initGame() {
+			this.clearData();
+
 			this.config = null;
 			if (this.mouse)
 				this.lastMousePos = this.mouse;
@@ -1585,7 +1598,26 @@ const Game = (() => {
 			return !this.battle || this.battle.dummyBattle;
 		}
 
-		canMove({x, y}, direction) {
+		isBlocked({x, y}, dx, dy, goingBackwards) {
+			const closeWallWithDirection = this.matchCell(this.map,x,y,dx,dy,this.orientation,"MXO",'');;
+			if (closeWallWithDirection) {
+				return true;
+			}
+			const closeDoorWithDirection = this.matchCell(this.map,x,y,dx,dy,this.orientation,'12345','');;
+			if (closeDoorWithDirection && (!this.doorOpened || goingBackwards)) {
+				return true;
+			}
+
+			const mapPosition = Game.getPosition(x,y,dx,dy,this.orientation);
+			const cell = getCell(this.map, ... mapPosition);
+			if (this.events && this.events[cell] && this.events[cell].blocking) {
+				return true;
+			}
+
+			return false;			
+		}
+
+		canMove(pos, direction) {
 			if (this.battle) {
 				return false;
 			}
@@ -1601,22 +1633,7 @@ const Game = (() => {
 			if (this.fade > 0 || this.battle || this.dialog) {
 				return false;
 			}
-			const closeWallWithDirection = this.matchCell(this.map,x,y,0,direction,this.orientation,"MXO",'');;
-			if (closeWallWithDirection) {
-				return false;
-			}
-			const closeDoorWithDirection = this.matchCell(this.map,x,y,0,direction,this.orientation,'12345','');;
-			if (closeDoorWithDirection && (!this.doorOpened || direction === -1)) {
-				return false;
-			}
-
-			const mapPosition = Game.getPosition(x,y,0,direction,this.orientation);
-			const cell = getCell(this.map, ... mapPosition);
-			if (this.events && this.events[cell] && this.events[cell].blocking) {
-				return false;
-			}
-
-			return true;
+			return !this.isBlocked(pos, 0, direction, direction === -1);
 		}
 
 		canOpen({x, y}, direction) {
@@ -1723,7 +1740,7 @@ const Game = (() => {
 			return onEvent && onEvent(this, events[cell]);
 		}
 
-		move(now, direction) {
+		move(now, direction, callback) {
 			const dy = direction === "forward" ? 1 : -1;
 			if (!this.canMove(this.pos, dy)) {
 				return;
@@ -1737,11 +1754,17 @@ const Game = (() => {
 					game.doorOpening = 0;
 					game.doorOpened = 0;
 					game.frameIndex = 0;
+					if (callback) {
+						callback(game);
+					}
 					if (this.checkEvents()) {
 						action.active = false;
 					}
 				}
 				: (game, action) => {
+					if (callback) {
+						callback(game);
+					}
 					if (this.checkEvents()) {
 						action.active = false;
 					}
@@ -2028,11 +2051,12 @@ const Game = (() => {
 			// if (this.bagOpening || this.pickedUp) {
 			// 	return;
 			// }
+			const flash = this.sceneData.flashTip && this.now - this.sceneData.flashTip < 30;
 			if (this.pendingTip) {
 				const tip = this.pendingTip;
 				tip.fade = Math.min(1, (this.now - (tip.end || tip.time + (tip.text.length + 10) * tip.speed)) / 350);
 				
-				this.displayText(tip);
+				this.displayText(tip, flash);
 				if (tip.fade >= 1) {
 					this.pendingTip = null;
 					this.tips = {};
@@ -2070,7 +2094,7 @@ const Game = (() => {
 				}
 
 				tip.fade = Math.min(1, tip.end ? (this.now - tip.end) / 100 : (this.now - (tip.time + (tip.text.length + 15) * tip.speed)) / 350);
-				this.displayText(tip);
+				this.displayText(tip, flash);
 				if (tip.fade >= 1) {
 					delete this.tips[t];
 				}
@@ -2221,7 +2245,7 @@ const Game = (() => {
 			}).join("\n");
 		}
 
-		displayText(tip) {
+		displayText(tip, flash) {
 			let {text} = tip;
 			const {time, fade, speed} = tip;
 			if (this.now < time) {
@@ -2251,7 +2275,7 @@ const Game = (() => {
 			if (fade > 0) {
 				ctx.globalAlpha = 1 - fade;
 			}
-			this.displayOutlinedImage(tempCanvas, "black", 20);
+			this.displayOutlinedImage(tempCanvas, flash ? "#444488" : "black", 20);
 
 			if (fade > 0) {
 				ctx.globalAlpha = 1;
@@ -3391,6 +3415,7 @@ const Game = (() => {
 		}
 
 		restart() {
+			this.load("clear");
 			this.gotoScene("start-screen");
 			this.data.gameOver = false;
 		}
@@ -3424,6 +3449,74 @@ const Game = (() => {
 			const { stats } = this.data;
 			const calcDamage = damage * damage / Math.max(1, this.data.stats.defense);
 			stats.life = Math.max(stats.life - calcDamage, blocked ? 1 : 0);
+		}
+
+		failEscape(callback) {
+			this.battle.failedEscape = game.now;
+			this.playErrorSound();
+			this.showTip("I failed my escape!", callback, 20);
+		}
+
+		canEscape(battle) {
+			if (battle && this.evaluate(battle.blockEscape, battle)) {
+				return false;
+			}
+			if (!this.sceneData.freeFormMove) {
+				const blocked = this.isBlocked(this.pos, 0, -1, true)
+					&& this.isBlocked(this.pos, 1, 0, true)
+					&& this.isBlocked(this.pos, -1, 0, true);
+				return !blocked;
+			}
+			return true;
+		}
+
+		escapeBattle(callback) {
+			if (this.currentScene.onEscapeBattle) {
+				this.currentScene.onEscapeBattle(this, callback);
+				return;
+			}
+
+			this.waitCursor = true;
+			this.useItem = null;
+			const battleTheme = this.battle.theme || SOUNDS.CHIN_TOK_THEME;
+			this.playTheme(null);
+			this.battle = null;
+			this.setVisited(false);
+
+			this.playSound(SOUNDS.HIT, {volume: .3});
+			for (let i = 0; i < 5; i++) {
+				this.delayAction(game => {
+					game.playSound(SOUNDS.HIT, {volume:.3});
+				}, 150 * i);				
+			}
+
+			const { x, y, } = this.pos;
+			if (!this.isBlocked(this.pos, 0, -1, true)) {
+				game.move(game.now, "backward", game => {
+					this.waitCursor = false;;
+					this.playTheme(battleTheme, {volume:.2});
+					if (callback)
+						callback(this);					
+				});
+			} else if (!this.isBlocked(this.pos, 1, 0, true)) {
+				this.turnLeft(this.now, game => {
+					game.move(game.now, "backward", game => {
+						game.waitCursor = false;
+						this.playTheme(battleTheme, {volume:.2});
+						if (callback)
+							callback(this);					
+					});
+				});
+			} else if (!this.isBlocked(this.pos, -1, 0, true)) {
+				this.turnRight(this.now, game => {
+					game.move(game.now, "backward", game => {
+						game.waitCursor = false;
+						this.playTheme(battleTheme, {volume:.2});
+						if (callback)
+							callback(this);					
+					});
+				});				
+			}
 		}
 
 		damageFoe(damage, options) {

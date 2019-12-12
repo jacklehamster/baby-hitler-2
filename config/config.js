@@ -306,7 +306,7 @@ function getCommonMaze(modifier) {
 		{
 			src: ASSETS.CLOSE_FLOOR,
 			index: game => game.doorOpening || game.bagOpening || game.menuOpening ? 0 : game.frameIndex,
-			hidden: game => game.rotation % 2 == 1 || !game.mazeFloor(0),
+			hidden: game => !game.mazeFloor(0),
 		},
 		{
 			custom: ({map, sceneData,pos, events}, sprite, ctx) => {
@@ -1614,6 +1614,27 @@ function makeOnSceneBattle() {
 
 function standardBattle() {
 	return [
+		{
+			noPunch: true,
+			src: ASSETS.ESCAPE,
+			offsetY: 5,
+			hidden: game => {
+				const {battle, arrow, useItem, bagOpening} = game;
+				return !battle || battle.dummyBattle || game.data.gameOver || battle.foeDefeated || useItem || bagOpening;
+			},
+			onClick: (game, sprite) => {
+				if (!game.evaluate(sprite.canEscape)) {
+					return;
+				}
+				if (Math.random() < .5 || !game.canEscape(game.battle)) {
+					game.failEscape();
+				} else {
+					game.escapeBattle();
+				}
+			},
+			canEscape: (game, sprite) => !game.battle.failedEscape || game.now - game.battle.failedEscape > 10000,
+			alpha: (game, sprite) => game.evaluate(sprite.canEscape) ? 1 : .3,
+		},
 		{
 			src: ({data}) => {
 				switch(data.leftHand) {

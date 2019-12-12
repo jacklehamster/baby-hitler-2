@@ -178,7 +178,7 @@ gameConfig.scenes.push(
 						sceneData.lastShot = 0;
 					}
 				},
-				hidden: game => game.data.ship.superGun,
+				hidden: game => game.data.ship && game.data.ship.superGun,
 			},
 			{
 				init: game => {
@@ -248,7 +248,7 @@ gameConfig.scenes.push(
 						}
 					}
 				},				
-				hidden: game => !game.data.ship.superGun,
+				hidden: game => !game.data.ship || !game.data.ship.superGun,
 			},
 			{
 				init: game => {
@@ -365,15 +365,15 @@ gameConfig.scenes.push(
 						if (Math.abs(asteroid.x - sceneData.ship.x) < shipDist && Math.abs(asteroid.y - sceneData.ship.y) < shipDist) {
 							if (sceneData.lives > 0) {
 								//	player collision
-								game.playSound(game.data.ship.superShield ? SOUNDS.DUD : SOUNDS.PLAYER_HURT);
+								game.playSound(game.data.ship && game.data.ship.superShield ? SOUNDS.DUD : SOUNDS.PLAYER_HURT);
 								asteroid.destroyed = true;
 								const speed = Math.sqrt(asteroid.dx * asteroid.dx + asteroid.dy * asteroid.dy);
-								if (!game.data.ship.superShield) {
+								if (!game.data.ship || !game.data.ship.superShield) {
 									sceneData.shakeTime = Math.max(now + (asteroid.distance * speed * 400), sceneData.shakeTime||0);
 								}
 								game.currentScene.makeDust(game, asteroid, "#882200");
 								const damage = (asteroid.distance * speed) / (sceneData.lives < sceneData.maxLives / 4 ? 2 : 1);
-								sceneData.lives -= game.data.ship.superShield ? Math.sqrt(damage) : damage;
+								sceneData.lives -= game.data.ship && game.data.ship.superShield ? Math.sqrt(damage) : damage;
 								if (sceneData.lives <= 0) {
 									game.currentScene.makeDust(game, asteroid, "#888888");
 									game.gameOver("    “The odds of\n    navigating an\n    asteroid field\n    is 3721 to 1”");
@@ -391,7 +391,7 @@ gameConfig.scenes.push(
 
 							let shot = false;
 							//	superLazer collision
-							if (game.data.ship.superGun && mouseDown && sceneData.shots > 0) {
+							if (game.data.ship && game.data.ship.superGun && mouseDown && sceneData.shots > 0) {
 								const { x, y } = sceneData.ship;
 								if (Math.abs(asteroid.x - x) < hitDist && asteroid.y < y) {
 									//	push
@@ -489,7 +489,7 @@ gameConfig.scenes.push(
 					ctx.globalAlpha = 1;
 
 					if (sceneData.lives > 0) {
-						ctx.fillStyle = game.data.ship.superShield ? "#88bbaa" : "#44bb44";
+						ctx.fillStyle = game.data.ship && game.data.ship.superShield ? "#88bbaa" : "#44bb44";
 						ctx.fillRect( 5, 5, 56 * sceneData.lives / sceneData.maxLives, 1);
 					}
 

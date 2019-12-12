@@ -17,7 +17,34 @@ gameConfig.scenes.push(
 			game.sceneData.finalTarget = { x: 230, y: -350 };
 			game.sceneData.nextFoe = 100;
 		},
+		onEscapeBattle: game => {
+			game.battle = null;
+			game.playTheme(null);
+			game.sceneData.escaping = game.now;
+
+			for (let i = 0; i < 5; i++) {
+				game.delayAction(game => {
+					game.playSound(SOUNDS.HIT, {volume:.3});
+				}, 150 * i);				
+			}
+
+			game.delayAction(game => {
+				game.playTheme(SOUNDS.MYSTICA_THEME, {volume: .6});
+			}, 2000);
+		},
 		onSceneRefresh: game => {
+			if (game.sceneData.leavingScene) {
+				return;
+			}
+			if (game.sceneData.escaping && game.now - game.sceneData.escaping < 2000) {
+				const angle = game.rotation / 8 * Math.PI * 2;
+				const rx = Math.cos(angle), ry = Math.sin(angle);
+				const speed = .2 * (1 - (game.now - game.sceneData.escaping) / 2000);
+				game.pos.x += speed * ry;
+				game.pos.y += -speed * rx;
+				return;
+			}
+
 			if (game.mouseDown && !game.dialog && !game.pendingTip) {
 				if (!game.hoverSprite || game.hoverSprite.allowMove) {
 					const { mouse, pos } = game;
@@ -451,7 +478,7 @@ gameConfig.scenes.push(
 										onSelect: game => {
 											game.showTip([
 													`I think I've seen him, near the tavern.`,
-													"Near the east",
+													"He usually hangs around there.",
 												], game => {
 													const { pos } = game;
 													const { x, y } = pos;
@@ -466,7 +493,7 @@ gameConfig.scenes.push(
 										msg: "Where are we?",
 										onSelect: game => {
 											game.showTip([
-												"This is the wastland of Westrow.",
+												"This is the wasteland of Westrow.",
 												"It's also the game scene with the most buggy implementation.",
 												"You gotta forgive the creator...",
 											], null, null, {removeLock: true});
@@ -615,6 +642,10 @@ gameConfig.scenes.push(
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return dy >= 2 ? -1 : 2;
+				},
+				onClick: game => {
+					game.sceneData.leavingScene = game.now;
+					game.fadeToScene("tavern-entrance");
 				},
 				tip: "This is it! Westrow's tavern!",
 				allowMove: true,

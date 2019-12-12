@@ -286,6 +286,15 @@ const ASSETS = {
 	MISSING_HAND_PUNCH: "assets/missing-hand-punch.png",
 	HOOK_PUNCH: "assets/hook-punch.png",
 	SUPER_PUNCH: "assets/super-punch.png",
+	SIDE_BUTTONS: "assets/side-buttons.png",
+	ESCAPE: "assets/escape.png",
+	TAVERN_ENTRANCE: "assets/tavern-entrance.png",
+	ARROW_CURSOR: "assets/arrow-cursor.png",
+	POSTERS: "assets/posters.png",
+	ZOOM_TAVERN_DOOR_SMOKE: "assets/zoom-tavern-door-smoke.png",
+	ZOOM_TAVERN_DOOR_ROBOT: "assets/zoom-tavern-door-robot.png",
+	ZOOM_TAVERN_DOOR_LADY: "assets/zoom-tavern-door-lady.png",
+	ZOOM_TAVERN_DOOR: "assets/zoom-tavern-door.png",
 };
 
 const SOUNDS = {
@@ -337,6 +346,8 @@ const SOUNDS = {
 	MYSTICA_THEME: "sounds/mystica.mp3",
 	SELECT: "sounds/select.mp3",
 	WEAKPUNCH: "sounds/weakpunch.mp3",
+	ROBOT_VOICE: "sounds/robot-voice.mp3",
+	HUM_LADY: "sounds/hum-lady.mp3",
 };
 
 const ALPHAS = (() => {

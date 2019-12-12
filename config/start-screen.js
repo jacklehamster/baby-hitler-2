@@ -4,35 +4,102 @@ gameConfig.scenes.push(
 		touchScreen: game => {
 			return "start";
 		},
+		onScene: game => {
+			game.sceneData.shift = 0;
+			game.sceneData.maxSlot = 0;
+
+			game.delayAction(game => {
+				game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
+				const list = game.getSaveList();
+				game.sceneData.loadSave = {};
+				for (let name in list) {
+					if (name !== "last") {
+						const { image } = list[name];
+						const img = new Image();
+						img.src = image;
+						game.sceneData.loadSave[name] = { img, name, };
+					}
+				}
+				for (let i in game.sceneData.loadSave) {
+					const { name } = game.sceneData.loadSave[i];
+					if (!isNaN(parseInt(name))) {
+						game.sceneData.maxSlot = Math.max(parseInt(name), game.sceneData.maxSlot);
+					}
+				}
+
+				game.currentScene.onStartDialog(game);
+				game.gameLoaded = true;
+			}, 1000);
+		},
 		sprites: [
 			{
 				custom: (game, sprite, ctx) => ctx.clearRect(0, 0, 64, 64),
 			},
-			... (new Array(4).fill(null).map((a, index) => {
+			... (new Array(8).fill(null).map((a, idx) => {
+				const index = idx - 2;
 				return {
 					index,
 					isSaveFile: true,
-					custom: ({sceneData}, {index, hoverTime}, ctx) => {
+					custom: ({sceneData, dialog}, {index, hoverTime}, ctx) => {
 						if (sceneData.loadSave) {
-							const { img } = sceneData.loadSave[index];
-							ctx.drawImage(img, 2 + index % 2 * 32, 2 + Math.floor(index / 2) * 32);
-							if (hoverTime) {
-								ctx.beginPath();
-								ctx.lineWidth = "2px"
-								ctx.strokeStyle = "#aaccff";
-								ctx.rect(2 + index % 2 * 32, 2 + Math.floor(index / 2) * 32, 28, 28);
-								ctx.stroke();														
+							const spriteIndex = index + game.sceneData.shift;
+							const { img } = sceneData.loadSave[spriteIndex];
+							if (img) {
+								const sideLeft = sceneData.sideLeft || 0;
+								const sideRight = sceneData.sideRight || 0;
+								const delay = 100;
+								const time = Math.min(delay, game.now - Math.max(sideLeft, sideRight));
+								const offsetX = time >= delay ? 0
+									: sideLeft > sideRight
+									? -30 * (delay - time) / delay
+									: sideLeft < sideRight
+									? 30 * (delay - time) / delay
+									: 0;
+
+								const px = 2 + Math.floor(index / 2) * 32, py = 2 + (index % 2 + 2) % 2 * 32;
+								ctx.drawImage(img, px + offsetX, py);
+								if (hoverTime && !dialog.hovered) {
+									ctx.beginPath();
+									ctx.lineWidth = "2px"
+									ctx.strokeStyle = "#aaccff";
+									ctx.rect(px + offsetX, py, 28, 28);
+									ctx.stroke();														
+								}
 							}
 						}
 					},
 					onClick: (game, {index}) => {
-						const {sceneData} = game;
+						const spriteIndex = index + game.sceneData.shift;
+						const { sceneData } = game;
 						game.playSound(SOUNDS.SELECT);
-						game.load(sceneData.loadSave[index].name);
+						game.load(sceneData.loadSave[spriteIndex].name);
 					},
-					hidden: ({sceneData, dialog}, sprite) => !dialog || dialog.index !== 2 || !sceneData.loadSave || !sceneData.loadSave[sprite.index],
+					hidden: ({sceneData, dialog}, {index}) => {
+						const spriteIndex = index + game.sceneData.shift;
+						return !dialog || dialog.index !== 2 || !sceneData.loadSave || !sceneData.loadSave[spriteIndex];
+					},
 				};
 			})),
+			{
+				src: ASSETS.SIDE_BUTTONS,
+				side: LEFT,
+				index: ({hoverSprite, dialog}, sprite) => hoverSprite === sprite && !dialog.hovered ? 1 : 0,
+				onClick: game => {
+					game.sceneData.shift -= 2;
+					game.sceneData.sideLeft = game.now;
+				},
+				hidden: game => game.sceneData.shift <= 0 || game.dialog && game.dialog.hovered,
+			},
+			{
+				src: ASSETS.SIDE_BUTTONS,
+				side: RIGHT,
+				index: ({hoverSprite, dialog}, sprite) => hoverSprite === sprite && !dialog.hovered ? 1 : 0,
+				onClick: game => {
+					game.sceneData.shift += 2;
+					game.sceneData.sideRight = game.now;
+				},
+				hidden: game => game.sceneData.maxSlot - game.sceneData.shift <= 3 || game.dialog && game.dialog.hovered,
+			},
 			{
 				src: ASSETS.MOON_BASE,
 				hidden: ({dialog}) => dialog && dialog.index === 2,
@@ -211,24 +278,6 @@ gameConfig.scenes.push(
 					}
 				],
 			});
-		},
-		onScene: game => {
-			game.delayAction(game => {
-				game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
-				const list = game.getSaveList();
-				game.sceneData.loadSave = {};
-				for (let name in list) {
-					if (name !== "last") {
-						const { image } = list[name];
-						const img = new Image();
-						img.src = image;
-						game.sceneData.loadSave[name] = { img, name, };
-					}
-				}
-
-				game.currentScene.onStartDialog(game);
-				game.gameLoaded = true;
-			}, 1000);
 		},
 	},
 );

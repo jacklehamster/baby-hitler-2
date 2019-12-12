@@ -35,10 +35,10 @@
 
 - Add option for exit to main menu ⭐
 - Make maze more distinctive  ⭐
-- Add escape button for battles
+- Add escape button for battles ⭐
 - Autosave
-- ground tile lighter
-- Warp drive: go Westrow after bought
+- ground tile lighter ⭐
+- Warp drive: go Westrow after bought ⭐
 - Test all ship purchases.
 - chest not restored after menu-save 🐞
 
