@@ -27,7 +27,7 @@
 - show arrows on practice battle
 - Fullscreen on tap ⭐
 - 🐞 Tap doesn't accelerate all tips
-
+- 🐞 loading screen problem
 
 
 
@@ -41,6 +41,7 @@
 - Warp drive: go Westrow after bought ⭐
 - Test all ship purchases.
 - chest not restored after menu-save 🐞
+- add grass around tavern
 
 ## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
