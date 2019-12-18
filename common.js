@@ -56,6 +56,7 @@ const ASSETS = {
 	DIMMING_LIGHT: 'assets/dimming-light.png',
 	RIGHT_GUARD: 'assets/right-guard.png',
 	LEFT_GUARD: 'assets/left-guard.png',
+	ALPHABET_DARK:'assets/alphabet.png',
 	ALPHABET:'assets/alphabet.png|invert-colors',
 	GRAB_PHOTO:'assets/grab-photo.png',
 	GRAB_PHOTO_SHOT:'assets/grab-photo-shot.png',
@@ -295,6 +296,9 @@ const ASSETS = {
 	ZOOM_TAVERN_DOOR_ROBOT: "assets/zoom-tavern-door-robot.png",
 	ZOOM_TAVERN_DOOR_LADY: "assets/zoom-tavern-door-lady.png",
 	ZOOM_TAVERN_DOOR: "assets/zoom-tavern-door.png",
+	DARK_CLOTH_STRANGER: "assets/dark-cloth-stranger.png",
+	GRAB_PLAYING_CARD: "assets/grab-playing-card.png",
+	ROBOT_DIAL: "assets/robot-dial.png",
 };
 
 const SOUNDS = {

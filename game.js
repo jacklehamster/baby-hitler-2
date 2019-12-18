@@ -31,7 +31,7 @@ const Game = (() => {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => game.actionDown === LEFT && game.turning ? 1 : 0,
 			side: LEFT,
-			hidden: game => game.sceneData.freeFormMove || !game.canTurn("left"),
+			hidden: game => game.sceneData.freeFormMove || !game.canTurn("left") && !game.evaluate(game.currentScene.canGo, LEFT),
 			onClick: game => game.processArrow(LEFT),
 			alpha: .5,
 		},
@@ -39,21 +39,21 @@ const Game = (() => {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => game.actionDown === RIGHT && game.turning ? 1 : 0,
 			side: RIGHT,
-			hidden: game => game.sceneData.freeFormMove || !game.canTurn("right"),
+			hidden: game => game.sceneData.freeFormMove || !game.canTurn("right") && !game.evaluate(game.currentScene.canGo, RIGHT),
 			onClick: game => game.processArrow(RIGHT),
 			alpha: .5,
 		},
 		FORWARD: {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => 2 + (game.actionDown === FORWARD && game.moving ? 1 : 0),
-			hidden: game => game.sceneData.freeFormMove || !game.pos || !game.canMove(game.pos, 1),
+			hidden: game => game.sceneData.freeFormMove || (!game.pos || !game.canMove(game.pos, 1)) && !game.evaluate(game.currentScene.canGo, FORWARD),
 			onClick: game => game.processArrow(FORWARD),
 			alpha: .5,
 		},
 		BACKWARD: {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
 			index: game => 4 + (game.actionDown === BACKWARD && game.moving ? 1 : 0),
-			hidden: game => game.sceneData.freeFormMove || !game.pos || !game.canMove(game.pos, -1),
+			hidden: game => game.sceneData.freeFormMove || (!game.pos || !game.canMove(game.pos, -1)) && !game.evaluate(game.currentScene.canGo, BACKWARD),
 			onClick: game => game.processArrow(BACKWARD),
 			alpha: .5,
 		},
@@ -72,6 +72,34 @@ const Game = (() => {
 		MULTI_ARROWS: {
 			src: ASSETS.MULTI_ARROWS, size: [64, 32],
 			hidden: game => game.battle || !game.sceneData.freeFormMove,
+			onRefresh: (game, sprite) => {
+				const cx = 32, cy = 18;
+				let jx = 0, jy = 0;
+				let anyTouch = false;
+				for (let i = 0; i < game.touchList.length; i++) {
+					const { pageX, pageY } = game.touchList[i];
+					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
+					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
+					jx = px;
+					jy = py;
+					anyTouch = true;
+				}
+				if (anyTouch) {
+					if (!game.mouse) {
+						game.mouse = game.lastMousePos ? game.lastMousePos : {
+							x: canvas.width / 2,
+							y: canvas.height / 2,
+							fromTouch: true,
+						};					
+					}
+					game.mouse.x = jx;
+					game.mouse.y = jy + 30;
+					game.mouseDown = true;
+				} else {
+					game.mouse = null;
+					game.mouseDown = false;
+				}
+			},
 		},
 		JOYPAD: {
 			hidden: game => !game.sceneData.joy,
@@ -204,6 +232,11 @@ const Game = (() => {
 				ctx.arc(cx, cy - joyTop, 6, 0, Math.PI * 2);
 				ctx.fill();				
 			},			
+		},
+		DIALOG: {
+			custom: (game, sprite, ctx) => {
+				// TODO DIALOG
+			},
 		},
 	};
 
@@ -507,7 +540,7 @@ const Game = (() => {
 				self.touchesSaved = [];
 				touchCanvas.addEventListener("touchstart", ({changedTouches, touches}) => {
 					self.touchList = touches;
-					if (game.sceneData.joy) {
+					if (game.sceneData.joy || game.sceneData.freeFormMove && !game.battle) {
 						return;
 					}
 
@@ -557,7 +590,7 @@ const Game = (() => {
 				touchCanvas.addEventListener("touchmove", e  => {
 					const {changedTouches, touches} = e;
 					self.touchList = touches;
-					if (game.sceneData.joy) {
+					if (game.sceneData.joy || game.sceneData.freeFormMove && !game.battle) {
 						return;
 					}
 
@@ -587,7 +620,7 @@ const Game = (() => {
 
 				touchCanvas.addEventListener("touchend", ({changedTouches, touches}) => {
 					self.touchList = touches;
-					if (game.sceneData.joy) {
+					if (game.sceneData.joy || game.sceneData.freeFormMove && !game.battle) {
 						return;
 					}
 
@@ -1018,8 +1051,6 @@ const Game = (() => {
 			this.timeOffset = 0;
 			this.paused = false;
 			this.loadCount = 0;
-			this.pos = null;
-			this.rotation = 0;
 			this.lastMouseCheck = 0;
 			this.lastMouseMove = 0;
 			this.sceneByName = {};
@@ -1041,6 +1072,8 @@ const Game = (() => {
 		}
 
 		initScene() {
+			this.pos = null;
+			this.rotation = 0;
 			this.actions = [];
 			this.keyboard = [];
 			this.frameIndex = 0;
@@ -1593,6 +1626,9 @@ const Game = (() => {
 				return false;
 			}
 			if (this.dialog) {
+				return false;
+			}
+			if (this.sceneData.noTurn) {
 				return false;
 			}
 			return !this.battle || this.battle.dummyBattle;
@@ -2904,8 +2940,9 @@ const Game = (() => {
 			return text;
 		}
 
-		displayTextLine(ctx, {msg, x, y, spacing, alpha, noTranslate}) {
-			if (!imageStock[ASSETS.ALPHABET]) {
+		displayTextLine(ctx, {msg, x, y, spacing, alpha, noTranslate, dark}) {
+			const src = dark ? ASSETS.ALPHABET_DARK : ASSETS.ALPHABET;
+			if (!imageStock[src]) {
 				return;
 			}
 
@@ -2914,7 +2951,7 @@ const Game = (() => {
 			}
 
 			const letterTemplate = {
-				src: ASSETS.ALPHABET, col:10, row:11, size: ALPHA_SIZE,
+				src: src, col:10, row:11, size: ALPHA_SIZE,
 				offsetX: 20, offsetY: 20,
 				index: game => Math.floor(game.now / 100) % 62,
 				isText: true,

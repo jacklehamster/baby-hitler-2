@@ -1,20 +1,35 @@
 gameConfig.scenes.push(
 	{
 		name: "tavern-entrance",
+		arrowGrid: [
+			[null, null,  MENU,  null, null ],
+			[],
+			[ null, null, null,  null, null ],
+			[ null, null, null,  null, null ],
+			[ null, null, BACKWARD,  null, null ],
+		],
 		onScene: game => {
 			game.save();
+			game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
 			if (!game.situation.shift) {
 				game.situation.shift = 0;
 			}
+			game.sceneData.noTurn = true;
 		},
 		onSceneRefresh: game => {
-			if (game.mouse && game.mouse.x > 64 - 5) {
+			if (game.mouse && game.mouse.x > 64 - 5 || game.actionDown === RIGHT) {
 				game.situation.shift -= .3;
 				game.situation.shift = Math.max(-64, Math.min(0, game.situation.shift));
-			} else if (game.mouse && game.mouse.x < 5) {
+			} else if (game.mouse && game.mouse.x < 5 || game.actionDown === LEFT) {
 				game.situation.shift += .3;
 				game.situation.shift = Math.max(-64, Math.min(0, game.situation.shift));				
 			}
+		},
+		onSceneBackward: game => {
+			game.fadeToScene("final-planet-world");
+		},
+		onSceneForward: game => {
+			console.log("GO TO TAVERN");
 		},
 		customCursor: (game, ctx) => {
 			if (game.mouse) {
@@ -27,6 +42,18 @@ gameConfig.scenes.push(
 					return "none";
 				}
 			}
+		},
+		canGo: (game, direction) => {
+			if (direction === FORWARD) {
+				return game.situation.shift > -20 && game.sceneData.openedDoor;
+			}
+			if (direction === RIGHT) {
+				return game.situation.shift > -64;
+			}
+			if (direction === LEFT) {
+				return game.situation.shift < 0;
+			}
+			return true;
 		},
 		sprites: [
 			{
@@ -45,7 +72,13 @@ gameConfig.scenes.push(
 					return 7;
 				},
 				onClick: game => {
-					game.gotoScene("tavern-entrance-zoom");
+					if (game.sceneData.openedDoor) {
+						game.currentScene.onSceneForward(game);
+					} else 	if (game.getSituation("robot-dial").gotPassword) {
+						game.sceneData.openedDoor = game.now;
+					} else {
+						game.gotoScene("tavern-entrance-zoom");
+					}
 				},
 			},
 			{
@@ -78,7 +111,7 @@ gameConfig.scenes.push(
 				offsetX: game => Math.round(game.situation.shift),
 				index: game => Math.floor(game.now / 300) % 13 === 5 ? 6 : 5,
 				onClick: game => {
-
+					game.gotoScene("tavern-stranger-zoom");
 				},
 			},
 			...standardMenu(),

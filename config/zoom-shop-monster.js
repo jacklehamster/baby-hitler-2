@@ -29,11 +29,8 @@ gameConfig.scenes.push(
 					game.showTip(`Ah, that's a woompachuice. I'll take it for two coins.`, null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "lighter":
-					game.dialog.index = 2;
-					game.sceneData.price = 3;
-					game.sceneData.forSale = item;
 					game.playSound(SOUNDS.WAITER);
-					game.showTip(`A lighter. I'll give you three coins for it.`, null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
+					game.showTip(["A lighter", "Not worth much, it's been already used!"], null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 					break;
 				case "photo":
 					game.playSound(SOUNDS.WAITER);

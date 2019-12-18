@@ -2,6 +2,8 @@ gameConfig.scenes.push(
 	{
 		name: "final-planet",
 		onScene: game => {
+			delete game.inventory["warpdrive"];
+
 			game.save();
 			game.playSound(SOUNDS.DIVING);
 			game.playTheme(null);

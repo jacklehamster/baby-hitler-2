@@ -93,7 +93,7 @@ gameConfig.scenes.push(
 			{
 				src: ASSETS.SIDE_BUTTONS,
 				side: RIGHT,
-				index: ({hoverSprite, dialog}, sprite) => hoverSprite === sprite && !dialog.hovered ? 1 : 0,
+				index: ({hoverSprite, dialog}, sprite) => hoverSprite === sprite && (!dialog || !dialog.hovered) ? 1 : 0,
 				onClick: game => {
 					game.sceneData.shift += 2;
 					game.sceneData.sideRight = game.now;
