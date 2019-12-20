@@ -22,15 +22,102 @@
 		<meta name="theme-color" content="#ac3f36">
 
 		<link rel="stylesheet" type="text/css" href="game.css">
-		<link rel="manifest" href="/manifest.json">
 
 		<meta name="mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="viewport" content="minimal-ui, user-scalable=no">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+		<script src="config/9-months.js" defer></script>
+		<script src="config/alien.js" defer></script>
+		<script src="config/amari-baby.js" defer></script>
+		<script src="config/arcade-room.js" defer></script>
+		<script src="config/asteroid-field.js" defer></script>
+		<script src="config/birthday.js" defer></script>
+		<script src="config/bring-cake.js" defer></script>
+		<script src="config/cake-face.js" defer></script>
+		<script src="config/ceiling-maze.js" defer></script>
+		<script src="config/cell-maze.js" defer></script>
+		<script src="config/cell-maze-2.js" defer></script>
+		<script src="config/concert.js" defer></script>
+		<script src="config/congrats.js" defer></script>
+		<script src="config/deadly-landing.js" defer></script>
+		<script src="config/doctar.js" defer></script>	
+		<script src="config/doctar-room.js" defer></script>	
+		<script src="config/doom.js" defer></script>	
+		<script src="config/disk-screen.js" defer></script>
+		<script src="config/drink-yupa.js" defer></script>
+		<script src="config/evening-date.js" defer></script>
+		<script src="config/final-corridor.js" defer></script>
+		<script src="config/final-credit.js" defer></script>	
+		<script src="config/final-doom.js" defer></script>	
+		<script src="config/final-exit.js" defer></script>
+		<script src="config/final-planet.js" defer></script>
+		<script src="config/final-planet-world.js" defer></script>
+		<script src="config/final-title.js" defer></script>
+		<script src="config/first-prison-cell.js" defer></script>
+		<script src="config/guards-attack.js" defer></script>
+		<script src="config/guards-laughing.js" defer></script>
+		<script src="config/guards-laughing-2.js" defer></script>
+		<script src="config/human-woke.js" defer></script>
+		<script src="config/i-have-no-hand.js" defer></script>
+		<script src="config/in-progress.js" defer></script>
+		<script src="config/inside-tavern.js" defer></script>
+		<script src="config/jail-cell.js" defer></script>
+		<script src="config/lab.js" defer></script>
+		<script src="config/landscape.js" defer></script>
+		<script src="config/lock-zoom.js" defer></script>
+		<script src="config/locker-room.js" defer></script>
+		<script src="config/look-right-left.js" defer></script>
+		<script src="config/maze-2.js" defer></script>
+		<script src="config/maze-3.js" defer></script>
+		<script src="config/maze-4.js" defer></script>
+		<script src="config/maze.js" defer></script>
+		<script src="config/mirror.js" defer></script>
+		<script src="config/monster-in-space.js" defer></script>
+		<script src="config/morning-after.js" defer></script>
+		<script src="config/name-screen.js" defer></script>
+		<script src="config/origin.js" defer></script>
+		<script src="config/outside.js" defer></script>
+		<script src="config/outside-carnage.js" defer></script>
+		<script src="config/poor-hitman.js" defer></script>
+		<script src="config/robot-dial.js" defer></script>
+		<script src="config/sarlie-planet.js" defer></script>
+		<script src="config/sarlie-planet-world.js" defer></script>
+		<script src="config/shop.js" defer></script>
+		<script src="config/shopkeepa.js" defer></script>
+		<script src="config/slots.js" defer></script>
+		<script src="config/space-adventure.js" defer></script>
+		<script src="config/space-travel.js" defer></script>
+		<script src="config/stars.js" defer></script>
+		<script src="config/start-screen.js" defer></script>
+		<script src="config/surface.js" defer></script>
+		<script src="config/tavern-entrance-zoom.js" defer></script>
+		<script src="config/tavern-entrance.js" defer></script>
+		<script src="config/tavern-posters.js" defer></script>
+		<script src="config/tavern-stranger-zoom.js" defer></script>
+		<script src="config/temp-end.js" defer></script>
+		<script src="config/the-date.js" defer></script>
+		<script src="config/tile-hole.js" defer></script>
+		<script src="config/toilet-monster.js" defer></script>
+		<script src="config/toilet-zoom.js" defer></script>
+		<script src="config/toilets.js" defer></script>
+		<script src="config/training-room.js" defer></script>
+		<script src="config/vending-machine.js" defer></script>
+		<script src="config/what-so-funny.js" defer></script>
+		<script src="config/yupa-sarlie.js" defer></script>
+		<script src="config/zoom-arcade.js" defer></script>
+		<script src="config/zoom-guards.js" defer></script>
+		<script src="config/zoom-shop-monster.js" defer></script>
+		<script src="config/zoom-hottub.js" defer></script>
+		<script src="config/zoom-hottub-2.js" defer></script>
+		<script src="config/zoom-vending-machine.js" defer></script>
+
 	</head>
 
 	<body style="margin: 0;">
+		<img id="alphabet" src="/assets/alphabet.png" style="width: 1px; height: 1px; position: absolute;"></img>
 		<div id="viewport" style="display: flex; flex-direction: column; height: 100%">
 			<div class="game-container">
 				<canvas class="screen-view game-size flex-item crisp" id="canvas" width=64 height=64 style="background-color: black; display:none"></canvas>
@@ -82,7 +169,7 @@
 			</script>
 		</div>
 		<div id="error-div" style="display:none; background-color: #FF000033; color: #FFFFDD99; position: absolute; width: 100%; top: 0; left: 0; padding: 15px">
-		</div>		
+		</div>
 	</body>
 	<script src="lib/md5.min.js"></script>
 	<script src="common.js"></script>
@@ -151,13 +238,15 @@
 			contextDst.drawImage(contextSrc.canvas, 0, 0, width, height);
 		}
 
-		let game;
-		document.addEventListener("DOMContentLoaded", e => {
+		function startGame() {
 			const ctx = document.getElementById("canvas").getContext("2d");
 			const ctx2 	= document.getElementById("canvas2").getContext("2d",{ alpha: false });
 			const touchCtx = document.getElementById("touch-canvas").getContext("2d");
 			const touchCtx2 = document.getElementById("touch-canvas2").getContext("2d",{ alpha: false });
 			game = Game.start(gameConfig);
+			game.injectImage(ASSETS.ALPHABET_DARK, document.getElementById("alphabet"));
+			document.getElementById("alphabet").style.display = "none";
+			game.playGame();
 			updateSaves();
 
 			game.refreshCallback = () => {
@@ -166,7 +255,9 @@
 			};
 
 			processTranslation();
-		});
+		}
+
+		let game;
 
 		if (DEMO) {
 			document.getElementById("saves").style.display = "none";
@@ -280,87 +371,12 @@
 		screen.orientation.lock('portrait').catch(function(error) {
 		});
 	</script>
-
-	<script src="config/9-months.js" async></script>
-	<script src="config/alien.js" async></script>
-	<script src="config/amari-baby.js" async></script>
-	<script src="config/arcade-room.js" async></script>
-	<script src="config/asteroid-field.js" async></script>
-	<script src="config/birthday.js" async></script>
-	<script src="config/bring-cake.js" async></script>
-	<script src="config/cake-face.js" async></script>
-	<script src="config/ceiling-maze.js" async></script>
-	<script src="config/cell-maze.js" async></script>
-	<script src="config/cell-maze-2.js" async></script>
-	<script src="config/concert.js" async></script>
-	<script src="config/congrats.js" async></script>
-	<script src="config/deadly-landing.js" async></script>
-	<script src="config/doctar.js" async></script>	
-	<script src="config/doctar-room.js" async></script>	
-	<script src="config/doom.js" async></script>	
-	<script src="config/disk-screen.js" async></script>
-	<script src="config/drink-yupa.js" async></script>
-	<script src="config/evening-date.js" async></script>
-	<script src="config/final-corridor.js" async></script>
-	<script src="config/final-credit.js" async></script>	
-	<script src="config/final-doom.js" async></script>	
-	<script src="config/final-exit.js" async></script>
-	<script src="config/final-planet.js" async></script>
-	<script src="config/final-planet-world.js" async></script>
-	<script src="config/final-title.js" async></script>
-	<script src="config/first-prison-cell.js" async></script>
-	<script src="config/guards-attack.js" async></script>
-	<script src="config/guards-laughing.js" async></script>
-	<script src="config/guards-laughing-2.js" async></script>
-	<script src="config/human-woke.js" async></script>
-	<script src="config/i-have-no-hand.js" async></script>
-	<script src="config/in-progress.js" async></script>
-	<script src="config/jail-cell.js" async></script>
-	<script src="config/lab.js" async></script>
-	<script src="config/landscape.js" async></script>
-	<script src="config/lock-zoom.js" async></script>
-	<script src="config/locker-room.js" async></script>
-	<script src="config/maze-2.js" async></script>
-	<script src="config/maze-3.js" async></script>
-	<script src="config/maze-4.js" async></script>
-	<script src="config/maze.js" async></script>
-	<script src="config/mirror.js" async></script>
-	<script src="config/monster-in-space.js" async></script>
-	<script src="config/morning-after.js" async></script>
-	<script src="config/name-screen.js" async></script>
-	<script src="config/origin.js" async></script>
-	<script src="config/outside.js" async></script>
-	<script src="config/outside-carnage.js" async></script>
-	<script src="config/poor-hitman.js" async></script>
-	<script src="config/robot-dial.js" async></script>
-	<script src="config/sarlie-planet.js" async></script>
-	<script src="config/sarlie-planet-world.js" async></script>
-	<script src="config/shop.js" async></script>
-	<script src="config/shopkeepa.js" async></script>
-	<script src="config/slots.js" async></script>
-	<script src="config/space-adventure.js" async></script>
-	<script src="config/space-travel.js" async></script>
-	<script src="config/stars.js" async></script>
-	<script src="config/start-screen.js" async></script>
-	<script src="config/surface.js" async></script>
-	<script src="config/tavern-entrance-zoom.js" async></script>
-	<script src="config/tavern-entrance.js" async></script>
-	<script src="config/tavern-posters.js" async></script>
-	<script src="config/tavern-stranger-zoom.js" async></script>
-	<script src="config/temp-end.js" async></script>
-	<script src="config/the-date.js" async></script>
-	<script src="config/tile-hole.js" async></script>
-	<script src="config/toilet-monster.js" async></script>
-	<script src="config/toilet-zoom.js" async></script>
-	<script src="config/toilets.js" async></script>
-	<script src="config/training-room.js" async></script>
-	<script src="config/vending-machine.js" async></script>
-	<script src="config/what-so-funny.js" async></script>
-	<script src="config/yupa-sarlie.js" async></script>
-	<script src="config/zoom-arcade.js" async></script>
-	<script src="config/zoom-guards.js" async></script>
-	<script src="config/zoom-shop-monster.js" async></script>
-	<script src="config/zoom-hottub.js" async></script>
-	<script src="config/zoom-hottub-2.js" async></script>
-	<script src="config/zoom-vending-machine.js" async></script>
+	<script>
+		const alphabet = document.getElementById("alphabet");
+		if (!alphabet.naturalWidth) {
+			alphabet.addEventListener("load", startGame);
+		} else {
+			startGame();
+		}
+	</script>
 </html>

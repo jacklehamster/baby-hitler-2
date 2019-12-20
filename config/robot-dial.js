@@ -20,7 +20,7 @@ gameConfig.scenes.push(
 					game.situation.gotPassword = game.now;
 					game.delayAction(game => {
 						game.gotoScene("tavern-entrance");
-						game.sceneData.openedDoor = game.now;
+						game.currentScene.openDoor(game);
 					}, 3000);
 				} else {
 					game.playErrorSound();

@@ -96,8 +96,8 @@ const Game = (() => {
 					game.mouse.y = jy + 30;
 					game.mouseDown = true;
 				} else {
-					game.mouse = null;
-					game.mouseDown = false;
+					// game.mouse = null;
+					// game.mouseDown = false;
 				}
 			},
 		},
@@ -283,13 +283,16 @@ const Game = (() => {
 
 		static start(gameConfig) {
 			gameInstance = new Game();
-			gameInstance.play(gameConfig);
+			gameInstance.config = gameConfig;
+			return gameInstance;
+		}
+
+		playGame() {
+			this.play();
 
 			if (location.hash.split("#")[1]) {
-				gameInstance.gotoScene(location.hash.split("#")[1]);
-			}
-
-			return gameInstance;
+				this.gotoScene(location.hash.split("#")[1]);
+			}			
 		}
 
 		getMapInfo(map, door) {
@@ -1044,7 +1047,6 @@ const Game = (() => {
 		initGame() {
 			this.clearData();
 
-			this.config = null;
 			if (this.mouse)
 				this.lastMousePos = this.mouse;
 			this.mouse = null;
@@ -1072,8 +1074,6 @@ const Game = (() => {
 		}
 
 		initScene() {
-			this.pos = null;
-			this.rotation = 0;
 			this.actions = [];
 			this.keyboard = [];
 			this.frameIndex = 0;
@@ -1660,6 +1660,14 @@ const Game = (() => {
 			if (this.sceneData.freeFormMove) {
 				return true;
 			}
+
+			if (direction < 0 && this.evaluate(this.currentScene.canGo, BACKWARD)) {
+				return true;
+			}
+			if (direction > 0 && this.evaluate(this.currentScene.canGo, FORWARD)) {
+				return true;
+			}
+
 			if (!this.motionAvailable) {
 				return false;
 			}
@@ -2438,6 +2446,7 @@ const Game = (() => {
 					if (!stock.loaded) {
 						stock.loaded = true;
 						this.loadPending = false;
+						this.sceneData.lastFileLoaded = src;
 						if (callback) {
 							callback(stock);
 						}
@@ -2456,6 +2465,13 @@ const Game = (() => {
 				soundStock[src] = stock;
 				audio.load();
 			}
+		}
+
+		injectImage(src, img) {
+			imageStock[src] = {
+				loaded: true,
+				img,
+			};
 		}
 
 		prepareImage(src, callback) {
@@ -2617,6 +2633,8 @@ const Game = (() => {
 				this.loadPending = true;
 				img.addEventListener("load", () => {
 					stock.loaded = true;
+					this.sceneData.lastFileLoaded = src;
+
 					this.loadPending = false;
 					if (callback) {
 						callback(stock);
@@ -2644,9 +2662,8 @@ const Game = (() => {
 			self.requestId = requestAnimationFrame(step);
 		}
 
-		play(config) {
+		play() {
 			this.initGame();
-			this.config = config;
 			const firstScene = this.config.scenes.filter(({startScene})=>startScene)[0];
 			this.loadScene(firstScene);
 		}
@@ -3736,4 +3753,4 @@ const Game = (() => {
 	}
 
 	return Game;
-}) ();
+})();

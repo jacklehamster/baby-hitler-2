@@ -29,7 +29,9 @@ gameConfig.scenes.push(
 			game.fadeToScene("final-planet-world");
 		},
 		onSceneForward: game => {
-			console.log("GO TO TAVERN");
+			game.fadeToScene("look-right-left");
+			game.actionDown = FORWARD;
+			return true;
 		},
 		customCursor: (game, ctx) => {
 			if (game.mouse) {
@@ -55,6 +57,10 @@ gameConfig.scenes.push(
 			}
 			return true;
 		},
+		openDoor: game => {
+			game.playSound(SOUNDS.DOOR);
+			game.sceneData.openedDoor = game.now;
+		},
 		sprites: [
 			{
 				src: ASSETS.TAVERN_ENTRANCE, col: 2, row: 5, size: [128, 64],
@@ -75,7 +81,7 @@ gameConfig.scenes.push(
 					if (game.sceneData.openedDoor) {
 						game.currentScene.onSceneForward(game);
 					} else 	if (game.getSituation("robot-dial").gotPassword) {
-						game.sceneData.openedDoor = game.now;
+						game.currentScene.openDoor(game);
 					} else {
 						game.gotoScene("tavern-entrance-zoom");
 					}

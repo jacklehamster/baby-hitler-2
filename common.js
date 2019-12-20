@@ -299,6 +299,7 @@ const ASSETS = {
 	DARK_CLOTH_STRANGER: "assets/dark-cloth-stranger.png",
 	GRAB_PLAYING_CARD: "assets/grab-playing-card.png",
 	ROBOT_DIAL: "assets/robot-dial.png",
+	LOOK_RIGHT_LEFT: "assets/look-right-left.png",
 };
 
 const SOUNDS = {

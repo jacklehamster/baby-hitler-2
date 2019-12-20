@@ -11,7 +11,10 @@ gameConfig.scenes.push(
 		onScene: game => {
 			game.save();
 			game.playTheme(SOUNDS.MYSTICA_THEME, {volume: .6});
-			game.pos = { x: 0, y: 0 };
+			if (!game.situation.firstStep) {
+				game.situation.firstStep = game.now;
+				game.pos = { x: 0, y: 0 };
+			}
 			game.sceneData.forwardUnlocked = true;
 			game.sceneData.freeFormMove = true;
 			game.sceneData.finalTarget = { x: 230, y: -350 };

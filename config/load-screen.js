@@ -42,8 +42,9 @@ gameConfig.scenes.push(
 			},
 			{
 				custom: (game, sprite, ctx) => {
+					const progress = game.currentScene.getProgress(game);
 					ctx.clearRect(0, 0, 64, 64);
-					ctx.globalAlpha = .08;
+					ctx.globalAlpha = .08 * progress;
 					for (let i= 0; i < 10; i++) {
 						game.displayTextLine(ctx, {
 							msg: "dobuki studio game",
@@ -52,7 +53,6 @@ gameConfig.scenes.push(
 					}
 					ctx.globalAlpha = 1;
 
-					const progress = game.currentScene.getProgress(game);
 					if (progress < 1) {
 						ctx.fillStyle = "#003377";
 						ctx.fillRect(5, 35, 51, 2);
@@ -65,6 +65,12 @@ gameConfig.scenes.push(
 						});
 						if (game.sceneData.estimate < 3600000 && Math.floor(game.sceneData.estimate / 1000) > 0) {
 							game.displayTextLine(ctx, {msg:Math.floor(game.sceneData.estimate / 1000) + "~ sec", x:18, y:40});
+						}
+						const numAssetsLoaded = game.countAssets(true);
+						const totalAssets = game.countAssets();
+						game.displayTextLine(ctx, {msg: `${numAssetsLoaded} / ${totalAssets}`, x: 1, y: 52, alpha: .3});
+						if (game.sceneData.lastFileLoaded) {
+							game.displayTextLine(ctx, {msg: game.sceneData.lastFileLoaded.split(".")[0], x: 1, y: 58, alpha: .3});
 						}
 					}
 				},
