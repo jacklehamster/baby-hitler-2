@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "what-so-funny",
 		onScene: game => {

@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "maze-2",
 		onScene: game => {

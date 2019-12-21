@@ -1,6 +1,6 @@
 const GANSTER_NAME = "Dick Ruber";
 const PASSWORD = "707 - 8008";
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "tavern-stranger-zoom",
 		arrowGrid: [

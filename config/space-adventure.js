@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "space-adventure",
 		startTalk: (game, talker, msg, onDone, removeLock) => {

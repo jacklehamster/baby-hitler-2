@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "leo-end",
 		onScene: game => game.showTip("Congrats Leo, you reached the end so far. I didn't program the rest yet."),

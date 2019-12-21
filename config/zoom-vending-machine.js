@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 		{
 			name: "zoom-vending-machine",
 			onScene: ({sceneData}) => {

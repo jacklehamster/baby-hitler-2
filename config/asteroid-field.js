@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "asteroid-field",
 		startTalk: (game, talker, msg, onDone, removeLock) => {

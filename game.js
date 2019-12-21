@@ -22,6 +22,9 @@ const Game = (() => {
 	letterCanvas.height = canvas.height;
 	letterCtx = letterCanvas.getContext("2d");
 
+	const AudioContext = window.AudioContext || window.webkitAudioContext;
+	const audioCtx = new AudioContext();
+
 	let TEXTSPEEDER = 1;
 	const SAVES_LOCATION = "saves";
 	const LAST_CONTINUE = "last";
@@ -1062,7 +1065,8 @@ const Game = (() => {
 			this.clickCtx.canvas.height = 3;
 
 			this.prepareAssets();
-			this.prepareSounds();
+			this.prepareSounds(({src}) => {
+			});
 		}
 
 		get orientation() {
@@ -2338,25 +2342,36 @@ const Game = (() => {
 					count++;
 				}
 			}
+			if (loaded) {
+				count += this.config.scenes.length;
+			} else {
+				count += document.querySelectorAll("script[src^='config/']").length;
+			}
 			return count;
 		}
 
-		prepareAssets() {
+		prepareAssets(callback) {
 			for (let a in ASSETS) {
 				const src = ASSETS[a];
 				if (!imageStock[src]) {
 					this.prepareImage(src, stock => {
 						stock.org = stock.img;
+						if (callback) {
+							callback(stock);
+						}
 					});
 				}
 			}
 		}
 
-		prepareSounds() {
+		prepareSounds(callback) {
 			for (let a in SOUNDS) {
 				const src = SOUNDS[a];
 				if (!soundStock[src]) {
-					this.prepareSound(src, () => {
+					this.prepareSound(src, stock => {
+						if (callback) {
+							callback(stock);
+						}
 					});
 				}
 			}
@@ -2436,7 +2451,7 @@ const Game = (() => {
 			}
 			const soundData = soundStock[src];
 			if (!soundData) {
-				const stock = {}
+				const stock = { src };
 				const audio = new Audio(src);
 				audio.addEventListener("ended", () => {
 					stock.playing = false;
@@ -2453,8 +2468,7 @@ const Game = (() => {
 					}
 				};
 
-				audio.addEventListener("loadeddata", onReady);
-				audio.addEventListener("loadedmetadata", onReady);
+				audio.addEventListener("canplaythrough", onReady);
 
 				audio.addEventListener("error", () => {
 					console.error(`Error: ${src}`);
@@ -2537,6 +2551,7 @@ const Game = (() => {
 					}
 					tempCtx.putImageData(imageData, 0, 0);
 					imageStock[src] = {
+						src,
 						loaded: true,
 						img: tempCanvas,
 					};
@@ -2566,6 +2581,7 @@ const Game = (() => {
 					}
 					tempCtx.putImageData(imageData, 0, 0);
 					imageStock[src] = {
+						src,
 						loaded: true,
 						img: tempCanvas,
 					};
@@ -2597,6 +2613,7 @@ const Game = (() => {
 					}
 					tempCtx.putImageData(imageData, 0, 0);
 					imageStock[src] = {
+						src,
 						loaded: true,
 						img: tempCanvas,
 					};
@@ -2616,6 +2633,7 @@ const Game = (() => {
 					tempCtx.drawImage(stock.img, 0, 0);
 
 					imageStock[src] = {
+						src,
 						loaded: true,
 						img: tempCanvas,
 					};
@@ -2627,7 +2645,7 @@ const Game = (() => {
 			}
 
 			if (!spriteData) {
-				const stock = {}
+				const stock = { src };
 				const img = new Image();
 				img.src = src;
 				this.loadPending = true;
@@ -2666,6 +2684,11 @@ const Game = (() => {
 			this.initGame();
 			const firstScene = this.config.scenes.filter(({startScene})=>startScene)[0];
 			this.loadScene(firstScene);
+		}
+
+		addScene(scene) {
+			this.config.scenes.push(scene);
+			this.sceneData.lastFileLoaded = `config/${scene.name}`;
 		}
 
 		loadScene(scene, restoreMapInfo) {

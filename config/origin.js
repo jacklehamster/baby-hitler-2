@@ -1,4 +1,4 @@
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "origin",
 		onScene: game => {
@@ -8,7 +8,7 @@ gameConfig.scenes.push(
 
 				In ~${new Date().getFullYear()}~, I was sent on a mission to undo the holocaust.
 
-				by travelling back in time to 1889, in order to kill Baby Hitler.
+				by travelling back in time to 1889, in order to kill\nBaby Hitler.
 
 				I failed that mission.
 

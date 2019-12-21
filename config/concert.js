@@ -1,7 +1,7 @@
 let val = 0;
 const magicnum = 13;
 
-gameConfig.scenes.push(
+game.addScene(
 	{
 		name: "concert",
 		onScene: game => {

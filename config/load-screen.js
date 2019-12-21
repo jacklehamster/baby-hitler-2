@@ -68,9 +68,9 @@ gameConfig.scenes.push(
 						}
 						const numAssetsLoaded = game.countAssets(true);
 						const totalAssets = game.countAssets();
-						game.displayTextLine(ctx, {msg: `${numAssetsLoaded} / ${totalAssets}`, x: 1, y: 52, alpha: .3});
+						game.displayTextLine(ctx, {msg: `${numAssetsLoaded} / ${totalAssets}`, x: 1, y: 52, alpha: .2});
 						if (game.sceneData.lastFileLoaded) {
-							game.displayTextLine(ctx, {msg: game.sceneData.lastFileLoaded.split(".")[0], x: 1, y: 58, alpha: .3});
+							game.displayTextLine(ctx, {msg: game.sceneData.lastFileLoaded.split(".")[0], x: 1, y: 58, alpha: .2});
 						}
 					}
 				},
@@ -122,6 +122,14 @@ gameConfig.scenes.push(
 					ctx.putImageData(imageData, 0, 0);
 				},
 				hidden: game => !game.sceneData.gameStarted,
+			},
+			{
+				src: game => game.sceneData.lastFileLoaded,
+				scale: 1/16,
+				offsetX: 60,
+				offsetY: 52,
+				alpha: .5,
+				hidden: game => !game.sceneData.lastFileLoaded || game.sceneData.lastFileLoaded.indexOf("assets/") !== 0,
 			},
 		],	
 	}
