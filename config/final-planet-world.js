@@ -108,7 +108,7 @@ game.addScene(
 		onSceneRotate: (game, arrow) => {
 			return true;
 		},
-		getTemplate: (game, x, y) => {
+		getTemplate: (game, x, y, scaleMul) => {
 			const { pos } = game;
 			const angle = game.rotation / 8 * Math.PI * 2;
 			const rx = Math.cos(angle), ry = Math.sin(angle);
@@ -116,7 +116,7 @@ game.addScene(
 			const absoluteDy = y - pos.y;
 			const dx = rx * absoluteDx + ry * absoluteDy;
 			const dy = ry * absoluteDx - rx * absoluteDy + 2;
-			const scale = Math.pow(2, dy);
+			const scale = (scaleMul || 1) * Math.pow(2, dy);
 			return { scale, dx, dy };
 		},
 		sprites: [
@@ -183,13 +183,41 @@ game.addScene(
 				}
 			},
 			{
+				custom: (game, sprite, ctx) => {
+					const { pos } = game;
+					const { x, y } = pos;
+					const ddx = game.sceneData.finalTarget.x - x;
+					const ddy = game.sceneData.finalTarget.y - y;
+					const dist = Math.sqrt(ddx*ddx + ddy*ddy);
+					if (dist < 100) {
+						ctx.globalAlpha = Math.min(.5, sprite.base / Math.max(0.0001, dist)); 
+						ctx.fillStyle = "#009900";
+						ctx.fillRect(0, 40, 64, 24);
+						ctx.globalAlpha = 1;
+					}
+				},
+				base: 2,
+			},
+			{
 				init: game => {},
 				getTileIndex: (game, x, y) => {
-					return Math.floor((Math.sin(x) + Math.cos(y)) * 1000000) % 17;
+					const ddx = game.sceneData.finalTarget.x - x;
+					const ddy = game.sceneData.finalTarget.y - y;
+					const dist = ddx*ddx + ddy*ddy;
+					if (dist < 3600) {
+						if (dist < 2500 && (Math.abs(ddx) <=.5 || Math.abs(ddy) <= .5 || Math.abs(Math.abs(ddx)-Math.abs(ddy)) <= .5)) {
+							return 9;
+						}
+
+						return Math.abs(Math.floor((Math.sin(x) + Math.cos(y)) * 1000000))%2 + 10;
+					}
+					const rand = Math.abs(Math.floor((Math.sin(x) + Math.cos(y)) * 1000000)) % 17;
+
+					return rand < 9 ? rand : -1;
 				},
 				displayTemplate: {
 					src: ASSETS.CRATER,
-					col: 3, row: 3,
+					col: 3, row: 4,
 				},
 				custom: (game, sprite, ctx) => {
 					const { pos } = game;
@@ -201,16 +229,21 @@ game.addScene(
 					for (let y = Math.floor(pos.y-5); y < pos.y+5; y++) {
 						for (let x = Math.floor(pos.x-5); x < pos.x+5; x++) {
 							const index = sprite.getTileIndex(game, x, y);
-							if (index < 9) {
+							if (index <= 11) {
 								const absoluteDx = x - pos.x;
 								const absoluteDy = y - pos.y;
 								const dx = rx * absoluteDx + ry * absoluteDy;
 								const dy = ry * absoluteDx - rx * absoluteDy + 2;
-								if (dy < 2 && dy > -1.5) {
+								if (dy < -3.5 && index !== 9) {
+									continue;
+								}
+
+								if (dy < 2 && dy > -5) {
+									const mul = index === 9 ? 5 : (index >= 10 ? 2 : 1);
 									const scale = Math.pow(2, dy);
 									displayTemplate.index = index;
-									displayTemplate.alpha = scale;
-									displayTemplate.scale = scale / 2;
+									displayTemplate.alpha = scale * mul;
+									displayTemplate.scale = scale / 2 * mul;
 									displayTemplate.offsetX = 32 - 32 * displayTemplate.scale + scale * dx * 10 * 5;
 									displayTemplate.offsetY = 40 - 32 * displayTemplate.scale + scale * 10;
 									game.displayImage(ctx, displayTemplate);
@@ -619,36 +652,50 @@ game.addScene(
 			},
 			{	//	temple
 				src: ASSETS.PLANET_ITEMS, col: 4, row: 4, size: [128,128],
-				scale: game => game.sceneData.templeTemplate ? game.sceneData.templeTemplate.scale / 2 : 1,
-				offsetX: game => {
+				yyy: -10,
+				scale: (game, sprite) => game.sceneData.templeTemplate ? game.sceneData.templeTemplate.scale / 2 : 1,
+				offsetX: (game, sprite) => {
 					if (!game.sceneData.templeTemplate) {
 						return 0;
 					}
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return 32 - 64 * scale/2 + scale * dx * 10 * 5;
 				},
-				offsetY: game => {
+				offsetY: (game, sprite) => {
 					if (!game.sceneData.templeTemplate) {
 						return 0;
 					}
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
-					return 40 - 64 * scale/2 + scale * (10 - 30);
+					return 40 - 64 * scale/2 + scale * (10 - 30 + sprite.yyy);
 				},
-				onRefresh: game => {
+				scaleMul: 10,
+				onRefresh: (game, sprite) => {
 					const { pos } = game;
 					const { x, y } = pos;
-					game.sceneData.templeTemplate = game.currentScene.getTemplate(game, game.sceneData.finalTarget.x, game.sceneData.finalTarget.y);
+					game.sceneData.templeTemplate = game.currentScene.getTemplate(game, game.sceneData.finalTarget.x, game.sceneData.finalTarget.y,
+						sprite.scaleMul);
 				},
 				init: (game, sprite) => {
-					sprite.onRefresh(game);
+					sprite.onRefresh(game, sprite);
 				},
 				index: game => {
+					if (!game.sceneData.templeTemplate) {
+						return 0;
+					}
 					const { dx, dy, scale } = game.sceneData.templeTemplate;
 					return dy >= 2 ? -1 : 2;
 				},
 				onClick: game => {
-					game.sceneData.leavingScene = game.now;
-					game.fadeToScene("tavern-entrance");
+					const { pos } = game;
+					const { x, y } = pos;
+					const ddx = game.sceneData.finalTarget.x - x;
+					const ddy = game.sceneData.finalTarget.y - y;
+					const dist = ddx*ddx + ddy*ddy;
+					if (dist < 25) {
+						game.sceneData.leavingScene = game.now;
+						game.fadeToScene("tavern-entrance");
+//						return Math.floor((Math.sin(x) + Math.cos(y)) * 1000000)%2 + 10;
+					}
 				},
 				tip: "This is it! Westrow's tavern!",
 				allowMove: true,

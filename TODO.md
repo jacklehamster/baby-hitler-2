@@ -24,9 +24,9 @@
 - Handle landscape ⭐
 - Asteroids / arcade ⭐
 - Make dialog friendly
-- show arrows on practice battle
+- show arrows on practice battle ⭐
 - Fullscreen on tap ⭐
-- 🐞 Tap doesn't accelerate all tips
+- 🐞 Tap doesn't accelerate all tips ⭐
 - 🐞 loading screen problem
 
 
@@ -40,7 +40,7 @@
 - ground tile lighter ⭐
 - Warp drive: go Westrow after bought ⭐
 - Test all ship purchases.
-- chest not restored after menu-save 🐞
+- chest not restored after menu-save 🐞⭐
 - add grass around tavern
 
 ## Links

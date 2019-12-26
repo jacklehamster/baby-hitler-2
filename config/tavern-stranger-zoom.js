@@ -43,6 +43,7 @@ game.addScene(
 					`Go find ${GANSTER_NAME} and beat him at the game.`,
 					"To get into the tavern, the password is:",
 					`${PASSWORD}             `,
+					`That's the same as their phone number.`,
 				], game => {
 					game.gotoScene("tavern-entrance");
 				});
@@ -313,6 +314,17 @@ game.addScene(
 						game.gotoScene("tavern-entrance");
 					}
 				}
+			},
+			{
+				src: ASSETS.POSTERS,
+				offsetX: 45,
+				offsetY: -20,
+				scale: .8,
+				onClick: game => {
+					if (!game.dialog) {
+						game.gotoScene("tavern-posters");
+					}
+				},
 			},
 			{
 				src: ASSETS.DARK_CLOTH_STRANGER, col: 5, row: 5,

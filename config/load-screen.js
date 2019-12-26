@@ -9,11 +9,11 @@ gameConfig.scenes.push(
 		},
 		onSceneRefresh: game => {
 			const progress = game.currentScene.getProgress(game);
-			if (progress < 1) {
+			if (progress < 1 && game.now > game.sceneData.startTime) {
 				const progressSpeed = progress / (game.now - game.sceneData.startTime);
 				const estimate = (1 - progress) / progressSpeed;
-				if (game.sceneData.estimate > estimate) {
-					game.sceneData.estimate = estimate;
+				if (Math.abs(game.sceneData.estimate - estimate) > 10000 || estimate < game.sceneData.estimate) {
+					// game.sceneData.estimate = estimate;
 				}
 			} else {
 				game.waitCursor = false;
@@ -64,7 +64,7 @@ gameConfig.scenes.push(
 							x: 15, y: 26,
 						});
 						if (game.sceneData.estimate < 3600000 && Math.floor(game.sceneData.estimate / 1000) > 0) {
-							game.displayTextLine(ctx, {msg:Math.floor(game.sceneData.estimate / 1000) + "~ sec", x:18, y:40});
+							game.displayTextLine(ctx, {msg: Math.floor(game.sceneData.estimate / 1000) + "~ sec", x:18, y:40});
 						}
 						const numAssetsLoaded = game.countAssets(true);
 						const totalAssets = game.countAssets();
@@ -129,7 +129,7 @@ gameConfig.scenes.push(
 				offsetX: 60,
 				offsetY: 52,
 				alpha: .5,
-				hidden: game => !game.sceneData.lastFileLoaded || game.sceneData.lastFileLoaded.indexOf("assets/") !== 0,
+				hidden: game => game.currentScene.getProgress(game) >= 1 || !game.sceneData.lastFileLoaded || game.sceneData.lastFileLoaded.indexOf("assets/") !== 0,
 			},
 		],	
 	}

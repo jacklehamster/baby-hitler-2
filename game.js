@@ -408,6 +408,11 @@ const Game = (() => {
 					this.playSound(SOUNDS.BOP, {volume: .2});
 					this.sceneData.flashTip = this.now;
 				}
+				if (this.pickedUp && this.pickedUp.tip) {
+					this.pickedUp.tip.time -= 400;
+					this.playSound(SOUNDS.BOP, {volume: .2});
+					this.sceneData.flashTip = this.now;					
+				}
 			});
 
 			canvas.addEventListener("mouseleave", () => {
@@ -536,6 +541,11 @@ const Game = (() => {
 						game.pendingTip.time -= 400;
 						game.playSound(SOUNDS.BOP, {volume: .2});
 						game.sceneData.flashTip = game.now;
+					}
+					if (game.pickedUp && game.pickedUp.tip) {
+						game.pickedUp.tip.time -= 400;
+						game.playSound(SOUNDS.BOP, {volume: .2});
+						game.sceneData.flashTip = game.now;					
 					}
 				});
 
@@ -737,7 +747,7 @@ const Game = (() => {
 						&& this.arrow !== BAG 
 						&& !(this.battle.dummyBattle && (this.arrow===LEFT || this.arrow===RIGHT))
 						&& !this.battle.playerLeftAttack && !this.battle.playerRightAttack
-						&& (!this.hoverSprite || !this.hoverSprite.noPunch)) {
+						&& (!this.hoverSprite || !this.evaluate(this.hoverSprite.noPunch, this.hoverSprite))) {
 					if (this.onScenePunch(this, this.battle)) {
 						if (this.battle.fist === LEFT && !this.battle.playerLeftAttack) {
 							this.battle.playerLeftAttack = this.now;
@@ -1015,6 +1025,9 @@ const Game = (() => {
 			for (let s in SOUNDS) {
 				this.stopSound(SOUNDS[s]);
 			}
+			if (this.tone) {
+				this.tone.stop();
+			}
 		}
 
 		resume() {
@@ -1022,6 +1035,9 @@ const Game = (() => {
 			this.resumed = this.now;
 			if (this.data.theme && this.data.theme.song) {
 				this.playTheme(this.data.theme.song, this.data.theme);
+			}
+			if (this.tone) {
+				this.tone.start();
 			}
 		}
 
@@ -1063,6 +1079,9 @@ const Game = (() => {
 			this.clickCtx = document.createElement("canvas").getContext("2d");
 			this.clickCtx.canvas.width = 3;
 			this.clickCtx.canvas.height = 3;
+
+			this.audioContext = new AudioContext();
+
 
 			this.prepareAssets();
 			this.prepareSounds(({src}) => {
@@ -1124,9 +1143,9 @@ const Game = (() => {
 			this.onSceneBattle = null;
 			this.onScenePunch = null;
 			this.customCursor = null;
-			this.chest = null;
 			this.moving = 0;
 			this.turning = 0;
+			this.setTone(0);
 		}
 
 		markPickedUp(item) {
@@ -2435,6 +2454,60 @@ const Game = (() => {
 			}
 		}
 
+		setTone(index, digit) {
+			switch(index) {
+				case 0:
+					if (this.tone) {
+						this.tone.stop();
+						this.tone = null;
+					}
+					break;
+				case 1:
+					this.setTone(0);
+					this.tone = new Tone(this.audioContext, 200, 300);
+					this.tone.start();
+					break;
+				case 2:
+					this.setTone(0);
+					this.tone = new Tone(this.audioContext, 350, 440);
+					this.tone.start();
+					break;
+				case 3:
+					this.setTone(0);
+					this.tone = new Tone(this.audioContext, 350, 440);
+					this.tone.start();
+					break;
+				case 4:
+					this.setTone(0);
+					this.tone = new Tone(this.audioContext, 400, 450);
+					this.tone.startRinging();
+					break;
+				default:
+					this.setTone(0);
+					const dtmfFrequencies = {
+					    "1": {f1: 697, f2: 1209},
+					    "2": {f1: 697, f2: 1336},
+					    "3": {f1: 697, f2: 1477},
+					    "4": {f1: 770, f2: 1209},
+					    "5": {f1: 770, f2: 1336},
+					    "6": {f1: 770, f2: 1477},
+					    "7": {f1: 852, f2: 1209},
+					    "8": {f1: 852, f2: 1336},
+					    "9": {f1: 852, f2: 1477},
+					    // "*": {f1: 941, f2: 1209},
+					    "0": {f1: 941, f2: 1336},
+					    // "#": {f1: 941, f2: 1477}
+					};
+					const { f1, f2 } = dtmfFrequencies[digit];
+					this.tone = new Tone(this.audioContext, f1, f2);
+					this.tone.start();
+					this.delayAction(game => {
+						game.setTone(0);
+					}, 100);
+					break;
+			}
+		}
+
 		stopSound(src, reset) {
 			if (src && soundStock[src]) {
 				const { audio } = soundStock[src];
@@ -2755,6 +2828,14 @@ const Game = (() => {
 
 		set battle(value) {
 			this.data.battle = value;
+		}
+
+		set chest(value) {
+			this.data.chest = value;
+		}
+
+		get chest() {
+			return this.data.chest;
 		}
 
 		handleSceneEvents() {
@@ -3170,7 +3251,8 @@ const Game = (() => {
 			});
 			this.displayImage(ctx, {src:image, col, row, index});
 			tip.fade = Math.min(1, (this.now - (tip.time + (tip.text.length + 15) * tip.speed)) / 350);
-			this.displayText(tip, true);
+			const flash = this.sceneData.flashTip && this.now - this.sceneData.flashTip < 30;
+			this.displayText(tip, flash);
 			if (tip.fade >= 1 && !tip.done) {
 				tip.done = true;
 				if (tip.onDone) {
@@ -3773,6 +3855,94 @@ const Game = (() => {
 //				document.querySelector("#viewport").requestFullscreen();										
 			}			
 		}
+	}
+
+
+
+	function Tone(context, value1, value2) {
+	    this.context = context;
+	    this.status = 0;
+	    this.value1 = value1;
+	    this.value2 = value2;
+	}
+
+	Tone.prototype.setup = function(){
+	    this.osc1 = this.context.createOscillator();
+	    this.osc2 = this.context.createOscillator();
+	    this.osc1.frequency.value = this.value1;
+	    this.osc2.frequency.value = this.value2;
+
+	    this.gainNode = this.context.createGain();
+	    this.gainNode.gain.value = 0.25;
+
+	    this.filter = this.context.createBiquadFilter();
+	    this.filter.type = "lowpass";
+	    this.filter.frequency = 8000;
+
+	    this.osc1.connect(this.gainNode);
+	    this.osc2.connect(this.gainNode);
+
+	    this.gainNode.connect(this.filter);
+	    this.filter.connect(this.context.destination);
+	}
+
+	Tone.prototype.start = function(){
+		if (!this.status) {
+			this.setup();
+		    this.osc1.start(0);
+		    this.osc2.start(0);
+		    this.status = 1;
+		}
+    }
+
+	Tone.prototype.stop = function(){
+		if (this.status) {
+		    this.osc1.stop(0);
+		    this.osc2.stop(0);
+		    this.osc1 = null;
+		    this.osc2 = null;
+		    this.status = 0;
+			if (this.ringerLFOSource) {
+				this.ringerLFOSource.stop(0);
+				this.ringerLFOSource = null;
+			}
+		}
+	}
+
+	Tone.prototype.createRingerLFO = function() {
+	    // Create an empty 3 second mono buffer at the
+	    // sample rate of the AudioContext
+	    var channels = 1;
+	    var sampleRate = this.context.sampleRate;
+	    var frameCount = sampleRate * 3;
+	    var arrayBuffer = this.context.createBuffer(channels, frameCount, sampleRate);
+
+	    // getChannelData allows us to access and edit the buffer data and change.
+	    var bufferData = arrayBuffer.getChannelData(0);
+	    for (var i = 0; i < frameCount; i++) {
+	        // if the sample lies between 0 and 0.4 seconds, or 0.6 and 1 second, we want it to be on.
+	        if ((i/sampleRate > 0 && i/sampleRate < 0.4) || (i/sampleRate > 0.6 && i/sampleRate < 1.0)){
+	            bufferData[i] = 0.25;
+	        }
+	    }
+
+	    this.ringerLFOBuffer = arrayBuffer;
+	}
+
+	Tone.prototype.startRinging = function(){
+	    this.start();
+	    // set our gain node to 0, because the LFO is calibrated to this level
+	    this.gainNode.gain.value = 0;
+	    this.status = 1;
+
+	    this.createRingerLFO();
+
+	    this.ringerLFOSource = this.context.createBufferSource();
+	    this.ringerLFOSource.buffer = this.ringerLFOBuffer;
+	    this.ringerLFOSource.loop = true;
+	    // connect the ringerLFOSource to the gain Node audio param
+	    this.ringerLFOSource.connect(this.gainNode.gain);
+	    this.ringerLFOSource.start(0);
 	}
 
 	return Game;

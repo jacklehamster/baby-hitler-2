@@ -4,16 +4,16 @@ game.addScene(
 		onScene: game => {
 			game.playTheme(SOUNDS.JAIL_CELL_THEME);
 			game.delayAction(game => {
-				game.gotoAndScene("inside-tavern");
+				game.gotoScene("inside-tavern");
 			}, 11000);
 		},
 		sprites: [
 			{
-				src: ASSETS.LOOK_RIGHT_LEFT, col: 3, row: 4,
+				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,
 				index: 0,
 			},
-			{
-				src: ASSETS.LOOK_RIGHT_LEFT, col: 3, row: 4,
+			{	//	HITMAN
+				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,
 				index: game => {
 					const period = 400, timeTurn = 7000;
 					if (game.now - game.sceneTime > timeTurn && (game.now - game.sceneTime - timeTurn) / period < Math.PI*2) {
@@ -29,6 +29,16 @@ game.addScene(
 				scale: game => Math.min(1, .7 + .3 * (game.now - game.sceneTime)/5000),
 				offsetX: (game, sprite) => 3 + (game.now - game.sceneTime >= 5000 ? 0 : 32 - 32 * game.evaluate(sprite.scale)),
 				offsetY: (game, sprite) => +3 + (game.now - game.sceneTime >= 5000 ? 0 : 64 - (64 + Math.abs(Math.sin((5000 + game.sceneTime - game.now)/300)) * 2) * game.evaluate(sprite.scale)),
+			},
+			{	//	HITMAN MOUTH
+				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,
+				index: game => {
+					if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker === "human") {
+						return Math.floor(game.now / 200) % 4 + 13;
+					}
+					return 13;
+				},
+				hidden: game => !game.sceneData.surprised,
 			},
 			{
 				src: ASSETS.BEARD_SHAVED, col: 3, row: 3,
@@ -46,8 +56,8 @@ game.addScene(
 				offsetX: (game, sprite) => 3 + (game.now - game.sceneTime >= 5000 ? 32 - 1.2 * (32 - game.evaluate(sprite.offX)) : 32 - (32 - game.evaluate(sprite.offX)) * game.evaluate(sprite.scale, sprite)),
 				offsetY: (game, sprite) => +3 + (game.now - game.sceneTime >= 5000 ? 64 - 1.2 * (64 - game.evaluate(sprite.offY)) : 64 - (64 - game.evaluate(sprite.offY) + Math.abs(Math.sin((5000 + game.sceneTime - game.now)/300)) * 2) * game.evaluate(sprite.scale, sprite)),
 			},
-			{
-				src: ASSETS.LOOK_RIGHT_LEFT, col: 3, row: 4,
+			{	//	YUPA
+				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,
 				index: game => {
 					const period = 350, timeTurn = 7500;
 					if (game.now - game.sceneTime > timeTurn && (game.now - game.sceneTime - timeTurn) / period < Math.PI*2) {
@@ -63,6 +73,14 @@ game.addScene(
 				scale: game => Math.min(1, .7 + .3 * (game.now - game.sceneTime)/5000),
 				offsetX: (game, sprite) => game.now - game.sceneTime >= 5000 ? 0 : 32 - 32 * game.evaluate(sprite.scale),
 				offsetY: (game, sprite) => +1 + (game.now - game.sceneTime >= 5000 ? 0 : 64 - (64 + Math.abs(Math.sin((5000 + game.sceneTime - game.now)/200)) * 1) * game.evaluate(sprite.scale)),
+			},
+			{	//	YUPA
+				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,
+				index: game => {
+					const frame = Math.floor(game.now / 50) % 3;
+					return frame !== 0 ? frame % 2 + 11 : 8;
+				},
+				hidden: game => !game.pendingTip || game.pendingTip.progress < 1 || game.pendingTip.talker !== "yupa",
 			},
 		],
 	},

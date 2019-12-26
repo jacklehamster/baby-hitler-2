@@ -1615,18 +1615,20 @@ function makeOnSceneBattle() {
 function standardBattle() {
 	return [
 		{
-			noPunch: true,
+			noPunch: (game, sprite) => game.evaluate(sprite.canEscape),
 			src: ASSETS.ESCAPE,
 			offsetY: 5,
 			hidden: game => {
 				const {battle, arrow, useItem, bagOpening} = game;
-				return !battle || battle.dummyBattle || game.data.gameOver || battle.foeDefeated || useItem || bagOpening;
+				return !battle || game.data.gameOver || battle.foeDefeated || useItem || bagOpening;
 			},
 			onClick: (game, sprite) => {
 				if (!game.evaluate(sprite.canEscape)) {
 					return;
 				}
-				if (Math.random() < .5 || !game.canEscape(game.battle)) {
+				if (game.battle && game.battle.dummyBattle) {
+					game.escapeBattle();
+				} else if (Math.random() < .5 || !game.canEscape(game.battle)) {
 					game.failEscape();
 				} else {
 					game.escapeBattle();

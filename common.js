@@ -300,6 +300,11 @@ const ASSETS = {
 	GRAB_PLAYING_CARD: "assets/grab-playing-card.png",
 	ROBOT_DIAL: "assets/robot-dial.png",
 	LOOK_RIGHT_LEFT: "assets/look-right-left.png",
+	INSIDE_TAVERN: "assets/inside-tavern.png",
+	TAVERN_GANGSTA: "assets/tavern-gangsta.png",
+	BABY_HITLER_WAITER: "assets/baby-hitler-waiter.png",
+	INSIDE_TAVERN_PHONE: "assets/inside-tavern-phone.png",
+	PHONE_SPLIT: "assets/phone-split.png",
 };
 
 const SOUNDS = {
@@ -353,6 +358,9 @@ const SOUNDS = {
 	WEAKPUNCH: "sounds/weakpunch.mp3",
 	ROBOT_VOICE: "sounds/robot-voice.mp3",
 	HUM_LADY: "sounds/hum-lady.mp3",
+	TURTLE_SONG_THEME: "sounds/turtle-song.mp3",
+	HELLO_HUMAN: "sounds/hello-human.mp3",
+	INVALID_NUMBER: "sounds/invalid-number.mp3",
 };
 
 const ALPHAS = (() => {

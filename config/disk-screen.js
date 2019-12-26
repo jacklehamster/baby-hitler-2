@@ -59,9 +59,45 @@ game.addScene(
 					hidden: ({sceneData}, {index}) => {
 						const spriteIndex = index + sceneData.shift;
 						return !sceneData.loadSave || !sceneData.loadSave[spriteIndex];
-					}
+					},
 				};
 			})),
+			... (new Array(8).fill(null).map((a, idx) => {
+				const index = idx - 2;
+				return {
+					index,
+					isSaveFile: true,
+					custom: ({sceneData}, {index}, ctx) => {
+						if (sceneData.loadSave) {
+							const sideLeft = sceneData.sideLeft || 0;
+							const sideRight = sceneData.sideRight || 0;
+							const delay = 100;
+							const time = Math.min(delay, game.now - Math.max(sideLeft, sideRight));
+							const offsetX = time >= delay ? 0
+								: sideLeft > sideRight
+								? -30 * (delay - time) / delay
+								: sideLeft < sideRight
+								? 30 * (delay - time) / delay
+								: 0;
+
+							const spriteIndex = index + sceneData.shift;
+							const px = Math.floor(index / 2) * 32, py = (index % 2 + 2) % 2 * 32;
+
+							game.displayTextLine(ctx, {
+								msg: `#${spriteIndex+1}`,
+								x: px + offsetX + 1, y: py + 2,
+								alpha: .8,
+								dark: true,
+							});								
+
+							game.displayTextLine(ctx, {
+								msg: `#${spriteIndex+1}`,
+								x: px + offsetX + 1, y: py + 1,
+							});
+						}
+					},
+				};
+			})),			
 			... (new Array(8).fill(null).map((a, idx) => {
 				const index = idx - 2;
 				return {
@@ -85,9 +121,9 @@ game.addScene(
 							const top = py;
 							const width = 28, height = 28;
 							const x = left + width/2 - 6;
-							const y = top + height / 2 - 8;
+							const y = top + height / 2 - 6;
 
-							ctx.fillStyle = hoverTime ? "#8888cc" : "#000088bb";
+							ctx.fillStyle = hoverTime ? "#8888cc" : "#00008899";
 							ctx.fillRect(x-1, y-1, 15, 7);
 							game.displayTextLine(ctx, {
 								msg: "load",
@@ -129,9 +165,9 @@ game.addScene(
 							const top = py;
 							const width = 28, height = 28;
 							const x = left + width/2 - 10;
-							const y = top + height / 2 + 6;
+							const y = top + height / 2 + 9;
 
-							ctx.fillStyle = hoverTime ? "#cc8888" : "#880000bb";
+							ctx.fillStyle = hoverTime ? "#cc8888" : "#88000099";
 							ctx.fillRect(x-1, y-1, 22, 7);
 							game.displayTextLine(ctx, {
 								msg: "delete",
@@ -151,6 +187,9 @@ game.addScene(
 					},
 					hidden: ({sceneData}, {index}) => {
 						const spriteIndex = index + sceneData.shift;
+						if (sceneData.currentSaves && sceneData.currentSaves[spriteIndex]) {
+							return true;
+						}
 						return !sceneData.loadSave || !sceneData.loadSave[spriteIndex];
 					}
 				};
@@ -211,13 +250,27 @@ game.addScene(
 						const left = 2 + px + offsetX;
 						const top = py;
 						const width = 28, height = 28;
-						const x = left + 1;
-						const y = top + 1;
+						const x = left + 0.5;
+						const y = top + 2.5;
 						ctx.beginPath();
-						ctx.lineWidth = "4px"
-						ctx.strokeStyle = "#88FF99";
-						ctx.rect(x, y, 26, 26);
+						ctx.lineWidth = 3;
+						ctx.strokeStyle = "black";
+						ctx.rect(x, y, 27, 27);
 						ctx.stroke();
+						ctx.beginPath();
+						ctx.fillStyle = "black";
+						ctx.fillRect(x-.5, y-.5, 28, 8);
+
+
+						ctx.lineWidth = 1;
+						ctx.strokeStyle = "#33aa00";
+						ctx.rect(x, y, 27, 27);
+						ctx.stroke();
+
+						game.displayTextLine(ctx, {
+							msg: "saved",
+							x: x + 4.5, y: y + 1.5,
+						});						
 					},
 					hidden: ({sceneData}, {index}) => {
 						const spriteIndex = index + sceneData.shift;

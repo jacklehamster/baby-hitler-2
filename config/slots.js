@@ -14,7 +14,7 @@ game.addScene(
 				game.situation.coinPlayed = 0;
 				game.situation.initial = {
 					lastCoin: Math.min(20, numCoins),
-					slots: numCoins < 7 ? [0,0,0] : numCoins < 18 ? [1,1,1] : [2,2,2],
+					slots: numCoins < 5 ? [0,0,0] : numCoins < 10 ? [1,1,1] : [2,2,2],
 				};
 				game.situation.slots = [
 					0, 1, 2,

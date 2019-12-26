@@ -1023,7 +1023,7 @@ game.addScene(
 						count: 10,
 						msg: "We sell amunition for your gun in packs of 10.",
 					},
-					{ item: "compass",		name: "compass",		cost: 50,	src: ASSETS.GRAB_COMPASS,		available:true,
+					{ item: "compass",		name: "compass",		cost: 20,	src: ASSETS.GRAB_COMPASS,		available:true,
 						msg: "The red arrow always points to the north.",
 					},
 					{ item: "superarm",	name: "superarm",			cost: 500,	available: game => game.data.leftHand !== "super",

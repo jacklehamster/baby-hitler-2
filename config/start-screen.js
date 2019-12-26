@@ -65,6 +65,17 @@ game.addScene(
 									ctx.rect(px + offsetX, py, 28, 28);
 									ctx.stroke();														
 								}
+								game.displayTextLine(ctx, {
+									msg: `#${spriteIndex+1}`,
+									x: px + offsetX + 1, y: py + 2,
+									alpha: .8,
+									dark: true,
+								});								
+
+								game.displayTextLine(ctx, {
+									msg: `#${spriteIndex+1}`,
+									x: px + offsetX + 1, y: py + 1,
+								});								
 							}
 						}
 					},

@@ -7,16 +7,16 @@ game.addScene(
 		},
 		arrowGrid: [
 			[ null, null, MENU, null, null ],
-			[ null, null, null,     null, null  ],
-			[ LEFT, null, s(1),     null, RIGHT ],
-			[ LEFT, null, s(1),     null, RIGHT ],
-			[ LEFT, null, BACKWARD, null, RIGHT ],
+			[ null, null, null, null, null  ],
+			[ LEFT, null, s(1), null, RIGHT ],
+			[ LEFT, null, s(1), null, RIGHT ],
+			[ LEFT, null, s(9), null, RIGHT ],
 		],
 		map: `
 			XXXXXXXXX
-			XT...._.3
+			XT......3
 			XXX.XX.XX
-			XXX1XX_XX
+			XXX1XX.XX
 			XXXXXX2XX
 			XXXXXXXXX
 		`,
