@@ -59,7 +59,7 @@ game.addScene(
 			{	//	YUPA
 				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,
 				index: game => {
-					const period = 350, timeTurn = 7500;
+					const period = 350, timeTurn = 7200;
 					if (game.now - game.sceneTime > timeTurn && (game.now - game.sceneTime - timeTurn) / period < Math.PI*2) {
 						const frame = Math.round(Math.sin((game.now - game.sceneTime - timeTurn) / period) * 2);
 						if (frame > 0) {

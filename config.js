@@ -29,6 +29,7 @@ const shortcut = {
 	},
 	10: game => game.rotation % 4 === 0 ? BAG : null,
 	11: ({battle}) => battle ? BLOCK : FORWARD,
+	12: game => game.dialog ? null : BACKWARD,
 };
 
 function s(index) {

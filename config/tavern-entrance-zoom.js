@@ -26,12 +26,134 @@ game.addScene(
 				src: ASSETS.ZOOM_TAVERN_DOOR_LADY, col: 2, row: 2,
 				onClick: game => {
 					game.playSound(SOUNDS.HUM_LADY);
-					game.showTip([
+					game.showTip(game.situation.revealPassword ? [
+						"I told all my friends about the password.",
+						"Now we can all go in and have fun!",
+					] : [
 						"I've been trying to get in as well,",
 						"but I don't know the\npassword either.",
 					], game => {
-						
-						
+						game.startDialog({
+							conversation: [
+								{
+									options: [
+										{
+											msg: "Why go in?",
+											onSelect: game => {
+												game.playSound(SOUNDS.HUM);
+												game.showTip([
+													"Why are you trying to get in?",
+												], game => {
+													game.playSound(SOUNDS.HUM_LADY);
+													game.showTip([
+														"Everyone knows, this place serves the most\nmarvelous cocktails.",
+														"And a lot of young handsome men...",
+													], game => {
+													}, 80, { talker: "lady"});
+												}, 80, {talker: "human"});
+
+											},
+										},
+										{
+											msg: "Reveal password",
+											hidden: game => game.situation.revealPassword,
+											onSelect: game => {
+												game.playSound(SOUNDS.HUM);
+												game.showTip([
+													"Would you like to know the\npassword?",
+												], game => {
+													game.playSound(SOUNDS.HUM_LADY);
+													game.showTip([
+														"Yes please!",
+													], game => {
+														game.dialog.index = 1;
+													}, 80, { talker: "lady"});
+												}, 80, {talker: "human"});
+											},
+										},
+										{
+											msg: "I'm poor",
+											hidden: game => !game.situation.revealPassword || game.countItem("coin"),
+											onSelect: game => {
+												game.playSound(SOUNDS.HUM);
+												game.showTip([
+													"Can you spare some change?",
+												], game => {
+													game.playSound(SOUNDS.HUM_LADY);
+													game.showTip([
+														"Sure! Here you go",
+													], game => {
+														game.pickUp({item:"coin", image:ASSETS.GRAB_COIN, message:"1 coin"});
+													}, 80, { talker: "lady"});
+												});												
+											},
+										},
+										{
+											msg: "LEAVE", onSelect: game => {
+												game.gotoScene("tavern-entrance");
+											}
+										},
+									],
+								},
+								{
+									options: [
+										{
+											hidden: game => !game.getSituation("tavern-stranger-zoom").knowPassword,
+											msg: "707 - 8008",
+											onSelect: game => {
+												game.playSound(SOUNDS.HUM);
+												game.showTip([
+													"Alright, not sure if I can trust you this time,",
+													"but I'll take my chances.",
+													"Keep it a secret:",
+													"To get in, the password is",
+													`${"707 - 8008"}`,
+												], game => {
+													game.situation.revealPassword = game.now;
+													game.playSound(SOUNDS.HUM_LADY);
+													game.showTip([
+														"707 - 8008, got it.",
+														"Thank you! I will tell that to all my friends!",
+														"Here's a token of my\ngratitude",
+													], game => {
+														game.pickUp({item:"coin", image:ASSETS.GRAB_COIN, message:"1 coin",
+															onPicked: game => {
+																game.playSound(SOUNDS.HUM_LADY);
+																game.showTip([
+																	"I'm a rich and\ngenerous lady ...",
+																], null, 80, { talker:"lady"});
+															},
+														});
+														game.dialog.index = 0;
+													}, 80, { talker: "lady"});
+												});
+											},
+										},
+										{
+											msg: "I don't know",
+											onSelect: game => {
+												game.playSound(SOUNDS.HUM);
+												game.showTip([
+													"I actually don't know the password.",
+												], game => {
+													game.playSound(SOUNDS.HUM_LADY);
+													game.showTip([
+														"Pff... get out of here!",
+													], game => {
+														game.dialog.index = 0;
+													}, 80, { talker: "lady"});
+												});
+											},
+										},
+										{
+											msg: "Nevermind", onSelect: game => {
+												game.dialog.index = 0;
+											},
+										},
+									],
+								},
+							],
+						});						
 					}, 80, { talker:"lady" });
 				},
 				index: game => game.pendingTip && game.pendingTip.talker === "lady" && game.pendingTip.progress < 1 ? Math.floor(game.now / 100) % 4 : 0,

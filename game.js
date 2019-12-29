@@ -692,9 +692,6 @@ const Game = (() => {
 			     event.stopPropagation();
 			     return false;
 			};
-
-
-			this.createLoop(this.refresh.bind(this));
 		}
 
 		actionMove(x, y, offsetWidth, offsetHeight, fromTouch) {
@@ -1086,6 +1083,8 @@ const Game = (() => {
 			this.prepareAssets();
 			this.prepareSounds(({src}) => {
 			});
+
+			this.createLoop(this.refresh.bind(this));
 		}
 
 		get orientation() {
@@ -1293,6 +1292,9 @@ const Game = (() => {
 				active: true,
 				started: false,
 			});
+			if (this.pendingTip) {
+				this.pendingTip.end = game.now;
+			}
 		}
 
 		openMenu(now, onClose) {
@@ -2799,7 +2801,7 @@ const Game = (() => {
 		}
 
 		get now() {
-			return this.data.time;
+			return this.data ? this.data.time : 0;
 		}
 
 		set now(value) {
@@ -3208,7 +3210,7 @@ const Game = (() => {
 					this.displayTextLine(tempCtx, {msg, x: 2, y: dialogShift + row * 7 + 43});
 				}
 			});
-			this.displayOutlinedImage(tempCtx.canvas, "black", 16);
+			this.displayOutlinedImage(tempCtx.canvas, "#002244", 16);
 		}
 
 		displayOutlinedImage(image, color, intensity, size) {

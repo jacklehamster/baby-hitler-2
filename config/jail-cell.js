@@ -399,6 +399,7 @@ game.addScene(
 				},
 			},
 			{
+				name: "writing",
 				src: ASSETS.WRITING, col:3, row:3,
 				index: game => (game.rotation + 8) % 8,
 				hidden: game => game.rotation === 0,

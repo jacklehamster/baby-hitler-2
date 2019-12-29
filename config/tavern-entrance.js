@@ -6,7 +6,7 @@ game.addScene(
 			[],
 			[ null, null, null,  null, null ],
 			[ null, null, null,  null, null ],
-			[ null, null, BACKWARD,  null, null ],
+			[ null, null, s(12),  null, null ],
 		],
 		onScene: game => {
 			game.save();
@@ -29,7 +29,12 @@ game.addScene(
 			game.fadeToScene("final-planet-world");
 		},
 		onSceneForward: game => {
-			game.fadeToScene("look-right-left");
+			if (game.situation.beenInTavern) {
+				game.fadeToScene("explore-tavern");
+			} else {
+				game.situation.beenInTavern = game.now;
+				game.fadeToScene("look-right-left");
+			}
 			game.actionDown = FORWARD;
 			return true;
 		},

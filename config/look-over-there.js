@@ -38,15 +38,15 @@ game.addScene(
 														"Looks like he's surrrounded by two\nbodyguards,",
 														"which might cause a bit of trouble.",
 														"Let's first check out the room,",
-														"then we can talk with him.",
+														"then we can chat with him.",
 													], game => {
 														game.gotoScene("explore-tavern");
 													});
 												});
 											});
 										});
-									}, 3000);
-								}, 3000);
+									}, 5000);
+								}, 500);
 							});
 						});
 					}, 4000);
@@ -125,28 +125,39 @@ game.addScene(
 				},
 				hidden: game => !game.pendingTip || game.pendingTip.progress >= 1 || game.pendingTip.talker !== "yupa",
 			},
+
 			{	//	BG
-				src: ASSETS.TAVERN_GANGSTA, col: 2, row: 2,
+				src: ASSETS.TAVERN_GANGSTA, col: 5, row: 5,
 				hidden: game => !game.sceneData.showGangsta,
+			},
+			{	//	BARTENDER
+				src: ASSETS.TAVERN_GANGSTA, col: 5, row: 5,
+				hidden: game => !game.sceneData.showGangsta,
+				index: 1,
+			},
+			{	//	BOY
+				src: ASSETS.TAVERN_GANGSTA, col: 5, row: 5,
+				hidden: game => !game.sceneData.showGangsta,
+				index: 6,
+			},
+			{
+				//	BODYGUARDS
+				src: ASSETS.TAVERN_GANGSTA, col: 5, row: 5,
+				hidden: game => !game.sceneData.showGangsta,
+				index: 7,
+			},
+			{
+				//	TABLE
+				src: ASSETS.TAVERN_GANGSTA, col: 5, row: 5,
+				hidden: game => !game.sceneData.showGangsta,
+				index: 10,
 			},
 			{	//	Dick Ruber
-				src: ASSETS.TAVERN_GANGSTA, col: 2, row: 2,
+				src: ASSETS.TAVERN_GANGSTA, col: 5, row: 5,
 				hidden: game => !game.sceneData.showGangsta,
 				index: game => {
-					return game.sceneData.gangstaLookUp ? 2 : 1;
+					return game.sceneData.gangstaLookUp ? 14 : 11;
 				},
-			},
-			{	//	yupa
-				src: ASSETS.TAVERN_GANGSTA, col: 2, row: 2,
-				hidden: game => !game.sceneData.showGangsta || !game.sceneData.approachGangsta,
-				side: LEFT,
-				index: 3,
-			},
-			{	//	hitman
-				src: ASSETS.TAVERN_GANGSTA,
-				hidden: game => !game.sceneData.showGangsta || !game.sceneData.approachGangsta,
-				side: RIGHT,
-				index: 3,
 			},
 			{
 				src: ASSETS.BABY_HITLER_WAITER,

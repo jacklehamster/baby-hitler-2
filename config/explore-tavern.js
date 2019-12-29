@@ -36,7 +36,8 @@ game.addScene(
 			return false;
 		},
 		onScene: game => {
-			game.playTheme(SOUNDS.TURTLE_SONG_THEME, {volume: .5});
+			game.save();
+			game.playTheme(SOUNDS.TURTLE_SONG_THEME, {volume: .7});
 			if (!game.situation.shift) {
 				game.situation.shift = 0;
 			}
@@ -53,7 +54,7 @@ game.addScene(
 		},
 		sprites: [
 			{	//	Phone booth
-				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 4,
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
 				index: 4,
 				offsetX: game => Math.round(game.situation.shift),
 				tip: "There's a phone booth in the corner.",
@@ -62,7 +63,7 @@ game.addScene(
 				},
 			},
 			{	//	Stage
-				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 4,
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
 				index: 5,
 				offsetX: game => Math.round(game.situation.shift),
 				tip: "There are two musicians on stage, playing a funky tune.",
@@ -71,27 +72,45 @@ game.addScene(
 				},
 			},
 			{	//	Gangsta table
-				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 4,
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
 				index: 6,
 				offsetX: game => Math.round(game.situation.shift),
-				tip: "Baby Hitler is there serving some dodgy\nlooking dude.\n"+
+				tip: game => game.situation.confirmDick
+					? "That's Dick Ruber, and Baby Hitler next to him." : "Baby Hitler is there serving some dodgy\nlooking dude.\n"+
 					"I bet that's Dick Ruber",
 				onClick: game => {
-
+					game.gotoScene("gangsta-table");
 				},
 			},
 			{	//	Bar
-				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 4,
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
 				index: 7,
 				offsetX: game => Math.round(game.situation.shift),
-				tip: "The bartender is talking with a drunk customer.",
+				tip: game => game.getSituation("tavern-phone").yupaAndBrutus
+					? "One bodyguard is busy talking to Yupa.\nThis should help dealing with Dick." : "The bartender is talking with a drunk customer.",
 				onClick: game => {
 
 				},
 			},
 			{
-				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 4,
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
 				index: game => Math.floor(game.now / 500) % 2,
+				offsetX: game => Math.round(game.situation.shift),
+			},
+			{
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
+				index: 10,
+				offsetX: game => Math.round(game.situation.shift),
+				hidden: game => !game.getSituation("tavern-phone").yupaAndBrutus,
+			},
+			{
+				src: ASSETS.INSIDE_TAVERN, size: [128, 64], col: 2, row: 6,
+				index: game => {
+					if (game.getSituation("tavern-phone").yupaAndBrutus) {
+						return 8;
+					}
+					return 9;
+				},
 				offsetX: game => Math.round(game.situation.shift),
 			},
 			...standardMenu(),

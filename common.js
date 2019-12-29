@@ -305,6 +305,7 @@ const ASSETS = {
 	BABY_HITLER_WAITER: "assets/baby-hitler-waiter.png",
 	INSIDE_TAVERN_PHONE: "assets/inside-tavern-phone.png",
 	PHONE_SPLIT: "assets/phone-split.png",
+	TAVERN_HITMAN_CLOSEUP: "assets/hitman-tavern-closeup.png",
 };
 
 const SOUNDS = {
@@ -361,6 +362,8 @@ const SOUNDS = {
 	TURTLE_SONG_THEME: "sounds/turtle-song.mp3",
 	HELLO_HUMAN: "sounds/hello-human.mp3",
 	INVALID_NUMBER: "sounds/invalid-number.mp3",
+	GRUMP: "sounds/grump.mp3",
+	YES_BOSS: "sounds/yes-boss.mp3",
 };
 
 const ALPHAS = (() => {

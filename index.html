@@ -156,7 +156,6 @@
 			const ctx2 	= document.getElementById("canvas2").getContext("2d",{ alpha: false });
 			const touchCtx = document.getElementById("touch-canvas").getContext("2d");
 			const touchCtx2 = document.getElementById("touch-canvas2").getContext("2d",{ alpha: false });
-			game = Game.start(gameConfig);
 			game.injectImage(ASSETS.ALPHABET_DARK, document.getElementById("alphabet"));
 			document.getElementById("alphabet").style.display = "none";
 			game.playGame();
@@ -170,7 +169,7 @@
 			processTranslation();
 		}
 
-		let game;
+		const game = Game.start(gameConfig);
 
 		if (DEMO) {
 			document.getElementById("saves").style.display = "none";
@@ -289,6 +288,7 @@
 	<script src="config/amari-baby.js" async></script>
 	<script src="config/arcade-room.js" async></script>
 	<script src="config/asteroid-field.js" async></script>
+	<script src="config/call-gangsta.js" async></script>
 	<script src="config/birthday.js" async></script>
 	<script src="config/bring-cake.js" async></script>
 	<script src="config/cake-face.js" async></script>
@@ -313,6 +313,7 @@
 	<script src="config/final-planet-world.js" async></script>
 	<script src="config/final-title.js" async></script>
 	<script src="config/first-prison-cell.js" async></script>
+	<script src="config/gangsta-table.js" async></script>
 	<script src="config/guards-attack.js" async></script>
 	<script src="config/guards-laughing.js" async></script>
 	<script src="config/guards-laughing-2.js" async></script>

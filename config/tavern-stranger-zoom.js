@@ -11,17 +11,18 @@ game.addScene(
 			[ null, null, BAG ,  null, null ],
 		],
 		startTalk: (game, talker, msg, onDone, removeLock) => {
-			let x, y;
+			let x, y, speed = null;
 			if (talker === "human") {
 				x = 2;
 				y = 62;
 				game.playSound(SOUNDS.HUM);
-			} else if (talker === "stranger") {
+			} else if (talker === "stranger" || talker === "strangerslow") {
 				x = 3;
 				y = 45;
-//				game.playSound(SOUNDS.YUPA);
+				speed = talker === "strangerslow" ? 250 : null;
+				game.playSound(SOUNDS.HUM_LADY);
 			}
-			game.showTip(msg, onDone, null, { x, y, talker, removeLock });
+			game.showTip(msg, onDone, speed, { x, y, talker, removeLock });
 		},
 		onSceneHoldItem: (game, item) => {
 			if (item === "gun") {
@@ -42,10 +43,16 @@ game.addScene(
 					"You already know what to do.",
 					`Go find ${GANSTER_NAME} and beat him at the game.`,
 					"To get into the tavern, the password is:",
-					`${PASSWORD}             `,
-					`That's the same as their phone number.`,
 				], game => {
-					game.gotoScene("tavern-entrance");
+					currentScene.startTalk(game, "strangerslow", [
+						`${PASSWORD}`,
+					], game => {
+						currentScene.startTalk(game, "stranger", [
+							`That's the same as their phone number.`,
+						], game => {
+							game.gotoScene("tavern-entrance");
+						});
+					});
 				});
 			} else {
 				currentScene.startTalk(game, "stranger", "Hey, it's you again.", game => {
@@ -86,7 +93,7 @@ game.addScene(
 									currentScene.startTalk(game, "human", "How can I get into the tavern?", game => {
 										currentScene.startTalk(game, "stranger", [
 											"The tavern is reserved for members.",
-											"We all know the\npassword to get in.",
+											"We all know the password to get in.",
 											"But it's a secret. Most members never share it.",
 										], game => {
 											game.dialog.index++;
@@ -248,7 +255,7 @@ game.addScene(
 									currentScene.startTalk(game, "human", "A playing card?", game => {
 										currentScene.startTalk(game, "stranger", [
 											"This is not just any playing card.",
-											`It's the one that will help you beat ${GANSTER_NAME}.`,
+											`It's the only card that will let you beat ${GANSTER_NAME}.`,
 										])
 									});
 								},
@@ -313,7 +320,7 @@ game.addScene(
 					if (!game.dialog) {
 						game.gotoScene("tavern-entrance");
 					}
-				}
+				},
 			},
 			{
 				src: ASSETS.POSTERS,
@@ -327,6 +334,7 @@ game.addScene(
 				},
 			},
 			{
+				name: "stranger",
 				src: ASSETS.DARK_CLOTH_STRANGER, col: 5, row: 5,
 				index: ({pendingTip, now}) => pendingTip && pendingTip.progress < 1 && pendingTip.talker === "stranger" ? Math.floor(now / 100) % 4 : Math.floor(now / 300) % 30 === 0 ? 4 : 0,
 				onRefresh: game => {
@@ -346,7 +354,7 @@ game.addScene(
 						game.showTip("I think he wants me to light up his cig.");
 					}
 				},
-				combine: (item, game, sprite) => {
+				combine: (item, game) => {
 					const { situation, now, sceneData, currentScene } = game;
 					switch(item) {
 						case "photo":
@@ -363,13 +371,14 @@ game.addScene(
 									currentScene.startTalk(game, "stranger", "That photo... is it...", game => {
 										currentScene.startTalk(game, "human", [
 											"That's right. It's the only photo I have of Baby Hitler.",
-											"It was taken fifteen years ago... I've lost my memory every since...",
+											"It was taken fifteen years ago... I've lost my memory ever since...",
 											"So I don't know how we got\nseparated...",
 											"But I want to bring us all back together.",
 											"Like a family. Me, Yupa, and Baby Hitler.",
 										], game => {
 											currentScene.startTalk(game, "stranger", [
 												"Family huh?",
+												"How touching..."
 											], game => {
 												currentScene.rightHandState(game, "returnPhoto");
 												game.delayAction(game => {
@@ -377,36 +386,45 @@ game.addScene(
 													currentScene.startTalk(game, "stranger", [
 														"Alright, not sure if I can trust you this time,",
 														"but I'll take my chances.",
+														"Keep it a secret:",
 														"To get in, the password is",
-														`${PASSWORD}                `,
-														"It's the same as the tavern's phone number.",
 													], game => {
-														currentScene.startTalk(game, "human", [
-															"Thanks for your help...",
-														],game => {
+														currentScene.startTalk(game, "strangerslow", [
+															`${PASSWORD}`,
+														], game => {
 															currentScene.startTalk(game, "stranger", [
-																`You'll have to deal with a man named ${GANSTER_NAME}.`,
-																"He's the gang boss. He owns Baby Hitler.",
-																"He won't let you take him with you, unless you beat him",
-																"at a card game.",
+																"Same as the tavern's phone number."
 															], game => {
+																game.situation.knowPassword = game.now;
 																currentScene.startTalk(game, "human", [
-																	"Well then, I'll just have to be lucky.",
-																], game => {
+																	"Thanks for your help...",
+																],game => {
 																	currentScene.startTalk(game, "stranger", [
-																		"That game has nothing to do with luck.",
+																		"Once inside, to get to Baby Hitler,",
+																		`you'll have to deal with a man named ${GANSTER_NAME}.`,
+																		"He's the gang boss.",
+																		"He won't let you talk to the kid, unless you beat him",
+																		"at a card game.",
 																	], game => {
-																		currentScene.rightHandState(game, "grabCard");
-																		currentScene.startTalk(game, "stranger", [
-																			"Here, take this with you.",
+																		currentScene.startTalk(game, "human", [
+																			"Well then, I'll just have to be lucky.",
 																		], game => {
-																			currentScene.rightHandState(game, "retractHand");
-																			game.pickUp({item: "ace of hearts", image: ASSETS.GRAB_PLAYING_CARD,
-																				message: "The ace of hearts.\nIt's signed on with a marker.",
-																				onPicked: game => {
-																					game.dialog.paused = false;
-																					game.dialog.index = 4;
-																				},
+																			currentScene.startTalk(game, "stranger", [
+																				"That game has nothing to do with luck.",
+																			], game => {
+																				currentScene.rightHandState(game, "grabCard");
+																				currentScene.startTalk(game, "stranger", [
+																					"Here, take this with you.",
+																				], game => {
+																					currentScene.rightHandState(game, "retractHand");
+																					game.pickUp({item: "ace of hearts", image: ASSETS.GRAB_PLAYING_CARD,
+																						message: "The ace of hearts.\nSomething's written on it.",
+																						onPicked: game => {
+																							game.dialog.paused = false;
+																							game.dialog.index = 4;
+																						},
+																					});
+																				});
 																			});
 																		});
 																	});
