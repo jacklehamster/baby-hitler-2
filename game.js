@@ -28,6 +28,8 @@ const Game = (() => {
 	const SAVES_LOCATION = "saves";
 	const LAST_CONTINUE = "last";
 
+	const MAX_LOAD_ERRORS = 800;
+
 	const TOUCH_SPRITES = {
 		LEFT: {
 			src: ASSETS.TOUCH_ARROWS, col: 2, row: 3, size: [64, 32],
@@ -2562,6 +2564,10 @@ const Game = (() => {
 					this.addLoadError(src);
 					delete soundStock[src];
 					this.loadPending = false;
+					if (this.countLoadError > MAX_LOAD_ERRORS) {
+						this.tooManyErrors();
+						return;
+					}
 					this.delayAction(game => {
 						this.prepareSound(src, data => {
 							this.removeLoadError(src);
@@ -2584,6 +2590,7 @@ const Game = (() => {
 				this.loadErrorResolved = {};
 			}
 			this.loadError[src] = true;
+			this.countLoadError = (this.countLoadError || 0) + 1;
 			this.showLoadError();
 		}
 
@@ -2601,9 +2608,9 @@ const Game = (() => {
 			const errors = [];
 			for (let src in this.loadError) {
 				if (this.loadErrorResolved[src]) {
-					errors.push(`<div style="color: #FFFFDD33"><del>Failed to load: ${src}.</del> ✅</div>`);
+					errors.push(`<div style="color: #FFFFDD33">✅ <del>Failed to load: ${src}.</del></div>`);
 				} else {
-					errors.push(`<div>Failed to load: <a target=_blank href="${src}">${src}.</a></div>`);
+					errors.push(`<div>⚠️ Failed to load: <a target=_blank href="${src}">${src}.</a></div>`);
 				}
 			}
 			if (errors.length) {
@@ -2620,6 +2627,13 @@ const Game = (() => {
 			};
 		}
 
+		tooManyErrors() {
+			if (!this.showedTooManyErrors) {
+				this.showedTooManyErrors = true;
+				showError("Too many load errors. Please check your internet connection.<br>");
+			}
+		}
+
 		prepareImage(src, callback) {
 			const spriteData = imageStock[src];
 			if (spriteData) {
@@ -2633,7 +2647,11 @@ const Game = (() => {
 							callback(spriteData);
 						});
 						spriteData.img.addEventListener("error", () => {
-							this.addLoadError(src);							
+							this.addLoadError(src);
+							if (this.countLoadError > MAX_LOAD_ERRORS) {
+								this.tooManyErrors();
+								return;
+							}
 							this.delayAction(game => {
 								this.prepareImage(src, data => {
 									this.removeLoadError(src);
@@ -2806,6 +2824,10 @@ const Game = (() => {
 					delete imageStock[src];
 					this.loadPending = false;
 
+					if (this.countLoadError > MAX_LOAD_ERRORS) {
+						this.tooManyErrors();
+						return;
+					}
 					this.delayAction(game => {
 						this.prepareImage(src, data => {
 							this.removeLoadError(src);

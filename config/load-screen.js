@@ -15,8 +15,9 @@ gameConfig.scenes.push(
 				if (Math.abs(game.sceneData.estimate - estimate) > 10000 || estimate < game.sceneData.estimate) {
 					// game.sceneData.estimate = estimate;
 				}
-			} else {
+			} else if(game.waitCursor) {
 				game.waitCursor = false;
+				game.countLoadError = 0;
 			}
 		},
 		getProgress: game => {
