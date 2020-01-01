@@ -19,6 +19,17 @@ game.addScene(
 			game.sceneData.freeFormMove = true;
 			game.sceneData.finalTarget = { x: 230, y: -350 };
 			game.sceneData.nextFoe = 100;
+
+			game.sceneData.anim = [
+				[12,13,14,15],	//	N
+				[16,17,18,19],	//	NW
+				[24,25,26,27],	//	W
+				[4,5,6,7],		//	SW
+				[0,1,2,3],		//	S
+				[8,9,10,11],	//	SE
+				[28,29,30,31],	//	E
+				[20,21,22,23],	//	NE
+			];
 		},
 		onEscapeBattle: game => {
 			game.battle = null;
@@ -160,8 +171,25 @@ game.addScene(
 					ctx.beginPath();
 					ctx.arc(20 + rot * 64, 20, size, 0, 2 * Math.PI);
 					ctx.fill();
+
+					if (dist < 200) {
+						// ctx.fillStyle = "#00000077";
+						// ctx.beginPath();
+						// ctx.moveTo(32,20);
+						// ctx.lineTo(64,64);
+						// ctx.lineTo(0,64);
+						// ctx.closePath();
+						ctx.fill();
+						ctx.fillStyle = "#000000cc";
+						ctx.fillRect(31,17,2,4);
+					}
 				},
-			},
+				onRefresh: ({sceneData, now}) => {
+					if (!sceneData.moonLand) {
+						sceneData.moonLand = now;
+					}
+				},
+			},	
 			{
 				src: ASSETS.MOUNTAINS, col: 1, row: 2,
 				offsetY: -24,
@@ -293,6 +321,42 @@ game.addScene(
 			// 	},
 			// },
 			{
+				src: ASSETS.HITMAN_WALK, size:[16,32], col: 6, row: 6,
+				offsetX: (game, {scale}) => {
+					return 31 - 10 * game.evaluate(scale);
+				},
+				offsetY: (game, {scale}) => {
+					return 22 + 40 * game.evaluate(scale);
+				},
+				index: game => {
+					const anim = game.sceneData.anim;					
+					const animation = game.getAnimation(0, -1);
+					const frame = true ? Math.floor(game.now/100) % 4 : 0;
+					return anim[animation][frame];
+				},
+				scale: game => {
+					const timeArrive = 20000;
+					const time = game.now - game.sceneData.moonLand;
+					return Math.max(.001, 1 - Math.sqrt(time / timeArrive));
+				},
+				hidden: game => !game.sceneData.moonLand,
+			},
+			{
+				src: ASSETS.YUPA_BACK_WALK,
+				offsetX: (game, {scale}) => {
+					return 31 + 3 * game.evaluate(scale);
+				},
+				offsetY: (game, {scale}) => {
+					return 25 + 40 * game.evaluate(scale);
+				},
+				index: game => true ? Math.floor(game.now/100) % 4 : 0,
+				scale: game => {
+					const timeArrive = 20000;
+					const time = game.now - game.sceneData.moonLand;
+					return Math.max(.001, 1 - Math.sqrt(time / timeArrive)) * .7;
+				},
+			},		
+			{
 				src: ASSETS.SPACESHIP, col: 1, row: 2,
 				scale: game => game.sceneData.spaceshipTemplate ? game.sceneData.spaceshipTemplate.scale / 2 : 1,
 				offsetX: game => {
@@ -414,6 +478,26 @@ game.addScene(
 						return;
 					}
 
+					const moonMessages = [
+						[
+							"That bright shiny object is the sky is Westrow's moon.",
+							"You can see it by looking south.",
+						],
+						[
+							"You can use the moon for direction.",
+							"Or, if you have a compass, it's a bit easier.",
+						],
+						[
+							"Something's odd about that moon in the south...",
+						],
+						[
+							"The moon aways faces south from this point.",
+						],
+						[
+							"As you get closer, the moon tends to get very large...",
+						],
+					];
+
 					game.pendingTip = null;
 					game.startDialog({
 						time: game.now,
@@ -424,7 +508,9 @@ game.addScene(
 									{
 										msg: "Ask direction",
 										onSelect: game => {
-											game.showTip(`You are currently facing ${game.getOrientationText()}.`, null, null, {removeLock:true});
+											game.showTip([
+												`You are currently facing ${game.getOrientationText()}.`,
+											], null, null, {removeLock:true});
 										},
 									},
 									{
@@ -445,10 +531,11 @@ game.addScene(
 									{
 										msg: "The moon...",
 										onSelect: game => {
-											game.showTip([
-													"That bright shiny object is the sky is Westrow's moon.",
-													"You can see it by looking south.",
-												], game => {
+											if (game.dialog.moonTalk===undefined) {
+												game.dialog.moonTalk = (game.situation.moonTalk||0);
+												game.situation.moonTalk = (game.dialog.moonTalk + 1) % moonMessages.length;
+											}
+											game.showTip(moonMessages[game.dialog.moonTalk], game => {
 												}, null, {removeLock:true}
 											);
 										},
@@ -732,14 +819,14 @@ game.addScene(
 					ctx.stroke();
 
 					const orientation = game.granular_orientation;
-					game.displayTextLine(ctx, {msg: orientation, x: y-5 + (orientation.length === 1 ? 3 : 0), y: y-2});
+					game.displayTextLine(ctx, {msg: orientation, x: x-5 + (orientation.length === 1 ? 3 : 0), y: y-2});
 
 					ctx.fillStyle = "#cccccc55";
 					ctx.beginPath();
 					ctx.ellipse(x-1, y-1, 3, 1, 0, 0, 2 * Math.PI);
 					ctx.fill();					
 				},
-				hidden: game => !game.inventory.compass || game.battle || game.dialog || game.useItem === "compass",
+				hidden: game => game.sceneData.moonLand || !game.inventory.compass || game.battle || game.dialog || game.useItem === "compass",
 			},
 			...standardBattle(),
 			...standardMenu(),

@@ -306,6 +306,7 @@ const ASSETS = {
 	INSIDE_TAVERN_PHONE: "assets/inside-tavern-phone.png",
 	PHONE_SPLIT: "assets/phone-split.png",
 	TAVERN_HITMAN_CLOSEUP: "assets/hitman-tavern-closeup.png",
+	YUPA_BACK_WALK: "assets/yupa-back-walk.png",
 };
 
 const SOUNDS = {

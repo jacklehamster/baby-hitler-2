@@ -1029,7 +1029,7 @@ const Game = (() => {
 		resume() {
 			this.paused = 0;
 			this.resumed = this.now;
-			if (this.data.theme && this.data.theme.song) {
+			if (this.data && this.data.theme && this.data.theme.song) {
 				this.playTheme(this.data.theme.song, this.data.theme);
 			}
 			if (this.tone) {

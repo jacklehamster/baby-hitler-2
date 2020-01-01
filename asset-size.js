@@ -261,6 +261,7 @@ const FILE_SIZE = {
    'waiter.png' : 812,
    'wood.png' : 206,
    'writing.png' : 407,
+   'yupa-back-walk.png' : 1845,
    'yupa-dance.png' : 1418,
    'yupa-dry-close.png' : 1148,
    'yupa-dry.png' : 401,
