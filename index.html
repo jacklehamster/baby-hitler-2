@@ -81,9 +81,41 @@
 				document.querySelector(".debug").style.display = window.debugMode ? "" : "none";
 			</script>
 		</div>
-		<div id="error-div" style="display:none; background-color: #FF000033; color: #FFFFDD99; position: absolute; width: 100%; top: 0; left: 0; padding: 15px">
+		<div id="error-div" style="display:none; background-color: #FF000033; color: #FFFFDD99; position: absolute; z-index: 10; width: 100%; top: 0; left: 0; padding: 15px">
+		</div>
+		<div id="load-error-div" style="display:none; background-color: #EEEE0033; color: #FFFFDD99; position: absolute; z-index: 20; width: 100%; top: 0; left: 0; padding: 15px">
 		</div>
 	</body>
+
+	<script>
+		const errorDiv = document.getElementById("error-div");
+		errorDiv.addEventListener("click", e => {
+			errorDiv.style.display = "none";
+		});	
+		function showError(error) {
+			if (error) {
+				errorDiv.style.display = "";
+				errorDiv.innerHTML += error + "\n";
+			} else {
+				errorDiv.style.display = "none";
+			}
+		}
+
+		const loadErrorDiv = document.getElementById("load-error-div");
+		loadErrorDiv.addEventListener("click", e => {
+			loadErrorDiv.style.display = "none";
+		});
+
+		function showLoadErrors(errors) {
+			if (errors) {
+				loadErrorDiv.style.display = "";
+				loadErrorDiv.innerHTML = errors + "\n";
+			} else {
+				loadErrorDiv.style.display = "none";
+			}			
+		}
+	</script>
+
 	<script src="lib/md5.min.js"></script>
 	<script src="common.js"></script>
 	<script src="config.js"></script>
@@ -112,16 +144,6 @@
 	</script>
 
 	<script>
-		const errorDiv = document.getElementById("error-div");
-		errorDiv.addEventListener("click", e => {
-			errorDiv.style.display = "none";
-		});	
-		function showError(error) {
-			const errorDiv = document.getElementById("error-div");
-			errorDiv.style.display = "";
-			errorDiv.innerHTML += error + "\n";
-		}
-
 		const noises = document.querySelectorAll(".noise");
 		const scanlines = document.querySelectorAll(".scanline");
 		const screenCopies = document.querySelectorAll(".screen-copy");
@@ -381,5 +403,22 @@
 		} else {
 			startGame();
 		}
+	</script>
+
+	<script>
+		const scripts = Array.prototype.slice.apply(document.scripts).filter(({src}) => src && src.length);
+		scripts.forEach(script => {
+			script.addEventListener("error", function err(e) {
+				game.addLoadError(script.src);
+				document.body.removeChild(script);
+				const newScript = document.createElement("script");
+				newScript.src = script.src;
+				newScript.addEventListener("error", err);
+				setTimeout(() => {
+					game.removeLoadError(script.src);
+					document.body.appendChild(newScript);
+				}, 5000);
+			});
+		});
 	</script>
 </html>

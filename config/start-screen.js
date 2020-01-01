@@ -154,7 +154,7 @@ game.addScene(
 					if (!game.sceneData.notAbout) {
 						game.sceneData.notAbout = game.now;
 						game.sceneData.about = 0;
-						game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
+//						game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
 						game.currentScene.onStartDialog(game);
 					}
 				},
@@ -164,7 +164,7 @@ game.addScene(
 					game.sceneData.credits = `
 						This game is the sequel to
 						“Kill Baby Hitler”
-						a game published january 2019.
+						a game published on january 2019.
 
 						The first part of this game was released as an entry for september's\n#LOWREZJAM\n2019, a jam to make a game\nentirely fit a 64x64 pixels screen.
 
@@ -201,7 +201,7 @@ game.addScene(
 						if (game.now - game.sceneData.scrollTime > 60000) {
 							game.sceneData.notAbout = game.now;
 							game.sceneData.about = 0;
-							game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
+//							game.playTheme(SOUNDS.FUTURE_SONG_THEME, {volume: .5});
 							game.currentScene.onStartDialog(game);
 						}
 					}
@@ -221,7 +221,7 @@ game.addScene(
 					{
 						options: [
 							{
-								hidden: ({sceneData}) => Object.keys(sceneData.loadSave).length,
+								hidden: ({sceneData}) => Object.keys(sceneData.loadSave).filter(name => name !== "clear").length,
 							},
 							{
 								msg: "New Game",
@@ -235,7 +235,7 @@ game.addScene(
 								}
 							},
 							{
-								hidden: ({sceneData}) => !Object.keys(sceneData.loadSave).length,
+								hidden: ({sceneData}) => !Object.keys(sceneData.loadSave).filter(name => name !== "clear").length,
 								msg: "Load",
 								onSelect: (game, dialog) => dialog.index = 2,
 							},
@@ -253,7 +253,7 @@ game.addScene(
 								onSelect: (game, dialog) => {
 									game.sceneData.about = game.now;
 									game.sceneData.notAbout = 0;
-									game.playTheme(SOUNDS.F1, {volume:.2});
+//									game.playTheme(SOUNDS.F1, {volume:.2});
 									game.sceneData.scrollTime = game.now;
 									game.dialog = null;
 								},

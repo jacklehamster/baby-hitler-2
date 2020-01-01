@@ -6,7 +6,7 @@ game.addScene(
 			game.sceneData.credits = `
 				I'm a\nprofessional hitman.
 
-				In ~${new Date().getFullYear()}~, I was sent on a mission to undo the holocaust.
+				In ~${game.babyHitlerYear()}~, I was sent on a mission to undo the holocaust.
 
 				by travelling back in time to 1889, in order to kill\nBaby Hitler.
 

@@ -23,7 +23,6 @@ const Game = (() => {
 	letterCtx = letterCanvas.getContext("2d");
 
 	const AudioContext = window.AudioContext || window.webkitAudioContext;
-	const audioCtx = new AudioContext();
 
 	let TEXTSPEEDER = 1;
 	const SAVES_LOCATION = "saves";
@@ -1076,9 +1075,6 @@ const Game = (() => {
 			this.clickCtx = document.createElement("canvas").getContext("2d");
 			this.clickCtx.canvas.width = 3;
 			this.clickCtx.canvas.height = 3;
-
-			this.audioContext = new AudioContext();
-
 
 			this.prepareAssets();
 			this.prepareSounds(({src}) => {
@@ -2457,6 +2453,9 @@ const Game = (() => {
 		}
 
 		setTone(index, digit) {
+			if (index && !this.audioContext) {
+				this.audioContext = new AudioContext();
+			}
 			switch(index) {
 				case 0:
 					if (this.tone) {
@@ -2546,13 +2545,57 @@ const Game = (() => {
 				audio.addEventListener("canplaythrough", onReady);
 
 				audio.addEventListener("error", () => {
-					console.error(`Error: ${src}`);
+					this.addLoadError(src);
 					delete soundStock[src];
 					this.loadPending = false;
+					this.delayAction(game => {
+						this.prepareSound(src, data => {
+							this.removeLoadError(src);
+							if (callback) {
+								callback(data);
+							}
+						});
+					}, 5000);
 				});
 				stock.audio = audio;
 				soundStock[src] = stock;
 				audio.load();
+			}
+		}
+
+		addLoadError(src) {
+			console.error(`Error: ${src}`);
+			if (!this.loadError) {
+				this.loadError = {};
+				this.loadErrorResolved = {};
+			}
+			this.loadError[src] = true;
+			this.showLoadError();
+		}
+
+		removeLoadError(src) {
+			this.loadErrorResolved[src] = this.now;
+			this.showLoadError();
+			this.delayAction(game => {
+				delete this.loadErrorResolved[src];
+				delete this.loadError[src];
+				this.showLoadError();
+			}, 1000);
+		}
+
+		showLoadError() {
+			const errors = [];
+			for (let src in this.loadError) {
+				if (this.loadErrorResolved[src]) {
+					errors.push(`<div style="color: #FFFFDD33"><del>Failed to load: ${src}.</del> ✅</div>`);
+				} else {
+					errors.push(`<div>Failed to load: <a target=_blank href="${src}">${src}.</a></div>`);
+				}
+			}
+			if (errors.length) {
+				showLoadErrors(errors.join(""));
+			} else {
+				showLoadErrors(null);
 			}
 		}
 
@@ -2574,6 +2617,17 @@ const Game = (() => {
 					if (callback) {
 						spriteData.img.addEventListener("load", () => {
 							callback(spriteData);
+						});
+						spriteData.img.addEventListener("error", () => {
+							this.addLoadError(src);							
+							this.delayAction(game => {
+								this.prepareImage(src, data => {
+									this.removeLoadError(src);
+									if (callback) {
+										callback(data);
+									}
+								});
+							}, 5000);
 						});
 					};
 				}
@@ -2734,8 +2788,18 @@ const Game = (() => {
 					}
 				});
 				img.addEventListener("error", () => {
+					this.addLoadError(src);
 					delete imageStock[src];
 					this.loadPending = false;
+
+					this.delayAction(game => {
+						this.prepareImage(src, data => {
+							this.removeLoadError(src);
+							if (callback) {
+								callback(data);
+							}
+						});
+					}, 5000);
 				});
 				stock.img = img;
 				imageStock[src] = stock;
@@ -3196,10 +3260,12 @@ const Game = (() => {
 			const filteredOptions = options.filter(option => !option.hidden || !this.evaluate(option.hidden, option));
 			const y = this.mouse ? Math.floor((this.mouse.y - 43 - offY) / 7) : -1;
 			ctx.fillStyle = this.dialog.tapped && Math.floor(this.now / 50) % 2 === 0 ? "#00443355" : (this.dialog.highlightColor || "#009988aa");
+			let selectedRow;
 			if (y >= 0 && y < filteredOptions.length) {
 				const { msg, cantSelect } = filteredOptions[y];
 				if (this.evaluate(msg) && !this.evaluate(cantSelect)) {
 					ctx.fillRect(0, dialogShift + y * 7 + 42, 64, 7);
+					selectedRow = y;
 				}
 			}
 
@@ -3207,10 +3273,10 @@ const Game = (() => {
 			filteredOptions.forEach((option, row) => {
 				const msg = this.evaluate(option.msg);
 				if (msg) {
-					this.displayTextLine(tempCtx, {msg, x: 2, y: dialogShift + row * 7 + 43});
+					this.displayTextLine(tempCtx, {msg, x: 2, y: dialogShift + row * 7 + 43,});
 				}
 			});
-			this.displayOutlinedImage(tempCtx.canvas, "#002244", 16);
+			this.displayOutlinedImage(tempCtx.canvas, "#001144", 16);
 		}
 
 		displayOutlinedImage(image, color, intensity, size) {
@@ -3520,6 +3586,13 @@ const Game = (() => {
 					loaded: true,
 				};
 			});
+
+			img.addEventListener("error", () => {
+				this.delayAction(game => {
+					this.replaceImage(id, src);
+				}, 5000);
+			});
+
 			img.src = this.data.images[id];
 		}
 
@@ -3781,6 +3854,10 @@ const Game = (() => {
 
 		dumdum() {
 			const CHEATCODDE = "yupayupa";
+		}
+
+		babyHitlerYear() {
+			return 2019;
 		}
 
 		getAnimation(dx, dy) {

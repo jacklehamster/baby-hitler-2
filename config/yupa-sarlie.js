@@ -226,7 +226,7 @@ game.addScene(
 											currentScene.startTalk(game, "yupa", [
 												`${game.data.name||"Hitman"}~,`,
 												`yo rememba wat ya did before?`,
-												`Ya travel back in tam, from da year ~${new Date().getFullYear()}~ to 1889`,
+												`Ya travel back in tam, from da year ~${game.babyHitlerYear()}~ to 1889`,
 												"To kell da babi.",
 											], game => {
 												currentScene.startTalk(game, "human2", [
@@ -236,7 +236,7 @@ game.addScene(
 												], game => {
 													currentScene.startTalk(game, "yupa", [
 														"Rite, so wad da ya think happen",
-														`to 7 billionz humanz who wure living in ~${new Date().getFullYear()}~?`,
+														`to 7 billionz humanz who wure living in ~${game.babyHitlerYear()}~?`,
 													], game => {
 														game.sceneData.hitmanSurprised = game.now;
 														game.delayAction(game => {

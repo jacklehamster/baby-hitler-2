@@ -13,8 +13,8 @@ game.addScene(
 		],
 		map: `
 			XXXXXXXXXXX
-			XXXXX|XXXXX
 			X1......2mX
+			XXXXX|XXXXX
 			XXXXXXXXXXX
 		`,
 		sprites: [

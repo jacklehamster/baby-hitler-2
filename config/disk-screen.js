@@ -184,6 +184,7 @@ game.addScene(
 						}
 						game.deleteSave(spriteIndex);
 						game.currentScene.refreshImages(game);
+						game.playSound(SOUNDS.HIT_LAND);
 					},
 					hidden: ({sceneData}, {index}) => {
 						const spriteIndex = index + sceneData.shift;
@@ -320,6 +321,7 @@ game.addScene(
 						game.saveData(spriteIndex, screenshot, savedData);
 						game.sceneData.currentSaves[spriteIndex] = true;
 						game.currentScene.refreshImages(game);
+						game.playSound(SOUNDS.JINGLE);
 					},
 					hidden: ({sceneData}, {index}) => {
 						const spriteIndex = index + sceneData.shift;

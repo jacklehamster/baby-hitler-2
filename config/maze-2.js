@@ -21,8 +21,10 @@ game.addScene(
 			X_._._._._._...2X
 			XXX.XXXXXXX:XXXXX
 			XXX...3XXXX.XXXXX
-			XXX.XXXXXXX.XMXXX
-			XXX...4XX1....XXX
+			XXX.XXXXXXX.XXXXX
+			XXX...4XXXX.XXXXX
+			XXXXXXXXXXX.XMXXX
+			XXXX1.........XXX
 			XXXXXXXXXXXXXXXXX
 		`,
 		sprites: [

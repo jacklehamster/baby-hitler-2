@@ -30,7 +30,7 @@ gameConfig.scenes.push(
 					ctx.fillStyle = "#000000";
 					ctx.fillRect(0, 0, 64, 64);					
 				},
-				hidden: game => game.progress < 1,
+				hidden: game => game.currentScene.getProgress(game) < 1,
 				onClick: game => {
 					game.playSound(SOUNDS.RANDOM);
 					game.sceneData.gameStarted = game.now;
