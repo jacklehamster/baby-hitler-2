@@ -140,11 +140,11 @@ game.addScene(
 						return Math.min(16, 11 + Math.floor((now - battle.foeDefeated) / 60));
 					}
 
-					if (game.battle.restoreBot) {
-						const frame = Math.max(0, Math.min(3, Math.floor((game.now - game.battle.restoreBot)/100)));
-						return frame>=3 ? 0 : 9 + 2 - frame;
-					}
 					if (game.battle.ball) {
+						if (game.battle.restoreBot) {
+							const frame = Math.max(0, Math.min(3, Math.floor((game.now - game.battle.restoreBot)/100)));
+							return frame>=3 ? 0 : 9 + 2 - frame;
+						}
 						const frame = Math.min(2, Math.floor((game.now - game.battle.ball)/100));
 						return 9 + frame;
 					}
@@ -293,7 +293,9 @@ game.addScene(
 				onEvent: (game, {foe, foeLife, foeBlockChance, foeDefense, attackSpeed, riposteChance, attackPeriod, foeDamage, onWin, xp, belowTheBelt, invincible, battleCry}) => {
 					const {data, now} = game;
 					const { yupa } = game.data;
-					yupa.rotation = (game.rotation + 4) % 8;
+					if (yupa) {
+						yupa.rotation = (game.rotation + 4) % 8;
+					}
 					
 					if (game.situation.defeatedBot) {
 						return;

@@ -18,7 +18,7 @@ game.addScene(
 				game.sceneData.shakeTime = game.now;
 				game.playSound(SOUNDS.HIT_LAND);
 			}
-			if (game.data.yupa.inBottle) {
+			if (!game.data.yupa || game.data.yupa.inBottle) {
 				if (!game.sceneData.showGameOver && frame > 150) {
 					game.hideCursor = false;
 					game.gameOver(" “You're not\n          Superman!”");
@@ -49,7 +49,7 @@ game.addScene(
 					if (frame < 10) {
 						return 0;
 					}
-					if (frame < 100) {
+					if (frame < 100 || !game.data.yupa || game.data.yupa.inBottle) {
 						return 2 + Math.min(2, frame - 10);
 					}
 					if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker==="yupa") {

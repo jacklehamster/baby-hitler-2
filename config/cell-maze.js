@@ -110,7 +110,7 @@ game.addScene(
 									game.playSound(SOUNDS.YUPA);
 									game.waitCursor = true;
 									game.showTip([
-										"Aa was travellin in parrlel uverse.",
+										"Aye was travellin in parrlel uverse.",
 										"Life here so boring in cage. Just had to get out.",
 										"Oh that's right, yo can't do that coz you a human.",
 									], () => {
@@ -214,7 +214,7 @@ game.addScene(
 						return;
 					}
 					game.situation.skeletonRopeFound = game.now;
-					game.pickUp({item:"rope", image:ASSETS.GRAB_ROPE, message:"This rope might be handy."});					
+					game.pickUp({item:"rope", image:ASSETS.GRAB_ROPE, message:"This rope might come handy."});					
 				},
 			},
 			{

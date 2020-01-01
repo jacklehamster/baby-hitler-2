@@ -17,7 +17,7 @@ game.addScene(
 							{},
 							{
 								hidden: game => (game.data.name||"") === "",
-								msg: "Undo",
+								msg: "Backspace",
 								onSelect: (game, dialog) => game.data.name = game.data.name.substring(0, game.data.name.length-1),								
 							},
 							{
@@ -27,6 +27,7 @@ game.addScene(
 									game.gotoScene(game.sceneData.returnScene, null, true);
 									if (game.currentScene.onDialog) {
 										game.currentScene.onDialog(game);
+										game.playSound(SOUNDS.HUM);
 										game.showTip([
 											`It's me, your friend ${game.data.name}.`,
 											"Remember? We travel in space together, with Baby Hitler!",
@@ -90,7 +91,7 @@ game.addScene(
 			{
 				custom: (game,sprite,ctx) => {
 					const alphaSprite = {
-						src: ASSETS.ALPHABET, size: [5,6], col: 10, row:7,
+						src: ASSETS.ALPHABET, size: [10,11], col: 10, row:7,
 					};
 
 					game.displayTextLine(ctx, {msg:"Your name?", x: 17, y: 1});

@@ -2408,45 +2408,59 @@ const Game = (() => {
 			}
 		}
 
+		playSoundClone(src) {
+			const { audio, clones } = soundStock[src];
+			let freeClone = clones.filter(({playing}) => !playing)[0];
+			if (!freeClone) {
+				freeClone = {
+					audio: audio.cloneNode(true),
+					playing: false,
+				};
+				freeClone.audio.addEventListener("ended", e => {
+					freeClone.playing = false;
+				});
+				clones.push(freeClone);
+			}
+			freeClone.playing = true;
+			return freeClone.audio;
+		}
+
 		playSound(src, options) {
+			if (this.mute) {
+				return;
+			}
 			const {loop, volume} = options || {};
 			if (soundStock[src]) {
 				const { audio, playing } = soundStock[src];
 				if (loop) {
 					audio.volume = volume || 1;
 					audio.loop = true;
-					if (!this.mute) {
-						try {
-							audio.play();
-						} catch(e) {
-							console.log("sound blocked", e);
-						}
+					try {
+						audio.play();
+					} catch(e) {
+						console.log("sound blocked", e);
 					}
 				} else {
 					if (!playing) {
 						soundStock[src].playing = true;
 					}
-					const soundBite = playing ? audio.cloneNode(true) : audio;
+					const soundBite = playing ? this.playSoundClone(src) : audio;
 					soundBite.volume = volume || .5;
 					soundBite.loop = false;
-					if (!this.mute) {
-						try {
-							soundBite.play();
-						} catch(e) {
-							console.log("sound blocked", e);
-						}
+					try {
+						soundBite.play();
+					} catch(e) {
+						console.log("sound blocked", e);
 					}
 				}
 			} else {
 				this.prepareSound(src, ({audio}) => {
 					soundStock[src] = audio;
 					audio.volume = volume || 1;
-					if (!this.mute) {
-						try {
-							audio.play();
-						} catch(e) {
-							console.log("sound blocked", e);
-						}
+					try {
+						audio.play();
+					} catch(e) {
+						console.log("sound blocked", e);
 					}
 				})
 			}
@@ -2525,7 +2539,7 @@ const Game = (() => {
 			}
 			const soundData = soundStock[src];
 			if (!soundData) {
-				const stock = { src };
+				const stock = { src, clones: [] };
 				const audio = new Audio(src);
 				audio.addEventListener("ended", () => {
 					stock.playing = false;
@@ -2827,7 +2841,9 @@ const Game = (() => {
 
 		addScene(scene) {
 			this.config.scenes.push(scene);
-			this.sceneData.lastFileLoaded = `config/${scene.name}`;
+			if (this.sceneData) {
+				this.sceneData.lastFileLoaded = `config/${scene.name}`;
+			}
 		}
 
 		loadScene(scene, restoreMapInfo) {
@@ -3330,7 +3346,7 @@ const Game = (() => {
 		}
 
 		displayImage(ctx, sprite) {
-			const {src, scale, index, side, col, row, size, hidden, offsetX, offsetY, alpha, custom, ending, isText, globalCompositeOperation } = sprite;			
+			const {src, scale, index, side, col, row, size, hidden, offsetX, offsetY, alpha, custom, ending, isText, globalCompositeOperation, flipH } = sprite;			
 			if (this.evaluate(hidden, sprite)) {
 				return;
 			}
@@ -3411,7 +3427,15 @@ const Game = (() => {
 				ctx.globalCompositeOperation = this.evaluate(globalCompositeOperation, sprite);
 			}
 
+			if (flipH) {
+				ctx.translate(64, 0);
+				ctx.scale(-1, 1);
+			}
 			ctx.drawImage(spriteData.img, srcX, srcY, srcW, srcH, dstX + shiftX, dstY + shiftY, dstW, dstH);
+			if (flipH) {
+				ctx.scale(-1, 1);
+				ctx.translate(-64, 0);
+			}
 			if (alphaColor) {
 				ctx.globalAlpha = 1.0;
 			}

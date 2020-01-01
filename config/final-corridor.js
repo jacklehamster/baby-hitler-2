@@ -87,7 +87,7 @@ game.addScene(
 								game.delayAction(game => {
 									game.playSound(SOUNDS.YUPA);
 									game.waitCursor = false;
-									game.showTip("That waz easy.", null, null, { x: 1, y: 20, speed: 80, talker:"yupa", removeLock: true });
+									game.showTip("That waz eazy.", null, null, { x: 1, y: 20, speed: 80, talker:"yupa", removeLock: true });
 								}, 2500);
 							}, null, { x: 1, y: 20, speed: 80, talker:"yupa" });
 						});						
@@ -757,7 +757,9 @@ game.addScene(
 				showBag: true,
 				onEvent: (game, event) => {
 					const { yupa } = game.data;
-					yupa.rotation = (game.rotation + 4) % 8;
+					if (yupa) {
+						yupa.rotation = (game.rotation + 4) % 8;
+					}
 				},
 			},
 			'C': {

@@ -81,7 +81,9 @@ game.addScene(
 			{	//	beard
 				src: ASSETS.BEARD_SHAVED, col: 3, row: 3,
 				index: 0,
+				offsetX: -2,
 				offsetY: -5,
+				flipH: true,
 				onRefresh: (game, sprite) => {
 					if (game.mouseDown) {
 						const stock = game.imageStock[sprite.src];
@@ -91,7 +93,7 @@ game.addScene(
 						const w = 64, h = 64, canvas = ctx.canvas;
 						for (let yy = 0; yy < canvas.height; yy += h) {
 							for (let xx = 0; xx < canvas.width; xx += w) {
-								ctx.fillRect(xx + Math.round(game.mouse.x-.5), yy + Math.round(game.mouse.y-sprite.offsetY), 2, 1);
+								ctx.fillRect(xx + Math.round(64 - game.mouse.x-.5), yy + Math.round(game.mouse.y-sprite.offsetY), 2, 1);
 							}
 						}
 						if (!game.data.images) {

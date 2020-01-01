@@ -647,10 +647,10 @@ function standardBag() {
 					game.hideCursor = true;
 					game.delayAction(game => {
 						game.hideCursor = false;
-						if (consumable[game.useItem](game)) {
-								game.sceneData.eatTime = 0;
-								game.removeFromInventory(item);
-								game.useItem = null;
+						if (consumable[item](game)) {
+							game.sceneData.eatTime = 0;
+							game.removeFromInventory(item);
+							game.useItem = null;
 						}
 					}, 500);
 					return true;
@@ -1060,7 +1060,7 @@ function makeYupa() {
 				return Math.floor(now / 120) % 4 + 12;
 			}
 			if (pendingTip && pendingTip.talker === "yupa") {
-				return 8 + Math.floor(now / 100) % 3;
+				return pendingTip.progress < 1 ? 8 + Math.floor(now / 100) % 3 : 8;
 			}
 			if (!dialog) {
 				const phase = Math.floor(now / 300 / 8);
@@ -1092,7 +1092,7 @@ function makeYupa() {
 												game.playSound(SOUNDS.HUM);
 												game.showTip(["Come on! Just give it a try.", "Please, I wanna see you do it!", "Show me you're a real Yupa!"], game => {
 													game.playSound(SOUNDS.YUPA);
-													game.showTip("Hum... ooright. But only for a few seconds then...", game => {
+													game.showTip("Hum... ooright. But only for a few secondz then...", game => {
 														game.waitCursor = false;
 														game.data.yupa.inBottle = game.now;
 														game.playSound(SOUNDS.HUM);
@@ -1133,14 +1133,38 @@ function makeYupa() {
 							},null, { x: 2, y: 22, speed: 80, talker:"yupa" });
 						});
 					} else {
-						game.showTip("No reason to give him that, at the moment.", null, null, {removeLock:true});
+						game.showTip([
+							"No reason to give him that, at the moment.",
+							"Let's chat first.",
+						], null, null, {removeLock:true});
 						game.useItem = null;
 					}
 					return true;
 					break;
+				case "water bottle":
+					game.playSound(SOUNDS.YUPA);
+					game.showTip("Am nat thursty", null, 80, { x: 2, y: 22, talker:"yupa" });
+					game.useItem = null;
+					return true;
+					break;
+				case "fruit?":
+					game.playSound(SOUNDS.YUPA);
+					game.showTip("Am nat hongry", null, 80, { x: 2, y: 22, talker:"yupa" });
+					game.useItem = null;
+					return true;
+					break;
+				case "photo":
+					game.playSound(SOUNDS.YUPA);
+					game.showTip([
+						"Ya wantet to take photo befar takin da baby,",
+						"az suvenir.",
+					], null, 80, { x: 2, y: 22, talker:"yupa" });
+					game.useItem = null;
+					return true;
+					break;
 				default:
 			}
-			return true;
+			return false;
 		},
 		onClick: game => {
 			game.startDialog({
@@ -1270,7 +1294,7 @@ function makeYupa() {
 									], game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
-											"Supapawa? You mean stuff humans cannot do?",
+											"Supapawa? You mean stuf humanz cannut do?",
 											"Hum... Yupa can release smelly gas from my bott.",
 											"Also make a very loud noise when da happen.",
 										], game => {
@@ -1309,9 +1333,9 @@ function makeYupa() {
 									game.showTip("Amazing! tell me more!", game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
-											"In paralol uverse, I had a big family.",
+											"In paralol uverse, I had a big famly.",
 											"Mi, mi wife, mi husban, and tree kidz",
-											"We was goin on an adventure...",
+											"We was goin on an advanture...",
 										], game => {
 											game.playSound(SOUNDS.HUM);
 											game.showTip(["Ok ok, I got it.", "So you don't have any useful superpawa?"], game => {

@@ -163,8 +163,9 @@ game.addScene(
 				id: "mirror",
 				src: ASSETS.BEARD_SHAVED,
 				scale: .25,
-				offsetX: 10,
+				offsetX: 38,
 				offsetY: 17,
+				flipH: true,
 				alpha: ({sceneData, now}, {id}) => {
 					if (game.sceneData.to === id) {
 						return .5 * Math.min(1, (game.now - game.sceneData.switchTime)/sceneData.fadeSpeed);
