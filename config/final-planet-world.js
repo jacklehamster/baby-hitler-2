@@ -638,11 +638,11 @@ game.addScene(
 					const { dx, dy, scale } = game.sceneData.fountainTemplate;
 					return dy >= 2 ? -1 : 3;
 				},
-				combine: game => {
+				combine: (item, game) => {
 					if (item === "empty bottle") {
 						game.removeFromInventory("empty bottle");
 						game.useItem = null;
-						game.pickUp({item:"water bottle", image:ASSETS.GRAB_WATER_BOTTLE, message:"It does look like water... so far."});
+						game.pickUp({item:"water bottle", image:ASSETS.GRAB_WATER_BOTTLE, message:"The water looks clear."});
 						return true;
 					}
 				},

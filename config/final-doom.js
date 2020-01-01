@@ -11,7 +11,7 @@ game.addScene(
 				"That drug to simulate death was just a scam.",
 				"As my spirit fades away",
 				"I felt ...",
-				"absolutely NOTHING.",
+				"absolutely\nNOTHING.",
 			], game => {
 				game.gotoScene("final-credit");
 			}, 100, {maxLines: 10});

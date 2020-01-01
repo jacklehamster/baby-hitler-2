@@ -291,6 +291,8 @@ game.addScene(
 								},
 							},
 						],
+					},
+					{
 						options: [
 							{
 								msg: "That's it?",

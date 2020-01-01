@@ -32,7 +32,7 @@ game.addScene(
 														game.currentScene.startTalk(game, "doctar", [
 															"You might start with the island's shopkeeper.",
 															"Many people drop by that shop.",
-															"Maybe someone metionned something about your baby.",
+															"Maybe someone\nmentioned\nsomething about your baby.",
 														], game => {
 															game.currentScene.startTalk(game, "human", [
 																"Thanks doctor.",
@@ -493,12 +493,12 @@ game.addScene(
 				offsetY: 3,
 				index: game => {
 					if (game.sceneData.looking) {
-						if (game.pendingTip && game.pendingTip.talker==="yupa") {
+						if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker==="yupa") {
 							return Math.floor(game.now / 100) % 2 + 16;
 						}
 						return 16;
 					}
-					if (game.pendingTip && game.pendingTip.talker==="yupa") {
+					if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker==="yupa") {
 						return Math.floor(game.now / 100) % 2 === 0 ? 5 : 18;
 					}
 					return 5;
@@ -510,12 +510,12 @@ game.addScene(
 				offsetY: 5,
 				index: game => {
 					if (game.sceneData.looking) {
-						if (game.pendingTip && game.pendingTip.talker==="doctar") {
+						if (game.pendingTip && pendingTip.progress < 1 && game.pendingTip.talker==="doctar") {
 							return Math.floor(game.now / 100) % 2 + 19;
 						}
 						return 19;
 					}
-					if (game.pendingTip && game.pendingTip.talker==="doctar") {
+					if (game.pendingTip && pendingTip.progress < 1 && game.pendingTip.talker==="doctar") {
 						return Math.floor(game.now / 100) % 2 === 0 ? 6 : 21;
 					}
 					return 6;

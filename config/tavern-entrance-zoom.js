@@ -31,7 +31,7 @@ game.addScene(
 						"Now we can all go in and have fun!",
 					] : [
 						"I've been trying to get in as well,",
-						"but I don't know the\npassword either.",
+						"but I don't know the\npassword\neither.",
 					], game => {
 						game.startDialog({
 							conversation: [

@@ -77,7 +77,7 @@ game.addScene(
 									game.dialog = null;
 									game.currentScene.startTalk(game, "shopkeepa", game.countItem("warpdrive") ? "Have a good trip to Westrow!" : "Hope to see you soon.", game => {
 										if (game.countItem("warpdrive")) {
-											game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find find Baby Hitler!", game => {
+											game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find Baby Hitler!", game => {
 												game.dialog = null;
 												game.fadeToScene("space-adventure", null, 3000);
 											});											
