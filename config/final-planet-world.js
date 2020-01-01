@@ -157,8 +157,10 @@ game.addScene(
 				offsetX: game => 64 * (game.rotation % 2) - 128,
 			},
 			{
+				moonX: 0, moonY: -1000,
+				closeDist: 200,
 				custom: (game, sprite, ctx) => {
-					const [ moonX, moonY ] = [ 0 - game.pos.x, -1000 - game.pos.y ];
+					const [ moonX, moonY ] = [ sprite.moonX - game.pos.x, sprite.moonY - game.pos.y ];
 					const dist = Math.sqrt(moonX*moonX + moonY*moonY);
 					const size = 5 * 1000 / dist;
 					const outline = size / 5 * 7;
@@ -172,21 +174,19 @@ game.addScene(
 					ctx.arc(20 + rot * 64, 20, size, 0, 2 * Math.PI);
 					ctx.fill();
 
-					if (dist < 200) {
-						// ctx.fillStyle = "#00000077";
-						// ctx.beginPath();
-						// ctx.moveTo(32,20);
-						// ctx.lineTo(64,64);
-						// ctx.lineTo(0,64);
-						// ctx.closePath();
+					if (dist < sprite.closeDist) {
 						ctx.fill();
 						ctx.fillStyle = "#000000cc";
 						ctx.fillRect(31,17,2,4);
 					}
 				},
-				onRefresh: ({sceneData, now}) => {
-					if (!sceneData.moonLand) {
+				onRefresh: (game, sprite) => {
+					const {sceneData, now} = game;
+					const [ moonX, moonY ] = [ sprite.moonX - game.pos.x, sprite.moonY - game.pos.y ];
+					const dist = Math.sqrt(moonX*moonX + moonY*moonY);
+					if (!sceneData.moonLand && dist < sprite.closeDist) {
 						sceneData.moonLand = now;
+						game.hideCursor = true;
 					}
 				},
 			},	
