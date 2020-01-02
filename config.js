@@ -912,7 +912,7 @@ function standardMenu() {
 					highlightColor: "#00998899",
 					conversation: [
 						{
-							offsetY: (game, {options}) => (options.length - 3) * -7,
+							offsetY: (game, {options}) => (options.filter(({hidden})=>!hidden).length - 3) * -7,
 							options: [
 								{
 									msg: "Exit to menu",
@@ -933,6 +933,7 @@ function standardMenu() {
 									}
 								},
 								{
+									hidden: true,
 									msg: "Language",
 									onSelect: (game, dialog) => {
 										game.showTip("Option not yet available");

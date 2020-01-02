@@ -246,7 +246,7 @@ game.addScene(
 						],
 					},
 					{
-						offsetY: (game, {options}) => (options.length - 3) * -7,
+						offsetY: (game, {options}) => (options.filter(({hidden})=>!hidden).length - 3) * -7,
 						options: [
 							{
 								msg: "About this game",
@@ -267,6 +267,7 @@ game.addScene(
 								onSelect: (game, dialog) => toggleScanlines(),
 							},
 							{
+								hidden: true,
 								msg: "Language",
 								onSelect: (game, dialog) => game.showTip("Option not yet available"),
 							},
