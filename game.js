@@ -288,6 +288,9 @@ const Game = (() => {
 		static start(gameConfig) {
 			gameInstance = new Game();
 			gameInstance.config = gameConfig;
+			gameConfig.scenes.forEach(scene => {
+				gameInstance.onSceneAdded(scene);
+			});
 			return gameInstance;
 		}
 
@@ -521,7 +524,7 @@ const Game = (() => {
 					const [ touch ] = changedTouches;
 					const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = currentTarget;
 					game.actionMove(touch.clientX - offsetLeft, touch.clientY - offsetTop, offsetWidth, offsetHeight, true);
-				});
+				}, {passive:true});
 
 				canvas.addEventListener('touchstart', e => {
 					if (!game.touchActive) {
@@ -548,7 +551,7 @@ const Game = (() => {
 						game.playSound(SOUNDS.BOP, {volume: .2});
 						game.sceneData.flashTip = game.now;					
 					}
-				});
+				}, {passive:true});
 
 				canvas.addEventListener('touchend', e => e.preventDefault());
 
@@ -602,7 +605,7 @@ const Game = (() => {
 					}
 					game.mouse.time = game.now;
 					game.lastMouseMove = game.now;
-				});
+				}, {passive:true});
 
 				touchCanvas.addEventListener("touchmove", e  => {
 					const {changedTouches, touches} = e;
@@ -633,7 +636,7 @@ const Game = (() => {
 							self.touchesSaved[identifier].pageY = pageY;
 						}
 					});
-				});
+				}, {passive:true});
 
 				touchCanvas.addEventListener("touchend", ({changedTouches, touches}) => {
 					self.touchList = touches;
@@ -958,11 +961,15 @@ const Game = (() => {
 			}
 		}
 
-		get currentScene() {
-			if (typeof (this.sceneByName[this.sceneName]) != 'undefined') {
-				return this.sceneByName[this.sceneName];
+		getSceneByName(name) {
+			if (this.sceneByName) {
+				return this.sceneByName[name];
 			}
-			return this.sceneByName[this.sceneName] = this.config.scenes.filter(({name}) => name === this.sceneName)[0];
+			return null;			
+		}
+
+		get currentScene() {
+			return this.getSceneByName(this.sceneName);
 		}
 
 		set door (value) {
@@ -1072,7 +1079,6 @@ const Game = (() => {
 			this.loadCount = 0;
 			this.lastMouseCheck = 0;
 			this.lastMouseMove = 0;
-			this.sceneByName = {};
 			
 			this.clickCtx = document.createElement("canvas").getContext("2d");
 			this.clickCtx.canvas.width = 3;
@@ -2863,9 +2869,17 @@ const Game = (() => {
 
 		addScene(scene) {
 			this.config.scenes.push(scene);
+			this.onSceneAdded(scene);
+		}
+
+		onSceneAdded(scene) {
 			if (this.sceneData) {
 				this.sceneData.lastFileLoaded = `config/${scene.name}`;
 			}
+			if (!this.sceneByName) {
+				this.sceneByName = {};
+			}
+			this.sceneByName[scene.name] = scene;
 		}
 
 		loadScene(scene, restoreMapInfo) {

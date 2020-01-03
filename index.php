@@ -1,32 +1,50 @@
 <?php
   header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
 
+    function prepareDir($dir, $var, $output_file, $lambda=null) {
+      $assets = scandir($dir);
+      $asset_source = "";
+      $asset_source .= "const $var = {\n";
+      foreach ($assets as $file) {
+        $filename = "$dir/$file";
+        if (is_file($filename)) {
+          if(!$lambda || $lambda($filename)){
+            $size = filesize("$dir/$file");
+            $asset_source .= "   '$file' : $size,\n";
+          }
+        }
+      }
+      $asset_source .= "};";
+
+      file_put_contents($output_file, $asset_source);      
+    }
+
 
     /**
       * PREPARE ASSETS.
       */
-    $dir    = 'ASSETS';
-    $assets = scandir($dir);
-    $asset_source = "";
-    $asset_source .= "const FILE_SIZE = {\n";
-    foreach ($assets as $file) {
-      $filename = "$dir/$file";
-    	if (is_file($filename)) {
-        if(@exif_imagetype($filename)){
-          $size = filesize("$dir/$file");
-          $asset_source .= "   '$file' : $size,\n";
-        }
-    	}
+    prepareDir('assets', 'FILE_SIZE', 'asset-size.js', function($filename) {
+      return @exif_imagetype($filename);
+    });
+    /**
+      * PREPARE CONFIGS.
+      */
+    prepareDir('config', 'CONFIG_FILES', 'config-size.js');
+
+
+    //  SET debug mode
+    if (!isset($_GET['nodebug'])) {
+      ?>
+        <script>
+          window.debugMode = true;
+        </script>
+      <?php
     }
-    $asset_source .= "};";
 
-    file_put_contents("asset-size.js", $asset_source);
-
-    ?>
-      <script>
-        window.debugMode = true;
-      </script>
-    <?php
+    //  minify JS
+    include "php/minify.php";
+    minify("game.js");
+    minify("config.js");
 
 
     /**
