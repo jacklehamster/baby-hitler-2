@@ -15,7 +15,7 @@ game.addScene(
 					});
 				} else {
 					game.currentScene.startTalk(game, "dick", [
-						"You're blocking the light.",
+						"You're blocking my light.",
 					], game => {
 						game.startDialog({
 							conversation: [
@@ -145,7 +145,7 @@ game.addScene(
 				"That's right!",
 				"I'm doing this for Baby Hitler!",
 			] : [
-				"No, I just need Baby Hitler.",
+				"No, I just need Baby Hitler's help.",
 				"He's the only one who can save me.",
 			], game => {
 				game.sceneData.hitmanCloseup = 0;
@@ -182,7 +182,7 @@ game.addScene(
 										game.sceneData.hitmanCloseup = 0;
 										game.currentScene.startTalk(game, "dick", [
 											"Well that depends...",
-											"If you win, you can take the kid, or whoever you want...",
+											"If you win, you can take your boy, or whoever you want...",
 											"Now if I win,",
 											"I get to take your life!",
 											"Do we have a deal?",
@@ -220,6 +220,10 @@ game.addScene(
 				x = 2;
 				y = 60;
 				game.playSound(SOUNDS.GRUMP);
+			} else if (talker === "dick2") {
+				x = 2;
+				y = 24;
+				game.playSound(SOUNDS.GRUMP);
 			} else if (talker === "brutus") {
 				x = 1;
 				y = 20;
@@ -245,7 +249,7 @@ game.addScene(
 											"I call it ...",
 											"WAR",
 											"This is how the game plays out.",
-											"You pick a card, and I pick a card.",
+											"You get a card, and I get a card.",
 											"The highest card wins!",
 										], game => {
 											game.dialog.index ++;
@@ -335,7 +339,16 @@ game.addScene(
 										"Let's go, I'm ready to play!",
 									], game => {
 										game.dialog = null;
-										console.log("PLAY CARDS");
+										game.currentScene.startTalk(game, "dick", [
+											"Ok, then. For fairness,",
+										], game => {
+											game.sceneData.zoomDick = game.now;
+											game.currentScene.startTalk(game, "dick2", [
+												"we are going to ask Ernest to deal the cards.",
+											], game => {
+												game.gotoScene("ernest");
+											});
+										});
 									});
 								},
 							},
@@ -495,6 +508,23 @@ game.addScene(
 					}
 					return 0;
 				},
+			},
+			{
+				custom: (game, sprite, ctx) => {
+					ctx.fillStyle = "#453737";
+					ctx.fillRect(0, 0, 64, 64);
+				},
+				hidden: game => !game.sceneData.zoomDick,
+			},
+			{
+				src: ASSETS.ZOOM_DICK,
+				index: game => {
+					if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker === "dick2") {
+						return Math.floor(game.now / 100) % 4;
+					}
+					return 0;
+				},
+				hidden: game => !game.sceneData.zoomDick,
 			},
 		],
 	},

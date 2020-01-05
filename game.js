@@ -2672,7 +2672,28 @@ const Game = (() => {
 				return;
 			}
 
-			if (src.split("|").pop() === "invert-colors") {
+			const splitPop = src.split("|").pop();
+
+			if (splitPop.indexOf("crop:") === 0) {
+				const [ cropX, cropY, cropWidth, cropHeight ] = splitPop.split("crop:").pop().split(",");
+				this.prepareImage(src.split("|").slice(0,-1).join("|"), stock => {
+					const tempCanvas = document.createElement("canvas");
+					tempCanvas.width = cropWidth;
+					tempCanvas.height = cropHeight;
+					const tempCtx = tempCanvas.getContext("2d");
+					tempCtx.drawImage(stock.img, -cropX, -cropY);
+					imageStock[src] = {
+						loaded: true,
+						img: tempCanvas,
+					};
+					if (callback) {
+						callback(imageStock[src]);
+					}
+				});
+				return;				
+			}
+
+			if (splitPop === "invert-colors") {
 				this.prepareImage(src.split("|").slice(0,-1).join("|"), stock => {
 					const tempCanvas = document.createElement("canvas");
 					tempCanvas.width = stock.img.naturalWidth || stock.img.width;
@@ -2700,7 +2721,7 @@ const Game = (() => {
 				return;
 			}
 
-			if (src.split("|").pop() === "darken") {
+			if (splitPop === "darken") {
 				this.prepareImage(src.split("|").slice(0,-1).join("|"), stock => {
 					const tempCanvas = document.createElement("canvas");
 					tempCanvas.width = stock.img.naturalWidth || stock.img.width;
@@ -2729,7 +2750,7 @@ const Game = (() => {
 				return;
 			}
 
-			if (src.split("|").pop() === "rotate-colors") {
+			if (splitPop === "rotate-colors") {
 				this.prepareImage(src.split("|").slice(0,-1).join("|"), stock => {
 					const tempCanvas = document.createElement("canvas");
 					tempCanvas.width = stock.img.naturalWidth || stock.img.width;
@@ -2759,7 +2780,7 @@ const Game = (() => {
 				return;
 			}
 
-			if (src.split("|").pop() === "chroma-key-pink") {
+			if (splitPop === "chroma-key-pink") {
 				this.prepareImage(src.split("|").slice(0,-1).join("|"), stock => {
 					const tempCanvas = document.createElement("canvas");
 					tempCanvas.width = stock.img.naturalWidth || stock.img.width;
@@ -2791,7 +2812,7 @@ const Game = (() => {
 				return;	
 			}
 
-			if (src.split("|").pop() === "shaved") {
+			if (splitPop === "shaved") {
 				this.prepareImage(src.split("|").slice(0,-1).join("|"), stock => {
 					const tempCanvas = document.createElement("canvas");
 					tempCanvas.width = stock.img.naturalWidth || stock.img.width;
