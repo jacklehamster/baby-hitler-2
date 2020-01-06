@@ -312,6 +312,8 @@ const ASSETS = {
 	SHUFFLE_CARDS: "assets/shuffle-cards.png",
 	SHIFTY_EYES: "assets/shifty-eyes.png",
 	TAVERN_GANGSTA_CARD_GAME: "assets/tavern-gangsta-card-game.png",
+	SWITCHAROO: "assets/switcharoo.png",
+	CARDS_SHOWDOWN: "assets/cards-showdown.png",
 };
 
 const SOUNDS = {

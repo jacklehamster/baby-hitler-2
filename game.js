@@ -388,6 +388,7 @@ const Game = (() => {
 		constructor() {
 			this.imageStock = imageStock;
 			this.soundStock = soundStock;
+			this.keyboard = [];
 			document.addEventListener("keydown", ({keyCode}) => {
 				this.keyboard[keyCode] = true;
 			});
@@ -2143,7 +2144,7 @@ const Game = (() => {
 				return;
 			}
 			let hoveredTip = null;
-			if (this.hoverSprite) {
+			if (this.hoverSprite && this.mouse) {
 				hoveredTip = this.evaluate(this.hoverSprite.tip, this.hoverSprite);
 				if (hoveredTip) {
 					const tip = this.tips[hoveredTip];
@@ -3092,7 +3093,7 @@ const Game = (() => {
 				if (this.sceneData.gameOverMessage) {
 					const lines = this.sceneData.gameOverMessage.split("\n");
 					lines.forEach((msg, index) => {
-						this.displayTextLine(tempCtx, {msg, x: 1, y: 15 + (index - lines.length/2) * 7})
+						this.displayTextLine(tempCtx, {msg, x: 1, y: 15 + Math.round(index - lines.length/2) * 7})
 					});
 				} else {
 					this.displayTextLine(tempCtx, {msg: "GAME OVER",  x:11, y:20 });					

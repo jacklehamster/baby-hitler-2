@@ -333,6 +333,30 @@ game.addScene(
 								},
 							},
 							{
+								msg: "Why War?",
+								hidden: game => game.sceneData.brotherStory,
+								onSelect: game => {
+									game.currentScene.startTalk(game, "human", [
+										"Don't you have a better card game in mind?",
+										"What's the big deal with War?",
+									], game => {
+										game.currentScene.startTalk(game, "dick", [
+											"This was my younger brother's favorite game.",
+											"He always used to win with the ace of heart.",
+											"He was so lucky with that card, he even wrote his name on it.",
+											"Not sure how he did it ... but I will never know ...",
+											"Since my brother got murdered!",
+											"We never found the killer. But I swear I will someday."
+										], game => {
+											game.currentScene.startTalk(game, "human", [
+												"I hope you do.",
+											]);
+											game.sceneData.brotherStory = game.now;
+										});
+									});
+								},
+							},
+							{
 								msg: "Let's play",
 								onSelect: game => {
 									game.currentScene.startTalk(game, "human", [
