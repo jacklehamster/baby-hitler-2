@@ -33,10 +33,24 @@ game.addScene(
 					game.gameOver(
 						! game.countItem("bullet") && game.sceneData.triedToShoot
 						? "  “Can't function\n   on an empty\n   barrel.” "
+						: game.sceneData.talkItOut
+						? "  “When you have\n  to shoot, shoot.\n   Don't talk.“"
 						: !game.sceneData.dickShot || game.getSituation("tavern-phone").yupaAndBrutus
 						? "   “In a shootout,\n you gotta draw\n  quickly.”"
 						: " “Three might be\n   too much to\n     handle.”");
 					game.waitCursor = 0;
+				}
+			}
+
+			if (game.sceneData.dickShot && game.sceneData.rightGuardShot) {
+				if (game.sceneData.leftGuardShot || game.getSituation("tavern-phone").yupaAndBrutus) {
+					if (!game.sceneData.killedEveryone) {
+						game.sceneData.killedEveryone = game.now;
+						game.useItem = null;
+						game.hideCursor = true;
+					} else if (game.now - game.sceneData.killedEveryone > 3000) {
+						game.gotoScene("money-shot");
+					}
 				}
 			}
 		},
@@ -65,6 +79,8 @@ game.addScene(
 			if (game.useItem === "gun") {
 				game.sceneData.triedToShoot = true;
 			}
+			game.dialog = null;
+			game.pendingTip = null;
 			game.useItem = null;
 			game.waitCursor = true;
 			game.sceneData.bodyguardShoot = game.now;
@@ -213,6 +229,57 @@ game.addScene(
 						game.currentScene.alertBrutus(game);
 						game.currentScene.guardAlert(game);
 					}
+				},
+				onClick: game => {
+					game.startDialog({
+						conversation: [
+							{
+								options: [
+									{
+										msg: "Can we talk?",
+										onSelect: game => {
+											game.sceneData.talkItOut = game.now;
+											game.dialog = null;
+											game.playSound(SOUNDS.HUM);
+											game.showTip([
+												"Let's talk. I have a perfect explanation for what happened",
+												"You see, I met this stranger and he gave me this card...",
+												"I don't know how he got it,",
+												"but if you ask me, I'm sure he had something to do with your brother's deadh...",
+												"Are you listening to me?",
+											], null, 30);
+										},
+									},
+									{
+										msg: "It's not my card!",
+										onSelect: game => {
+											game.sceneData.talkItOut = game.now;
+											game.dialog = null;
+											game.playSound(SOUNDS.HUM);
+											game.showTip([
+												"It's not my card! You see, I met this stranger and he gave me this card...",
+												"I don't know how he got it,",
+												"but if you ask me, I'm sure he had something to do with your brother's death...",
+												"Are you listening to me?",
+											], null, 30);
+										},
+									},
+									{
+										msg: "Sorry!",
+										onSelect: game => {
+											game.sceneData.talkItOut = game.now;
+											game.dialog = null;
+											game.playSound(SOUNDS.HUM);
+											game.showTip([
+												"I'm sorry about your brother's death. I did not kill him though.",
+												"Are you listening to me?",
+											], null, 30);
+										},
+									},								
+								],
+							},
+						],
+					});
 				},
 			},
 			{	//	table

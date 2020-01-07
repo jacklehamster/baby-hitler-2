@@ -317,6 +317,7 @@ const ASSETS = {
 	GANGSTA_CHECK_CARDS: "assets/gangsta-check-cards.png",
 	ZOOM_DICK_MAD: "assets/zoom-dick-mad.png",
 	TAVERN_GANGSTA_SHOOTOUT: "assets/tavern-gangsta-shootout.png",
+	MONEY_SHOT: "assets/money-shot.png",
 };
 
 const SOUNDS = {
@@ -376,6 +377,7 @@ const SOUNDS = {
 	GRUMP: "sounds/grump.mp3",
 	YES_BOSS: "sounds/yes-boss-low.mp3",
 	YES_SIR: "sounds/yes-boss.mp3",
+	GOOD_BAD_UGLIZ: "sounds/good-bad-ugliz.mp3",
 };
 
 const ALPHAS = (() => {
