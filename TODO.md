@@ -44,6 +44,7 @@
 - Test all ship purchases.
 - chest not restored after menu-save 🐞⭐
 - add grass around tavern ⭐
+- money shot only if no miss/no blank shots
 
 ## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
