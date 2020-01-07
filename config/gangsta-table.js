@@ -14,8 +14,11 @@ game.addScene(
 						game.currentScene.challenge(game);
 					});
 				} else {
-					game.currentScene.startTalk(game, "dick", [
-						"You're blocking my light.",
+					game.currentScene.startTalk(game, "dick", 
+						game.situation.proposedGame ? [
+							"What now?",
+						] : [
+							"You're blocking my light.",
 					], game => {
 						game.startDialog({
 							conversation: [
@@ -24,6 +27,7 @@ game.addScene(
 										{
 											msg: "Are you game?",
 											onSelect: game => {
+												game.situation.proposedGame = game.now;
 												game.currentScene.startTalk(game, "human", [
 													"I challenge you to a card game.",
 													"Are you man enough to face me?",
@@ -62,7 +66,19 @@ game.addScene(
 								},
 								{
 									options: [
-										{},
+										{
+											msg: "Practice game",
+											onSelect: game => {
+												game.currentScene.startTalk(game, "human", [
+													"Let's do a\npractice game,",
+													"just for fun!",
+												], game => {
+													game.currentScene.startTalk(game, "dick", "Get lost!", game => {
+														game.gotoScene("explore-tavern");
+													});
+												});
+											},
+										},
 										{
 											msg: "Baby Hitler",
 											onSelect: game => {
@@ -205,7 +221,7 @@ game.addScene(
 					y = 64;
 				} else {
 					x = 5;
-					y = 15;
+					y = 62;
 				}
 				game.playSound(SOUNDS.HUM);
 			} else if (talker === "yupa") {
@@ -218,7 +234,7 @@ game.addScene(
 				game.playSound(SOUNDS.HELLO_HUMAN, {volume: .2});
 			} else if (talker === "dick") {
 				x = 2;
-				y = 60;
+				y = 22;
 				game.playSound(SOUNDS.GRUMP);
 			} else if (talker === "dick2") {
 				x = 2;
@@ -245,8 +261,8 @@ game.addScene(
 									], game => {
 										game.currentScene.startTalk(game, "dick", [
 											"Alright let's begin...",
-											"We're going to play one of my favorite card game",
-											"I call it ...",
+											"We are going to play one of my favorite card game",
+											"It is called ...",
 											"WAR",
 											"This is how the game plays out.",
 											"You get a card, and I get a card.",
@@ -262,7 +278,7 @@ game.addScene(
 								onSelect: game => {
 									game.currentScene.startTalk(game, "human", [
 										"No deal!",
-										"I'm not gonna risk my life on a stupid game!",
+										"I'm not gonna risk my life on a stupid card game!",
 									], game => {
 										game.currentScene.startTalk(game, "dick", [
 											"Well, let me know when you change your mind,",
@@ -300,7 +316,9 @@ game.addScene(
 						options: [
 							{
 								msg: "That's it?",
+								hidden: game => game.sceneData.thatsIt,
 								onSelect: game => {
+									game.sceneData.thatsIt = game.now;
 									game.currentScene.startTalk(game, "human", [
 										"That's it? We're playing War?",
 										"That's just a game of luck.",
@@ -314,7 +332,9 @@ game.addScene(
 							},
 							{
 								msg: "And equal cards?",
+								hidden: game => game.sceneData.equalCards,
 								onSelect: game => {
+									game.sceneData.equalCards = game.now;
 									game.currentScene.startTalk(game, "human", [
 										"What happens if the cards are equal?",
 									], game => {
@@ -376,6 +396,8 @@ game.addScene(
 									});
 								},
 							},
+							{},
+							{},
 						],
 					},
 				],

@@ -18,7 +18,7 @@ game.addScene(
 
 				game.delayAction(game => {
 					if (game.getSituation("ernest-card-dealing").aceOfHearts) {
-						console.log("ACE OF HEARTS");
+						game.gotoScene("gangsta-check-cards");
 					} else {
 						game.getSituation("ernest-card-dealing").lostGame = game.now;
 						game.gotoScene("ernest-card-dealing");

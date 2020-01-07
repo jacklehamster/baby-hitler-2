@@ -1150,6 +1150,7 @@ const Game = (() => {
 			this.moving = 0;
 			this.turning = 0;
 			this.setTone(0);
+			this.data.gameOver = false;
 		}
 
 		markPickedUp(item) {
@@ -3575,6 +3576,7 @@ const Game = (() => {
 		}
 
 		delayAction(callback, delay) {
+			console.assert(delay, "delayAction missing delay");
 			this.actions.push({
 				time: this.now,
 				command: "delay",

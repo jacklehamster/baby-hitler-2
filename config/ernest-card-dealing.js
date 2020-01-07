@@ -79,6 +79,7 @@ game.addScene(
 															game.currentScene.startTalk(game, "ernest", [
 																"You are very\nwelcome, sir. Enjoy the game!",
 															], game => {
+																game.playTheme(SOUNDS.JAIL_CELL_THEME);
 																game.sceneData.ernestLeave = game.now;
 																game.dialog = null;
 																game.currentScene.startTalk(game, "dick", [
@@ -109,7 +110,7 @@ game.addScene(
 				game.playSound(SOUNDS.YES_SIR);
 			} else if (talker === "dick") {
 				x = 2;
-				y = 54;
+				y = game.sceneData.zoomDick ? 22 : 54;
 				game.playSound(SOUNDS.GRUMP);				
 			} else if (talker === "bodyguard") {
 				x = 5;

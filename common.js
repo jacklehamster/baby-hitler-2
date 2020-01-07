@@ -314,6 +314,9 @@ const ASSETS = {
 	TAVERN_GANGSTA_CARD_GAME: "assets/tavern-gangsta-card-game.png",
 	SWITCHAROO: "assets/switcharoo.png",
 	CARDS_SHOWDOWN: "assets/cards-showdown.png",
+	GANGSTA_CHECK_CARDS: "assets/gangsta-check-cards.png",
+	ZOOM_DICK_MAD: "assets/zoom-dick-mad.png",
+	TAVERN_GANGSTA_SHOOTOUT: "assets/tavern-gangsta-shootout.png",
 };
 
 const SOUNDS = {
