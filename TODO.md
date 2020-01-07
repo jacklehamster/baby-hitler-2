@@ -27,8 +27,10 @@
 - show arrows on practice battle ⭐
 - Fullscreen on tap ⭐
 - 🐞 Tap doesn't accelerate all tips ⭐
-- 🐞 loading screen problem
-
+- 🐞 loading screen problem ⭐
+- 🐞 Menu down when forward
+- 🐞 Bullet replaces gun
+- 🐞 hide punch/block when using gun
 
 
 ## Game TODO:
