@@ -114,6 +114,7 @@ game.addScene(
 			}, 700);
 		},
 		onSceneShot: game => {
+			console.log("SHOOT");
 			game.currentScene.hideBartender(game);
 			game.currentScene.alertBrutus(game);
 			game.currentScene.guardAlert(game);

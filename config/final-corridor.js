@@ -785,7 +785,7 @@ game.addScene(
 					}
 					const {data, now} = game;
 					game.chest = null;
-					const theme = data.theme.song;
+					const theme = data.theme ? data.theme.song : null;
 					game.playTheme(SOUNDS.BATTLE_THEME, {volume:.8});
 					if (!data.battle) {
 						data.battle = {
@@ -818,6 +818,7 @@ game.addScene(
 				},
 				onWin: game => game.findChest(game.now + 2000, {
 					item:"bullet", image:ASSETS.GRAB_GUN, message: "I found one bullet for my gun.",
+					hideFromInventory: true,
 				}),
 			},		
 		},

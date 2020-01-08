@@ -55,11 +55,11 @@ game.addScene(
 						const frame = Math.floor((now - chest.opened) / 100);
 						if (frame > 4 && !chest.checked) {
 							chest.checked = now;
-							const { item, image } = chest;
+							const { item, image, hideFromInventory } = chest;
 							game.pickUp({item, image, message:"", onPicked: game => {
 								game.battle = null;
 								situation.chestCleared = now;
-							}});
+							}, hideFromInventory});
 						}
 					}
 				},

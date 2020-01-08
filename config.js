@@ -1807,7 +1807,7 @@ function standardBattle() {
 					const frame = Math.floor((now - chest.opened) / 100);
 					if (frame > 4 && !chest.checked) {
 						chest.checked = now;
-						const { item, count, image, message } = chest;
+						const { item, count, image, message, hideFromInventory } = chest;
 						if (item) {
 							game.pickUp({item, count, image, message:message || "", onPicked: game => {
 								if (game.battle) {
@@ -1821,7 +1821,7 @@ function standardBattle() {
 									}
 									situation.chestCleared[game.frontCell()] = now;
 								}
-							}});
+							}, hideFromInventory});
 						} else {
 							game.showTip(message||null, game => {
 								if (game.battle) {

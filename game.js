@@ -1159,7 +1159,7 @@ const Game = (() => {
 			}
 		}
 
-		pickUp({item, image, message, inventoryMessage, count, col, row, index, onPicked, onTipDone, justLooking}) {
+		pickUp({item, image, message, inventoryMessage, count, col, row, index, onPicked, onTipDone, justLooking, hideFromInventory}) {
 			if (!item) {
 				console.error(`Your item (${image}) needs a name.`);
 			}
@@ -1168,7 +1168,7 @@ const Game = (() => {
 				this.markPickedUp(item);
 				this.addToInventory({
 					item,
-					image,
+					image: hideFromInventory ? null : image,
 					col: col||2,
 					row: row||2,
 					count: count || 1,
@@ -1609,7 +1609,7 @@ const Game = (() => {
 				this.clicking = true;
 				if (this.useItem === "gun") {
 					if (this.gunFiredWithin(100)) {
-						this.onSceneShot(this, this.useItem);
+//						this.onSceneShot(this, this.useItem);
 					}
 				} else if (this.useItem) {
 					this.onSceneUseItem(this, this.useItem);
@@ -3805,7 +3805,7 @@ const Game = (() => {
 			for (let i = 0; i < 5; i++) {
 				this.delayAction(game => {
 					game.playSound(SOUNDS.HIT, {volume:.3});
-				}, 150 * i);				
+				}, 150 * (i+1));				
 			}
 
 			const { x, y, } = this.pos;
@@ -3881,7 +3881,7 @@ const Game = (() => {
 			return Math.max(2, Math.ceil(Math.log(xp))) - 1;
 		}
 
-		findChest(found, { item, count, image, cleared, message }) {
+		findChest(found, { item, count, image, cleared, message, hideFromInventory }) {
 			this.chest = {
 				found,
 				opened: 0,
@@ -3891,6 +3891,7 @@ const Game = (() => {
 				image,
 				cleared,
 				message,
+				hideFromInventory,
 			};			
 		}
 

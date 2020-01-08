@@ -83,6 +83,7 @@ game.addScene(
 					},
 					{ item: "bullet", 		name: "bullet", 		cost: 5,	src: ASSETS.GRAB_GUN,			available:true,
 						msg: "A bit expensive, but it'll help you out in a fight.",
+						hideFromInventory: true,
 					},
 					{ item: "access card", 	name: "access card", 	cost: 20,	src: ASSETS.GRAB_ACCESS_CARD,	available:false,
 						msg: "I warned you, you should have kept this. 20 coins to get it back.",

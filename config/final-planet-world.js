@@ -848,6 +848,7 @@ game.addScene(
 				case 1: 
 					game.findChest(game.now + 2000, {
 						item:"bullet", count: 5, image:ASSETS.GRAB_GUN, message: "I found five bullets for my gun.",
+						hideFromInventory: true,
 					});
 					break;
 				case 2:
@@ -865,6 +866,7 @@ game.addScene(
 					} else {
 						game.findChest(game.now + 2000, {
 							item:"bullet", count: 1, image:ASSETS.GRAB_GUN, message: "I found one bullet for my gun.",
+							hideFromInventory: true,
 						});						
 					}
 					break;
@@ -876,6 +878,7 @@ game.addScene(
 					} else {
 						game.findChest(game.now + 2000, {
 							item:"bullet", count: 1, image:ASSETS.GRAB_GUN, message: "I found one bullet for my gun.",
+							hideFromInventory: true,
 						});						
 					}
 					break;

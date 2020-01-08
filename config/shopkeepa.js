@@ -1022,6 +1022,7 @@ game.addScene(
 					{ item: "bullet", 		name: "10 bullets", 	cost: 40,	src: ASSETS.GRAB_GUN,			available:true,
 						count: 10,
 						msg: "We sell amunition for your gun in packs of 10.",
+						hideFromInventory: true,
 					},
 					{ item: "compass",		name: "compass",		cost: 20,	src: ASSETS.GRAB_COMPASS,		available:true,
 						msg: "The red arrow always points to the north.",
