@@ -69,9 +69,9 @@ gameConfig.scenes.push(
 						}
 						const numAssetsLoaded = game.countAssets(true);
 						const totalAssets = game.countAssets();
-						game.displayTextLine(ctx, {msg: `${numAssetsLoaded} / ${totalAssets}`, x: 1, y: 52, alpha: .2});
+						game.displayTextLine(ctx, {msg: `${numAssetsLoaded} / ${totalAssets}`, x: 1, y: 52, alpha: .2, noTranslate: true});
 						if (game.sceneData.lastFileLoaded) {
-							game.displayTextLine(ctx, {msg: game.sceneData.lastFileLoaded.split(".")[0], x: 1, y: 58, alpha: .2});
+							game.displayTextLine(ctx, {msg: game.sceneData.lastFileLoaded.split(".")[0], x: 1, y: 58, alpha: .2, noTranslate: true});
 						}
 					}
 				},

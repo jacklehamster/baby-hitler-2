@@ -28,7 +28,7 @@
 - Fullscreen on tap ⭐
 - 🐞 Tap doesn't accelerate all tips ⭐
 - 🐞 loading screen problem ⭐
-- 🐞 Menu down when forward
+- 🐞 Menu down when forward ⭐
 - 🐞 Bullet replaces gun ⭐
 - 🐞 hide punch/block when using gun ⭐
 
@@ -44,7 +44,7 @@
 - Test all ship purchases.
 - chest not restored after menu-save 🐞⭐
 - add grass around tavern ⭐
-- money shot only if no miss/no blank shots
+- money shot only if no miss/no blank shots ⭐
 - Add bag icon in menu
 
 ## Links

@@ -50,9 +50,9 @@ game.addScene(
 
 							game.delayAction(game => {
 								game.playSound(SOUNDS.HUM);
-								game.showTip("You stay here!\nBaby Hitler", game => {
+								game.showTip("You stay here!", game => {
 									game.gotoScene("we-take-care-of-you");
-								});
+								}, null, {x: 10, y: 12});
 							}, 500);
 						}
 					}

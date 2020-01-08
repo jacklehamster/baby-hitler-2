@@ -663,33 +663,7 @@ const Game = (() => {
 				document.addEventListener('fullscreenerror', (event) => {
 				  	console.error('an error occurred changing into fullscreen', event);
 				});
-				document.addEventListener("fullscreenchange", () => {
-					const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-					const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);				
-					const minSize = Math.min(w, h);
-					if (!document.fullscreenElement) {
-						document.querySelectorAll(".game-size").forEach(({classList, style}) => {
-							style.width = ``;
-							style.height = ``;
-							classList.remove("full");
-						});
-						document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
-							classList.remove("full");
-						});
-						document.querySelector(".game-container").classList.remove("full");
-					} else {
-						document.querySelectorAll(".game-size").forEach(({classList, style}) => {
-							style.width = `${minSize}px`;
-							style.height = `${minSize}px`;
-							classList.add("full");
-						});
-						document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
-							classList.add("full");
-						});
-						document.querySelector(".game-container").classList.add("full");
-					}
-				});
-
+				document.addEventListener("fullscreenchange", self.fixScreenSize);
 			}
 
 			window.oncontextmenu = function(event) {
@@ -697,6 +671,33 @@ const Game = (() => {
 			     event.stopPropagation();
 			     return false;
 			};
+		}
+
+		fixScreenSize() {
+			const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+			const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);				
+			const minSize = Math.min(w, h);
+			if (!document.fullscreenElement) {
+				document.querySelectorAll(".game-size").forEach(({classList, style}) => {
+					style.width = ``;
+					style.height = ``;
+					classList.remove("full");
+				});
+				document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
+					classList.remove("full");
+				});
+				document.querySelector(".game-container").classList.remove("full");
+			} else {
+				document.querySelectorAll(".game-size").forEach(({classList, style}) => {
+					style.width = `${minSize}px`;
+					style.height = `${minSize}px`;
+					classList.add("full");
+				});
+				document.querySelectorAll(".touch-size").forEach(({classList, style}) => {
+					classList.add("full");
+				});
+				document.querySelector(".game-container").classList.add("full");
+			}
 		}
 
 		actionMove(x, y, offsetWidth, offsetHeight, fromTouch) {
@@ -1857,6 +1858,8 @@ const Game = (() => {
 				return;
 			}
 
+			this.bagOpening = 0;
+			this.menuOpening = 0;
 			this.doorOpening = 0;
 			this.doorOpened = 0;
 			this.moving = now;
@@ -2346,7 +2349,8 @@ const Game = (() => {
 
 			tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
 			lines.forEach((msg, row) => {
-				this.displayTextLine(tempCtx, {msg, x: (tip.x || 2), y: (row - lines.length) * 7 + (tip.y || 60), noTranslate: true});
+				this.displayTextLine(tempCtx, {msg, x: (tip.x || 2), y: (row - lines.length) * 7 + (tip.y || 60),
+					noTranslate: true});
 			});
 			if (fade > 0) {
 				ctx.globalAlpha = 1 - fade;
@@ -2416,7 +2420,7 @@ const Game = (() => {
 			this.data.theme = {
 				song,
 				volume,
-			}
+			};
 		}
 
 		playSoundClone(src) {
@@ -2906,7 +2910,23 @@ const Game = (() => {
 			this.sceneByName[scene.name] = scene;
 		}
 
+		cleanSituations() {
+			for (let sceneName in this.data.situation) {
+				const sceneSituation = this.data.situation[sceneName];
+				for (let elem in sceneSituation) {
+					if (!Object.keys(sceneSituation[elem]).length) {
+						delete sceneSituation[elem];
+					}
+				}
+
+				if (!Object.keys(sceneSituation).length) {
+					delete this.data.situation[sceneName];
+				}
+			}
+		}
+
 		loadScene(scene, restoreMapInfo) {
+			this.cleanSituations();
 			this.initScene();
 			const { map, sprites, doors, arrowGrid, events, customCursor,
 				onScene, onSceneRefresh, onSceneShot, onSceneHoldItem, onSceneUseItem,

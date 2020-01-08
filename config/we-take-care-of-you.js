@@ -5,9 +5,8 @@ game.addScene(
 			game.playTheme(null);
 			game.playSound(SOUNDS.HUM);
 			game.showTip([
-				"Don't worry, I'm on your side.",
-				"We will take care of you,",
-				"Baby Hitler."
+				"Don't worry.",
+				"We will take care of you,\nBaby Hitler."
 			], game => {
 				game.sceneData.showBoy = game.now;
 				game.delayAction(game => game.sceneData.boySmile = game.now, 2500);

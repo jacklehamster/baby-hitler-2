@@ -147,6 +147,7 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 */
 
 .game-size {
+    max-width: calc(100vw - 5%);
     width: 512px;
     height: 512px;
     z-index: 2;

@@ -8,7 +8,7 @@
 		$explode = explode('.', $path);
 		array_pop($explode);
 		$explode[] = "min.js";
-		$minifiedPath = implode('.', $explode);
+		$minifiedPath = "generated/" . implode('.', $explode);
 		$minifier->minify($minifiedPath);
 		return $minifiedPath;    	
     }

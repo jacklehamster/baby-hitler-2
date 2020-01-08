@@ -120,14 +120,12 @@
 
 	<script>
 		const JAVASCRIPT_FILES = [
-			//	RELEASE 				DEBUG
-			// ["lib/md5.min.js", 			"lib/md5.min.js"],
-			["common.js", 				"common.js"],
-			// ["asset-size.js", 			"asset-size.js"],
-			["config-size.js", 			"config-size.js"],
-			["config.min.js", 			"config.js"],
-			["game.min.js", 			"game.js"],
-			["config/load-screen.js",	"config/load-screen.js"],
+			//	RELEASE 					DEBUG
+			["common.js", 					"common.js"],
+			["generated/config-size.js",	"generated/config-size.js"],
+			["generated/config.min.js", 	"config.js"],
+			["generated/game.min.js", 		"game.js"],
+			["config/load-screen.js",		"config/load-screen.js"],
 		].map(([release, debug]) => window.debugMode ? debug : release).filter(a => a);
 
 		JAVASCRIPT_FILES.forEach(file => {

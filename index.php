@@ -16,7 +16,7 @@
       }
       $asset_source .= "};";
 
-      file_put_contents($output_file, $asset_source);      
+      file_put_contents("generated/$output_file", $asset_source);      
     }
 
 
@@ -37,6 +37,7 @@
       ?>
         <script>
           window.debugMode = true;
+          window.updateTranslationLink = "/updatetranslation.php?text=";
         </script>
       <?php
     }
