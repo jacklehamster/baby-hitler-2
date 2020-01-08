@@ -9,6 +9,7 @@ game.addScene(
 			[ null, null, BAG,  null, null ],
 		],
 		onScene: game => {
+			game.playTheme(null);
 			game.delayAction(game => {
 				game.sceneData.startDraw = game.now;
 			}, 500);
@@ -46,10 +47,14 @@ game.addScene(
 				if (game.sceneData.leftGuardShot || game.getSituation("tavern-phone").yupaAndBrutus) {
 					if (!game.sceneData.killedEveryone) {
 						game.sceneData.killedEveryone = game.now;
-						game.useItem = null;
-						game.hideCursor = true;
 					} else if (game.now - game.sceneData.killedEveryone > 3000) {
-						game.gotoScene("money-shot");
+						if (!game.sceneData.missedShots) {
+							game.gotoScene("money-shot");
+						} else {
+							game.delayAction(game => {
+								game.gotoScene("crowd");
+							}, 1000);
+						}
 					}
 				}
 			}
@@ -114,7 +119,6 @@ game.addScene(
 			}, 700);
 		},
 		onSceneShot: game => {
-			console.log("SHOOT");
 			game.currentScene.hideBartender(game);
 			game.currentScene.alertBrutus(game);
 			game.currentScene.guardAlert(game);
@@ -122,6 +126,11 @@ game.addScene(
 		sprites: [
 			{
 				src: ASSETS.TAVERN_GANGSTA_SHOOTOUT, col: 5, row: 6,
+				noHighlight: true,
+				onShot: game => {
+					game.sceneData.missedShots = (game.sceneData.missedShots||0) + 1;
+					return true;
+				},
 			},
 			{	//	bartender
 				src: ASSETS.TAVERN_GANGSTA_SHOOTOUT, col: 5, row: 6,
@@ -174,6 +183,7 @@ game.addScene(
 						game.sceneData.leftGuardShot = game.now;
 						game.currentScene.hideBartender(game);
 						game.currentScene.guardAlert(game);
+						return true;
 					}
 				},
 			},
@@ -203,6 +213,7 @@ game.addScene(
 						game.currentScene.alertBrutus(game);
 						game.currentScene.hideBrutus(game);
 						game.currentScene.guardAlert(game);
+						return true;
 					}
 				},
 			},
@@ -229,6 +240,7 @@ game.addScene(
 						game.currentScene.hideBartender(game);
 						game.currentScene.alertBrutus(game);
 						game.currentScene.guardAlert(game);
+						return true;
 					}
 				},
 				onClick: game => {
@@ -243,24 +255,10 @@ game.addScene(
 											game.dialog = null;
 											game.playSound(SOUNDS.HUM);
 											game.showTip([
-												"Let's talk. I have a perfect explanation for what happened",
+												"I have a perfect explanation for what happened",
 												"You see, I met this stranger and he gave me this card...",
 												"I don't know how he got it,",
 												"but if you ask me, I'm sure he had something to do with your brother's deadh...",
-												"Are you listening to me?",
-											], null, 30);
-										},
-									},
-									{
-										msg: "It's not my card!",
-										onSelect: game => {
-											game.sceneData.talkItOut = game.now;
-											game.dialog = null;
-											game.playSound(SOUNDS.HUM);
-											game.showTip([
-												"It's not my card! You see, I met this stranger and he gave me this card...",
-												"I don't know how he got it,",
-												"but if you ask me, I'm sure he had something to do with your brother's death...",
 												"Are you listening to me?",
 											], null, 30);
 										},

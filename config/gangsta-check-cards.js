@@ -15,6 +15,7 @@ game.addScene(
 						"Boss, are you ok?",
 					], game => {
 						game.sceneData.zoomDick = game.now;
+						game.playTheme(null);
 						game.currentScene.startTalk(game, "dick", [
 							"You... ",
 							"... BASTARD!",

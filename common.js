@@ -318,6 +318,15 @@ const ASSETS = {
 	ZOOM_DICK_MAD: "assets/zoom-dick-mad.png",
 	TAVERN_GANGSTA_SHOOTOUT: "assets/tavern-gangsta-shootout.png",
 	MONEY_SHOT: "assets/money-shot.png",
+	RUNNER0: "assets/runner.png",
+	RUNNER1: "assets/runner.png|rotate-colors",
+	RUNNER2: "assets/runner.png|rotate-colors|rotate-colors",
+	RUNNER3: "assets/runner.png|darken",
+	RUNNER4: "assets/runner.png|rotate-colors|darken",
+	RUNNER5: "assets/runner.png|rotate-colors|rotate-colors|darken",
+	CRAWLING_BOY: "assets/crawling-boy.png",
+	HITMAN_FROM_ABOVE: "assets/hitman-from-above.png",
+	BOY_SMILE: "assets/boy-smile.png",
 };
 
 const SOUNDS = {

@@ -65,13 +65,13 @@ const Game = (() => {
 			src: ASSETS.TOUCH_PUNCH, col: 1, row: 2, size: [64, 32],
 			index: game => game.mouseDown && !game.arrow ? 1 : 0,
 			side: LEFT,
-			hidden: game => !game.battle || game.battle.foeDefeated,
+			hidden: game => !game.battle || game.battle.foeDefeated || game.useItem === "gun",
 		},
 		BLOCK: {
 			src: ASSETS.TOUCH_PUNCH, col: 1, row: 2, size: [64, 32],
 			index: game => game.mouseDown && game.arrow === BLOCK ? 1 : 0,
 			side: RIGHT,
-			hidden: game => !game.battle || game.battle.foeDefeated,
+			hidden: game => !game.battle || game.battle.foeDefeated || game.useItem === "gun",
 		},
 		MULTI_ARROWS: {
 			src: ASSETS.MULTI_ARROWS, size: [64, 32],
@@ -774,7 +774,8 @@ const Game = (() => {
 					game.playSound(SOUNDS.GUN_SHOT);
 				} else {
 					this.gunFired = 0;
-					game.playSound(SOUNDS.DUD)
+					game.playSound(SOUNDS.DUD);
+					game.sceneData.missedShots = (game.sceneData.missedShots||0) + 1;
 				}
 				this.mouseDown = this.now;
 				return;
@@ -1609,7 +1610,7 @@ const Game = (() => {
 				this.clicking = true;
 				if (this.useItem === "gun") {
 					if (this.gunFiredWithin(100)) {
-//						this.onSceneShot(this, this.useItem);
+						this.onSceneShot(this, this.useItem);
 					}
 				} else if (this.useItem) {
 					this.onSceneUseItem(this, this.useItem);

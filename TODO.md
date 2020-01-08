@@ -29,8 +29,8 @@
 - 🐞 Tap doesn't accelerate all tips ⭐
 - 🐞 loading screen problem ⭐
 - 🐞 Menu down when forward
-- 🐞 Bullet replaces gun
-- 🐞 hide punch/block when using gun
+- 🐞 Bullet replaces gun ⭐
+- 🐞 hide punch/block when using gun ⭐
 
 
 ## Game TODO:
@@ -45,6 +45,7 @@
 - chest not restored after menu-save 🐞⭐
 - add grass around tavern ⭐
 - money shot only if no miss/no blank shots
+- Add bag icon in menu
 
 ## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222

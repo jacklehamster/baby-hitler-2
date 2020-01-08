@@ -5,7 +5,7 @@ game.addScene(
 			game.hideCursor = true;
 			game.playSound(SOUNDS.GOOD_BAD_UGLIZ);
 			game.delayAction(game => {
-				console.log("NEXT SCENE");
+				game.gotoScene("crowd");
 			}, 6000);
 		},
 		sprites: [

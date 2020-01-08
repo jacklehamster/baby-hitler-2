@@ -71,7 +71,7 @@ game.addScene(
 													},
 												},
 												{
-													msg: "Nothing, thanks.",
+													msg: "That's all.",
 													onSelect: game => {
 														game.currentScene.startTalk(game, "human", [
 															"That'll be all. Thanks Ernest.",

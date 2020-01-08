@@ -76,8 +76,7 @@ game.addScene(
 				index: 6,
 				offsetX: game => Math.round(game.situation.shift),
 				tip: game => game.situation.confirmDick
-					? "That's Dick Ruber, and Baby Hitler next to him." : "Baby Hitler is there serving some dodgy\nlooking dude.\n"+
-					"I bet that's Dick Ruber",
+					? "That's Dick Ruber's table." : "I bet that's Dick Ruber's table.",
 				onClick: game => {
 					game.gotoScene("gangsta-table");
 				},
