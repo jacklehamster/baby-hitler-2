@@ -42,9 +42,13 @@ function mergeImages($image1, $image2) {
 /* Two images */
 $image1 = $_GET['img1'];
 $image2 = $_GET['img2'];
+$output = $_GET['output'];
 if($image1 && $image2) {
 	header('Content-Type: image/png');
 	$im = mergeImages($image1, $image2);
+	if ($output) {
+		imagepng($im, $output);
+	}
 	imagepng($im);
 	imagedestroy($im);
 }

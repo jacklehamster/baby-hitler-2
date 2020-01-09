@@ -37,7 +37,7 @@
       ?>
         <script>
           window.debugMode = true;
-          window.updateTranslationLink = "/updatetranslation.php?text=";
+          window.updateTranslationLink = "/php/updatetranslation.php?text=";
         </script>
       <?php
     }
