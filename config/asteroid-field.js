@@ -376,7 +376,7 @@ game.addScene(
 								sceneData.lives -= game.data.ship && game.data.ship.superShield ? Math.sqrt(damage) : damage;
 								if (sceneData.lives <= 0) {
 									game.currentScene.makeDust(game, asteroid, "#888888");
-									game.gameOver("    “The odds of\n    navigating an\n    asteroid field\n    is 3721 to 1”");
+									game.gameOver("    “~The odds of\n    navigating an\n    asteroid field\n    is 3721 to 1~”");
 								}
 							}
 						} else {

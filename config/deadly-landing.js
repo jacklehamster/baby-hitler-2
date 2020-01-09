@@ -21,7 +21,7 @@ game.addScene(
 			if (!game.data.yupa || game.data.yupa.inBottle) {
 				if (!game.sceneData.showGameOver && frame > 150) {
 					game.hideCursor = false;
-					game.gameOver(" “You're not\n          Superman!”");
+					game.gameOver(" “~You're no\n          Superman!”~");
 				}
 			} else {
 				if (!game.sceneData.yupaTalked && frame > 150) {

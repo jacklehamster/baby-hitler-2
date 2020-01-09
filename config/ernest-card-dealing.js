@@ -140,7 +140,7 @@ game.addScene(
 							"You did well, Baxter.",
 							"You did very well ...",
 						], game => {
-							game.gameOver("  “I needed a\n      distraction.”");
+							game.gameOver("  “~I needed a\n      distraction.~”");
 						});
 					});
 				}, 800);
@@ -174,7 +174,7 @@ game.addScene(
 				game.fade = game.sceneData.bodyguardShoot ? .6 * progress : 0;
 				game.fadeColor = "#990000";
 				if (progress >= 1 && !game.data.gameOver && !game.sceneData.overrideGameOver) {
-					game.gameOver("“The odds were\n   stacked against\n   you.”");
+					game.gameOver("“~The odds were\n   stacked against\n   you.~”");
 				}
 			}
 		},

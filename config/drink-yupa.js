@@ -34,7 +34,7 @@ game.addScene(
 								game.showTip("Yu are very stuped man", game => {
 									game.playSound(SOUNDS.HUM);
 									game.showTip("I know", game => {
-										game.gameOver(" “YUPA is not\n           YOPLAIT!”");
+										game.gameOver(" “~YUPA is not\n     mean YOPLAIT!~”");
 									}, null, {x: 20, y: 30, speed: 100, talker: "human"});
 								}, null, { x: 2, y: 22, speed: 80, talker:"yupa" })
 							}, 8000);

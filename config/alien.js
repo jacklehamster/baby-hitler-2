@@ -64,7 +64,7 @@ game.addScene(
 				}
 			} else {
 				if (!game.data.gameOver) {
-					game.gameOver(" “That was\n             not cake!”");
+					game.gameOver(" “~That was\n             not cake!~”");
 				}
 			}
 		},
