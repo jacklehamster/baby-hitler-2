@@ -65,13 +65,13 @@ const Game = (() => {
 			src: ASSETS.TOUCH_PUNCH, col: 1, row: 2, size: [64, 32],
 			index: game => game.mouseDown && !game.arrow ? 1 : 0,
 			side: LEFT,
-			hidden: game => !game.battle || game.battle.foeDefeated || game.useItem === "gun",
+			hidden: game => !game.battle || game.battle.foeDefeated || game.useItem || game.bagOpening,
 		},
 		BLOCK: {
 			src: ASSETS.TOUCH_PUNCH, col: 1, row: 2, size: [64, 32],
 			index: game => game.mouseDown && game.arrow === BLOCK ? 1 : 0,
 			side: RIGHT,
-			hidden: game => !game.battle || game.battle.foeDefeated || game.useItem === "gun",
+			hidden: game => !game.battle || game.battle.foeDefeated || game.useItem || game.bagOpening,
 		},
 		MULTI_ARROWS: {
 			src: ASSETS.MULTI_ARROWS, size: [64, 32],
@@ -1153,6 +1153,7 @@ const Game = (() => {
 			this.turning = 0;
 			this.setTone(0);
 			this.data.gameOver = false;
+			this.processingBag = false;
 		}
 
 		markPickedUp(item) {
@@ -2925,23 +2926,7 @@ const Game = (() => {
 			this.sceneByName[scene.name] = scene;
 		}
 
-		cleanSituations() {
-			for (let sceneName in this.data.situation) {
-				const sceneSituation = this.data.situation[sceneName];
-				for (let elem in sceneSituation) {
-					if (!Object.keys(sceneSituation[elem]).length) {
-						delete sceneSituation[elem];
-					}
-				}
-
-				if (!Object.keys(sceneSituation).length) {
-					delete this.data.situation[sceneName];
-				}
-			}
-		}
-
 		loadScene(scene, restoreMapInfo) {
-			this.cleanSituations();
 			this.initScene();
 			const { map, sprites, doors, arrowGrid, events, customCursor,
 				onScene, onSceneRefresh, onSceneShot, onSceneHoldItem, onSceneUseItem,

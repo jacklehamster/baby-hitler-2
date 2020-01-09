@@ -30,36 +30,41 @@ game.addScene(
 					game.battle.restoreBot = game.now + 1000;
 				}
 			}
-		},		
+		},
+		checkHole: game => {
+			game.pendingTip = null;
+			game.startDialog({
+				time: game.now,
+				index: 0,
+				conversation: [
+					{
+						options: [
+							{ 
+							},
+							{ msg: game => game.situation.roppedLadder ? "Go down" : "Jump down", onSelect: game => {
+								if (game.situation.roppedLadder) {
+									game.fadeToScene("final-corridor", {door:"L"}, 500);
+								} else {
+									game.fadeToScene("deadly-landing", {door:5}, 500);
+								}
+							}},
+							{ msg: "CANCEL", onSelect: game => {
+								game.dialog = null;
+								game.pendingTip = null;
+								game.situation.viewingHole = 0;
+							}},
+						],
+					},
+				],
+			});
+		},
 		sprites: [
 			...getCommonMaze("_RED_1"),
 			{
 				src: ASSETS.HOLE_BOTTOM,
 				hidden: game => !game.situation.viewingHole,
 				onClick: game => {
-					game.pendingTip = null;
-					game.startDialog({
-						time: game.now,
-						index: 0,
-						conversation: [
-							{
-								options: [
-									{ 
-									},
-									{ msg: game => game.situation.roppedLadder ? "Go down" : "Jump down", onSelect: game => {
-										if (game.situation.roppedLadder) {
-											game.fadeToScene("final-corridor", {door:"L"}, 500);
-										} else {
-											game.fadeToScene("deadly-landing", {door:5}, 500);
-										}
-									}},
-									{ msg: "CANCEL", onSelect: game => {
-										game.dialog = null;
-									}},
-								],
-							},
-						],
-					});
+					game.currentScene.checkHole(game);
 				},
 			},
 			{
@@ -87,7 +92,9 @@ game.addScene(
 						return;
 					}
 					if (!game.getSituation("lab").shotTank) {
-						game.showTip("It looks deep.", null, null, {removeLock:true});						
+						game.showTip("It looks deep.", game => {
+							game.currentScene.checkHole(game);
+						}, null, {removeLock:true});
 					}
 					game.situation.viewingHole = game.now;
 					if (!game.getSituation("final-corridor").monsterLetOut) {
@@ -192,6 +199,7 @@ game.addScene(
 				onClick: game => {
 					if(game.situation.viewingHole) {
 						game.situation.viewingHole = 0;
+						game.dialog = null;
 						game.pendingTip = null;
 						game.save();
 					}

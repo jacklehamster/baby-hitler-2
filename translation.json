@@ -55,10 +55,6 @@
         "md5": "ed411044bec729e7549f48a1d571cb44",
         "text": "Adolf Hitler."
     },
-    "6716ee4ad8b40a7b9de5d7454b5128c8": {
-        "md5": "6716ee4ad8b40a7b9de5d7454b5128c8",
-        "text": "And my body is filled with bruises..."
-    },
     "56a0b9c41a4b5035433c31127e0cede8": {
         "md5": "56a0b9c41a4b5035433c31127e0cede8",
         "text": "Damnit Yupa! While you were dozing off, we just passed through\nan asteroid field!"
@@ -74,10 +70,6 @@
     "bc6822a84a3dc9806f12957d2afc5d1a": {
         "md5": "bc6822a84a3dc9806f12957d2afc5d1a",
         "text": "GAME OVER"
-    },
-    "8b1a9953c4611296a827abf8c47804d7": {
-        "md5": "8b1a9953c4611296a827abf8c47804d7",
-        "text": "Hello"
     },
     "47b93d0db0931e630b2bf1ff3409be43": {
         "md5": "47b93d0db0931e630b2bf1ff3409be43",
@@ -123,14 +115,6 @@
         "md5": "2ca8d70baf21b18878843c02a086e46c",
         "text": "In "
     },
-    "5aa8c1c1a34504833d9a6d8df2560762": {
-        "md5": "5aa8c1c1a34504833d9a6d8df2560762",
-        "text": "It's empty."
-    },
-    "e0f9ef6d3025baf33497bafcca7ff781": {
-        "md5": "e0f9ef6d3025baf33497bafcca7ff781",
-        "text": "LEAVE"
-    },
     "4994a8ffeba4ac3140beb89e8d41f174": {
         "md5": "4994a8ffeba4ac3140beb89e8d41f174",
         "text": "Language"
@@ -138,10 +122,6 @@
     "16bfbf9c462762cf1cba4134ec53c504": {
         "md5": "16bfbf9c462762cf1cba4134ec53c504",
         "text": "Loading"
-    },
-    "75f99464037186cd5506c6405dad801b": {
-        "md5": "75f99464037186cd5506c6405dad801b",
-        "text": "My brain... it hurts..."
     },
     "88559a0cfd8250c9d65970cc145c92d4": {
         "md5": "88559a0cfd8250c9d65970cc145c92d4",
@@ -211,17 +191,9 @@
         "md5": "28240f491460854fe0a265868a00da27",
         "text": "We will take care of you,\nBaby Hitler."
     },
-    "3f0dc8030c3fc1c92c5af745e233be6c": {
-        "md5": "3f0dc8030c3fc1c92c5af745e233be6c",
-        "text": "What happened? I don't\nremember\nanything."
-    },
     "8b9a425b6d1299d884639d2b3085f749": {
         "md5": "8b9a425b6d1299d884639d2b3085f749",
         "text": "What?!! You're kidding me!"
-    },
-    "f9782e2ed8a9f9455b3af8010b2e9158": {
-        "md5": "f9782e2ed8a9f9455b3af8010b2e9158",
-        "text": "Where am I?"
     },
     "3b67a67549f3e747d3f0b5e496f2f686": {
         "md5": "3b67a67549f3e747d3f0b5e496f2f686",
@@ -302,10 +274,6 @@
     "f201b6f98105c6550e8bfffe0b521282": {
         "md5": "f201b6f98105c6550e8bfffe0b521282",
         "text": "dunt try be a heru! Just wak me up!"
-    },
-    "361fbdc892cc3335b40ff3fdef4029ff": {
-        "md5": "361fbdc892cc3335b40ff3fdef4029ff",
-        "text": "empty bottle"
     },
     "06620e1fd2cd4058154900e8a1710a74": {
         "md5": "06620e1fd2cd4058154900e8a1710a74",
@@ -395,10 +363,6 @@
         "md5": "b2dbd469e435d5d30442b98c8d3d8265",
         "text": "spaceship."
     },
-    "b5e3d176291588d205b4969a30516246": {
-        "md5": "b5e3d176291588d205b4969a30516246",
-        "text": "start over"
-    },
     "9b538098f91b37f65596715915fec606": {
         "md5": "9b538098f91b37f65596715915fec606",
         "text": "the baby."
@@ -442,10 +406,6 @@
     "d2fc0559021667f7bd93e62203c87e7c": {
         "md5": "d2fc0559021667f7bd93e62203c87e7c",
         "text": "travel back"
-    },
-    "fd5770e19b0deb705ca98efcfc3b2045": {
-        "md5": "fd5770e19b0deb705ca98efcfc3b2045",
-        "text": "try again"
     },
     "07379d4188dca4a8a7762563a67ccaf0": {
         "md5": "07379d4188dca4a8a7762563a67ccaf0",
@@ -795,5 +755,395 @@
         "md5": "a903cc20f6975a9b110a8ee65409d7ce",
         "text": "Ok, then. For fairness,",
         "timestamp": "2020-01-09T03:20:26Z"
+    },
+    "08b43519a7e36ee4c6c5615d1663bcfd": {
+        "md5": "08b43519a7e36ee4c6c5615d1663bcfd",
+        "text": "skip",
+        "timestamp": "2020-01-09T17:06:30Z"
+    },
+    "b06ab87402a9c8714da3d4e439b3b912": {
+        "md5": "b06ab87402a9c8714da3d4e439b3b912",
+        "text": "I'm a",
+        "timestamp": "2020-01-09T17:06:31Z"
+    },
+    "27ade1b64f9515dbb776cc3cc5bc3377": {
+        "md5": "27ade1b64f9515dbb776cc3cc5bc3377",
+        "text": "professional",
+        "timestamp": "2020-01-09T17:06:32Z"
+    },
+    "98ce0beb1f55794e72f706e06197d34a": {
+        "md5": "98ce0beb1f55794e72f706e06197d34a",
+        "text": "hitman.",
+        "timestamp": "2020-01-09T17:06:34Z"
+    },
+    "75f99464037186cd5506c6405dad801b": {
+        "md5": "75f99464037186cd5506c6405dad801b",
+        "text": "My brain... it hurts...",
+        "timestamp": "2020-01-09T17:06:38Z"
+    },
+    "6716ee4ad8b40a7b9de5d7454b5128c8": {
+        "md5": "6716ee4ad8b40a7b9de5d7454b5128c8",
+        "text": "And my body is filled with bruises...",
+        "timestamp": "2020-01-09T17:06:40Z"
+    },
+    "3f0dc8030c3fc1c92c5af745e233be6c": {
+        "md5": "3f0dc8030c3fc1c92c5af745e233be6c",
+        "text": "What happened? I don't\nremember\nanything.",
+        "timestamp": "2020-01-09T17:06:41Z"
+    },
+    "f9782e2ed8a9f9455b3af8010b2e9158": {
+        "md5": "f9782e2ed8a9f9455b3af8010b2e9158",
+        "text": "Where am I?",
+        "timestamp": "2020-01-09T17:06:43Z"
+    },
+    "5acc7b7c1c62cad0e669e1a632c551c5": {
+        "md5": "5acc7b7c1c62cad0e669e1a632c551c5",
+        "text": "Hey, it looks like I carved a birthday cake on the wall.",
+        "timestamp": "2020-01-09T17:06:51Z"
+    },
+    "8d6cab4c6515d55c1e75c36b1b6c7ab3": {
+        "md5": "8d6cab4c6515d55c1e75c36b1b6c7ab3",
+        "text": "I can't remember but could it be... it's my BIRTHDAY?!",
+        "timestamp": "2020-01-09T17:06:57Z"
+    },
+    "8b1a9953c4611296a827abf8c47804d7": {
+        "md5": "8b1a9953c4611296a827abf8c47804d7",
+        "text": "Hello",
+        "timestamp": "2020-01-09T17:07:05Z"
+    },
+    "e0f9ef6d3025baf33497bafcca7ff781": {
+        "md5": "e0f9ef6d3025baf33497bafcca7ff781",
+        "text": "LEAVE",
+        "timestamp": "2020-01-09T17:07:05Z"
+    },
+    "334676f2a83a4681e707307b44f1246c": {
+        "md5": "334676f2a83a4681e707307b44f1246c",
+        "text": "My birthday!",
+        "timestamp": "2020-01-09T17:07:05Z"
+    },
+    "4a6ffbebe8d1de6a27368ba05ac6f141": {
+        "md5": "4a6ffbebe8d1de6a27368ba05ac6f141",
+        "text": "... did he\nunderstand? ...",
+        "timestamp": "2020-01-09T17:07:06Z"
+    },
+    "d47c61e8f2bef99965d84cf904ebd64b": {
+        "md5": "d47c61e8f2bef99965d84cf904ebd64b",
+        "text": "Wait... why did he just leave?",
+        "timestamp": "2020-01-09T17:07:12Z"
+    },
+    "45c1e3b8e742eaea346be414d2b409d8": {
+        "md5": "45c1e3b8e742eaea346be414d2b409d8",
+        "text": "That's odd.",
+        "timestamp": "2020-01-09T17:07:13Z"
+    },
+    "6af3599b6bbca262a3132c99241fee7e": {
+        "md5": "6af3599b6bbca262a3132c99241fee7e",
+        "text": "Maybe he went to get me a birthday cake.",
+        "timestamp": "2020-01-09T17:07:14Z"
+    },
+    "da86109bc176a8e9f60fa11e8b526670": {
+        "md5": "da86109bc176a8e9f60fa11e8b526670",
+        "text": "Wouldn't that be funny?!?",
+        "timestamp": "2020-01-09T17:07:15Z"
+    },
+    "9b317d0e89e54d5c059dcf9a282f920e": {
+        "md5": "9b317d0e89e54d5c059dcf9a282f920e",
+        "text": "OMG!",
+        "timestamp": "2020-01-09T17:07:19Z"
+    },
+    "6e55f4a6e5a6e62d6ce9a86d6f4f27eb": {
+        "md5": "6e55f4a6e5a6e62d6ce9a86d6f4f27eb",
+        "text": "What a surprise, how thoughtful of you!",
+        "timestamp": "2020-01-09T17:07:20Z"
+    },
+    "1ca5b67763a0885d023be46aa0f88bd3": {
+        "md5": "1ca5b67763a0885d023be46aa0f88bd3",
+        "text": "You really do care about me after all..",
+        "timestamp": "2020-01-09T17:07:22Z"
+    },
+    "b6c7adbc663950516b7fe574a0a8a138": {
+        "md5": "b6c7adbc663950516b7fe574a0a8a138",
+        "text": "Even in this situation, I'm glad I can laugh with you guys.",
+        "timestamp": "2020-01-09T17:07:31Z"
+    },
+    "fa0e5ecfd2d8d2cb8b377ab354f73b73": {
+        "md5": "fa0e5ecfd2d8d2cb8b377ab354f73b73",
+        "text": "Hahaha...",
+        "timestamp": "2020-01-09T17:07:31Z"
+    },
+    "867794a2184d1a1b30e681b91ab20e0e": {
+        "md5": "867794a2184d1a1b30e681b91ab20e0e",
+        "text": "By the way, what's so funny?",
+        "timestamp": "2020-01-09T17:07:34Z"
+    },
+    "23a5027a184582c1f2fe2844805e9b62": {
+        "md5": "23a5027a184582c1f2fe2844805e9b62",
+        "text": "Ohh my brain... it hurts...",
+        "timestamp": "2020-01-09T17:07:55Z"
+    },
+    "683d16a1ae9591b04cc1ff1524261d05": {
+        "md5": "683d16a1ae9591b04cc1ff1524261d05",
+        "text": "... now at least, I know how I got those.",
+        "timestamp": "2020-01-09T17:07:59Z"
+    },
+    "040dac940379f0b8a81e38d1887d5eb0": {
+        "md5": "040dac940379f0b8a81e38d1887d5eb0",
+        "text": "I must find a way out of here.",
+        "timestamp": "2020-01-09T17:08:01Z"
+    },
+    "86309be870649fbf86b376ced7800f30": {
+        "md5": "86309be870649fbf86b376ced7800f30",
+        "text": "Looks like the only way out",
+        "timestamp": "2020-01-09T17:08:02Z"
+    },
+    "d891be9c3e480ec49dd7efe2e4a95b30": {
+        "md5": "d891be9c3e480ec49dd7efe2e4a95b30",
+        "text": "Turns out they left a bunch of stuff behind.",
+        "timestamp": "2020-01-09T17:08:07Z"
+    },
+    "e85647a37da2f7113ce5e8316583a2f6": {
+        "md5": "e85647a37da2f7113ce5e8316583a2f6",
+        "text": "Hum... they took the time to bring me a cake fork...",
+        "timestamp": "2020-01-09T17:08:08Z"
+    },
+    "aee9fabca4f25d574847f62c9bec22fe": {
+        "md5": "aee9fabca4f25d574847f62c9bec22fe",
+        "text": "I can't lift this tile with my fingers. I need some kind of lever.",
+        "timestamp": "2020-01-09T17:08:10Z"
+    },
+    "f87c5be195f09663783fec1dd0dc506a": {
+        "md5": "f87c5be195f09663783fec1dd0dc506a",
+        "text": "The most\npathetic part in all of this ... I still want a bite of that cake.",
+        "timestamp": "2020-01-09T17:08:14Z"
+    },
+    "0f421159291e17d1c9f7939e8f6d8441": {
+        "md5": "0f421159291e17d1c9f7939e8f6d8441",
+        "text": "For the candle on my cake, they actually used a lighter.",
+        "timestamp": "2020-01-09T17:08:18Z"
+    },
+    "778b212dcc3f4d113d3f53f52513be72": {
+        "md5": "778b212dcc3f4d113d3f53f52513be72",
+        "text": "cake fork",
+        "timestamp": "2020-01-09T17:08:23Z"
+    },
+    "c5c089b8135ae76864a4d5d6e69ee7a6": {
+        "md5": "c5c089b8135ae76864a4d5d6e69ee7a6",
+        "text": "A loaded gun! Did I hide this in here?",
+        "timestamp": "2020-01-09T17:08:26Z"
+    },
+    "5aa8c1c1a34504833d9a6d8df2560762": {
+        "md5": "5aa8c1c1a34504833d9a6d8df2560762",
+        "text": "It's empty.",
+        "timestamp": "2020-01-09T17:08:29Z"
+    },
+    "9a35a1b3ec37d71895e7b03e56ecd8ef": {
+        "md5": "9a35a1b3ec37d71895e7b03e56ecd8ef",
+        "text": "It's ...\nBABY HITLER!",
+        "timestamp": "2020-01-09T17:08:31Z"
+    },
+    "d0eedb799584d850fdd802fd3c27ae34": {
+        "md5": "d0eedb799584d850fdd802fd3c27ae34",
+        "text": "Hey",
+        "timestamp": "2020-01-09T17:17:45Z"
+    },
+    "5ae0c1c8a5260bc7b6648f6fbd115c35": {
+        "md5": "5ae0c1c8a5260bc7b6648f6fbd115c35",
+        "text": "photo",
+        "timestamp": "2020-01-09T17:17:47Z"
+    },
+    "1f2c4c0db69b0c8e1bafd75849c671c5": {
+        "md5": "1f2c4c0db69b0c8e1bafd75849c671c5",
+        "text": "gun with 6 bullets",
+        "timestamp": "2020-01-09T17:18:00Z"
+    },
+    "361fbdc892cc3335b40ff3fdef4029ff": {
+        "md5": "361fbdc892cc3335b40ff3fdef4029ff",
+        "text": "empty bottle",
+        "timestamp": "2020-01-09T17:18:02Z"
+    },
+    "6af3a32a75e410d67cba34818f1027ae": {
+        "md5": "6af3a32a75e410d67cba34818f1027ae",
+        "text": "       noticeable\u201d",
+        "timestamp": "2020-01-09T17:18:11Z"
+    },
+    "1e992c9c43e93bfe98ce05c7c7830d3b": {
+        "md5": "1e992c9c43e93bfe98ce05c7c7830d3b",
+        "text": "  \u201cThat was too",
+        "timestamp": "2020-01-09T17:18:11Z"
+    },
+    "b5e3d176291588d205b4969a30516246": {
+        "md5": "b5e3d176291588d205b4969a30516246",
+        "text": "start over",
+        "timestamp": "2020-01-09T17:18:11Z"
+    },
+    "fd5770e19b0deb705ca98efcfc3b2045": {
+        "md5": "fd5770e19b0deb705ca98efcfc3b2045",
+        "text": "try again",
+        "timestamp": "2020-01-09T17:18:11Z"
+    },
+    "0d29309e514bb0c0ffadfba7c7ffcfac": {
+        "md5": "0d29309e514bb0c0ffadfba7c7ffcfac",
+        "text": "gun with 3 bullets",
+        "timestamp": "2020-01-09T17:20:01Z"
+    },
+    "a1b8585122e1ad60623d6a74d3eb3b6a": {
+        "md5": "a1b8585122e1ad60623d6a74d3eb3b6a",
+        "text": "cake",
+        "timestamp": "2020-01-09T17:20:02Z"
+    },
+    "6a19bbb52d8327f9149be17eaf420c01": {
+        "md5": "6a19bbb52d8327f9149be17eaf420c01",
+        "text": "lighter",
+        "timestamp": "2020-01-09T17:20:02Z"
+    },
+    "099af53f601532dbd31e0ea99ffdeb64": {
+        "md5": "099af53f601532dbd31e0ea99ffdeb64",
+        "text": "delete",
+        "timestamp": "2020-01-09T17:20:37Z"
+    },
+    "ec4d1eb36b22d19728e9d1d23ca84d1c": {
+        "md5": "ec4d1eb36b22d19728e9d1d23ca84d1c",
+        "text": "load",
+        "timestamp": "2020-01-09T17:20:37Z"
+    },
+    "43781db5c40ecc39fd718685594f0956": {
+        "md5": "43781db5c40ecc39fd718685594f0956",
+        "text": "save",
+        "timestamp": "2020-01-09T17:20:37Z"
+    },
+    "536a056b710e94b16169efd17a4a657b": {
+        "md5": "536a056b710e94b16169efd17a4a657b",
+        "text": "saved",
+        "timestamp": "2020-01-09T17:20:39Z"
+    },
+    "115ce50c044ab2c69859d89513e6b772": {
+        "md5": "115ce50c044ab2c69859d89513e6b772",
+        "text": "+5xp",
+        "timestamp": "2020-01-09T17:20:58Z"
+    },
+    "c054c7efff0653700ee0ea64fcfe04a7": {
+        "md5": "c054c7efff0653700ee0ea64fcfe04a7",
+        "text": "It does look like water... so far.",
+        "timestamp": "2020-01-09T17:21:22Z"
+    },
+    "96cc5c725ae8f5ccb76056b7d12ed095": {
+        "md5": "96cc5c725ae8f5ccb76056b7d12ed095",
+        "text": "ATK",
+        "timestamp": "2020-01-09T17:21:54Z"
+    },
+    "822dd494b3e14a82aa76bd455e6b6f4b": {
+        "md5": "822dd494b3e14a82aa76bd455e6b6f4b",
+        "text": "DEF",
+        "timestamp": "2020-01-09T17:21:54Z"
+    },
+    "644161d5b6f89203e792111e2ff24176": {
+        "md5": "644161d5b6f89203e792111e2ff24176",
+        "text": "LVL 2",
+        "timestamp": "2020-01-09T17:21:54Z"
+    },
+    "971ab16c6e59a04d070cb8d8da13418e": {
+        "md5": "971ab16c6e59a04d070cb8d8da13418e",
+        "text": "STA",
+        "timestamp": "2020-01-09T17:21:54Z"
+    },
+    "9b57db6e9d84ba5f537ce97b13079736": {
+        "md5": "9b57db6e9d84ba5f537ce97b13079736",
+        "text": "XP",
+        "timestamp": "2020-01-09T17:21:54Z"
+    },
+    "e2e9c66ba722c71dfb3e67e2ac271cfa": {
+        "md5": "e2e9c66ba722c71dfb3e67e2ac271cfa",
+        "text": "coin x2",
+        "timestamp": "2020-01-09T17:21:59Z"
+    },
+    "0230cae7ea521a871c572b5a54372367": {
+        "md5": "0230cae7ea521a871c572b5a54372367",
+        "text": "Looks like some symbol on that locker.",
+        "timestamp": "2020-01-09T17:22:24Z"
+    },
+    "df3074439fbab7eab7584698c47d4fc0": {
+        "md5": "df3074439fbab7eab7584698c47d4fc0",
+        "text": "It's the right combination!",
+        "timestamp": "2020-01-09T17:22:34Z"
+    },
+    "884a2381206f5cf56257487cbf6b9886": {
+        "md5": "884a2381206f5cf56257487cbf6b9886",
+        "text": "Looks like some kind of access card!",
+        "timestamp": "2020-01-09T17:22:39Z"
+    },
+    "08ee28bd1134b20d4283d516101e3e9b": {
+        "md5": "08ee28bd1134b20d4283d516101e3e9b",
+        "text": "coin x4",
+        "timestamp": "2020-01-09T17:23:08Z"
+    },
+    "1ba01440824138cda4a6279711e981f2": {
+        "md5": "1ba01440824138cda4a6279711e981f2",
+        "text": "It's locked.",
+        "timestamp": "2020-01-09T17:24:53Z"
+    },
+    "3cd131eeeb3cecdbfdcb1c1315c30214": {
+        "md5": "3cd131eeeb3cecdbfdcb1c1315c30214",
+        "text": "gun with 2 bullets",
+        "timestamp": "2020-01-09T17:24:54Z"
+    },
+    "3c6e0b8a9c15224a8228b9a98ca1531d": {
+        "md5": "3c6e0b8a9c15224a8228b9a98ca1531d",
+        "text": "key",
+        "timestamp": "2020-01-09T17:24:54Z"
+    },
+    "d03dc359b691ddd3f983b85767753680": {
+        "md5": "d03dc359b691ddd3f983b85767753680",
+        "text": "coin x5",
+        "timestamp": "2020-01-09T17:25:18Z"
+    },
+    "a93531df211c0848e444f928b5340155": {
+        "md5": "a93531df211c0848e444f928b5340155",
+        "text": "fruit?",
+        "timestamp": "2020-01-09T17:25:18Z"
+    },
+    "6b658f9a02f6bbf9fe81514702b35598": {
+        "md5": "6b658f9a02f6bbf9fe81514702b35598",
+        "text": "Delicious!",
+        "timestamp": "2020-01-09T17:25:20Z"
+    },
+    "132f671b621c82ee56b683fc20469456": {
+        "md5": "132f671b621c82ee56b683fc20469456",
+        "text": "Goal!!",
+        "timestamp": "2020-01-09T17:25:55Z"
+    },
+    "2dce8f543e8c072775c2743c7b9854cc": {
+        "md5": "2dce8f543e8c072775c2743c7b9854cc",
+        "text": "undo",
+        "timestamp": "2020-01-09T17:26:49Z"
+    },
+    "004a02313292afb7876eeca47b5f07c6": {
+        "md5": "004a02313292afb7876eeca47b5f07c6",
+        "text": "It looks deep.",
+        "timestamp": "2020-01-09T17:30:25Z"
+    },
+    "2027c027133e22c8929e2874dc44dd36": {
+        "md5": "2027c027133e22c8929e2874dc44dd36",
+        "text": "CANCEL",
+        "timestamp": "2020-01-09T17:30:28Z"
+    },
+    "aade5dd7f0c0e90457bebfe7eb362440": {
+        "md5": "aade5dd7f0c0e90457bebfe7eb362440",
+        "text": "Jump down",
+        "timestamp": "2020-01-09T17:30:28Z"
+    },
+    "ea2e865634c8167bcbf26f609ab2ec1e": {
+        "md5": "ea2e865634c8167bcbf26f609ab2ec1e",
+        "text": "The ladder is broken.",
+        "timestamp": "2020-01-09T17:33:00Z"
+    },
+    "563da6a3031ed0ecb6c09e9c96435d06": {
+        "md5": "563da6a3031ed0ecb6c09e9c96435d06",
+        "text": "          Superman!\u201d",
+        "timestamp": "2020-01-09T17:41:13Z"
+    },
+    "1fc06b64d9b58caa9e321d850b4cce15": {
+        "md5": "1fc06b64d9b58caa9e321d850b4cce15",
+        "text": "You're no",
+        "timestamp": "2020-01-09T17:41:13Z"
     }
 }

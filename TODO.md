@@ -23,7 +23,7 @@
 - Make arrows functional ⭐
 - Handle landscape ⭐
 - Asteroids / arcade ⭐
-- Make dialog friendly
+- Make dialog friendly UI
 - show arrows on practice battle ⭐
 - Fullscreen on tap ⭐
 - 🐞 Tap doesn't accelerate all tips ⭐
@@ -34,13 +34,14 @@
 - 🐞 door should close when bag opens
 - arcade swap joystick and buttons
 - arcade: seems stuck
-- allow player to shoot arcade
+- allow player to shoot arcade with gun
 - bag should always show in maze
-- bag in maze doesn't seem to work
-- 🐞 yupa woke up then dried again???
-- 🐞 jump down/go down crashed
-- 🐞 rope and fembot not persistent
-- hide punch/block when bag is out
+- bag in maze doesn't seem to work ⭐
+- 🐞 yupa woke up then dried again??? ⭐
+- 🐞 jump down/go down crashed ⭐
+- 🐞 rope and fembot not persistent ⭐
+- hide punch/block when bag is out ⭐
+- 🐞 it's hard to tap the hole to go down ⭐
 
 ## Game TODO:
 

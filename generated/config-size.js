@@ -30,7 +30,7 @@ const CONFIG_FILES = {
       size: 1558,
    },
    'ceiling-maze.js' : {
-      size: 10592,
+      size: 10759,
    },
    'cell-maze-2.js' : {
       size: 715,
