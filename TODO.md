@@ -40,6 +40,7 @@
 - 🐞 yupa woke up then dried again???
 - 🐞 jump down crashed
 - 🐞 rope and fembot not persistent
+- hide punch/block when bag is out
 
 ## Game TODO:
 
