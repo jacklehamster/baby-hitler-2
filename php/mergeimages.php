@@ -1,6 +1,6 @@
 <?php
 
-function mergeImages($image1, $image2) {
+function merge_images($image1, $image2) {
 	/* Get images dimensions */
 	list($width1, $height1) = getimagesize($image1);
 	list($width2, $height2) = getimagesize($image2);
@@ -35,6 +35,8 @@ function mergeImages($image1, $image2) {
 		imagecopy($im, $im1, 0, 0, 0, 0, $width1, $height1);
 		imagecopy($im, $im2, 0, $height1, 0, 0, $width2, $height2);
 	}
+	imagedestroy($im1);
+	imagedestroy($im2);
 
 	return $im;
 }
@@ -45,7 +47,7 @@ $image2 = $_GET['img2'];
 $output = $_GET['output'];
 if($image1 && $image2) {
 	header('Content-Type: image/png');
-	$im = mergeImages($image1, $image2);
+	$im = merge_images($image1, $image2);
 	if ($output) {
 		imagepng($im, $output);
 	}

@@ -1,7 +1,7 @@
 <?php
   header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
 
-    function prepareDir($dir, $var, $output_file, $lambda=null) {
+    function prepare_dir($dir, $var, $output_file, $lambda=null) {
       $assets = scandir($dir);
       $asset_source = "";
       $asset_source .= "const $var = {\n";
@@ -10,7 +10,12 @@
         if (is_file($filename)) {
           if(!$lambda || $lambda($filename)){
             $size = filesize("$dir/$file");
-            $asset_source .= "   '$file' : $size,\n";
+            $asset_source .= <<<EOD
+   '$file' : {
+      size: $size,
+   },
+
+EOD;
           }
         }
       }
@@ -23,13 +28,13 @@
     /**
       * PREPARE ASSETS.
       */
-    prepareDir('assets', 'FILE_SIZE', 'asset-size.js', function($filename) {
+    prepare_dir('assets', 'FILE_SIZE', 'asset-size.js', function($filename) {
       return @exif_imagetype($filename);
     });
     /**
       * PREPARE CONFIGS.
       */
-    prepareDir('config', 'CONFIG_FILES', 'config-size.js');
+    prepare_dir('config', 'CONFIG_FILES', 'config-size.js');
 
 
     //  SET debug mode
