@@ -302,6 +302,7 @@ game.addScene(
 									});										
 								});
 							} else {
+								game.waitCursor = true;
 								game.situation.explainedToYupa = true;
 								game.currentScene.startTalk(game, "human2", [
 									"Listen Yupa,",
@@ -320,6 +321,7 @@ game.addScene(
 											"Wanna hear an awesume storey?",
 										], game => {
 											game.situation.yupaAndBrutus = game.now;
+											game.waitCursor = false;
 											game.gotoScene("explore-tavern");
 										});
 									});

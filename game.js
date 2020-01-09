@@ -3204,6 +3204,10 @@ const Game = (() => {
 		}
 
 		processText(text, addOnly) {
+			if (!text.match(/[a-z]/i)) {
+				return text;
+			}
+
 			if (text.indexOf("~") >= 0) {
 				text.split("~").forEach(a => this.processText(a, addOnly));
 				return text;
@@ -3214,7 +3218,7 @@ const Game = (() => {
 			}
 			if (!this.translate[text]) {
 				this.translate[text] = {};
-				if (window.updateTranslationLink && !addOnly) {
+				if (window.updateTranslationLink && !addOnly && this.allowTranslation) {
 					const request = new XMLHttpRequest();
 			  		request.open("GET", `${window.updateTranslationLink}${encodeURIComponent(text)}`);
 					request.send();

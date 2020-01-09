@@ -143,6 +143,8 @@
 					for (let o in obj) {
 						game.processText(obj[o].text, true);
 					}
+					if (game)
+						game.allowTranslation = true;
 	  			}
 	  		});
 

@@ -140,7 +140,7 @@ game.addScene(
 							"You did well, Baxter.",
 							"You did very well ...",
 						], game => {
-							game.gameOver("  “That was too\n       noticeable”");
+							game.gameOver("  “I needed a\n      distraction.”");
 						});
 					});
 				}, 800);

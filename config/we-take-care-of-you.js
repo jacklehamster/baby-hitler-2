@@ -3,15 +3,59 @@ game.addScene(
 		name: "we-take-care-of-you",
 		onScene: game => {
 			game.playTheme(null);
-			game.playSound(SOUNDS.HUM);
-			game.showTip([
-				"Don't worry.",
-				"We will take care of you,\nBaby Hitler."
-			], game => {
-				game.sceneData.showBoy = game.now;
-				game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
-				game.delayAction(game => game.sceneData.showBoy = 0, 5000);
-			}, null, { talker: "human"});
+			game.startDialog({
+				conversation: [
+					{
+						options: [
+							{
+								msg: "We'll take care",
+								onSelect: game => {
+									game.dialog = null;
+									game.playSound(SOUNDS.HUM);
+									game.showTip([
+										"Don't worry.",
+										"We will take care of you,\nBaby Hitler."
+									], game => {
+										game.sceneData.showBoy = game.now;
+										game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
+										game.delayAction(game => game.sceneData.showBoy = 0, 5000);
+									}, null, { talker: "human"});
+								},
+							},
+							{
+								msg: "Don't move",
+								onSelect: game => {
+									game.dialog = null;
+									game.playSound(SOUNDS.HUM);
+									game.showTip([
+										"Don't go\nanywhere.",
+										"You should stay with us,\nBaby Hitler.",
+									], game => {
+										game.sceneData.showBoy = game.now;
+										game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
+										game.delayAction(game => game.sceneData.showBoy = 0, 5000);
+									}, null, { talker: "human"});
+								},
+							},
+							{
+								msg: "I'll protect you",
+								onSelect: game => {
+									game.dialog = null;
+									game.playSound(SOUNDS.HUM);
+									game.showTip([
+										"I'm here to protect you.",
+										"Don't you worry,\nBaby Hitler."
+									], game => {
+										game.sceneData.showBoy = game.now;
+										game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
+										game.delayAction(game => game.sceneData.showBoy = 0, 5000);
+									}, null, { talker: "human"});
+								},
+							},
+						],
+					},
+				],
+			});
 		},
 		onSceneRefresh: game => {
 			if (!game.sceneData.lastCrowd || game.now - game.sceneData.lastCrowd > 1000) {
