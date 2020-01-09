@@ -31,6 +31,13 @@
 - 🐞 Menu down when forward ⭐
 - 🐞 Bullet replaces gun ⭐
 - 🐞 hide punch/block when using gun ⭐
+- 🐞 door should close when bag opens
+- arcade swap joystick and buttons
+- arcade: seems stuck
+- allow player to shoot arcade
+- bag should always show in maze
+- bag in maze doesn't seem to work
+
 
 
 ## Game TODO:
