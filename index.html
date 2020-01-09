@@ -119,14 +119,21 @@
 	</script>
 
 	<script>
-		const JAVASCRIPT_FILES = [
-			//	RELEASE 					DEBUG
-			["common.js", 					"common.js"],
-			["generated/config-size.js",	"generated/config-size.js"],
-			["generated/config.min.js", 	"config.js"],
-			["generated/game.min.js", 		"game.js"],
-			["config/load-screen.js",		"config/load-screen.js"],
-		].map(([release, debug]) => window.debugMode ? debug : release).filter(a => a);
+		const JAVASCRIPT_FILES = window.debugMode ? [
+			'common.js',
+			"generated/config-size.js",
+			"generated/spritesheets/spritesheet.js",
+			"config.js",
+			"game.js",
+			"config/load-screen.js",
+		] : [
+			'generated/common.min.js',
+			"generated/config-size.min.js",
+			"generated/config.min.js",
+			"generated/spritesheet.min.js",
+			"generated/game.min.js",
+			"config/load-screen.js",
+		];
 
 		JAVASCRIPT_FILES.forEach(file => {
 			document.write(`<script src="${file}"><\/script>`);

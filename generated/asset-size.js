@@ -3,7 +3,7 @@ const FILE_SIZE = {
       size: 119,
    },
    'alexa.png' : {
-      size: 419,
+      size: 418,
    },
    'alien-eater.png' : {
       size: 3116,
@@ -12,10 +12,10 @@ const FILE_SIZE = {
       size: 552,
    },
    'amari-baby.png' : {
-      size: 1047,
+      size: 1046,
    },
    'arcade-hands.png' : {
-      size: 258,
+      size: 256,
    },
    'arcade-room.png' : {
       size: 181,
@@ -30,7 +30,7 @@ const FILE_SIZE = {
       size: 356,
    },
    'arrow-cursor.png' : {
-      size: 171,
+      size: 162,
    },
    'arrow-forward.png' : {
       size: 258,
@@ -48,7 +48,7 @@ const FILE_SIZE = {
       size: 29223,
    },
    'baby-hitler-waiter.png' : {
-      size: 2565,
+      size: 710,
    },
    'bag-out.png' : {
       size: 228,
@@ -75,7 +75,7 @@ const FILE_SIZE = {
       size: 323,
    },
    'boy-smile.png' : {
-      size: 2640,
+      size: 1006,
    },
    'brave-shield.png' : {
       size: 3238,
@@ -84,7 +84,7 @@ const FILE_SIZE = {
       size: 716,
    },
    'brusalien.png' : {
-      size: 2625,
+      size: 2526,
    },
    'cafee.png' : {
       size: 248,
@@ -111,10 +111,10 @@ const FILE_SIZE = {
       size: 676,
    },
    'cards-showdown.png' : {
-      size: 2391,
+      size: 745,
    },
    'ceiling-hole-only.png' : {
-      size: 314,
+      size: 312,
    },
    'ceiling-hole.png' : {
       size: 1086,
@@ -126,7 +126,7 @@ const FILE_SIZE = {
       size: 312,
    },
    'close-floor.png' : {
-      size: 534,
+      size: 481,
    },
    'close-further-side.png' : {
       size: 456,
@@ -159,16 +159,16 @@ const FILE_SIZE = {
       size: 154,
    },
    'compass.png' : {
-      size: 746,
+      size: 708,
    },
    'congrats.png' : {
-      size: 64350,
+      size: 64349,
    },
    'crater.png' : {
-      size: 5715,
+      size: 1797,
    },
    'crawling-boy.png' : {
-      size: 4200,
+      size: 1157,
    },
    'dancer.png' : {
       size: 441,
@@ -177,7 +177,7 @@ const FILE_SIZE = {
       size: 882,
    },
    'date-night.png' : {
-      size: 1894,
+      size: 1891,
    },
    'date-table.png' : {
       size: 3002,
@@ -195,7 +195,7 @@ const FILE_SIZE = {
       size: 870,
    },
    'doctor-lobby-sarlie.png' : {
-      size: 938,
+      size: 927,
    },
    'doctor-lobby.png' : {
       size: 1654,
@@ -228,13 +228,13 @@ const FILE_SIZE = {
       size: 312,
    },
    'ernest.png' : {
-      size: 3285,
+      size: 690,
    },
    'escape.png' : {
       size: 168,
    },
    'evening-date.png' : {
-      size: 6249,
+      size: 1845,
    },
    'exit-door.png' : {
       size: 122,
@@ -258,7 +258,7 @@ const FILE_SIZE = {
       size: 139,
    },
    'far-map.png' : {
-      size: 209,
+      size: 206,
    },
    'far-side-corner.png' : {
       size: 138,
@@ -279,16 +279,16 @@ const FILE_SIZE = {
       size: 234,
    },
    'final-planet.png' : {
-      size: 589,
+      size: 588,
    },
    'flash-screen.png' : {
-      size: 458,
+      size: 452,
    },
    'floor-ceiling.png' : {
-      size: 236,
+      size: 235,
    },
    'floor.png' : {
-      size: 382,
+      size: 358,
    },
    'further-side.png' : {
       size: 511,
@@ -297,34 +297,34 @@ const FILE_SIZE = {
       size: 198,
    },
    'game-thumbnail.png' : {
-      size: 19415,
+      size: 19410,
    },
    'gangsta-check-cards.png' : {
-      size: 3051,
+      size: 1152,
    },
    'gate-open.png' : {
-      size: 360,
+      size: 359,
    },
    'gate.png' : {
       size: 121,
    },
    'grab-access-card.png' : {
-      size: 476,
+      size: 474,
    },
    'grab-apple.png' : {
-      size: 416,
+      size: 414,
    },
    'grab-bottle-2.png' : {
-      size: 467,
+      size: 465,
    },
    'grab-bottle.png' : {
       size: 467,
    },
    'grab-cake.png' : {
-      size: 490,
+      size: 488,
    },
    'grab-coin.png' : {
-      size: 442,
+      size: 437,
    },
    'grab-compass.png' : {
       size: 475,
@@ -345,28 +345,28 @@ const FILE_SIZE = {
       size: 2775,
    },
    'grab-photo.png' : {
-      size: 2766,
+      size: 2765,
    },
    'grab-playing-card.png' : {
-      size: 514,
+      size: 502,
    },
    'grab-rope.png' : {
-      size: 551,
+      size: 547,
    },
    'grab-tickets.png' : {
-      size: 642,
+      size: 634,
    },
    'grab-warp-drive.png' : {
-      size: 431,
+      size: 426,
    },
    'grab-water-bottle.png' : {
-      size: 516,
+      size: 512,
    },
    'grab-yupa-bottle.png' : {
       size: 999,
    },
    'guard.png' : {
-      size: 2677,
+      size: 2615,
    },
    'guards-attack.png' : {
       size: 1469,
@@ -378,10 +378,10 @@ const FILE_SIZE = {
       size: 177,
    },
    'hitler.png' : {
-      size: 512,
+      size: 482,
    },
    'hitman-argues.png' : {
-      size: 796,
+      size: 795,
    },
    'hitman-beard-walk.png' : {
       size: 370,
@@ -390,13 +390,13 @@ const FILE_SIZE = {
       size: 1999,
    },
    'hitman-from-above.png' : {
-      size: 4557,
+      size: 1140,
    },
    'hitman-laugh.png' : {
       size: 620,
    },
    'hitman-tavern-closeup.png' : {
-      size: 3594,
+      size: 1004,
    },
    'hitman-walk.png' : {
       size: 990,
@@ -417,10 +417,10 @@ const FILE_SIZE = {
       size: 251,
    },
    'hole.png' : {
-      size: 993,
+      size: 991,
    },
    'hook-punch.png' : {
-      size: 1539,
+      size: 1538,
    },
    'hottub-close-up.png' : {
       size: 3198,
@@ -429,7 +429,7 @@ const FILE_SIZE = {
       size: 184,
    },
    'hottub.png' : {
-      size: 326,
+      size: 322,
    },
    'human-hottub.png' : {
       size: 200,
@@ -441,10 +441,10 @@ const FILE_SIZE = {
       size: 1185,
    },
    'inside-tavern-phone.png' : {
-      size: 7989,
+      size: 2186,
    },
    'inside-tavern.png' : {
-      size: 10263,
+      size: 3282,
    },
    'jail-360.png' : {
       size: 2065,
@@ -465,7 +465,7 @@ const FILE_SIZE = {
       size: 330,
    },
    'lab-monster-battle.png' : {
-      size: 3262,
+      size: 3260,
    },
    'lab-monster-through-hole.png' : {
       size: 461,
@@ -474,19 +474,19 @@ const FILE_SIZE = {
       size: 5680,
    },
    'lab-monster.png' : {
-      size: 266,
+      size: 265,
    },
    'lab.png' : {
       size: 1116,
    },
    'ladder.png' : {
-      size: 250,
+      size: 249,
    },
    'landscape.png' : {
-      size: 348,
+      size: 345,
    },
    'left-guard.png' : {
-      size: 844,
+      size: 834,
    },
    'level-up.png' : {
       size: 283,
@@ -498,7 +498,7 @@ const FILE_SIZE = {
       size: 157,
    },
    'lock-back.png' : {
-      size: 359,
+      size: 358,
    },
    'lock-block.png' : {
       size: 142,
@@ -513,10 +513,10 @@ const FILE_SIZE = {
       size: 253,
    },
    'locker-room.png' : {
-      size: 258,
+      size: 255,
    },
    'look-right-left.png' : {
-      size: 1855,
+      size: 1854,
    },
    'machine.png' : {
       size: 358,
@@ -525,10 +525,10 @@ const FILE_SIZE = {
       size: 224,
    },
    'maze-rotation-background-solid.png' : {
-      size: 326,
+      size: 321,
    },
    'maze-rotation-background.png' : {
-      size: 336,
+      size: 335,
    },
    'maze-rotation-corner-solid.png' : {
       size: 107,
@@ -549,7 +549,7 @@ const FILE_SIZE = {
       size: 102,
    },
    'menu-out.png' : {
-      size: 214,
+      size: 212,
    },
    'menu-profile.png' : {
       size: 113,
@@ -564,25 +564,25 @@ const FILE_SIZE = {
       size: 1187,
    },
    'money-shot.png' : {
-      size: 3927,
+      size: 1570,
    },
    'monster-planet.png' : {
       size: 1057,
    },
    'monster.png' : {
-      size: 2780,
+      size: 2730,
    },
    'moon-base-guard.png' : {
-      size: 311,
+      size: 307,
    },
    'moon-base.png' : {
       size: 1174,
    },
    'mountains.png' : {
-      size: 262,
+      size: 253,
    },
    'multi-arrows.png' : {
-      size: 263,
+      size: 255,
    },
    'next-scene.png' : {
       size: 161,
@@ -591,7 +591,7 @@ const FILE_SIZE = {
       size: 161,
    },
    'operation-room.png' : {
-      size: 1135,
+      size: 1134,
    },
    'origin-story.png' : {
       size: 5157,
@@ -609,10 +609,10 @@ const FILE_SIZE = {
       size: 2076,
    },
    'pedro.png' : {
-      size: 977,
+      size: 972,
    },
    'phone-split.png' : {
-      size: 5457,
+      size: 1642,
    },
    'photo.png' : {
       size: 387,
@@ -630,7 +630,7 @@ const FILE_SIZE = {
       size: 608,
    },
    'posters.png' : {
-      size: 325,
+      size: 309,
    },
    'profile-notification.png' : {
       size: 129,
@@ -642,7 +642,7 @@ const FILE_SIZE = {
       size: 1431,
    },
    'razor.png' : {
-      size: 278,
+      size: 267,
    },
    'right-guard.png' : {
       size: 546,
@@ -651,10 +651,10 @@ const FILE_SIZE = {
       size: 375,
    },
    'rope-ceiling.png' : {
-      size: 311,
+      size: 310,
    },
    'runner.png' : {
-      size: 1926,
+      size: 531,
    },
    'sarlie-hospital.png' : {
       size: 255,
@@ -681,7 +681,7 @@ const FILE_SIZE = {
       size: 76,
    },
    'shifty-eyes.png' : {
-      size: 1833,
+      size: 476,
    },
    'shoots.png' : {
       size: 256,
@@ -699,13 +699,13 @@ const FILE_SIZE = {
       size: 4505,
    },
    'shuffle-cards.png' : {
-      size: 5604,
+      size: 1698,
    },
    'side-buttons.png' : {
       size: 369,
    },
    'side-far-far.png' : {
-      size: 344,
+      size: 342,
    },
    'side-far-map.png' : {
       size: 467,
@@ -717,13 +717,13 @@ const FILE_SIZE = {
       size: 362,
    },
    'skeleton-rope.png' : {
-      size: 321,
+      size: 317,
    },
    'skeleton.png' : {
-      size: 240,
+      size: 238,
    },
    'slime.png' : {
-      size: 1677,
+      size: 1640,
    },
    'slots.png' : {
       size: 961,
@@ -741,25 +741,25 @@ const FILE_SIZE = {
       size: 201,
    },
    'super-punch.png' : {
-      size: 1791,
+      size: 1751,
    },
    'switcharoo.png' : {
-      size: 1050,
+      size: 310,
    },
    'tammy-slow.png' : {
-      size: 1321,
+      size: 1318,
    },
    'tavern-entrance.png' : {
       size: 771,
    },
    'tavern-gangsta-card-game.png' : {
-      size: 11661,
+      size: 2944,
    },
    'tavern-gangsta-shootout.png' : {
-      size: 13479,
+      size: 4258,
    },
    'tavern-gangsta.png' : {
-      size: 10083,
+      size: 2948,
    },
    'the-hole.png' : {
       size: 384,
@@ -780,19 +780,19 @@ const FILE_SIZE = {
       size: 299,
    },
    'toilets.png' : {
-      size: 295,
+      size: 294,
    },
    'top-5.png' : {
       size: 229,
    },
    'touch-arrows.png' : {
-      size: 431,
+      size: 404,
    },
    'touch-punch.png' : {
       size: 782,
    },
    'treasure-chest.png' : {
-      size: 421,
+      size: 420,
    },
    'vending-machine-apple.png' : {
       size: 245,
@@ -801,19 +801,19 @@ const FILE_SIZE = {
       size: 242,
    },
    'vending-machine-close.png' : {
-      size: 249,
+      size: 246,
    },
    'vending-machine-coin-return.png' : {
       size: 168,
    },
    'vending-machine-coin-slot.png' : {
-      size: 242,
+      size: 241,
    },
    'vending-machine-glass.png' : {
       size: 170,
    },
    'vending-machine.png' : {
-      size: 173,
+      size: 172,
    },
    'waiter.png' : {
       size: 812,
@@ -825,10 +825,10 @@ const FILE_SIZE = {
       size: 407,
    },
    'yupa-back-walk.png' : {
-      size: 1845,
+      size: 565,
    },
    'yupa-dance.png' : {
-      size: 1418,
+      size: 1417,
    },
    'yupa-dry-close.png' : {
       size: 1148,
@@ -846,7 +846,7 @@ const FILE_SIZE = {
       size: 189,
    },
    'yupa-in-lab.png' : {
-      size: 3374,
+      size: 3365,
    },
    'yupa-in-shop.png' : {
       size: 739,
@@ -858,19 +858,19 @@ const FILE_SIZE = {
       size: 330,
    },
    'yupa-woopsie.png' : {
-      size: 380,
+      size: 379,
    },
    'yupa-zoom.png' : {
       size: 1616,
    },
    'zoom-arcade.png' : {
-      size: 297,
+      size: 294,
    },
    'zoom-dick-mad.png' : {
-      size: 3312,
+      size: 895,
    },
    'zoom-dick.png' : {
-      size: 3012,
+      size: 785,
    },
    'zoom-guard-alert.png' : {
       size: 172,

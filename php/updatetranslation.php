@@ -4,6 +4,7 @@
 		return;
 	}
 
+	chdir("..");
 	$json = json_decode(@file_get_contents('translation.json', LOCK_EX) ?: '{}', true);
 
 	$md5 = md5($text);

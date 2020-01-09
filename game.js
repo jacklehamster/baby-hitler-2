@@ -2679,6 +2679,21 @@ const Game = (() => {
 				return;
 			}
 
+			//	check spritesheet replacement
+			if (spritesheet[src]) {
+				this.prepareImage(spritesheet[src], stock => {
+					imageStock[src] = {
+						loaded: true,
+						img: stock.img,
+					};
+					if (callback) {
+						callback(imageStock[src]);
+					}
+				});
+				return;
+			}
+
+
 			const splitPop = src.split("|").pop();
 
 			if (splitPop.indexOf("crop:") === 0) {

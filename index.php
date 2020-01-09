@@ -49,9 +49,11 @@ EOD;
 
     //  minify JS
     include "php/minify.php";
+    minify("common.js");
     minify("game.js");
     minify("config.js");
-
+    minify("generated/config-size.js");
+    minify("generated/spritesheets/spritesheet.js");
 
     /**
      *  SHOW GAME
