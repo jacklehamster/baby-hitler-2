@@ -37,8 +37,7 @@
 - allow player to shoot arcade
 - bag should always show in maze
 - bag in maze doesn't seem to work
-
-
+- 🐞 yupa woke up then dried again???
 
 ## Game TODO:
 
