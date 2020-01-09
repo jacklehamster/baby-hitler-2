@@ -53,6 +53,7 @@
 - add grass around tavern ⭐
 - money shot only if no miss/no blank shots ⭐
 - Add bag icon in menu
+- Yupa dialog: talk more about supapawa
 
 ## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222
