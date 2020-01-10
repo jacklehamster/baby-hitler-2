@@ -90,6 +90,8 @@ game.addScene(
 					if (ship.lives > 0) {
 						ship.x = gameScreen.x + gameScreen.width / 2;
 						ship.y =  gameScreen.y + gameScreen.height - 2;
+						game.mouse.x = ship.x;
+						game.mouse.y = ship.y;
 						ship.born = now;
 						ship.destroyed = 0;
 						ship.lives --;

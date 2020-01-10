@@ -112,7 +112,7 @@ const Game = (() => {
 				if (!sceneData.joystick) {
 					sceneData.joystick = {};
 				}
-				const cx = 50, cy = 18;
+				const cx = 18, cy = 18;
 				let jx = 0, jy = 0;
 				for (let i = 0; i < game.touchList.length; i++) {
 					const { pageX, pageY } = game.touchList[i];
@@ -120,7 +120,7 @@ const Game = (() => {
 					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
 					const djx = (px - cx);
 					const djy = (py - cy);
-					if (px > 32) {
+					if (px < 32) {
 						const dist = Math.sqrt(djx * djx + djy * djy);
 						jx = djx / dist * Math.min(dist, 5);
 						jy = djy / dist * Math.min(dist, 5);
@@ -152,7 +152,7 @@ const Game = (() => {
 				game.mouse.y = Math.max(limitTop, Math.min(limitBottom, game.mouse.y));
 			},
 			custom: (game, sprite, ctx) => {
-				const cx = 50, cy = 18;
+				const cx = 18, cy = 18;
 				ctx.fillStyle = "#888888";
 				ctx.beginPath();
 				ctx.arc(cx, cy, 10, 0, Math.PI * 2);
@@ -206,14 +206,14 @@ const Game = (() => {
 					const { pageX, pageY } = game.touchList[i];
 					const px = (pageX - touchCanvas.offsetLeft) / touchCanvas.offsetWidth * touchCanvas.width;
 					const py = (pageY - touchCanvas.offsetTop) / touchCanvas.offsetHeight * touchCanvas.height;					
-					if (px < 32) {
+					if (px > 32) {
 						game.sceneData.joystick.pressed = game.now;
 					}
 				}
 				game.mouseDown = game.sceneData.joystick.pressed;
 			},
 			custom: (game, sprite, ctx) => {
-				const cx = 16, cy = 18;
+				const cx = 48, cy = 18;
 				ctx.fillStyle = "#888888";
 				ctx.beginPath();
 				ctx.arc(cx, cy, 8, 0, Math.PI * 2);

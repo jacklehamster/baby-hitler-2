@@ -288,7 +288,7 @@ const CONFIG_FILES = {
       size: 17965,
    },
    'zoom-arcade.js' : {
-      size: 19421,
+      size: 19479,
    },
    'zoom-guards.js' : {
       size: 3923,
