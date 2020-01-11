@@ -63,10 +63,6 @@
         "md5": "6563adab71bd3b18c76d2e512a7eea4d",
         "text": "Damnit Yupa! While you were dozing off, we just passed through an asteroid field!"
     },
-    "15bc53c216e7645dcc1a7ae037faa9d8": {
-        "md5": "15bc53c216e7645dcc1a7ae037faa9d8",
-        "text": "Don't worry."
-    },
     "bc6822a84a3dc9806f12957d2afc5d1a": {
         "md5": "bc6822a84a3dc9806f12957d2afc5d1a",
         "text": "GAME OVER"
@@ -118,10 +114,6 @@
     "4994a8ffeba4ac3140beb89e8d41f174": {
         "md5": "4994a8ffeba4ac3140beb89e8d41f174",
         "text": "Language"
-    },
-    "16bfbf9c462762cf1cba4134ec53c504": {
-        "md5": "16bfbf9c462762cf1cba4134ec53c504",
-        "text": "Loading"
     },
     "88559a0cfd8250c9d65970cc145c92d4": {
         "md5": "88559a0cfd8250c9d65970cc145c92d4",
@@ -187,10 +179,6 @@
         "md5": "dba358d690591ee664591135868e0d5d",
         "text": "We travelled"
     },
-    "28240f491460854fe0a265868a00da27": {
-        "md5": "28240f491460854fe0a265868a00da27",
-        "text": "We will take care of you,\nBaby Hitler."
-    },
     "8b9a425b6d1299d884639d2b3085f749": {
         "md5": "8b9a425b6d1299d884639d2b3085f749",
         "text": "What?!! You're kidding me!"
@@ -206,10 +194,6 @@
     "8b454043e583fae1a51db35ae3692ab7": {
         "md5": "8b454043e583fae1a51db35ae3692ab7",
         "text": "Ya were drivin da ship?"
-    },
-    "8613bbfb34d7ef30642448f6f47bc37f": {
-        "md5": "8613bbfb34d7ef30642448f6f47bc37f",
-        "text": "You stay here!"
     },
     "064f92bddf2662d751f8b187d45edbaa": {
         "md5": "064f92bddf2662d751f8b187d45edbaa",
@@ -266,10 +250,6 @@
     "2efe3aed41e21a3e762181ab986904c1": {
         "md5": "2efe3aed41e21a3e762181ab986904c1",
         "text": "capable of"
-    },
-    "d994ac4b133ecf56ebabec0a5f620f91": {
-        "md5": "d994ac4b133ecf56ebabec0a5f620f91",
-        "text": "dobuki studio game"
     },
     "f201b6f98105c6550e8bfffe0b521282": {
         "md5": "f201b6f98105c6550e8bfffe0b521282",
@@ -911,16 +891,6 @@
         "text": "Hey",
         "timestamp": "2020-01-09T17:17:45Z"
     },
-    "5ae0c1c8a5260bc7b6648f6fbd115c35": {
-        "md5": "5ae0c1c8a5260bc7b6648f6fbd115c35",
-        "text": "photo",
-        "timestamp": "2020-01-09T17:17:47Z"
-    },
-    "1f2c4c0db69b0c8e1bafd75849c671c5": {
-        "md5": "1f2c4c0db69b0c8e1bafd75849c671c5",
-        "text": "gun with 6 bullets",
-        "timestamp": "2020-01-09T17:18:00Z"
-    },
     "361fbdc892cc3335b40ff3fdef4029ff": {
         "md5": "361fbdc892cc3335b40ff3fdef4029ff",
         "text": "empty bottle",
@@ -934,16 +904,6 @@
     "1e992c9c43e93bfe98ce05c7c7830d3b": {
         "md5": "1e992c9c43e93bfe98ce05c7c7830d3b",
         "text": "  \u201cThat was too",
-        "timestamp": "2020-01-09T17:18:11Z"
-    },
-    "b5e3d176291588d205b4969a30516246": {
-        "md5": "b5e3d176291588d205b4969a30516246",
-        "text": "start over",
-        "timestamp": "2020-01-09T17:18:11Z"
-    },
-    "fd5770e19b0deb705ca98efcfc3b2045": {
-        "md5": "fd5770e19b0deb705ca98efcfc3b2045",
-        "text": "try again",
         "timestamp": "2020-01-09T17:18:11Z"
     },
     "0d29309e514bb0c0ffadfba7c7ffcfac": {
@@ -1046,16 +1006,6 @@
         "text": "It's locked.",
         "timestamp": "2020-01-09T17:24:53Z"
     },
-    "3cd131eeeb3cecdbfdcb1c1315c30214": {
-        "md5": "3cd131eeeb3cecdbfdcb1c1315c30214",
-        "text": "gun with 2 bullets",
-        "timestamp": "2020-01-09T17:24:54Z"
-    },
-    "3c6e0b8a9c15224a8228b9a98ca1531d": {
-        "md5": "3c6e0b8a9c15224a8228b9a98ca1531d",
-        "text": "key",
-        "timestamp": "2020-01-09T17:24:54Z"
-    },
     "d03dc359b691ddd3f983b85767753680": {
         "md5": "d03dc359b691ddd3f983b85767753680",
         "text": "coin x5",
@@ -1111,26 +1061,6 @@
         "text": "You're no",
         "timestamp": "2020-01-09T17:41:13Z"
     },
-    "d78eafc34e8c92a224f1fa11890b3f2c": {
-        "md5": "d78eafc34e8c92a224f1fa11890b3f2c",
-        "text": "Jack Le Hamster",
-        "timestamp": "2020-01-10T03:10:22Z"
-    },
-    "d10dd520737d3bd14019133ab6e5f544": {
-        "md5": "d10dd520737d3bd14019133ab6e5f544",
-        "text": "Where in Space",
-        "timestamp": "2020-01-10T03:10:22Z"
-    },
-    "e1c718767e78f8a5fd359aefb6d92cf8": {
-        "md5": "e1c718767e78f8a5fd359aefb6d92cf8",
-        "text": "a game by",
-        "timestamp": "2020-01-10T03:10:22Z"
-    },
-    "653d14937ef87248c0368487ac0035d0": {
-        "md5": "653d14937ef87248c0368487ac0035d0",
-        "text": "is Baby Hitler?",
-        "timestamp": "2020-01-10T03:10:22Z"
-    },
     "f19dbf2edb3a0bd74b0524d960ff21eb": {
         "md5": "f19dbf2edb3a0bd74b0524d960ff21eb",
         "text": "Load",
@@ -1155,5 +1085,175 @@
         "md5": "b7551cf4684ecaadf367091321f6d84c",
         "text": "Darn it! I can do better. I wanna play again",
         "timestamp": "2020-01-10T03:21:00Z"
+    },
+    "d78eafc34e8c92a224f1fa11890b3f2c": {
+        "md5": "d78eafc34e8c92a224f1fa11890b3f2c",
+        "text": "Jack Le Hamster",
+        "timestamp": "2020-01-11T11:49:59Z"
+    },
+    "d10dd520737d3bd14019133ab6e5f544": {
+        "md5": "d10dd520737d3bd14019133ab6e5f544",
+        "text": "Where in Space",
+        "timestamp": "2020-01-11T11:49:59Z"
+    },
+    "e1c718767e78f8a5fd359aefb6d92cf8": {
+        "md5": "e1c718767e78f8a5fd359aefb6d92cf8",
+        "text": "a game by",
+        "timestamp": "2020-01-11T11:49:59Z"
+    },
+    "653d14937ef87248c0368487ac0035d0": {
+        "md5": "653d14937ef87248c0368487ac0035d0",
+        "text": "is Baby Hitler?",
+        "timestamp": "2020-01-11T11:49:59Z"
+    },
+    "4ec60616bab0205c7d5e680a39622b81": {
+        "md5": "4ec60616bab0205c7d5e680a39622b81",
+        "text": "Hitman!",
+        "timestamp": "2020-01-11T13:20:16Z"
+    },
+    "2e712fc56b05dc30f688e2ef3c8721d4": {
+        "md5": "2e712fc56b05dc30f688e2ef3c8721d4",
+        "text": "Da rest of da gang is caming!",
+        "timestamp": "2020-01-11T13:20:18Z"
+    },
+    "09b2f5fb5a534bfebb90e1876773bff0": {
+        "md5": "09b2f5fb5a534bfebb90e1876773bff0",
+        "text": "Gat reddy for a big faight!",
+        "timestamp": "2020-01-11T13:20:22Z"
+    },
+    "8613bbfb34d7ef30642448f6f47bc37f": {
+        "md5": "8613bbfb34d7ef30642448f6f47bc37f",
+        "text": "You stay here!",
+        "timestamp": "2020-01-11T13:26:20Z"
+    },
+    "aae3fb0aea100159e1271e2fce887a57": {
+        "md5": "aae3fb0aea100159e1271e2fce887a57",
+        "text": "Don't move",
+        "timestamp": "2020-01-11T13:26:23Z"
+    },
+    "a72c54507dbfaf9ea8d07b16c617be31": {
+        "md5": "a72c54507dbfaf9ea8d07b16c617be31",
+        "text": "I'll protect you",
+        "timestamp": "2020-01-11T13:26:23Z"
+    },
+    "8190d4233340b31e8d163858f8ca63f5": {
+        "md5": "8190d4233340b31e8d163858f8ca63f5",
+        "text": "We'll take care",
+        "timestamp": "2020-01-11T13:26:23Z"
+    },
+    "4394408fe997dc78c716f56bce31e81c": {
+        "md5": "4394408fe997dc78c716f56bce31e81c",
+        "text": "I'm here to protect you.",
+        "timestamp": "2020-01-11T13:26:27Z"
+    },
+    "6c65e6c4f2c91342a23701647b1e155f": {
+        "md5": "6c65e6c4f2c91342a23701647b1e155f",
+        "text": "Don't you worry,\nBaby Hitler.",
+        "timestamp": "2020-01-11T13:26:30Z"
+    },
+    "ef3e9957676a3b096d3282869663a0a2": {
+        "md5": "ef3e9957676a3b096d3282869663a0a2",
+        "text": "Bring it on!",
+        "timestamp": "2020-01-11T14:14:21Z"
+    },
+    "90fecce3638ce94f91ce40f62a85b737": {
+        "md5": "90fecce3638ce94f91ce40f62a85b737",
+        "text": "   \u201cIn a shootout,",
+        "timestamp": "2020-01-11T14:26:10Z"
+    },
+    "2c1de952736f5bcfd127473d6513273f": {
+        "md5": "2c1de952736f5bcfd127473d6513273f",
+        "text": "  quickly.\u201d",
+        "timestamp": "2020-01-11T14:26:10Z"
+    },
+    "de1508d87553228fd4a7fa28aeac2332": {
+        "md5": "de1508d87553228fd4a7fa28aeac2332",
+        "text": " you gotta draw",
+        "timestamp": "2020-01-11T14:26:10Z"
+    },
+    "b5e3d176291588d205b4969a30516246": {
+        "md5": "b5e3d176291588d205b4969a30516246",
+        "text": "start over",
+        "timestamp": "2020-01-11T14:26:10Z"
+    },
+    "fd5770e19b0deb705ca98efcfc3b2045": {
+        "md5": "fd5770e19b0deb705ca98efcfc3b2045",
+        "text": "try again",
+        "timestamp": "2020-01-11T14:26:10Z"
+    },
+    "1f2c4c0db69b0c8e1bafd75849c671c5": {
+        "md5": "1f2c4c0db69b0c8e1bafd75849c671c5",
+        "text": "gun with 6 bullets",
+        "timestamp": "2020-01-11T14:28:34Z"
+    },
+    "3cd131eeeb3cecdbfdcb1c1315c30214": {
+        "md5": "3cd131eeeb3cecdbfdcb1c1315c30214",
+        "text": "gun with 2 bullets",
+        "timestamp": "2020-01-11T14:28:43Z"
+    },
+    "cee7651b9672ad948a9ea982b563e130": {
+        "md5": "cee7651b9672ad948a9ea982b563e130",
+        "text": "   barrel.\u201d ",
+        "timestamp": "2020-01-11T14:28:48Z"
+    },
+    "f19f3b87db11c9a9fd87c2de38bf70bb": {
+        "md5": "f19f3b87db11c9a9fd87c2de38bf70bb",
+        "text": "   on an empty",
+        "timestamp": "2020-01-11T14:28:48Z"
+    },
+    "4bb0315d023674379b41283afd575152": {
+        "md5": "4bb0315d023674379b41283afd575152",
+        "text": "  \u201cCan't function",
+        "timestamp": "2020-01-11T14:28:48Z"
+    },
+    "3c6e0b8a9c15224a8228b9a98ca1531d": {
+        "md5": "3c6e0b8a9c15224a8228b9a98ca1531d",
+        "text": "key",
+        "timestamp": "2020-01-11T14:29:01Z"
+    },
+    "287968bab2f83b717042555738913b24": {
+        "md5": "287968bab2f83b717042555738913b24",
+        "text": "gun with 4 bullets",
+        "timestamp": "2020-01-11T14:30:16Z"
+    },
+    "a93f537856ae22d490e41efe44a1636f": {
+        "md5": "a93f537856ae22d490e41efe44a1636f",
+        "text": "water bottle",
+        "timestamp": "2020-01-11T14:30:16Z"
+    },
+    "5ae0c1c8a5260bc7b6648f6fbd115c35": {
+        "md5": "5ae0c1c8a5260bc7b6648f6fbd115c35",
+        "text": "photo",
+        "timestamp": "2020-01-11T14:30:17Z"
+    },
+    "15bc53c216e7645dcc1a7ae037faa9d8": {
+        "md5": "15bc53c216e7645dcc1a7ae037faa9d8",
+        "text": "Don't worry.",
+        "timestamp": "2020-01-11T14:30:50Z"
+    },
+    "28240f491460854fe0a265868a00da27": {
+        "md5": "28240f491460854fe0a265868a00da27",
+        "text": "We will take care of you,\nBaby Hitler.",
+        "timestamp": "2020-01-11T14:30:52Z"
+    },
+    "33a98e7e5080f068bc9006ba12dd481b": {
+        "md5": "33a98e7e5080f068bc9006ba12dd481b",
+        "text": "Don't go\nanywhere.",
+        "timestamp": "2020-01-11T14:32:28Z"
+    },
+    "b5511fdaeab9d2ffde02bbb91105fa0f": {
+        "md5": "b5511fdaeab9d2ffde02bbb91105fa0f",
+        "text": "You should stay with us,\nBaby Hitler.",
+        "timestamp": "2020-01-11T14:32:30Z"
+    },
+    "16bfbf9c462762cf1cba4134ec53c504": {
+        "md5": "16bfbf9c462762cf1cba4134ec53c504",
+        "text": "Loading",
+        "timestamp": "2020-01-11T14:37:21Z"
+    },
+    "d994ac4b133ecf56ebabec0a5f620f91": {
+        "md5": "d994ac4b133ecf56ebabec0a5f620f91",
+        "text": "dobuki studio game",
+        "timestamp": "2020-01-11T14:37:21Z"
     }
 }

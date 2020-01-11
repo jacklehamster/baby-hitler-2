@@ -36,8 +36,10 @@ game.addScene(
 				game.delayAction(({sceneData, now}) => {
 					sceneData.takeOutCig = now;
 				}, 1000);
-				currentScene.startTalk(game, "stranger", "Hey there, you got light?", game => {
-				});
+				currentScene.startTalk(game, "stranger", [
+					"Damn it's freaking cold out there.",
+					"You got light?",
+				]);
 			} else if (game.inventory["ace of hearts"]) {
 				currentScene.startTalk(game, "stranger", [
 					"You already know what to do.",
@@ -80,7 +82,7 @@ game.addScene(
 												"Yeah... you can say I'm a regular at the tavern.",
 											], game => {
 												currentScene.startTalk(game, "human", "How often do you come here?", game => {
-													currentScene.startTalk(game, "stranger", "I pratically live here.");
+													currentScene.startTalk(game, "stranger", "Damn, I pratically live here.");
 												});
 											});
 										});
@@ -135,8 +137,8 @@ game.addScene(
 									], game => {
 										currentScene.startTalk(game, "stranger", [
 											"Are you\nthreatening me?",
-											"Why don't you just tell me...",
-											"What are you looking for in this tavern?",
+											"Why don't you freaking tell me...",
+											"What the hell are you looking for in this tavern?",
 										], game => {
 											game.dialog.index ++;
 										});
@@ -152,7 +154,7 @@ game.addScene(
 									], game => {
 										currentScene.startTalk(game, "stranger", [
 											"Hum... really?",
-											"What's so\nimportant in that tavern?",
+											"What's so goddamn\nimportant in that tavern?",
 										], game => {
 											game.dialog.index ++;
 										});
@@ -191,7 +193,7 @@ game.addScene(
 										"I'm on a secret mission.",
 									], game => {
 										currentScene.startTalk(game, "stranger", [
-											"Well it's ok.",
+											"Well it's ok,\nbutthead.",
 											"You're not\nsharing, and I'm not sharing."
 										], game => {
 											game.dialog.index = 0;
@@ -207,7 +209,7 @@ game.addScene(
 										"My blatter is about to explode!",
 									], game => {
 										currentScene.startTalk(game, "stranger", [
-											"Hum... the tavern isn't open to strangers who need to pee.",
+											"Better piss your pants then. The tavern isn't open for that.",
 										], game => {
 											game.dialog.index = 0;
 										});
@@ -227,7 +229,7 @@ game.addScene(
 									], game => {
 										currentScene.startTalk(game, "stranger", [
 											"Who are you to him?",
-											"I'm not sure I can trust you.",
+											"I'm not sure I can trust a bloke like you.",
 										]);
 									});
 								},
@@ -378,7 +380,7 @@ game.addScene(
 										], game => {
 											currentScene.startTalk(game, "stranger", [
 												"Family huh?",
-												"How touching..."
+												"How touching... almost made me throw up.",
 											], game => {
 												currentScene.rightHandState(game, "returnPhoto");
 												game.delayAction(game => {
@@ -402,8 +404,8 @@ game.addScene(
 																	currentScene.startTalk(game, "stranger", [
 																		"Once inside, to get to Baby Hitler,",
 																		`you'll have to deal with a man named ${GANSTER_NAME}.`,
-																		"He's the gang boss.",
-																		"He won't let you talk to the kid, unless you beat him",
+																		"He's the freaking gang boss.",
+																		"He won't let go of that kid, unless you beat him",
 																		"at a card game.",
 																	], game => {
 																		currentScene.startTalk(game, "human", [

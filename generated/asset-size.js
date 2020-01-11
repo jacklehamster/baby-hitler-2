@@ -83,6 +83,9 @@ const FILE_SIZE = {
    'bring-cake.png' : {
       size: 716,
    },
+   'bring-it-on.png' : {
+      size: 2985,
+   },
    'brusalien.png' : {
       size: 2526,
    },
@@ -607,6 +610,24 @@ const FILE_SIZE = {
    },
    'outside.png' : {
       size: 2076,
+   },
+   'panic-exit-background.png' : {
+      size: 1830,
+   },
+   'panic-exit-runner-1.png' : {
+      size: 495,
+   },
+   'panic-exit-runner-2.png' : {
+      size: 465,
+   },
+   'panic-exit-runner-3.png' : {
+      size: 491,
+   },
+   'panic-exit-runner-4.png' : {
+      size: 455,
+   },
+   'panic-exit-yupa.png' : {
+      size: 400,
    },
    'pedro.png' : {
       size: 972,

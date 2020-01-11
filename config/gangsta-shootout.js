@@ -25,6 +25,14 @@ game.addScene(
 				}
 			}, 2600);
 		},
+		shortcut: game => {
+			game.addToInventory({
+				item: "bullet",
+				count: 6,
+			});
+			game.pickUp({item:"gun", image:ASSETS.GRAB_GUN,});
+			game.getSituation("tavern-phone").yupaAndBrutus = game.now;
+		},
 		onSceneRefresh: game => {
 			if (game.sceneData.bodyguardShoot) {
 				const progress = Math.min(1, (game.now - game.sceneData.bodyguardShoot) / 3000);

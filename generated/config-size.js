@@ -20,6 +20,9 @@ const CONFIG_FILES = {
    'bring-cake.js' : {
       size: 1773,
    },
+   'bring-it-on.js' : {
+      size: 1675,
+   },
    'cake-face.js' : {
       size: 605,
    },
@@ -45,7 +48,7 @@ const CONFIG_FILES = {
       size: 919,
    },
    'crowd.js' : {
-      size: 2893,
+      size: 2920,
    },
    'deadly-landing.js' : {
       size: 1882,
@@ -89,6 +92,9 @@ const CONFIG_FILES = {
    'final-exit.js' : {
       size: 2109,
    },
+   'final-fight.js' : {
+      size: 861,
+   },
    'final-planet-world.js' : {
       size: 30590,
    },
@@ -105,7 +111,7 @@ const CONFIG_FILES = {
       size: 1940,
    },
    'gangsta-shootout.js' : {
-      size: 8709,
+      size: 8919,
    },
    'gangsta-table.js' : {
       size: 17532,
@@ -200,6 +206,9 @@ const CONFIG_FILES = {
    'outside.js' : {
       size: 2551,
    },
+   'panic-exit.js' : {
+      size: 1447,
+   },
    'poor-hitman.js' : {
       size: 602,
    },
@@ -252,7 +261,7 @@ const CONFIG_FILES = {
       size: 692,
    },
    'tavern-stranger-zoom.js' : {
-      size: 16139,
+      size: 16251,
    },
    'temp-end.js' : {
       size: 269,
@@ -279,7 +288,7 @@ const CONFIG_FILES = {
       size: 2184,
    },
    'we-take-care-of-you.js' : {
-      size: 2706,
+      size: 2838,
    },
    'what-so-funny.js' : {
       size: 956,

@@ -2,6 +2,7 @@ game.addScene(
 	{
 		name: "crowd",
 		onScene: game => {
+			game.hideCursor = true;
 			game.playTheme(null);
 		},
 		onSceneRefresh: game => {

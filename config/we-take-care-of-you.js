@@ -10,6 +10,7 @@ game.addScene(
 							{
 								msg: "We'll take care",
 								onSelect: game => {
+									game.hideCursor = true;
 									game.dialog = null;
 									game.playSound(SOUNDS.HUM);
 									game.showTip([
@@ -18,13 +19,14 @@ game.addScene(
 									], game => {
 										game.sceneData.showBoy = game.now;
 										game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
-										game.delayAction(game => game.sceneData.showBoy = 0, 5000);
+										game.delayAction(game => game.gotoScene("panic-exit"), 5000);
 									}, null, { talker: "human"});
 								},
 							},
 							{
 								msg: "Don't move",
 								onSelect: game => {
+									game.hideCursor = true;
 									game.dialog = null;
 									game.playSound(SOUNDS.HUM);
 									game.showTip([
@@ -33,13 +35,14 @@ game.addScene(
 									], game => {
 										game.sceneData.showBoy = game.now;
 										game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
-										game.delayAction(game => game.sceneData.showBoy = 0, 5000);
+										game.delayAction(game => game.gotoScene("panic-exit"), 5000);
 									}, null, { talker: "human"});
 								},
 							},
 							{
 								msg: "I'll protect you",
 								onSelect: game => {
+									game.hideCursor = true;
 									game.dialog = null;
 									game.playSound(SOUNDS.HUM);
 									game.showTip([
@@ -48,7 +51,7 @@ game.addScene(
 									], game => {
 										game.sceneData.showBoy = game.now;
 										game.delayAction(game => game.sceneData.boySmile = game.now, 2500);
-										game.delayAction(game => game.sceneData.showBoy = 0, 5000);
+										game.delayAction(game => game.gotoScene("panic-exit"), 5000);
 									}, null, { talker: "human"});
 								},
 							},
@@ -85,7 +88,7 @@ game.addScene(
 					if (game.sceneData.boySmile) {
 						return 2;
 					}
-					return Math.floor(game.now / 100) % 20 === 0 ? 1 : 0;
+					return Math.floor((game.now - game.sceneData.showBoy) / 100) % 10 === 0 ? 1 : 0;
 				},
 				hidden: game => !game.sceneData.showBoy,
 			},

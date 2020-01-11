@@ -327,6 +327,21 @@ const ASSETS = {
 	CRAWLING_BOY: "assets/crawling-boy.png",
 	HITMAN_FROM_ABOVE: "assets/hitman-from-above.png",
 	BOY_SMILE: "assets/boy-smile.png",
+	PANIC_EXIT_BACKGROUND: "assets/panic-exit-background.png",
+	PANIC_EXIT_YUPA: "assets/panic-exit-yupa.png",
+	PANIC_EXIT_RUNNER_1: "assets/panic-exit-runner-1.png",
+	PANIC_EXIT_RUNNER_2: "assets/panic-exit-runner-2.png",
+	PANIC_EXIT_RUNNER_3: "assets/panic-exit-runner-3.png",
+	PANIC_EXIT_RUNNER_4: "assets/panic-exit-runner-4.png",
+	PANIC_EXIT_RUNNER_5: "assets/panic-exit-runner-1.png|rotate-colors",
+	PANIC_EXIT_RUNNER_6: "assets/panic-exit-runner-2.png|rotate-colors",
+	PANIC_EXIT_RUNNER_7: "assets/panic-exit-runner-3.png|rotate-colors",
+	PANIC_EXIT_RUNNER_8: "assets/panic-exit-runner-4.png|rotate-colors",
+	PANIC_EXIT_RUNNER_9: "assets/panic-exit-runner-1.png|rotate-colors|rotate-colors",
+	PANIC_EXIT_RUNNER_10: "assets/panic-exit-runner-2.png|rotate-colors|rotate-colors",
+	PANIC_EXIT_RUNNER_11: "assets/panic-exit-runner-3.png|rotate-colors|rotate-colors",
+	PANIC_EXIT_RUNNER_12: "assets/panic-exit-runner-4.png|rotate-colors|rotate-colors",
+	BRING_IT_ON: "assets/bring-it-on.png",
 };
 
 const SOUNDS = {
