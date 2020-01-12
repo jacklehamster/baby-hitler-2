@@ -3,7 +3,7 @@
 	<head>
         <title>Where in Space is Baby Hitler?</title>
 		<meta charset="utf-8"/>
-		<meta name="Description" content="JavaScript point-and-click game, sequel of Kill Baby Hitler. Travel accross the galaxy and look for Baby Hitler in Space.">
+		<meta name="description" content="JavaScript point-and-click game, sequel of Kill Baby Hitler. Travel accross the galaxy and look for Baby Hitler in Space.">
 
 		<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
@@ -18,7 +18,7 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
-		<link rel="manifest" href="icons/manifest.json">
+		<link rel="manifest" href="manifest.json">
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
 		<meta name="theme-color" content="#ac3f36">
@@ -26,9 +26,23 @@
 		<link rel="stylesheet" type="text/css" href="game.css" media="print" onload="this.media='all'">
 
 		<meta name="mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="viewport" content="minimal-ui, user-scalable=no, initial-scale=1">
+		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="apple-mobile-web-app-title" content="Where in Space is Baby Hitler?">
+
+		<script type="text/javascript">
+			// Register service worker.
+			if ('serviceWorker' in navigator) {
+			  window.addEventListener('load', () => {
+			    navigator.serviceWorker.register('/service-worker.js')
+			        .then((reg) => {
+//			          console.log('Service worker registered.', reg);
+			        });
+			  });
+			}
+		</script>
+
 	</head>
 
 	<body style="margin: 0; background-color: black">
