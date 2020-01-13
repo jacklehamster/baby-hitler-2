@@ -2,7 +2,7 @@ const FILES_TO_CACHE = [
   'offline.html',
 ];
 
-const CACHE_NAME = "test12345678";
+const CACHE_NAME = "cache_test2";
 
 addEventListener('install', event => {
 	event.waitUntil(
@@ -25,6 +25,7 @@ addEventListener('activate', event => {
 });
 
 addEventListener('fetch', event => {
+	console.log(event.request);
 	if (event.request.mode !== 'navigate') {
 	  // Not a page navigation, bail.
 	  return;

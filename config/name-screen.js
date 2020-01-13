@@ -29,7 +29,7 @@ game.addScene(
 										game.currentScene.onDialog(game);
 										game.playSound(SOUNDS.HUM);
 										game.showTip([
-											`It's me, your friend ${game.data.name}.`,
+											`It's me, your friend ~${game.data.name}~.`,
 											"Remember? We travel in space together, with Baby Hitler!",
 										], onDone => {
 											game.playSound(SOUNDS.YUPA);

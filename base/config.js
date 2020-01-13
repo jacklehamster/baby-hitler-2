@@ -1317,44 +1317,69 @@ function makeYupa() {
 								},
 							},
 							{
-								msg: "About Shapeshit",
-								hidden: game => !game.data.yupa.canTurnIntoGoo || game.data.yupa.askedShapeshift,
+								msg: "Turning into goo",
+								hidden: game => !game.data.yupa.canTurnIntoGoo || game.data.yupa.talkedAboutGoo,
 								onSelect: (game, dialog) => {
 									game.waitCursor = true;
+									game.data.yupa.talkedAboutGoo = true;
 									game.playSound(SOUNDS.HUM);
 									game.showTip([
-										"So About your supapawa,",
-										"the one that lets you turn into dense goo ...",
-										"It might come handy to sneak underneat doors and stuff.",
+										"So you can turn into liquid goo.",
+										"That must come pretty handy",
+										"If you need to sneak under a door or something.",
 									], game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
-											"Not rally. It's not like a can move when in liquid form.",
-											"I can only tune bak to miself.",
+											"Not rally, I cun't movarownd in goo form.",
+											"I cun anly turn back to normol.",
 										], game => {
-											game.data.yupa.askedShapeshift = game.now;
+											game.playSound(SOUNDS.HUM);
+											game.showTip([
+												"Really? So what is that power good for?",
+											], game => {
+												game.playSound(SOUNDS.YUPA);
+												game.showTip([
+													"On ma planet, it good for transpartation.",
+													"We can fit hundredz Yupaz in a big truck.",
+													"Nat cunfortable but vury iconomic.",
+												], game => {
+													game.waitCursor = false;
+													dialog.index-=2;
+												}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
+											});
 										}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
 									});
-								},
+								},								
 							},
 							{
 								msg: "How dense?",
-								hidden: game => !game.data.yupa.askedShapeshift,
+								hidden: game => !game.data.yupa.talkedAboutGoo,
 								onSelect: (game, dialog) => {
 									game.waitCursor = true;
+									game.data.yupa.talkedAboutGoo = true;
 									game.playSound(SOUNDS.HUM);
 									game.showTip([
-										"How dense do you become after shapeshit?",
+										"How dense is the goo?",
+										"Like, could you fit in a glass?",
 									], game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
-											"Prutty dense.",
-											"It uzeful for transpartatian.",
-											"Cauze we can fit a dazen yupaz in one pucket",
+											"Maybi. I naver tride.",
 										], game => {
-											game.data.yupa.askedShapeshift = game.now;
+											game.playSound(SOUNDS.HUM);
+											game.showTip([
+												"That's crazy!",
+											], game => {
+												game.playSound(SOUNDS.YUPA);
+												game.showTip([
+													"Yupp...",
+												], game => {
+													game.waitCursor = false;
+													dialog.index-=2;
+												}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
+											});
 										}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
-									});
+									});									
 								},
 							},
 							{
