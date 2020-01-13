@@ -21,7 +21,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Offline</title>
-  <link rel="manifest" href="manifest.json">
+<!--   <link rel="manifest" href="manifest.json"> -->
   <meta name="theme-color" content="#2F3BA2" />
   <style>
 
@@ -181,7 +181,7 @@ body {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/service-worker.js')
             .then((reg) => {
-              console.log('Service worker registered.', reg);
+              // console.log('Service worker registered.', reg);
             });
       });
     }

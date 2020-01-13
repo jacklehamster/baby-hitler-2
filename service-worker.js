@@ -1,9 +1,8 @@
 const FILES_TO_CACHE = [
   'offline.html',
-  'manifest.json',
 ];
 
-const CACHE_NAME = "test123456";
+const CACHE_NAME = "test12345678";
 
 addEventListener('install', event => {
 	event.waitUntil(

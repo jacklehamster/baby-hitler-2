@@ -3,13 +3,9 @@
     include "minify/JS.php";
     use MatthiasMullie\Minify;
 
-    function minify($path) {
-		$minifier = new Minify\JS($path);
-		$explode = explode('.', $path);
-		array_pop($explode);
-		$explode[] = "min.js";
-		$filename = basename(implode('.', $explode));
-		$minifiedPath = "generated/$filename";
+    function minify($paths, $target_file) {
+		$minifier = new Minify\JS(...$paths);
+		$minifiedPath = "generated/$target_file";
 		$minifier->minify($minifiedPath);
 		return $minifiedPath;    	
     }

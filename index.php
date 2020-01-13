@@ -1,18 +1,30 @@
 <?php
   header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
 
+    function console_log($msg) {
+      echo "<script>console.log(`$msg`);</script>";
+    }
+
+    function quote($string) {
+      return "'$string'";
+    }
+
     function prepare_dir($dir, $var, $output_file, $lambda=null) {
+      $files = [];
       $assets = scandir($dir);
       $asset_source = "";
       $asset_source .= "const $var = {\n";
       foreach ($assets as $file) {
-        $filename = "$dir/$file";
-        if (is_file($filename)) {
-          if(!$lambda || $lambda($filename)){
-            $size = filesize("$dir/$file");
+        $filepath = "$dir/$file";
+        if (is_file($filepath)) {
+          if(!$lambda || $lambda($filepath)){
+            $files[] = $filepath;
+            $size = filesize($filepath);
+            $date = filemtime($filepath);
             $asset_source .= <<<EOD
    '$file' : {
       size: $size,
+      date: '$date',
    },
 
 EOD;
@@ -21,21 +33,32 @@ EOD;
       }
       $asset_source .= "};";
 
-      file_put_contents("generated/$output_file", $asset_source);      
+      file_put_contents("generated/$output_file", $asset_source);
+      return $files;
     }
 
+    $asset_size_file = "generated/asset-size.js";
+    $previous_asset_size_js = file_exists($asset_size_file) ? file_get_contents($asset_size_file) : "";
 
     /**
       * PREPARE ASSETS.
       */
-    prepare_dir('assets', 'FILE_SIZE', 'asset-size.js', function($filename) {
-      return @exif_imagetype($filename);
+    $asset_files = prepare_dir('assets', 'FILE_SIZE', 'asset-size.js', function($filepath) {
+      return @exif_imagetype($filepath);
     });
     /**
       * PREPARE CONFIGS.
       */
-    prepare_dir('config', 'CONFIG_FILES', 'config-size.js');
+    $config_files = prepare_dir('config', 'CONFIG_FILES', 'config-size.js');
+    $config_Files = array_filter($config_files, function($file) { return $file != "config/load-screen.js"; });
 
+    if ($previous_asset_size_js != file_get_contents($asset_size_file) || !file_exists("generated/spritesheets/spritesheet.js")) {
+      console_log("Redoing assets for spritesheet");
+      //  create spritesheets
+      include "php/spritesheet.php";
+      $except = "game-thumbnail,baby-hitler-photo,congrats,alphabet,brave-shield";
+      process_spritesheets("assets", null, "1024x1024", "generated/spritesheets", $except);
+    }
 
     //  SET debug mode
     if (!isset($_GET['nodebug'])) {
@@ -49,11 +72,46 @@ EOD;
 
     //  minify JS
     include "php/minify.php";
-    minify("common.js");
-    minify("game.js");
-    minify("config.js");
-    minify("generated/config-size.js");
-    minify("generated/spritesheets/spritesheet.js");
+
+    $base_files = [
+      "base/error-div.js",
+      "base/common.js",
+      "base/game.js",
+      "base/config.js",
+      "generated/config-size.js",
+      "generated/spritesheets/spritesheet.js",
+      "config/load-screen.js",
+      "base/translation.js",
+      "base/starter.js",
+    ];
+
+    minify($base_files, 'game-engine.min.js');
+    minify($config_files, 'config-files.min.js');
+
+    //  generated index.js
+    $base_files_js = implode(",", array_map(function($file) {
+      return "'$file'";
+    }, $base_files));
+
+    $config_files_js = implode(",", array_map(function($file) {
+      return "'$file'";
+    }, $config_files));
+
+    $index_js = <<<EOD
+const JAVASCRIPT_FILES = window.debugMode ? [ $base_files_js ] : [ "generated/game-engine.min.js" ];
+JAVASCRIPT_FILES.forEach(file => {
+  document.write(`<script src="\${file}"><\/script>`);
+});
+
+
+const CONFIG_FILES_TO_LOAD = window.debugMode ? [ $config_files_js ] : [ "generated/config-files.min.js" ];
+
+CONFIG_FILES_TO_LOAD.forEach(file => {
+  document.write(`<script src="\${file}" async><\/script>`);
+});
+
+EOD;
+    file_put_contents("generated/idx.js", $index_js);
 
     /**
      *  SHOW GAME

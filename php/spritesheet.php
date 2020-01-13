@@ -80,6 +80,29 @@ function fit_images(&$image_infos, $sheet, $sheet_path, $rect_x, $rect_y, $rect_
 	return $count;
 }
 
+function get_images_from_directory($dir, $except) {
+	  $image_paths = [];
+      $assets = scandir($dir);
+      foreach ($assets as $file) {
+        $filename = "$dir/$file";
+        if (is_file($filename) && @exif_imagetype($filename)) {
+        	$image_paths[] = $filename;
+        }
+      }
+
+	  if ($except) {
+		$image_paths = array_filter($image_paths, function($filename) use ($except) {
+			foreach ($except as $exception) {
+				if (strpos($filename, $exception) !== false) {
+					return false;
+				}
+			}
+			return true;
+		});
+	  }      
+      return $image_paths;
+}
+
 function generate_spritesheets($images, $size, $output_path) {
 	list($sheet_width, $sheet_height) = $size;
 
@@ -137,6 +160,79 @@ function generate_spritesheets($images, $size, $output_path) {
 	];
 }
 
+function process_spritesheets ($dir, $image_paths, $size, $output_path, $except, $generate_html=false) {
+	if($image_paths || $dir) {
+		if ($except) {
+			$except = explode(',', $except);
+		}
+
+		if (!$image_paths) {
+			$image_paths = get_images_from_directory($dir, $except);
+		} else {
+			$image_paths = explode(',', $image_paths);
+			if ($except) {
+				$image_paths = array_filter($image_paths, function($filename) use ($except) {
+					foreach ($except as $exception) {
+						if (strpos($filename, $exception) !== false) {
+							return false;
+						}
+					}
+					return true;
+				});
+			}
+		}
+
+		list($sheets, $image_infos) = generate_spritesheets($image_paths, $size ? explode('x', $size) : [ 1024, 1024 ], $output_path ?: null);
+		if (error_get_last()) {
+			var_dump(error_get_last());
+			return;
+		}
+
+		if (!$output_path) {
+			header('Content-Type: image/png');
+			imagepng($sheets[0]);
+		} else {
+			$html = "";
+
+			//	cleanup
+			$files = glob("$output_path/*"); // get all file names
+			foreach($files as $file){ // iterate files
+			  if(is_file($file))
+			    unlink($file); // delete file
+			}
+
+			$html .= "<div>\n";
+
+			foreach($sheets as $index => $sheet) {
+				$sheet_path = "$output_path/sheet$index.png";
+				imagepng($sheet, $sheet_path);
+				$html .= "<img style='width: 200px; height: 200px; margin: 5px; border: 1px solid black; background-color: #FAFAFF;' src='/$sheet_path'>\n";
+			}
+			$html .=  "</div>\n";
+
+			$sheet_json = [];
+			foreach($image_infos as $path => $info) {
+				$sheet_json[$path] = $info['smart_path'];
+			}
+
+			$json = json_encode($sheet_json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+			file_put_contents("$output_path/spritesheet.js", "const spritesheet = $json;");
+			$html .=  "<a href='/$output_path/spritesheet.js'>spritesheet.js</a><br>\n";
+			$html .=  "<div style='white-space: pre; font-family: Courier New, monospace;'>$json</div>\n";
+			
+			if ($generate_html) {
+				header('Content-type: text/html');
+				echo $html;
+			}
+		}
+
+
+		foreach($sheets as $index => $sheet) {
+			imagedestroy($sheet);
+		}
+	}
+}
+
 /*
 game-thumbnail.png
 baby-hitler-photo.png
@@ -148,73 +244,5 @@ $image_paths = $_GET['images'] ?? null;
 $size = $_GET['size'] ?? null;
 $output_path = $_GET['output'] ?? null;
 $except = $_GET['except'] ?? null;
-if($image_paths || $dir) {
-	chdir("..");
 
-	if (!$image_paths) {
-	  $image_paths = [];
-      $assets = scandir($dir);
-      foreach ($assets as $file) {
-        $filename = "$dir/$file";
-        if (is_file($filename) && @exif_imagetype($filename)) {
-        	$image_paths[] = $filename;
-        }
-      }
-	} else {
-		$image_paths = explode(',', $image_paths);
-	}
-
-	if ($except) {
-		$except = explode(',', $except);
-		$image_paths = array_filter($image_paths, function($filename) use ($except) {
-			foreach ($except as $exception) {
-				if (strpos($filename, $exception) !== false) {
-					return false;
-				}
-			}
-			return true;
-		});
-	}
-
-	list($sheets, $image_infos) = generate_spritesheets($image_paths, $size ? explode('x', $size) : [ 1024, 1024 ], $output_path ?: null);
-	if (error_get_last()) {
-		var_dump(error_get_last());
-		return;
-	}
-
-	if (!$output_path) {
-		header('Content-Type: image/png');
-		imagepng($sheets[0]);
-	} else {
-		//	cleanup
-		$files = glob("$output_path/*"); // get all file names
-		foreach($files as $file){ // iterate files
-		  if(is_file($file))
-		    unlink($file); // delete file
-		}
-
-		header('Content-type: text/html');
-		echo "<div>";
-		foreach($sheets as $index => $sheet) {
-			$sheet_path = "$output_path/sheet$index.png";
-			imagepng($sheet, $sheet_path);
-			echo "<img style='width: 200px; height: 200px; margin: 5px; border: 1px solid black; background-color: #FAFAFF;' src='/$sheet_path'>";
-		}
-		echo "</div>";
-
-		$sheet_json = [];
-		foreach($image_infos as $path => $info) {
-			$sheet_json[$path] = $info['smart_path'];
-		}
-
-		$json = json_encode($sheet_json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-		file_put_contents("$output_path/spritesheet.js", "const spritesheet = $json;");
-		echo "<a href='/$output_path/spritesheet.js'>spritesheet.js</a><br>";
-		echo "<div style='white-space: pre; font-family: Courier New, monospace;'>$json</div>";
-	}
-
-
-	foreach($sheets as $index => $sheet) {
-		imagedestroy($sheet);
-	}
-}
+process_spritesheets($dir, $image_paths, $size, $output_path, $except, true);
