@@ -1,41 +1,12 @@
 <?php
-  header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
+    header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
+    
+    const MAX_FILES_PER_CONFIG = 60;
+    const SPRITESHEET_DIMENSION = '1024x1024';
 
-    function console_log($msg) {
-      echo "<script>console.log(`$msg`);</script>";
-    }
-
-    function quote($string) {
-      return "'$string'";
-    }
-
-    function prepare_dir($dir, $var, $output_file, $lambda=null) {
-      $files = [];
-      $assets = scandir($dir);
-      $asset_source = "";
-      $asset_source .= "const $var = {\n";
-      foreach ($assets as $file) {
-        $filepath = "$dir/$file";
-        if (is_file($filepath)) {
-          if(!$lambda || $lambda($filepath)){
-            $files[] = $filepath;
-            $size = filesize($filepath);
-            $date = filemtime($filepath);
-            $asset_source .= <<<EOD
-   '$file' : {
-      size: $size,
-      date: '$date',
-   },
-
-EOD;
-          }
-        }
-      }
-      $asset_source .= "};";
-
-      file_put_contents("generated/$output_file", $asset_source);
-      return $files;
-    }
+    require_once "php/common.php";
+    require_once "php/minify.php";
+    require_once "php/zip.php";
 
     $asset_size_file = "generated/asset-size.js";
     $previous_asset_size_js = file_exists($asset_size_file) ? file_get_contents($asset_size_file) : "";
@@ -57,7 +28,7 @@ EOD;
       //  create spritesheets
       include "php/spritesheet.php";
       $except = "game-thumbnail,baby-hitler-photo,congrats,alphabet,brave-shield";
-      process_spritesheets("assets", null, "1024x1024", "generated/spritesheets", $except);
+      process_spritesheets("assets", null, SPRITESHEET_DIMENSION, "generated/spritesheets", $except);
     }
 
     //  SET debug mode
@@ -71,8 +42,7 @@ EOD;
     }
 
     //  minify JS
-    include "php/minify.php";
-
+ 
     $base_files = [
       "base/error-div.js",
       "base/common.js",
@@ -86,16 +56,33 @@ EOD;
     ];
 
     minify($base_files, 'game-engine.min.js');
-    minify($config_files, 'config-files.min.js');
 
-    //  generated index.js
-    $base_files_js = implode(",", array_map(function($file) {
-      return "'$file'";
-    }, $base_files));
+    $combined_configs = [];
+    $config_group = [];
+    foreach ($config_files as $file) {
+      $config_group[] = $file;
+      if (count($config_group) >= MAX_FILES_PER_CONFIG) {
+        $index = count($combined_configs);
+        $config_name = "config/config-files-{$index}.min.js";
+        $combined_configs[] = "generated/$config_name";
+        minify($config_group, $config_name);
+        $config_group = [];
+      }
+    }
 
-    $config_files_js = implode(",", array_map(function($file) {
-      return "'$file'";
-    }, $config_files));
+    if (count ($config_group) > 0) {
+      $index = count($combined_configs);
+      $config_name = "config/config-files-{$index}.min.js";
+      $combined_configs[] = "generated/$config_name";
+      minify($config_group, $config_name);
+      $config_group = [];
+    }
+
+    //  generate idx.js
+    $base_files_js = implode(",", array_map("quote", $base_files));
+
+    $config_files_js = implode(",", array_map("quote", $config_files));
+    $combined_config_files_js = implode(",", array_map("quote", $combined_configs));
 
     $index_js = <<<EOD
 const JAVASCRIPT_FILES = window.debugMode ? [ $base_files_js ] : [ "generated/game-engine.min.js" ];
@@ -103,9 +90,7 @@ JAVASCRIPT_FILES.forEach(file => {
   document.write(`<script src="\${file}"><\/script>`);
 });
 
-
-const CONFIG_FILES_TO_LOAD = window.debugMode ? [ $config_files_js ] : [ "generated/config-files.min.js" ];
-
+const CONFIG_FILES_TO_LOAD = window.debugMode ? [ $config_files_js ] : [ $combined_config_files_js ];
 CONFIG_FILES_TO_LOAD.forEach(file => {
   document.write(`<script src="\${file}" async><\/script>`);
 });
@@ -121,58 +106,6 @@ EOD;
     /**
      *  ZIP GAME
      */
-    function startsWith ($string, $startString) { 
-        $len = strlen($startString); 
-        return (substr($string, 0, $len) === $startString); 
-    } 
-
-    function zipAll($zipFilename) {
-      // Get real path for our folder
-      $rootPath = realpath('.');
-
-      // Initialize archive object
-      $zip = new ZipArchive();
-      $zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-      // Create recursive directory iterator
-      /** @var SplFileInfo[] $files */
-      $files = new RecursiveIteratorIterator(
-          new RecursiveDirectoryIterator($rootPath),
-          RecursiveIteratorIterator::LEAVES_ONLY
-      );
-
-      foreach ($files as $name => $file)
-      {
-          // Skip directories (they would be added automatically)
-          if (!$file->isDir())
-          {
-              // Get real and relative path for current file
-              $filePath = $file->getRealPath();
-              $relativePath = substr($filePath, strlen($rootPath) + 1);
-
-              switch ($file->getExtension()) {
-                case "php":
-                case "sh":
-                case "DS_Store":
-                case "gdoc":
-                case "zip":
-                case "txt":
-                case "md":
-                  break;
-                default:
-                  if (!startsWith($relativePath, '.git')) {
-                    // Add current file to archive
-                    $zip->addFile($filePath, $relativePath);
-                  }
-                  break;
-              }
-
-          }
-      }
-
-      // Zip archive will be created only after closing object
-      $zip->close();  
-  }
   $zipFilename = 'baby-hitler-2.zip';
   zipAll($zipFilename);
   $md5 = md5_file($zipFilename);

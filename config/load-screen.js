@@ -15,9 +15,10 @@ gameConfig.scenes.push(
 				if (Math.abs(game.sceneData.estimate - estimate) > 10000 || estimate < game.sceneData.estimate) {
 					// game.sceneData.estimate = estimate;
 				}
-			} else if(game.waitCursor) {
+			} else if(game.now > game.sceneData.startTime && game.waitCursor) {
 				game.waitCursor = false;
 				game.countLoadError = 0;
+				console.log(`${game.now / 1000} sec.`);
 			}
 		},
 		getProgress: game => {

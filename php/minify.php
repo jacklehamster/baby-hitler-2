@@ -10,7 +10,7 @@
 		return $minifiedPath;    	
     }
 
-	$sourcePath = $_GET['input'];
+	$sourcePath = $_GET['input'] ?? null;
 	if ($sourcePath) {
 		header('Content-Type: text/plain; charset=utf-8');
 
