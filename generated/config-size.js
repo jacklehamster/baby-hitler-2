@@ -260,8 +260,8 @@ const CONFIG_FILES = {
   date: '1577835770',
 },
 'name-screen.js' : {
-  size: 4524,
-  date: '1577877697',
+  size: 4526,
+  date: '1578900892',
 },
 'origin.js' : {
   size: 3780,
