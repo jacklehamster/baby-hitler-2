@@ -20,7 +20,9 @@
     /**
       * PREPARE CONFIGS.
       */
-    $config_files = prepare_dir('config', 'CONFIG_FILES', 'config-size.js');
+    $config_files = prepare_dir('config', 'CONFIG_FILES', 'config-size.js', function($filepath) {
+      return pathinfo($filepath)['extension'] === 'js';
+    });
     $config_Files = array_filter($config_files, function($file) { return $file != "config/load-screen.js"; });
 
     if ($previous_asset_size_js != file_get_contents($asset_size_file) || !file_exists("generated/spritesheets/spritesheet.js")) {
