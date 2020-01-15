@@ -727,6 +727,10 @@ const FILE_SIZE = {
   size: 304,
   md5: '33b70dd910da29de654cb5ea95f80f02',
 },
+'menu-bag.png' : {
+  size: 609,
+  md5: 'dfe43694b00ca09cf92c71b6f28fd315',
+},
 'menu-disk.png' : {
   size: 113,
   md5: '21c42148710e591a7f7f4bf8ff0f4b33',

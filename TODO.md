@@ -31,11 +31,11 @@
 - 🐞 Menu down when forward ⭐
 - 🐞 Bullet replaces gun ⭐
 - 🐞 hide punch/block when using gun ⭐
-- 🐞 door should close when bag opens
+- 🐞 door should close when bag opens ⭐
 - arcade swap joystick and buttons ⭐
 - arcade: seems stuck ⭐
 - allow player to shoot arcade with gun ⭐
-- bag should always show in maze
+- bag should always show in maze ⭐
 - bag in maze doesn't seem to work ⭐
 - 🐞 yupa woke up then dried again??? ⭐
 - 🐞 jump down/go down crashed ⭐
@@ -55,7 +55,7 @@
 - chest not restored after menu-save 🐞⭐
 - add grass around tavern ⭐
 - money shot only if no miss/no blank shots ⭐
-- Add bag icon in menu
+- Add bag icon in menu ⭐
 - Yupa dialog: talk more about supapawa ⭐
 
 ## Links

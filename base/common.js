@@ -155,6 +155,7 @@ const ASSETS = {
 	MENU_DISK:'assets/menu-disk.png',
 	MENU_SOUND_ON:'assets/menu-sound-on.png',
 	MENU_SOUND_OFF:'assets/menu-sound-off.png',
+	MENU_BAG:'assets/menu-bag.png',
 	MENU_PROFILE:'assets/menu-profile.png',
 	MENU_OPTIONS:'assets/menu-options.png',
 	MENU_PROFILE_NOTIFICATION: "assets/profile-notification.png",

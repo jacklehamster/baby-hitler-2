@@ -2,7 +2,7 @@ const shortcut = {
 	0: ({situation, data}) => situation.explode && data.shot["left guard"] && data.shot["right guard"] ? FORWARD : null,
 	1: game => game.matchCell(game.map,game.pos.x,game.pos.y,0,1,game.orientation,"12345",[]) && !game.doorOpening ? DOOR : FORWARD,
 	2: game => game.matchCell(game.map,game.pos.x,game.pos.y,0,1,game.orientation,"12345",[]) ? (!game.doorOpening ? DOOR : FORWARD) : null,
-	3: game => game.battle ? BAG : BACKWARD,
+	3: game => game.battle || game.touchActive ? BAG : BACKWARD,
 	4: game => game.sceneData.forwardUnlocked ? FORWARD : null,
 	5: game => game.rotation === 0 ? BAG : null,
 	6: ({battle}) => battle ? BLOCK : s(3),
@@ -676,7 +676,10 @@ function standardBag() {
 					const flag = options.filter(({hidden})=>!hidden || !game.evaluate(hidden)).length * 7 + offY > 2 * 7 || dialog.paused;
 					return flag;
 				}
-				if (arrow === "BAG" || game.touchActive) {
+				if (game.touchActive) {
+					return false;
+				}
+				if (arrow === "BAG") {
 					const door = game.frontDoor();
 					if (door && door.lock && game.frameIndex === 0 && game.rotation % 2 === 0) {
 						const cell = game.frontCell();
@@ -1008,7 +1011,23 @@ function standardMenu() {
 			name: "profile-notification",
 			src: ASSETS.MENU_PROFILE_NOTIFICATION,
 			index: game => game.frameIndex,
-			hidden: game => !game.data.stats.bonus || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot),
+			hidden: game => !game.data.stats.bonus || game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot),
+			combine: (item, game) => {
+				game.useItem = null;
+				return true;
+			},
+		},
+		{
+			menu_item: true,
+			name: "bag",
+			src: ASSETS.MENU_BAG,
+			index: game => game.frameIndex,
+			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot),
+			alpha: ({hoverSprite}, sprite) => hoverSprite === sprite ? 1 : .5,
+			onClick: game => {
+				game.clickBag();
+			},
+			onHoverOut: (game, sprite, hovered) => { if (game.menuOpening > 0 && (!hovered || !hovered.menu_item && !hovered.menu)) game.openMenu(game.now); },
 			combine: (item, game) => {
 				game.useItem = null;
 				return true;

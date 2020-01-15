@@ -1282,6 +1282,7 @@ const Game = (() => {
 			if (this.processingBag) {
 				return;
 			}
+			this.doorOpening = 0;
 			this.processingBag = true;
 			this.actions.push({
 				time: now,
@@ -3581,6 +3582,7 @@ const Game = (() => {
 				}
 				this.arrow = 0;
 			}
+			game.menuOpening = 0;
 			this.openBag(this.now, game => {
 				this.onSceneHoldItem(game, this.useItem);
 			});

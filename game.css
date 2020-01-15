@@ -128,24 +128,6 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
     background-color: black;
 }
 
-/*.touch-button {
-	font-family: monospace;
-	font-size: 60px;
-	padding: 60px 100px;
-	border-radius: 100px;
-	background-color: #008800;
-	color: black;
-	margin: 5px 0 10px 0;
-	box-shadow: 3px;
-}
-
-.touch-button:active {
-	background-color: #aaFF00;
-	margin: 10px 0 5px 0;
-	box-shadow: 1px black;
-}
-*/
-
 .game-size {
     max-width: calc(100vw - 5%);
     width: 512px;
@@ -197,7 +179,18 @@ pre {outline: 1px solid #ccc; padding: 2px; margin: 2px; }
 	border: 40px solid #000000;
 }
 
+.rounded-screen.touched {   
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 40px solid #000000;
+}
+
 .rounded-screen.full {
-    border-width: 21px;
+    border-width: 20px;
+}
+
+.rounded-screen.touch-size {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
