@@ -355,6 +355,7 @@ game.addScene(
 					const time = game.now - game.sceneData.moonLand;
 					return Math.max(.001, 1 - Math.sqrt(time / timeArrive)) * .7;
 				},
+				hidden: game => !game.sceneData.moonLand,
 			},		
 			{
 				src: ASSETS.SPACESHIP, col: 1, row: 2,
@@ -417,7 +418,7 @@ game.addScene(
 					const [ xLoc, yLoc ] = sprite.getLocation(game, x, y);
 					const dx = game.sceneData.finalTarget.x - xLoc;
 					const dy = game.sceneData.finalTarget.y - yLoc;
-					return `“Westrow tavern is ${Math.abs(dx)}m ${dx<0?"West":"East"} and ${Math.abs(dy)}m ${dy<0?"South":"North"} from here”`;
+					return `“Westrow tavern is ~${Math.abs(dx)}m~ ~${dx<0?"West":"East"}~ and ~${Math.abs(dy)}m~ ~${dy<0?"South":"North"}~ from here”`;
 				},
 				hidden: game => game.battle,
 				allowMove: true,

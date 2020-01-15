@@ -70,6 +70,9 @@ game.addScene(
 			ctx.fill();
 		},
 		onScene: game => {
+			/** restore health */
+			game.data.stats.life = game.data.stats.maxLife;
+
 			//[.5,.4,.3,.7,.4,.3,.8,.3,.5,.4]
 			game.waitCursor = true;
 			game.sceneData.rads = new Array(9).fill(null).map(a => Math.random()+1);

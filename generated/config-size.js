@@ -16,8 +16,8 @@ const CONFIG_FILES = {
   md5: '5d448d078ba970810f32a18d38d2185a',
 },
 'asteroid-field.js' : {
-  size: 17057,
-  md5: 'c34e5dc4086349dc1b0761b7119509aa',
+  size: 17056,
+  md5: 'bfed69bc39e1bd3297c82f796ec2f1e5',
 },
 'birthday.js' : {
   size: 607,
@@ -128,8 +128,8 @@ const CONFIG_FILES = {
   md5: 'e1bf9b48ef5854cc8b167e5d3ca5a17f',
 },
 'final-planet-world.js' : {
-  size: 30590,
-  md5: 'b03e8310b438aa151b467e35e3dd1d29',
+  size: 30636,
+  md5: 'e0d34454a2a9ef053897a780254cf209',
 },
 'final-planet.js' : {
   size: 1112,
@@ -300,8 +300,8 @@ const CONFIG_FILES = {
   md5: '9319a8b29a008e3419f727bfc1ac58c0',
 },
 'shopkeepa.js' : {
-  size: 49679,
-  md5: '1434e36814a9c8fa939ba67cb33ce651',
+  size: 49726,
+  md5: '063562eed39aac920378f25889a653bc',
 },
 'slots.js' : {
   size: 5249,

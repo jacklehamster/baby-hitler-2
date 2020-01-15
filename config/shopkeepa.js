@@ -411,7 +411,7 @@ game.addScene(
 								onSelect: (game, dialog) => {
 									game.currentScene.startTalk(game, "human", [
 										"How are we going to recognize Baby Hitler?",
-										"I don't know how Hitler looked like as a teenager!",
+										"I don't know how Hitler looks like as a teenager!",
 									], game => {
 										game.currentScene.startTalk(game, "yupa", [
 											"Dun worry, I can racognize dat baby.",
@@ -459,7 +459,7 @@ game.addScene(
 													"Maybe we could come to some kind of ... arrangement",
 												], game => {
 													game.currentScene.startTalk(game, "shopkeepa", [
-														"I see... you'd like a make a deal!",
+														"I see... you'd like to make a deal!",
 														"Well, I guess now you know how much I want that ticket.",
 														"But no matter, I'm ready to listen.",
 														"What would you like in exchange?",
@@ -1123,13 +1123,16 @@ game.addScene(
 							game.situation.explainedPhoto = game.now;
 							game.dialog.paused = true;
 							game.currentScene.startTalk(game, "shopkeepa", "We don't buy back items in this shop.", game => {
-								game.currentScene.startTalk(game, "human", "Actually, we're looking for this baby. Have you seen him?", game => {
+								game.currentScene.startTalk(game, "human", [
+										"Actually, we're looking for this baby.",
+										"His name is Baby Hitler.",
+								], game => {
 									game.currentScene.startTalk(game, "shopkeepa", "Oh, ok... let me see the photo.", game => {
 										game.sceneData.sheTookPhoto = game.now;
 										game.useItem = null;
 										game.delayAction(game => {
 											game.currentScene.startTalk(game, "shopkeepa", ["That's a human baby.", "It's not\nsomething you find every day."], game => {
-												game.currentScene.startTalk(game, "human", ["So I've heard.", "Have you seen him?"], game => {
+												game.currentScene.startTalk(game, "human", ["So I've heard.", "Have you ever seen him?"], game => {
 													game.currentScene.startTalk(game, "shopkeepa", [
 														"This baby? No...",
 														"I don't even recall the last time I saw a human baby.",

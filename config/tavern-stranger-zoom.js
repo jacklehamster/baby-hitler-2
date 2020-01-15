@@ -37,7 +37,7 @@ game.addScene(
 					sceneData.takeOutCig = now;
 				}, 1000);
 				currentScene.startTalk(game, "stranger", [
-					"Damn it's freaking cold out there.",
+					"Damn it's\nfreaking cold out here.",
 					"You got light?",
 				]);
 			} else if (game.inventory["ace of hearts"]) {

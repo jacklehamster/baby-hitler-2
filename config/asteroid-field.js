@@ -44,7 +44,7 @@ game.addScene(
 					game.currentScene.startTalk(game, "human", "Damnit Yupa! While you were dozing off, we just passed through\nan asteroid field!", game => {
 						game.currentScene.startTalk(game, "yupa", [
 							"Ya were drivin da ship?",
-							"Why not let Alectra do it? She can dodge asteroidz, itz piecea cake!",
+							"Why not let Alectra drave? She can dogge asteroiz, itz piecea cake!",
 						], game => {
 							game.currentScene.startTalk(game, "human", [
 								"What?!! You're kidding me!",

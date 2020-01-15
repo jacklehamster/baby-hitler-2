@@ -15,8 +15,8 @@
 	];
 
 	function cmp($a, $b) {
-		$timestamp_a = $a['timestamp'] ?: "";
-		$timestamp_b = $b['timestamp'] ?: "";
+		$timestamp_a = $a['timestamp'] ?? "";
+		$timestamp_b = $b['timestamp'] ?? "";
 		$tmpcomp = $timestamp_a < $timestamp_b ? -1
 			: ($timestamp_a > $timestamp_b ? 1 : 0);
 		if ($tmpcomp) {
@@ -25,7 +25,7 @@
 		return $a['text'] < $b['text'] ? -1 : ($a['text'] > $b['text'] ? 1 : 0);
 	}
 
-	uasort($json, cmp);
+	uasort($json, "cmp");
 
 	file_put_contents('translation.json', json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES, LOCK_EX)) or die("can't open file");;
 	echo "OK";
