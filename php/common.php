@@ -7,27 +7,41 @@ function quote($string) {
   return "'$string'";
 }
 
+function collect_files($dir, $recursive, $lambda = null) {
+  $result = [];
+  $files = scandir($dir);
+  foreach ($files as $file) {
+    $path = "$dir/$file";
+    if (is_file($path)) {
+      if(!$lambda || $lambda($path)) {
+        $result[] = $path;
+      }
+    } else if ($recursive && $file !== '.' && $file !== '..') {
+      $result = array_merge($result, collect_files($path, $recursive, $lambda));
+    }
+  }
+  return $result;
+}
+
 function prepare_dir($dir, $var, $output_file, $lambda=null) {
   $files = [];
-  $assets = scandir($dir);
+  $assets = collect_files($dir, true, $lambda);
+
   $asset_source = "";
   $asset_source .= "const $var = {\n";
-  foreach ($assets as $file) {
-    $filepath = "$dir/$file";
-    if (is_file($filepath)) {
-      if(!$lambda || $lambda($filepath)){
-        $files[] = $filepath;
-        $size = filesize($filepath);
-        $md5 = md5_file($filepath);
-        $asset_source .= <<<EOD
-'$file' : {
+  foreach ($assets as $filepath) {
+    $files[] = $filepath;
+    $filename = basename($filepath);
+    $size = filesize($filepath);
+    $md5 = md5_file($filepath);
+    $asset_source .=
+<<<EOD
+'$filename' : {
   size: $size,
   md5: '$md5',
 },
 
 EOD;
-      }
-    }
   }
   $asset_source .= "};";
 

@@ -27,6 +27,6 @@
 
 	uasort($json, cmp);
 
-	file_put_contents('translation.json', json_encode($json, JSON_PRETTY_PRINT, LOCK_EX)) or die("can't open file");;
+	file_put_contents('translation.json', json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES, LOCK_EX)) or die("can't open file");;
 	echo "OK";
 ?>

@@ -1,6 +1,15 @@
 <?php
 require_once "common.php";
 
+function zip_files($files, $zipFilename) {
+    $zip = new ZipArchive();
+    $zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+    foreach ($files as $file) {
+      $zip->addFile($file);
+    }
+    $zip->close();
+}
+
 function zipAll($zipFilename) {
     // Get real path for our folder
     $rootPath = realpath('.');

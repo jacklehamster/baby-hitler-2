@@ -1,1 +1,0 @@
-const CACHE_NAME = '1a588177e3ce97b7f03a607ae8ea5525';

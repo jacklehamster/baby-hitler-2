@@ -1,6 +1,6 @@
 <?php
     header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
-    
+
     const MAX_FILES_PER_CONFIG = 60;
     const SPRITESHEET_DIMENSION = '1500x1500';
 
@@ -29,7 +29,7 @@
       console_log("Redoing assets for spritesheet");
       //  create spritesheets
       include "php/spritesheet.php";
-      $except = "game-thumbnail,baby-hitler-photo,congrats,alphabet,brave-shield";
+      $except = "game-thumbnail,baby-hitler-photo,congrats,alphabet,scanline,brave-shield";
       process_spritesheets("assets", null, SPRITESHEET_DIMENSION, "generated/spritesheets", $except);
     }
 
@@ -101,6 +101,28 @@ EOD;
     file_put_contents("generated/idx.js", $index_js);
 
     /**
+     *  List all offline files
+     */
+    $offline_files = collect_files("generated", true, function($filepath) {
+      return @exif_imagetype($filepath) || pathinfo($filepath)['extension'] === 'js';     
+    });
+
+    $offline_files = array_merge($offline_files, collect_files("sounds", true, function($filepath) {
+      return pathinfo($filepath)['extension'] === 'mp3';     
+    }));
+    $offline_files[] = "assets/alphabet.png";
+    $offline_files[] = "assets/scanline.png";
+    $offline_files[] = "service-worker.js";
+    $offline_files[] = "game.css";
+    $offline_files[] = "index.html";
+    $offline_files[] = "manifest.json";
+    $offline_files[] = "translation.json";
+    $offline_files[] = "offline.html";
+    $offline_json = json_encode($offline_files, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
+    file_put_contents("offline_files.js", "const OFFLINE_FILES = $offline_json");
+
+
+    /**
      *  SHOW GAME
      */
     readfile("index.html");
@@ -109,8 +131,7 @@ EOD;
      *  ZIP GAME
      */
     $zipFilename = 'baby-hitler-2.zip';
-    zipAll($zipFilename);
+    zip_files($offline_files, $zipFilename);
     $md5 = md5_file($zipFilename);
     file_put_contents('zip_version.txt', "$md5\n");
-    file_put_contents('generated/version.js', "const CACHE_NAME = '$md5';\n");
 ?>
