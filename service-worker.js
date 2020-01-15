@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cache2';
+const CACHE_NAME = 'cache';
 
 self.importScripts('offline_files.js');
 

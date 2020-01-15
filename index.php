@@ -110,6 +110,9 @@ EOD;
     $offline_files = array_merge($offline_files, collect_files("sounds", true, function($filepath) {
       return pathinfo($filepath)['extension'] === 'mp3';     
     }));
+
+    $offline_files = array_merge($offline_files, collect_files('icons', true));
+
     $offline_files[] = "assets/alphabet.png";
     $offline_files[] = "assets/scanline.png";
     $offline_files[] = "service-worker.js";
@@ -117,7 +120,8 @@ EOD;
     $offline_files[] = "index.html";
     $offline_files[] = "manifest.json";
     $offline_files[] = "translation.json";
-    $offline_files[] = "offline.html";
+    $offline_files[] = "offline.html";    
+
     $offline_json = json_encode($offline_files, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
     file_put_contents("offline_files.js", "const OFFLINE_FILES = $offline_json");
 
