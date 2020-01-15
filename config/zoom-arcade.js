@@ -22,6 +22,7 @@ game.addScene(
 					{ score: 135, 	player: 3 },
 					{ score: 95, 	player: 4 },
 				];
+				situation.initial = 3;
 			}
 
 			sceneData.gameStarted = 0;
@@ -90,8 +91,10 @@ game.addScene(
 					if (ship.lives > 0) {
 						ship.x = gameScreen.x + gameScreen.width / 2;
 						ship.y =  gameScreen.y + gameScreen.height - 2;
-						game.mouse.x = ship.x;
-						game.mouse.y = ship.y;
+						if(game.mouse) {
+							game.mouse.x = ship.x;
+							game.mouse.y = ship.y;
+						}
 						ship.born = now;
 						ship.destroyed = 0;
 						ship.lives --;
@@ -100,6 +103,7 @@ game.addScene(
 						situation.highscores.sort((a,b) => b.score-a.score);
 						situation.showHighScore = now;
 						situation.gotHighScore = now;
+						situation.initial = 0;
 						game.showTip(`That was fun!`);
 						game.playTheme(null);
 					} else if(!situation.showHighScore) {
@@ -245,28 +249,31 @@ game.addScene(
 				}
 			}
 		},
+		shouldDisplayHighScore: game => {
+			if (game.situation.shotScreenPosition && !game.sceneData.gameStarted && game.situation.initial === 3 && !game.situation.coin
+				&& (
+					Math.floor(game.now/50) % 30 !== 0
+					&& Math.floor(game.now/100) % 13 !== 3
+					&& Math.floor(game.now/200) % 7 !== 5
+					&& Math.floor(game.now/50) % 4 !== 2
+					)) {
+				return true;
+			}
+
+
+			return game.situation.showHighScore;
+		},
 		sprites: [
 			{
 				custom: (game, sprite, ctx) => {
 					ctx.fillStyle = "#7E7A18";
 					ctx.fillRect(0, 0, 64, 64);
 				},
-				onClick: ({sceneData, situation}) => {
+				onClick: game => {
+					const { sceneData, situation } = game;
 					const { gameStarted } = sceneData;
-					const { showHighScore } = situation;
-					if (!gameStarted || showHighScore) {
+					if (!gameStarted || game.currentScene.shouldDisplayHighScore(game)) {
 						game.gotoScene("arcade-room");
-					}
-				},
-			},
-			{ 
-				src: ASSETS.ZOOM_ARCADE,
-				combine: (item, game) => {
-					if (item === "coin") {
-						game.situation.putCoin = game.now;
-						game.removeFromInventory(item);
-						game.useItem = null;
-						return true;
 					}
 				},
 			},
@@ -275,8 +282,7 @@ game.addScene(
 				custom: (game, sprite, ctx) => {
 					const { sceneData, situation } = game;
 					const { gameScreen } = sceneData;
-					const { showHighScore } = situation;
-					if (showHighScore) {
+					if (game.currentScene.shouldDisplayHighScore(game)) {
 						return;
 					}
 					ctx.fillStyle = "#000012";
@@ -417,8 +423,7 @@ game.addScene(
 					return gameStarted && now >= gameStarted && (ship.lives || !ship.destroyed);
 				},
 				index: ({situation, now, sceneData}) => {
-					const { showHighScore } = situation;
-					if (showHighScore) {
+					if (game.currentScene.shouldDisplayHighScore(game)) {
 						return 3;
 					}
 
@@ -489,12 +494,19 @@ game.addScene(
 						situation.initial = 3;
 					}
 				},
+				onShot: (game, sprite) => {
+					if (!game.situation.shotScreenPosition) {
+						game.situation.shotScreenPosition = {
+							x: game.mouse.x - 32,
+							y: game.mouse.y - 32,
+						};
+					}
+				},
 			},
 			{
-				hidden: ({situation}) => !situation.showHighScore,
+				hidden: game => !game.currentScene.shouldDisplayHighScore(game),
 				custom: ({sceneData, situation}, sprite, ctx) => {
 					const { gameScreen } = sceneData;
-					const { showHighScore } = situation;
 					const ALIEN_DIGIT_0 = 1000;
 					for (let i = 0; i < situation.highscores.length; i++) {
 						let s = situation.highscores[i].score;
@@ -517,8 +529,7 @@ game.addScene(
 				custom: (game, sprite, ctx) => {
 					const { sceneData, situation } = game;
 					const { score } = sceneData;
-					const { showHighScore } = situation;
-					if (showHighScore) {
+					if (game.currentScene.shouldDisplayHighScore(game)) {
 						return;
 					}
 					const ALIEN_DIGIT_0 = 1000;
@@ -544,7 +555,7 @@ game.addScene(
 					}
 					return 0;
 				},
-				hidden: game => !game.situation.showHighScore,
+				hidden: game => !game.currentScene.shouldDisplayHighScore(game),
 			},
 			{
 				src: ASSETS.TOP_5, col: 3, row: 4,
@@ -558,7 +569,7 @@ game.addScene(
 					}
 					return 0;
 				},
-				hidden: game => !game.situation.showHighScore,
+				hidden: game => !game.currentScene.shouldDisplayHighScore(game),
 			},
 			{
 				src: ASSETS.TOP_5, col: 3, row: 4,
@@ -572,7 +583,7 @@ game.addScene(
 					}
 					return 0;
 				},
-				hidden: game => !game.situation.showHighScore,
+				hidden: game => !game.currentScene.shouldDisplayHighScore(game),
 			},
 			{
 				src: ASSETS.TOP_5, col: 3, row: 4,
@@ -586,7 +597,7 @@ game.addScene(
 					}
 					return 0;
 				},
-				hidden: game => !game.situation.showHighScore,
+				hidden: game => !game.currentScene.shouldDisplayHighScore(game),
 			},
 			{
 				src: ASSETS.TOP_5, col: 3, row: 4,
@@ -606,7 +617,18 @@ game.addScene(
 					}
 					return 0;
 				},
-				hidden: game => !game.situation.showHighScore,
+				hidden: game => !game.currentScene.shouldDisplayHighScore(game),
+			},
+			{ 
+				src: ASSETS.ZOOM_ARCADE,
+				combine: (item, game) => {
+					if (item === "coin") {
+						game.situation.putCoin = game.now;
+						game.removeFromInventory(item);
+						game.useItem = null;
+						return true;
+					}
+				},
 			},
 			{
 				src: ASSETS.COINSTART,
@@ -614,9 +636,23 @@ game.addScene(
 				hidden: game => !game.situation.putCoin,
 			},
 			{
+				src: ASSETS.SCREEN_FRACTURE,
+				offsetX: game => game.situation.shotScreenPosition.x,
+				offsetY: game => game.situation.shotScreenPosition.y,
+				hidden: game => !game.situation.shotScreenPosition,
+			},
+			{
+				src: ASSETS.SCREEN_FRACTURE,
+				offsetX: game => game.situation.shotScreenPosition.x,
+				offsetY: game => game.situation.shotScreenPosition.y,
+				hidden: game => !game.situation.shotScreenPosition,
+				flipH: true,
+			},
+			{
 				src: ASSETS.ARCADE_HANDS,
 				side: LEFT,
-				offsetY: ({sceneData,now,situation}) => {
+				offsetY: gane => {
+					const { sceneData,now,situation } = game;
 					const { coin, showHighScore } = situation;
 					if (sceneData.gameStarted) {
 						const { hand } = sceneData;
@@ -644,16 +680,17 @@ game.addScene(
 			{
 				src: ASSETS.ARCADE_HANDS,
 				side: RIGHT,
-				offsetY: ({sceneData, now, situation}) => {
-					const { coin, showHighScore } = situation;
+				offsetY: game => {
+					const { sceneData, now, situation } = game;
+					const { coin } = situation;
 					const { ship } = sceneData;
 					const buttonDown = ship.lastShot && now - ship.lastShot < 100 ? 1 : 0;
 					if (sceneData.gameStarted) {
 						return buttonDown;
-					} else if ((coin || showHighScore && situation.initial < 3) && sceneData.hoverScreen) {
+					} else if ((coin || game.currentScene.shouldDisplayHighScore(game) && situation.initial < 3) && sceneData.hoverScreen) {
 						const diff = now - sceneData.hoverScreen;
 						return Math.max(0, 40 - diff / 5) + buttonDown;
-					} else if ((coin || showHighScore && situation.initial < 3) && sceneData.hoverOutScreen) {
+					} else if ((coin || game.currentScene.shouldDisplayHighScore(game) && situation.initial < 3) && sceneData.hoverOutScreen) {
 						const diff = now - sceneData.hoverOutScreen;
 						return Math.max(0, diff / 5);
 					} else {

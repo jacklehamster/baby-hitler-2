@@ -2,7 +2,7 @@
     header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure');
     
     const MAX_FILES_PER_CONFIG = 60;
-    const SPRITESHEET_DIMENSION = '1024x1024';
+    const SPRITESHEET_DIMENSION = '1500x1500';
 
     require_once "php/common.php";
     require_once "php/minify.php";

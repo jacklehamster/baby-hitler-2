@@ -935,6 +935,10 @@ const FILE_SIZE = {
   size: 76,
   md5: '7824e7092ec611d96493e5b108a59e83',
 },
+'screen-fracture.png' : {
+  size: 360,
+  md5: 'd54d155df1d957d0232bfb0a881f1b35',
+},
 'shifty-eyes.png' : {
   size: 476,
   md5: '74faa33f928ffbc3a997ff81c92f6906',
@@ -1180,8 +1184,8 @@ const FILE_SIZE = {
   md5: '853433fdb339ea7012eea55bb39798f7',
 },
 'zoom-arcade.png' : {
-  size: 294,
-  md5: 'bd0584d88cc09253b75f03a1276b0f77',
+  size: 735,
+  md5: '7690538f92d25732574d4666a742c16f',
 },
 'zoom-dick-mad.png' : {
   size: 895,

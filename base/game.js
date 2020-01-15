@@ -2194,7 +2194,7 @@ const Game = (() => {
 				}
 				if (tipItem) {
 					const { item, count } = this.inventory[tipItem];	
-					const msg = item==="gun" ? `gun with ${this.countItem('bullet')} bullet${this.countItem('bullet')>1?'s':''}` : (count||1) > 1 ? `${item} x${count}` : `${item}`;
+					const msg = item==="gun" ? `gun with ~${this.countItem('bullet')}~ bullet${this.countItem('bullet')>1?'s':''}` : (count||1) > 1 ? `${item} x${count}` : `${item}`;
 					ctx.fillStyle = "#000000aa";
 					const showAbove = this.mouse.y >= 55;
 					ctx.fillRect(1, showAbove ? 40 : 57, 62, 7);

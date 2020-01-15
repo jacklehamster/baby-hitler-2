@@ -34,7 +34,7 @@
 - 🐞 door should close when bag opens
 - arcade swap joystick and buttons ⭐
 - arcade: seems stuck ⭐
-- allow player to shoot arcade with gun
+- allow player to shoot arcade with gun ⭐
 - bag should always show in maze
 - bag in maze doesn't seem to work ⭐
 - 🐞 yupa woke up then dried again??? ⭐
@@ -56,7 +56,7 @@
 - add grass around tavern ⭐
 - money shot only if no miss/no blank shots ⭐
 - Add bag icon in menu
-- Yupa dialog: talk more about supapawa
+- Yupa dialog: talk more about supapawa ⭐
 
 ## Links
 - https://stackoverflow.com/questions/3413683/disabling-the-context-menu-on-long-taps-on-android/28748222

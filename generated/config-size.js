@@ -396,8 +396,8 @@ const CONFIG_FILES = {
   md5: 'db3c051d9c73a444d4d3dab97fcc50c4',
 },
 'zoom-arcade.js' : {
-  size: 19479,
-  md5: '1582723f7333b1f0a030d400250b01dd',
+  size: 20791,
+  md5: 'c3680871654d9588552822e5beaa357b',
 },
 'zoom-guards.js' : {
   size: 3923,
