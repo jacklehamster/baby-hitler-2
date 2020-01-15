@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cache';
+const CACHE_NAME = 'cache1';
 
 self.importScripts('offline_files.js');
 
@@ -19,7 +19,9 @@ addEventListener('install', event => {
 	    		} else {
 	    			return false;
 	    		}
-	    	});
+		    }).then(function() {
+				return self.skipWaiting();
+			})	    	
 	    })
 	);
 });
