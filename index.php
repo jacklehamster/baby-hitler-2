@@ -108,9 +108,9 @@ EOD;
     /**
      *  ZIP GAME
      */
-  $zipFilename = 'baby-hitler-2.zip';
-  zipAll($zipFilename);
-  $md5 = md5_file($zipFilename);
-  file_put_contents('zip_version.txt', "$md5\n");
-
+    $zipFilename = 'baby-hitler-2.zip';
+    zipAll($zipFilename);
+    $md5 = md5_file($zipFilename);
+    file_put_contents('zip_version.txt', "$md5\n");
+    file_put_contents('generated/version.js', "const CACHE_NAME = '$md5';\n");
 ?>

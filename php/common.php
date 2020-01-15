@@ -18,11 +18,11 @@ function prepare_dir($dir, $var, $output_file, $lambda=null) {
       if(!$lambda || $lambda($filepath)){
         $files[] = $filepath;
         $size = filesize($filepath);
-        $date = filemtime($filepath);
+        $md5 = md5_file($filepath);
         $asset_source .= <<<EOD
 '$file' : {
   size: $size,
-  date: '$date',
+  md5: '$md5',
 },
 
 EOD;
