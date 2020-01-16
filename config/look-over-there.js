@@ -107,7 +107,7 @@ game.addScene(
 						return 3.5;
 					}
 				},
-				offsetY: (game, sprite) => -10,
+				offsetY: (game, sprite) => -11,
 				index: (game, sprite) => {
 					const { pendingTip, now } = game;
 					return pendingTip && pendingTip.talker === "human" && pendingTip.progress < 1 ? Math.floor(now / 100) % 4 : 0;

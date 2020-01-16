@@ -166,9 +166,11 @@ game.addScene(
 				src: ASSETS.ZOOM_TAVERN_DOOR_ROBOT, col: 3, row: 3,
 				offsetY: game => Math.round(Math.sin(game.now / 600) * 3), 
 				onClick: game => {
+					game.waitCursor = true;
 					game.showTip([
 						"The tavern is for members only.",
 					], game => {
+						game.waitCursor = false;
 						game.startDialog({
 							conversation: [
 								{
@@ -176,9 +178,9 @@ game.addScene(
 										{ 
 											msg: "Got the password",
 											onSelect: game => {
+												game.waitCursor = true;
 												game.showTip("Go ahead, enter the password.", game => {
 													game.dialog = null;
-													game.waitCursor = true;
 													game.sceneData.showDigits = game.now;
 													game.delayAction(game => {
 														game.waitCursor = false;

@@ -128,8 +128,8 @@ const CONFIG_FILES = {
   md5: 'e1bf9b48ef5854cc8b167e5d3ca5a17f',
 },
 'final-planet-world.js' : {
-  size: 30636,
-  md5: 'e0d34454a2a9ef053897a780254cf209',
+  size: 30648,
+  md5: 'cfb0e2ed812462cb411d087bc8b1c490',
 },
 'final-planet.js' : {
   size: 1112,
@@ -181,7 +181,7 @@ const CONFIG_FILES = {
 },
 'inside-tavern.js' : {
   size: 912,
-  md5: 'f33044e00b42f309597e6ce009eb1df2',
+  md5: 'af720eff952a07f431f94d0f67a35b44',
 },
 'jail-cell.js' : {
   size: 17980,
@@ -217,11 +217,11 @@ const CONFIG_FILES = {
 },
 'look-over-there.js' : {
   size: 4955,
-  md5: '342e8c0cde29e5ebfc926b37edf60217',
+  md5: 'e0de42c9721d185888fb9a72748d5cc5',
 },
 'look-right-left.js' : {
   size: 3610,
-  md5: '0a64ac313314b79973bc0c5612f851f7',
+  md5: 'b2adca7256c80d72049f983385703d7a',
 },
 'maze-2.js' : {
   size: 2832,
@@ -308,8 +308,8 @@ const CONFIG_FILES = {
   md5: '340b57d60b6def11f833940c2e961af9',
 },
 'space-adventure.js' : {
-  size: 5599,
-  md5: '7adfd5ba8703bb1439657ea3139a6fac',
+  size: 5676,
+  md5: '7268700129b2a2490def0d881e58b952',
 },
 'space-travel.js' : {
   size: 1861,
@@ -332,8 +332,8 @@ const CONFIG_FILES = {
   md5: 'e88a4abb9e94896503febfcecf5ffe44',
 },
 'tavern-entrance-zoom.js' : {
-  size: 7285,
-  md5: '9b5d799fe0399ef5eb0f7acc4997ae4a',
+  size: 7344,
+  md5: '6210d8f31bd95edc244f7cfca9709ed3',
 },
 'tavern-entrance.js' : {
   size: 3953,
@@ -348,8 +348,8 @@ const CONFIG_FILES = {
   md5: '00c68291970081321383d30bb3b537b2',
 },
 'tavern-stranger-zoom.js' : {
-  size: 16251,
-  md5: '51fc16abd04105877588912f11cac66b',
+  size: 16252,
+  md5: 'e8531de04760339896310fe17c12adbc',
 },
 'temp-end.js' : {
   size: 269,

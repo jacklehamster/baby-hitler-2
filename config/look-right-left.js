@@ -54,7 +54,7 @@ game.addScene(
 				},
 				offY: 3,
 				offsetX: (game, sprite) => 3 + (game.now - game.sceneTime >= 5000 ? 32 - 1.2 * (32 - game.evaluate(sprite.offX)) : 32 - (32 - game.evaluate(sprite.offX)) * game.evaluate(sprite.scale, sprite)),
-				offsetY: (game, sprite) => +3 + (game.now - game.sceneTime >= 5000 ? 64 - 1.2 * (64 - game.evaluate(sprite.offY)) : 64 - (64 - game.evaluate(sprite.offY) + Math.abs(Math.sin((5000 + game.sceneTime - game.now)/300)) * 2) * game.evaluate(sprite.scale, sprite)),
+				offsetY: (game, sprite) => +1 + (game.now - game.sceneTime >= 5000 ? 64 - 1.2 * (64 - game.evaluate(sprite.offY)) : 64 - (64 - game.evaluate(sprite.offY) + Math.abs(Math.sin((5000 + game.sceneTime - game.now)/300)) * 2) * game.evaluate(sprite.scale, sprite)),
 			},
 			{	//	YUPA
 				src: ASSETS.LOOK_RIGHT_LEFT, col: 4, row: 5,

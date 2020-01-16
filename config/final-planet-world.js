@@ -39,7 +39,7 @@ game.addScene(
 			for (let i = 0; i < 5; i++) {
 				game.delayAction(game => {
 					game.playSound(SOUNDS.HIT, {volume:.3});
-				}, 150 * i);				
+				}, 150 * i + 1);				
 			}
 
 			game.delayAction(game => {

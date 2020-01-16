@@ -154,7 +154,7 @@ game.addScene(
 									], game => {
 										currentScene.startTalk(game, "stranger", [
 											"Hum... really?",
-											"What's so goddamn\nimportant in that tavern?",
+											"What's so\ngoddamn\nimportant in that tavern?",
 										], game => {
 											game.dialog.index ++;
 										});

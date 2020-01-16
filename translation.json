@@ -1595,75 +1595,15 @@
         "text": "\u201cWestrow tavern is 230m East and 395m South from here\u201d",
         "timestamp": "2020-01-15T15:18:21Z"
     },
-    "d4b5f06f92a42674154999a77bff9f77": {
-        "md5": "d4b5f06f92a42674154999a77bff9f77",
-        "text": "+12xp",
-        "timestamp": "2020-01-15T15:19:33Z"
-    },
-    "4ffe8aab8cbb82546b14153c904c1c30": {
-        "md5": "4ffe8aab8cbb82546b14153c904c1c30",
-        "text": "fruit? x3",
-        "timestamp": "2020-01-15T15:19:39Z"
-    },
     "9fe9c0a8e17e6679470770033ebb44b6": {
         "md5": "9fe9c0a8e17e6679470770033ebb44b6",
         "text": "empty bottle x2",
         "timestamp": "2020-01-15T15:19:41Z"
     },
-    "d014cbbfa117aff304db40832992af60": {
-        "md5": "d014cbbfa117aff304db40832992af60",
-        "text": "+15xp",
-        "timestamp": "2020-01-15T15:20:48Z"
-    },
-    "809797d7e41981826f2ea1a07fbcf33e": {
-        "md5": "809797d7e41981826f2ea1a07fbcf33e",
-        "text": "LVL 4",
-        "timestamp": "2020-01-15T15:20:52Z"
-    },
-    "72e37dce4bdd72291b16a017ff489002": {
-        "md5": "72e37dce4bdd72291b16a017ff489002",
-        "text": "I found one bullet for my gun.",
-        "timestamp": "2020-01-15T15:20:59Z"
-    },
-    "efc04584d6b45a296fb463d628480ba5": {
-        "md5": "efc04584d6b45a296fb463d628480ba5",
-        "text": "Ask direction",
-        "timestamp": "2020-01-15T15:21:07Z"
-    },
-    "17036854701caa1b6a06d024a84c6ebd": {
-        "md5": "17036854701caa1b6a06d024a84c6ebd",
-        "text": "Ask info...",
-        "timestamp": "2020-01-15T15:21:07Z"
-    },
     "65af1d230962e07fd6d0590104262580": {
         "md5": "65af1d230962e07fd6d0590104262580",
         "text": "You are currently facing South West.",
         "timestamp": "2020-01-15T15:21:08Z"
-    },
-    "6ef30da25f23814c8ab0a58dde0e4745": {
-        "md5": "6ef30da25f23814c8ab0a58dde0e4745",
-        "text": "The moon...",
-        "timestamp": "2020-01-15T15:21:13Z"
-    },
-    "7fa21899543224b06af620a83c5b550a": {
-        "md5": "7fa21899543224b06af620a83c5b550a",
-        "text": "Nomads...",
-        "timestamp": "2020-01-15T15:21:14Z"
-    },
-    "88147f844f1515c4fd2e93da6acdb9fa": {
-        "md5": "88147f844f1515c4fd2e93da6acdb9fa",
-        "text": "Where are we?",
-        "timestamp": "2020-01-15T15:21:14Z"
-    },
-    "1e7c9dc407a8f5c34be01bbf333dac09": {
-        "md5": "1e7c9dc407a8f5c34be01bbf333dac09",
-        "text": "Us nomads roam around Westrow's desert.",
-        "timestamp": "2020-01-15T15:21:15Z"
-    },
-    "40c49e020f8124a4833328f8eed96bff": {
-        "md5": "40c49e020f8124a4833328f8eed96bff",
-        "text": "Other humans gather around a village near Westrow's tavern.",
-        "timestamp": "2020-01-15T15:21:20Z"
     },
     "3414330b75f3cbbaf3b838160548c8b9": {
         "md5": "3414330b75f3cbbaf3b838160548c8b9",
@@ -1674,11 +1614,6 @@
         "md5": "03e2aaeb072c3a13c20989d51a21699a",
         "text": "I found five bullets for my gun.",
         "timestamp": "2020-01-15T15:21:43Z"
-    },
-    "f1735bbeae59d4455c3543abc6a8418a": {
-        "md5": "f1735bbeae59d4455c3543abc6a8418a",
-        "text": "fruit? x2",
-        "timestamp": "2020-01-15T15:21:48Z"
     },
     "1d3658f8f9cf8eb9fd52494569ee0ad0": {
         "md5": "1d3658f8f9cf8eb9fd52494569ee0ad0",
@@ -1730,110 +1665,10 @@
         "text": "\u201cWestrow tavern is 30m East and 35m South from here\u201d",
         "timestamp": "2020-01-15T15:25:10Z"
     },
-    "29e7a2b08974ca548bb0c167d07fb1db": {
-        "md5": "29e7a2b08974ca548bb0c167d07fb1db",
-        "text": "Hey, it looks like Yupa and I.",
-        "timestamp": "2020-01-15T15:25:30Z"
-    },
-    "647246d9d57f89dbfd2cc7677d830545": {
-        "md5": "647246d9d57f89dbfd2cc7677d830545",
-        "text": "We're worth a lot of money!",
-        "timestamp": "2020-01-15T15:25:34Z"
-    },
     "e4baced84bbca44d0b2f10beef71e7d6": {
         "md5": "e4baced84bbca44d0b2f10beef71e7d6",
         "text": "Damn it's freaking cold out there.",
         "timestamp": "2020-01-15T15:25:38Z"
-    },
-    "5bde992fd89a4fa0298e31543de470db": {
-        "md5": "5bde992fd89a4fa0298e31543de470db",
-        "text": "You got light?",
-        "timestamp": "2020-01-15T15:25:42Z"
-    },
-    "c7c737db5bbe5f441713be90c490b460": {
-        "md5": "c7c737db5bbe5f441713be90c490b460",
-        "text": "I think he wants me to light up his cig.",
-        "timestamp": "2020-01-15T15:26:20Z"
-    },
-    "e54e55f2fcda3e6422bf54842d261ce5": {
-        "md5": "e54e55f2fcda3e6422bf54842d261ce5",
-        "text": "gun with ",
-        "timestamp": "2020-01-15T15:26:28Z"
-    },
-    "6b5acb2e640698609e40dd025a6d3c2b": {
-        "md5": "6b5acb2e640698609e40dd025a6d3c2b",
-        "text": " bullets",
-        "timestamp": "2020-01-15T15:26:29Z"
-    },
-    "5fabb598c2a623a07288015fd094d076": {
-        "md5": "5fabb598c2a623a07288015fd094d076",
-        "text": "Thanks.",
-        "timestamp": "2020-01-15T15:26:34Z"
-    },
-    "f6c2093759842407fc533c6f8a7d1b76": {
-        "md5": "f6c2093759842407fc533c6f8a7d1b76",
-        "text": "Who are you?",
-        "timestamp": "2020-01-15T15:26:35Z"
-    },
-    "84a0b8044162588dc10bcc87bb66e28f": {
-        "md5": "84a0b8044162588dc10bcc87bb66e28f",
-        "text": "How to get in?",
-        "timestamp": "2020-01-15T15:26:36Z"
-    },
-    "474de287b1a6b3a29bfe536b9d5ac76a": {
-        "md5": "474de287b1a6b3a29bfe536b9d5ac76a",
-        "text": "Who are you? Are you a member of the tavern?",
-        "timestamp": "2020-01-15T15:26:41Z"
-    },
-    "387f3a6b5d6e8bbc52a2af0537e9cd36": {
-        "md5": "387f3a6b5d6e8bbc52a2af0537e9cd36",
-        "text": "Yeah... you can say I'm a regular at the tavern.",
-        "timestamp": "2020-01-15T15:26:47Z"
-    },
-    "521ce4ecc80a33907aec00e6af1f1552": {
-        "md5": "521ce4ecc80a33907aec00e6af1f1552",
-        "text": "How often do you come here?",
-        "timestamp": "2020-01-15T15:26:52Z"
-    },
-    "980b45fcfdae66662ea497123ddd028e": {
-        "md5": "980b45fcfdae66662ea497123ddd028e",
-        "text": "Damn, I pratically live here.",
-        "timestamp": "2020-01-15T15:26:56Z"
-    },
-    "06c7d4626e90a1097096fa1cfacc8edb": {
-        "md5": "06c7d4626e90a1097096fa1cfacc8edb",
-        "text": "How can I get into the tavern?",
-        "timestamp": "2020-01-15T15:27:02Z"
-    },
-    "9df637a46db07021cc9ca9e8dcec6f1b": {
-        "md5": "9df637a46db07021cc9ca9e8dcec6f1b",
-        "text": "The tavern is reserved for members.",
-        "timestamp": "2020-01-15T15:27:06Z"
-    },
-    "bf6c09bf1da792897ecb60b96f6c01a8": {
-        "md5": "bf6c09bf1da792897ecb60b96f6c01a8",
-        "text": "We all know the password to get in.",
-        "timestamp": "2020-01-15T15:27:10Z"
-    },
-    "ebe1a9a2a7de7aebd32e93a6c624894e": {
-        "md5": "ebe1a9a2a7de7aebd32e93a6c624894e",
-        "text": "But it's a secret. Most members never share it.",
-        "timestamp": "2020-01-15T15:27:14Z"
-    },
-    "d198e54c1d27c18f2dcf6242eea44510": {
-        "md5": "d198e54c1d27c18f2dcf6242eea44510",
-        "text": "How about you?",
-        "timestamp": "2020-01-15T15:27:19Z"
-    },
-    "325eb0b9be7032f68254b1ea8dff3267": {
-        "md5": "325eb0b9be7032f68254b1ea8dff3267",
-        "text": "Give me the pass!",
-        "timestamp": "2020-01-15T15:27:20Z"
-    },
-    "381b93b483d3a08c47594b5ac187d37d": {
-        "md5": "381b93b483d3a08c47594b5ac187d37d",
-        "text": "Please, help me!",
-        "timestamp": "2020-01-15T15:27:20Z"
     },
     "038e916cfa33cfad8d8309ce2eb3de25": {
         "md5": "038e916cfa33cfad8d8309ce2eb3de25",
@@ -1850,21 +1685,6 @@
         "text": "What business do you have in this tavern?",
         "timestamp": "2020-01-15T15:27:30Z"
     },
-    "412237ab02340b07564aea32a45f2e52": {
-        "md5": "412237ab02340b07564aea32a45f2e52",
-        "text": "Baby Hitler.",
-        "timestamp": "2020-01-15T15:27:34Z"
-    },
-    "b1b1cdd1d80bf2fc53b3b1ddc3257d14": {
-        "md5": "b1b1cdd1d80bf2fc53b3b1ddc3257d14",
-        "text": "I can't tell you.",
-        "timestamp": "2020-01-15T15:27:34Z"
-    },
-    "55e4165037f2f20fb13569adbef7696e": {
-        "md5": "55e4165037f2f20fb13569adbef7696e",
-        "text": "I need to pee",
-        "timestamp": "2020-01-15T15:27:35Z"
-    },
     "7c1a0a2621c13e306157ff699c3d8168": {
         "md5": "7c1a0a2621c13e306157ff699c3d8168",
         "text": "I really need to use the\nrestroom.",
@@ -1879,201 +1699,6 @@
         "md5": "0e7797e379b1a0211dd5caf13b60991e",
         "text": "Better piss your pants then. The tavern isn't open for that.",
         "timestamp": "2020-01-15T15:27:44Z"
-    },
-    "a7365ef7535df370a011849f8d6b5031": {
-        "md5": "a7365ef7535df370a011849f8d6b5031",
-        "text": "Give me the pass, or else!",
-        "timestamp": "2020-01-15T15:28:11Z"
-    },
-    "85359c2e0ef01f6abe42e627a9e587f8": {
-        "md5": "85359c2e0ef01f6abe42e627a9e587f8",
-        "text": "Are you\nthreatening me?",
-        "timestamp": "2020-01-15T15:28:13Z"
-    },
-    "91c79c8b3488474a89636771777efd44": {
-        "md5": "91c79c8b3488474a89636771777efd44",
-        "text": "Why don't you freaking tell me...",
-        "timestamp": "2020-01-15T15:28:15Z"
-    },
-    "da91184f8c2c0066cc26bccc63fd6499": {
-        "md5": "da91184f8c2c0066cc26bccc63fd6499",
-        "text": "What the hell are you looking for in this tavern?",
-        "timestamp": "2020-01-15T15:28:18Z"
-    },
-    "628b448b84ca4fd5de41f4f6400d58f0": {
-        "md5": "628b448b84ca4fd5de41f4f6400d58f0",
-        "text": "I'm looking for someone...",
-        "timestamp": "2020-01-15T15:28:24Z"
-    },
-    "203b279b543ddef99d13f061860088ac": {
-        "md5": "203b279b543ddef99d13f061860088ac",
-        "text": "A kid, his name is...",
-        "timestamp": "2020-01-15T15:28:27Z"
-    },
-    "fdc4fe45a13da4b0a0aaa813862feae1": {
-        "md5": "fdc4fe45a13da4b0a0aaa813862feae1",
-        "text": "Baby Hitler!",
-        "timestamp": "2020-01-15T15:28:28Z"
-    },
-    "c54ccd14286cc6b006d073ae350a2187": {
-        "md5": "c54ccd14286cc6b006d073ae350a2187",
-        "text": "Baby...",
-        "timestamp": "2020-01-15T15:28:30Z"
-    },
-    "731942dcaa452d899717009337b722fc": {
-        "md5": "731942dcaa452d899717009337b722fc",
-        "text": "Hitler...",
-        "timestamp": "2020-01-15T15:28:31Z"
-    },
-    "9ebb86724b6a33d491c7e6d3754306ba": {
-        "md5": "9ebb86724b6a33d491c7e6d3754306ba",
-        "text": "I might know that name, or might not...",
-        "timestamp": "2020-01-15T15:28:33Z"
-    },
-    "16aaf7ee751cbd196f75610f6b931c9c": {
-        "md5": "16aaf7ee751cbd196f75610f6b931c9c",
-        "text": "That depends...",
-        "timestamp": "2020-01-15T15:28:37Z"
-    },
-    "cc4d4aa65b3c78af33828b82c4b644f3": {
-        "md5": "cc4d4aa65b3c78af33828b82c4b644f3",
-        "text": "What do you want from him?",
-        "timestamp": "2020-01-15T15:28:39Z"
-    },
-    "41737d5ab886ea172b5c61316ef18245": {
-        "md5": "41737d5ab886ea172b5c61316ef18245",
-        "text": "He can save me.",
-        "timestamp": "2020-01-15T15:28:41Z"
-    },
-    "7d7c9cf549b5e426e1c40acf78378c15": {
-        "md5": "7d7c9cf549b5e426e1c40acf78378c15",
-        "text": "Just talk.",
-        "timestamp": "2020-01-15T15:28:41Z"
-    },
-    "671b4e18c5a0909fa290c76869f58c3e": {
-        "md5": "671b4e18c5a0909fa290c76869f58c3e",
-        "text": "That photo... is it...",
-        "timestamp": "2020-01-15T15:28:46Z"
-    },
-    "1bba7d00777da2b8df8027220b3c598c": {
-        "md5": "1bba7d00777da2b8df8027220b3c598c",
-        "text": "That's right. It's the only photo I have of Baby Hitler.",
-        "timestamp": "2020-01-15T15:28:49Z"
-    },
-    "a88a7872dc810be0a8a293b160c9ab13": {
-        "md5": "a88a7872dc810be0a8a293b160c9ab13",
-        "text": "It was taken fifteen years ago... I've lost my memory ever since...",
-        "timestamp": "2020-01-15T15:28:55Z"
-    },
-    "c6f085ed978e9553b9a716259c54694b": {
-        "md5": "c6f085ed978e9553b9a716259c54694b",
-        "text": "So I don't know how we got\nseparated...",
-        "timestamp": "2020-01-15T15:29:02Z"
-    },
-    "e2061c2315c7467ffa0f7c4643d315d7": {
-        "md5": "e2061c2315c7467ffa0f7c4643d315d7",
-        "text": "But I want to bring us all back together.",
-        "timestamp": "2020-01-15T15:29:06Z"
-    },
-    "c2a2f3c5af9920b6f00310a93cf7fb8b": {
-        "md5": "c2a2f3c5af9920b6f00310a93cf7fb8b",
-        "text": "Like a family. Me, Yupa, and Baby Hitler.",
-        "timestamp": "2020-01-15T15:29:11Z"
-    },
-    "2232037626b09642e0579ba31daab76c": {
-        "md5": "2232037626b09642e0579ba31daab76c",
-        "text": "Family huh?",
-        "timestamp": "2020-01-15T15:29:16Z"
-    },
-    "1a2dcbdd68ea9bdbad87d5e20dc3ed22": {
-        "md5": "1a2dcbdd68ea9bdbad87d5e20dc3ed22",
-        "text": "How touching... almost made me throw up.",
-        "timestamp": "2020-01-15T15:29:18Z"
-    },
-    "6818cdd22e2f505e8a61592aa3107e0a": {
-        "md5": "6818cdd22e2f505e8a61592aa3107e0a",
-        "text": "Alright, not sure if I can trust you this time,",
-        "timestamp": "2020-01-15T15:29:24Z"
-    },
-    "d9623303af87f076bf4aa23c6308f009": {
-        "md5": "d9623303af87f076bf4aa23c6308f009",
-        "text": "but I'll take my chances.",
-        "timestamp": "2020-01-15T15:29:29Z"
-    },
-    "4d2d917c433e83f125562f65539e7c97": {
-        "md5": "4d2d917c433e83f125562f65539e7c97",
-        "text": "Keep it a secret:",
-        "timestamp": "2020-01-15T15:29:32Z"
-    },
-    "954b6e82963540575a2a5f840869485f": {
-        "md5": "954b6e82963540575a2a5f840869485f",
-        "text": "To get in, the password is",
-        "timestamp": "2020-01-15T15:29:35Z"
-    },
-    "ef2d6d612e920d4100295045c878bf7b": {
-        "md5": "ef2d6d612e920d4100295045c878bf7b",
-        "text": "Same as the tavern's phone number.",
-        "timestamp": "2020-01-15T15:29:44Z"
-    },
-    "cd17c51603b20ff41fb90c7781a404ff": {
-        "md5": "cd17c51603b20ff41fb90c7781a404ff",
-        "text": "Thanks for your help...",
-        "timestamp": "2020-01-15T15:29:48Z"
-    },
-    "13f2316d2d1c9c6caad2d1956082ae89": {
-        "md5": "13f2316d2d1c9c6caad2d1956082ae89",
-        "text": "Once inside, to get to Baby Hitler,",
-        "timestamp": "2020-01-15T15:29:51Z"
-    },
-    "ec485ded019c66604c96d9c2422f130a": {
-        "md5": "ec485ded019c66604c96d9c2422f130a",
-        "text": "you'll have to deal with a man named Dick Ruber.",
-        "timestamp": "2020-01-15T15:29:55Z"
-    },
-    "15256298367bee6f7d953fd557c22c55": {
-        "md5": "15256298367bee6f7d953fd557c22c55",
-        "text": "He's the freaking gang boss.",
-        "timestamp": "2020-01-15T15:30:00Z"
-    },
-    "2f5ace5210d18a9cea715ce29161f801": {
-        "md5": "2f5ace5210d18a9cea715ce29161f801",
-        "text": "He won't let go of that kid, unless you beat him",
-        "timestamp": "2020-01-15T15:30:04Z"
-    },
-    "be2c3163b32c93dde458694989756222": {
-        "md5": "be2c3163b32c93dde458694989756222",
-        "text": "at a card game.",
-        "timestamp": "2020-01-15T15:30:09Z"
-    },
-    "2666175d80970f992096e1397dee04b9": {
-        "md5": "2666175d80970f992096e1397dee04b9",
-        "text": "Well then, I'll just have to be lucky.",
-        "timestamp": "2020-01-15T15:30:12Z"
-    },
-    "0bcf4826b736a4c42f9861b73ee0d362": {
-        "md5": "0bcf4826b736a4c42f9861b73ee0d362",
-        "text": "That game has nothing to do with luck.",
-        "timestamp": "2020-01-15T15:30:16Z"
-    },
-    "23fa69ff49391359233fd6cc6da3f132": {
-        "md5": "23fa69ff49391359233fd6cc6da3f132",
-        "text": "Here, take this with you.",
-        "timestamp": "2020-01-15T15:30:21Z"
-    },
-    "44c79d397839b0fd23352f359ac66132": {
-        "md5": "44c79d397839b0fd23352f359ac66132",
-        "text": "The ace of hearts.\nSomething's written on it.",
-        "timestamp": "2020-01-15T15:30:24Z"
-    },
-    "1c1b97211890520c3ae4f96fabd5eb1f": {
-        "md5": "1c1b97211890520c3ae4f96fabd5eb1f",
-        "text": "A playing card?",
-        "timestamp": "2020-01-15T15:30:29Z"
-    },
-    "60beaf2d1cad90d99e8d50a4e46a7cea": {
-        "md5": "60beaf2d1cad90d99e8d50a4e46a7cea",
-        "text": "What's that mark?",
-        "timestamp": "2020-01-15T15:30:29Z"
     },
     "28ab83ab6149f9b385e87a61be483ed3": {
         "md5": "28ab83ab6149f9b385e87a61be483ed3",
@@ -2099,31 +1724,6 @@
         "md5": "2ae7ca7115ccb913d229c6f407b9268b",
         "text": "It's the only card that will let you beat Dick Ruber.",
         "timestamp": "2020-01-15T15:30:50Z"
-    },
-    "522e8ee0ef67311962deb6d5693434d0": {
-        "md5": "522e8ee0ef67311962deb6d5693434d0",
-        "text": "Thank you. I'll be on my way.",
-        "timestamp": "2020-01-15T15:30:57Z"
-    },
-    "b9cc77ab3e06e4a34a49be68454d64a4": {
-        "md5": "b9cc77ab3e06e4a34a49be68454d64a4",
-        "text": "Good luck! You'll need it.",
-        "timestamp": "2020-01-15T15:31:01Z"
-    },
-    "74f8ecabc3d3e00fc506a8cf60622548": {
-        "md5": "74f8ecabc3d3e00fc506a8cf60622548",
-        "text": "I thought that game didn't involve any luck.",
-        "timestamp": "2020-01-15T15:31:04Z"
-    },
-    "570e78dcf35cd0ea855c337126f26adc": {
-        "md5": "570e78dcf35cd0ea855c337126f26adc",
-        "text": "I wasn't talking about the game,",
-        "timestamp": "2020-01-15T15:31:09Z"
-    },
-    "3ced7cc944b245cbdddd6e3213e3b956": {
-        "md5": "3ced7cc944b245cbdddd6e3213e3b956",
-        "text": "but what happens afterwards...",
-        "timestamp": "2020-01-15T15:31:13Z"
     },
     "8dd418f94ce7c39e6b27ef9789a8eb0e": {
         "md5": "8dd418f94ce7c39e6b27ef9789a8eb0e",
@@ -2204,86 +1804,6 @@
         "md5": "d7c3dd4939523d718157482e0c96290e",
         "text": "I'm a rich and\ngenerous lady ...",
         "timestamp": "2020-01-15T15:32:22Z"
-    },
-    "475ae71020f249ffbeaa621abfbefa6d": {
-        "md5": "475ae71020f249ffbeaa621abfbefa6d",
-        "text": "The tavern is for members only.",
-        "timestamp": "2020-01-15T15:32:30Z"
-    },
-    "7a435f2b77fbfeb6c447370252aeebe1": {
-        "md5": "7a435f2b77fbfeb6c447370252aeebe1",
-        "text": "Become a member",
-        "timestamp": "2020-01-15T15:32:34Z"
-    },
-    "a4689ddee2c38148bc84ff56d574e844": {
-        "md5": "a4689ddee2c38148bc84ff56d574e844",
-        "text": "Got the password",
-        "timestamp": "2020-01-15T15:32:34Z"
-    },
-    "3292ba6e8a4de8905f762e0a98b22b5c": {
-        "md5": "3292ba6e8a4de8905f762e0a98b22b5c",
-        "text": "Go ahead, enter the password.",
-        "timestamp": "2020-01-15T15:32:35Z"
-    },
-    "d0b31121a8f4bc842456d94b04e868df": {
-        "md5": "d0b31121a8f4bc842456d94b04e868df",
-        "text": "Look ova dere!",
-        "timestamp": "2020-01-15T15:33:13Z"
-    },
-    "d569efb9a8f299cab058e50e402cbe46": {
-        "md5": "d569efb9a8f299cab058e50e402cbe46",
-        "text": "That young boy over there, is that? ...",
-        "timestamp": "2020-01-15T15:33:21Z"
-    },
-    "4249f8aa7357634b8740ba430ac9fa41": {
-        "md5": "4249f8aa7357634b8740ba430ac9fa41",
-        "text": "Yeah, dat's Baby Hitla!",
-        "timestamp": "2020-01-15T15:33:25Z"
-    },
-    "729a51874fe901b092899e9e8b31c97a": {
-        "md5": "729a51874fe901b092899e9e8b31c97a",
-        "text": "Are you sure?",
-        "timestamp": "2020-01-15T15:33:34Z"
-    },
-    "98b3e2642603935acd1c1f23d099647b": {
-        "md5": "98b3e2642603935acd1c1f23d099647b",
-        "text": "He doesn't look at all like a future dictator...",
-        "timestamp": "2020-01-15T15:33:36Z"
-    },
-    "93f1deaa78a36fdeffd175ce3006c4c8": {
-        "md5": "93f1deaa78a36fdeffd175ce3006c4c8",
-        "text": "Yeah, I raconize dat hairstyle",
-        "timestamp": "2020-01-15T15:33:42Z"
-    },
-    "01f4f5b09317c09e5e8ab1edad6c16b3": {
-        "md5": "01f4f5b09317c09e5e8ab1edad6c16b3",
-        "text": "Definatly dats him.",
-        "timestamp": "2020-01-15T15:33:45Z"
-    },
-    "19ea3b31301e93b6bfcff12fc18e25c7": {
-        "md5": "19ea3b31301e93b6bfcff12fc18e25c7",
-        "text": "Ok... then that man sitting there.",
-        "timestamp": "2020-01-15T15:33:48Z"
-    },
-    "89d34d0fc25d5a7d61ec8d607047ce71": {
-        "md5": "89d34d0fc25d5a7d61ec8d607047ce71",
-        "text": "I bet you that's Dick Ruber.",
-        "timestamp": "2020-01-15T15:33:52Z"
-    },
-    "07f25ea652317b92bb951386998f0813": {
-        "md5": "07f25ea652317b92bb951386998f0813",
-        "text": "Looks like he's surrrounded by two\nbodyguards,",
-        "timestamp": "2020-01-15T15:33:56Z"
-    },
-    "514d67549867323c25cda9fdc24dfc50": {
-        "md5": "514d67549867323c25cda9fdc24dfc50",
-        "text": "which might cause a bit of trouble.",
-        "timestamp": "2020-01-15T15:34:01Z"
-    },
-    "84c0180e64a9d7648bb5605d38147b01": {
-        "md5": "84c0180e64a9d7648bb5605d38147b01",
-        "text": "Let's first check out the room,",
-        "timestamp": "2020-01-15T15:34:05Z"
     },
     "662fcf56e959ec0dad5035d694de9a4e": {
         "md5": "662fcf56e959ec0dad5035d694de9a4e",
@@ -2674,5 +2194,660 @@
         "md5": "959d77b6cb2e9343ec147b3c389fa054",
         "text": "... BASTARD!",
         "timestamp": "2020-01-15T15:40:51Z"
+    },
+    "3d6f09367c71da6f4e447af6035cf4cc": {
+        "md5": "3d6f09367c71da6f4e447af6035cf4cc",
+        "text": "We landed in the middle of nowhere!",
+        "timestamp": "2020-01-16T04:54:19Z"
+    },
+    "0060636b449d1da5a8581bfee180f0c2": {
+        "md5": "0060636b449d1da5a8581bfee180f0c2",
+        "text": " and ",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "bc3e760d6eee43c61f97b85bf81e473b": {
+        "md5": "bc3e760d6eee43c61f97b85bf81e473b",
+        "text": " from here\u201d",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "524aef79efbeb74f095f42485fbfd4b1": {
+        "md5": "524aef79efbeb74f095f42485fbfd4b1",
+        "text": "230m",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "b5fc5327eb8705dc31425599b796d833": {
+        "md5": "b5fc5327eb8705dc31425599b796d833",
+        "text": "335m",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "a99dc62d017d04cf67266593f9c3761e": {
+        "md5": "a99dc62d017d04cf67266593f9c3761e",
+        "text": "East",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "263d7b2cf53802c9ed127b718c0bf9fd": {
+        "md5": "263d7b2cf53802c9ed127b718c0bf9fd",
+        "text": "South",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "9489d2325c55fd56a5bc6588a0a5fa80": {
+        "md5": "9489d2325c55fd56a5bc6588a0a5fa80",
+        "text": "\u201cWestrow tavern is ",
+        "timestamp": "2020-01-16T04:54:31Z"
+    },
+    "639bdfbff2aadcecb93d60535deb571a": {
+        "md5": "639bdfbff2aadcecb93d60535deb571a",
+        "text": "315m",
+        "timestamp": "2020-01-16T04:54:43Z"
+    },
+    "efc04584d6b45a296fb463d628480ba5": {
+        "md5": "efc04584d6b45a296fb463d628480ba5",
+        "text": "Ask direction",
+        "timestamp": "2020-01-16T04:54:49Z"
+    },
+    "17036854701caa1b6a06d024a84c6ebd": {
+        "md5": "17036854701caa1b6a06d024a84c6ebd",
+        "text": "Ask info...",
+        "timestamp": "2020-01-16T04:54:49Z"
+    },
+    "7fa21899543224b06af620a83c5b550a": {
+        "md5": "7fa21899543224b06af620a83c5b550a",
+        "text": "Nomads...",
+        "timestamp": "2020-01-16T04:54:50Z"
+    },
+    "6ef30da25f23814c8ab0a58dde0e4745": {
+        "md5": "6ef30da25f23814c8ab0a58dde0e4745",
+        "text": "The moon...",
+        "timestamp": "2020-01-16T04:54:50Z"
+    },
+    "88147f844f1515c4fd2e93da6acdb9fa": {
+        "md5": "88147f844f1515c4fd2e93da6acdb9fa",
+        "text": "Where are we?",
+        "timestamp": "2020-01-16T04:54:50Z"
+    },
+    "1e7c9dc407a8f5c34be01bbf333dac09": {
+        "md5": "1e7c9dc407a8f5c34be01bbf333dac09",
+        "text": "Us nomads roam around Westrow's desert.",
+        "timestamp": "2020-01-16T04:54:53Z"
+    },
+    "40c49e020f8124a4833328f8eed96bff": {
+        "md5": "40c49e020f8124a4833328f8eed96bff",
+        "text": "Other humans gather around a village near Westrow's tavern.",
+        "timestamp": "2020-01-16T04:54:58Z"
+    },
+    "4779db8709a1bfc41aaec5256d30b957": {
+        "md5": "4779db8709a1bfc41aaec5256d30b957",
+        "text": "210m",
+        "timestamp": "2020-01-16T04:55:11Z"
+    },
+    "b964552cac5e5052b054657b3edf0e2b": {
+        "md5": "b964552cac5e5052b054657b3edf0e2b",
+        "text": "295m",
+        "timestamp": "2020-01-16T04:55:11Z"
+    },
+    "b38ec1a864489d1b3d05ad85bf2027a2": {
+        "md5": "b38ec1a864489d1b3d05ad85bf2027a2",
+        "text": "I failed my escape!",
+        "timestamp": "2020-01-16T05:21:44Z"
+    },
+    "4ffe8aab8cbb82546b14153c904c1c30": {
+        "md5": "4ffe8aab8cbb82546b14153c904c1c30",
+        "text": "fruit? x3",
+        "timestamp": "2020-01-16T05:21:55Z"
+    },
+    "d8ce9ee3a9321ce0c8f22982818c0455": {
+        "md5": "d8ce9ee3a9321ce0c8f22982818c0455",
+        "text": "170m",
+        "timestamp": "2020-01-16T05:22:11Z"
+    },
+    "d56c59c5ecec2c0ef520e283c264d5e2": {
+        "md5": "d56c59c5ecec2c0ef520e283c264d5e2",
+        "text": "255m",
+        "timestamp": "2020-01-16T05:22:11Z"
+    },
+    "62a5fdf4c8ad483f2389f7e6cf2d5cce": {
+        "md5": "62a5fdf4c8ad483f2389f7e6cf2d5cce",
+        "text": "50m",
+        "timestamp": "2020-01-16T05:23:06Z"
+    },
+    "12612bac0d1908ec0da60146cbe265e4": {
+        "md5": "12612bac0d1908ec0da60146cbe265e4",
+        "text": "95m",
+        "timestamp": "2020-01-16T05:23:06Z"
+    },
+    "474de287b1a6b3a29bfe536b9d5ac76a": {
+        "md5": "474de287b1a6b3a29bfe536b9d5ac76a",
+        "text": "Who are you? Are you a member of the tavern?",
+        "timestamp": "2020-01-16T05:31:30Z"
+    },
+    "387f3a6b5d6e8bbc52a2af0537e9cd36": {
+        "md5": "387f3a6b5d6e8bbc52a2af0537e9cd36",
+        "text": "Yeah... you can say I'm a regular at the tavern.",
+        "timestamp": "2020-01-16T05:31:35Z"
+    },
+    "521ce4ecc80a33907aec00e6af1f1552": {
+        "md5": "521ce4ecc80a33907aec00e6af1f1552",
+        "text": "How often do you come here?",
+        "timestamp": "2020-01-16T05:31:40Z"
+    },
+    "980b45fcfdae66662ea497123ddd028e": {
+        "md5": "980b45fcfdae66662ea497123ddd028e",
+        "text": "Damn, I pratically live here.",
+        "timestamp": "2020-01-16T05:31:44Z"
+    },
+    "b57587199a9252d3b12949c4f01229f2": {
+        "md5": "b57587199a9252d3b12949c4f01229f2",
+        "text": "Please, help me out dude!",
+        "timestamp": "2020-01-16T05:32:09Z"
+    },
+    "87337416dac9867c3175c1223e5942fa": {
+        "md5": "87337416dac9867c3175c1223e5942fa",
+        "text": "I need to get in. It's a matter of life or death.",
+        "timestamp": "2020-01-16T05:32:10Z"
+    },
+    "8db2df3bda7cd727108a97b689969f68": {
+        "md5": "8db2df3bda7cd727108a97b689969f68",
+        "text": "Hum... really?",
+        "timestamp": "2020-01-16T05:32:12Z"
+    },
+    "15fd4064957e0d3a68de8c2ec3c98935": {
+        "md5": "15fd4064957e0d3a68de8c2ec3c98935",
+        "text": "What's so goddamn\nimportant in that tavern?",
+        "timestamp": "2020-01-16T05:32:13Z"
+    },
+    "401fdc7ccad4211ebd30e95d604ca95c": {
+        "md5": "401fdc7ccad4211ebd30e95d604ca95c",
+        "text": "It's secret! I can't tell you.",
+        "timestamp": "2020-01-16T05:32:51Z"
+    },
+    "235f2514552cdc1106f0dff82dedb649": {
+        "md5": "235f2514552cdc1106f0dff82dedb649",
+        "text": "I'm on a secret mission.",
+        "timestamp": "2020-01-16T05:32:54Z"
+    },
+    "d83c5cf19adeb8a62404e963ce10d88b": {
+        "md5": "d83c5cf19adeb8a62404e963ce10d88b",
+        "text": "Well it's ok,\nbutthead.",
+        "timestamp": "2020-01-16T05:32:58Z"
+    },
+    "2e47771479ad8a783254c93358a10df2": {
+        "md5": "2e47771479ad8a783254c93358a10df2",
+        "text": "You're not\nsharing, and I'm not sharing.",
+        "timestamp": "2020-01-16T05:33:01Z"
+    },
+    "25dfb907d2cae2d1f3cec4c6a73fada0": {
+        "md5": "25dfb907d2cae2d1f3cec4c6a73fada0",
+        "text": "I'm just a regular at the tavern.",
+        "timestamp": "2020-01-16T05:33:10Z"
+    },
+    "31e8335a63885e16f40f62ba0a51a953": {
+        "md5": "31e8335a63885e16f40f62ba0a51a953",
+        "text": "fruit? x4",
+        "timestamp": "2020-01-16T05:33:52Z"
+    },
+    "f1735bbeae59d4455c3543abc6a8418a": {
+        "md5": "f1735bbeae59d4455c3543abc6a8418a",
+        "text": "fruit? x2",
+        "timestamp": "2020-01-16T05:43:41Z"
+    },
+    "d4b5f06f92a42674154999a77bff9f77": {
+        "md5": "d4b5f06f92a42674154999a77bff9f77",
+        "text": "+12xp",
+        "timestamp": "2020-01-16T05:44:12Z"
+    },
+    "72e37dce4bdd72291b16a017ff489002": {
+        "md5": "72e37dce4bdd72291b16a017ff489002",
+        "text": "I found one bullet for my gun.",
+        "timestamp": "2020-01-16T05:44:15Z"
+    },
+    "d014cbbfa117aff304db40832992af60": {
+        "md5": "d014cbbfa117aff304db40832992af60",
+        "text": "+15xp",
+        "timestamp": "2020-01-16T05:47:33Z"
+    },
+    "6e6638812edd6c611e963b6edd3147ef": {
+        "md5": "6e6638812edd6c611e963b6edd3147ef",
+        "text": "This is it! Westrow's tavern!",
+        "timestamp": "2020-01-16T05:47:47Z"
+    },
+    "29e7a2b08974ca548bb0c167d07fb1db": {
+        "md5": "29e7a2b08974ca548bb0c167d07fb1db",
+        "text": "Hey, it looks like Yupa and I.",
+        "timestamp": "2020-01-16T05:48:30Z"
+    },
+    "647246d9d57f89dbfd2cc7677d830545": {
+        "md5": "647246d9d57f89dbfd2cc7677d830545",
+        "text": "We're worth a lot of money!",
+        "timestamp": "2020-01-16T05:48:33Z"
+    },
+    "22c4a7b87534c959a2f2464adb4f8b8c": {
+        "md5": "22c4a7b87534c959a2f2464adb4f8b8c",
+        "text": "Damn it's\nfreaking cold out here.",
+        "timestamp": "2020-01-16T05:49:53Z"
+    },
+    "5bde992fd89a4fa0298e31543de470db": {
+        "md5": "5bde992fd89a4fa0298e31543de470db",
+        "text": "You got light?",
+        "timestamp": "2020-01-16T05:49:57Z"
+    },
+    "c7c737db5bbe5f441713be90c490b460": {
+        "md5": "c7c737db5bbe5f441713be90c490b460",
+        "text": "I think he wants me to light up his cig.",
+        "timestamp": "2020-01-16T05:52:15Z"
+    },
+    "6b5acb2e640698609e40dd025a6d3c2b": {
+        "md5": "6b5acb2e640698609e40dd025a6d3c2b",
+        "text": " bullets",
+        "timestamp": "2020-01-16T05:52:21Z"
+    },
+    "e54e55f2fcda3e6422bf54842d261ce5": {
+        "md5": "e54e55f2fcda3e6422bf54842d261ce5",
+        "text": "gun with ",
+        "timestamp": "2020-01-16T05:52:21Z"
+    },
+    "5fabb598c2a623a07288015fd094d076": {
+        "md5": "5fabb598c2a623a07288015fd094d076",
+        "text": "Thanks.",
+        "timestamp": "2020-01-16T05:52:26Z"
+    },
+    "84a0b8044162588dc10bcc87bb66e28f": {
+        "md5": "84a0b8044162588dc10bcc87bb66e28f",
+        "text": "How to get in?",
+        "timestamp": "2020-01-16T05:52:27Z"
+    },
+    "f6c2093759842407fc533c6f8a7d1b76": {
+        "md5": "f6c2093759842407fc533c6f8a7d1b76",
+        "text": "Who are you?",
+        "timestamp": "2020-01-16T05:52:27Z"
+    },
+    "06c7d4626e90a1097096fa1cfacc8edb": {
+        "md5": "06c7d4626e90a1097096fa1cfacc8edb",
+        "text": "How can I get into the tavern?",
+        "timestamp": "2020-01-16T05:53:05Z"
+    },
+    "9df637a46db07021cc9ca9e8dcec6f1b": {
+        "md5": "9df637a46db07021cc9ca9e8dcec6f1b",
+        "text": "The tavern is reserved for members.",
+        "timestamp": "2020-01-16T05:53:07Z"
+    },
+    "bf6c09bf1da792897ecb60b96f6c01a8": {
+        "md5": "bf6c09bf1da792897ecb60b96f6c01a8",
+        "text": "We all know the password to get in.",
+        "timestamp": "2020-01-16T05:53:08Z"
+    },
+    "ebe1a9a2a7de7aebd32e93a6c624894e": {
+        "md5": "ebe1a9a2a7de7aebd32e93a6c624894e",
+        "text": "But it's a secret. Most members never share it.",
+        "timestamp": "2020-01-16T05:53:10Z"
+    },
+    "325eb0b9be7032f68254b1ea8dff3267": {
+        "md5": "325eb0b9be7032f68254b1ea8dff3267",
+        "text": "Give me the pass!",
+        "timestamp": "2020-01-16T05:53:11Z"
+    },
+    "d198e54c1d27c18f2dcf6242eea44510": {
+        "md5": "d198e54c1d27c18f2dcf6242eea44510",
+        "text": "How about you?",
+        "timestamp": "2020-01-16T05:53:11Z"
+    },
+    "381b93b483d3a08c47594b5ac187d37d": {
+        "md5": "381b93b483d3a08c47594b5ac187d37d",
+        "text": "Please, help me!",
+        "timestamp": "2020-01-16T05:53:11Z"
+    },
+    "a7365ef7535df370a011849f8d6b5031": {
+        "md5": "a7365ef7535df370a011849f8d6b5031",
+        "text": "Give me the pass, or else!",
+        "timestamp": "2020-01-16T05:53:13Z"
+    },
+    "85359c2e0ef01f6abe42e627a9e587f8": {
+        "md5": "85359c2e0ef01f6abe42e627a9e587f8",
+        "text": "Are you\nthreatening me?",
+        "timestamp": "2020-01-16T05:53:14Z"
+    },
+    "91c79c8b3488474a89636771777efd44": {
+        "md5": "91c79c8b3488474a89636771777efd44",
+        "text": "Why don't you freaking tell me...",
+        "timestamp": "2020-01-16T05:53:15Z"
+    },
+    "da91184f8c2c0066cc26bccc63fd6499": {
+        "md5": "da91184f8c2c0066cc26bccc63fd6499",
+        "text": "What the hell are you looking for in this tavern?",
+        "timestamp": "2020-01-16T05:53:16Z"
+    },
+    "412237ab02340b07564aea32a45f2e52": {
+        "md5": "412237ab02340b07564aea32a45f2e52",
+        "text": "Baby Hitler.",
+        "timestamp": "2020-01-16T05:53:17Z"
+    },
+    "b1b1cdd1d80bf2fc53b3b1ddc3257d14": {
+        "md5": "b1b1cdd1d80bf2fc53b3b1ddc3257d14",
+        "text": "I can't tell you.",
+        "timestamp": "2020-01-16T05:53:17Z"
+    },
+    "55e4165037f2f20fb13569adbef7696e": {
+        "md5": "55e4165037f2f20fb13569adbef7696e",
+        "text": "I need to pee",
+        "timestamp": "2020-01-16T05:53:17Z"
+    },
+    "628b448b84ca4fd5de41f4f6400d58f0": {
+        "md5": "628b448b84ca4fd5de41f4f6400d58f0",
+        "text": "I'm looking for someone...",
+        "timestamp": "2020-01-16T05:53:19Z"
+    },
+    "203b279b543ddef99d13f061860088ac": {
+        "md5": "203b279b543ddef99d13f061860088ac",
+        "text": "A kid, his name is...",
+        "timestamp": "2020-01-16T05:53:20Z"
+    },
+    "fdc4fe45a13da4b0a0aaa813862feae1": {
+        "md5": "fdc4fe45a13da4b0a0aaa813862feae1",
+        "text": "Baby Hitler!",
+        "timestamp": "2020-01-16T05:53:21Z"
+    },
+    "c54ccd14286cc6b006d073ae350a2187": {
+        "md5": "c54ccd14286cc6b006d073ae350a2187",
+        "text": "Baby...",
+        "timestamp": "2020-01-16T05:53:22Z"
+    },
+    "731942dcaa452d899717009337b722fc": {
+        "md5": "731942dcaa452d899717009337b722fc",
+        "text": "Hitler...",
+        "timestamp": "2020-01-16T05:53:22Z"
+    },
+    "9ebb86724b6a33d491c7e6d3754306ba": {
+        "md5": "9ebb86724b6a33d491c7e6d3754306ba",
+        "text": "I might know that name, or might not...",
+        "timestamp": "2020-01-16T05:53:23Z"
+    },
+    "16aaf7ee751cbd196f75610f6b931c9c": {
+        "md5": "16aaf7ee751cbd196f75610f6b931c9c",
+        "text": "That depends...",
+        "timestamp": "2020-01-16T05:53:25Z"
+    },
+    "cc4d4aa65b3c78af33828b82c4b644f3": {
+        "md5": "cc4d4aa65b3c78af33828b82c4b644f3",
+        "text": "What do you want from him?",
+        "timestamp": "2020-01-16T05:53:25Z"
+    },
+    "41737d5ab886ea172b5c61316ef18245": {
+        "md5": "41737d5ab886ea172b5c61316ef18245",
+        "text": "He can save me.",
+        "timestamp": "2020-01-16T05:53:26Z"
+    },
+    "7d7c9cf549b5e426e1c40acf78378c15": {
+        "md5": "7d7c9cf549b5e426e1c40acf78378c15",
+        "text": "Just talk.",
+        "timestamp": "2020-01-16T05:53:26Z"
+    },
+    "ae1c33fa39e2d67134ec9d7c3d0079fe": {
+        "md5": "ae1c33fa39e2d67134ec9d7c3d0079fe",
+        "text": "I need his help.",
+        "timestamp": "2020-01-16T05:53:31Z"
+    },
+    "ca9ed5905f44c02e9fb6635a20857fe4": {
+        "md5": "ca9ed5905f44c02e9fb6635a20857fe4",
+        "text": "It's a matter of life and death.",
+        "timestamp": "2020-01-16T05:53:32Z"
+    },
+    "7e3e7572cb82a4bb79827bcec237cea7": {
+        "md5": "7e3e7572cb82a4bb79827bcec237cea7",
+        "text": "I'm not sure I can trust a bloke like you.",
+        "timestamp": "2020-01-16T05:53:33Z"
+    },
+    "5417c7721e316d3c11c6f6a5c24675e7": {
+        "md5": "5417c7721e316d3c11c6f6a5c24675e7",
+        "text": "Who are you to him?",
+        "timestamp": "2020-01-16T05:53:33Z"
+    },
+    "cd5257e381c27960ec523d79d309a961": {
+        "md5": "cd5257e381c27960ec523d79d309a961",
+        "text": "I mean no harm to him.",
+        "timestamp": "2020-01-16T05:53:42Z"
+    },
+    "a56ac5ce7983438ecc9ebb05372814f1": {
+        "md5": "a56ac5ce7983438ecc9ebb05372814f1",
+        "text": "Just want to talk.",
+        "timestamp": "2020-01-16T05:53:43Z"
+    },
+    "d1cf4c5f64273021555b4ebbe60a7036": {
+        "md5": "d1cf4c5f64273021555b4ebbe60a7036",
+        "text": "How can I be sure I can trust you?",
+        "timestamp": "2020-01-16T05:53:44Z"
+    },
+    "671b4e18c5a0909fa290c76869f58c3e": {
+        "md5": "671b4e18c5a0909fa290c76869f58c3e",
+        "text": "That photo... is it...",
+        "timestamp": "2020-01-16T05:53:50Z"
+    },
+    "1bba7d00777da2b8df8027220b3c598c": {
+        "md5": "1bba7d00777da2b8df8027220b3c598c",
+        "text": "That's right. It's the only photo I have of Baby Hitler.",
+        "timestamp": "2020-01-16T05:53:53Z"
+    },
+    "a88a7872dc810be0a8a293b160c9ab13": {
+        "md5": "a88a7872dc810be0a8a293b160c9ab13",
+        "text": "It was taken fifteen years ago... I've lost my memory ever since...",
+        "timestamp": "2020-01-16T05:53:59Z"
+    },
+    "c6f085ed978e9553b9a716259c54694b": {
+        "md5": "c6f085ed978e9553b9a716259c54694b",
+        "text": "So I don't know how we got\nseparated...",
+        "timestamp": "2020-01-16T05:54:02Z"
+    },
+    "e2061c2315c7467ffa0f7c4643d315d7": {
+        "md5": "e2061c2315c7467ffa0f7c4643d315d7",
+        "text": "But I want to bring us all back together.",
+        "timestamp": "2020-01-16T05:54:04Z"
+    },
+    "c2a2f3c5af9920b6f00310a93cf7fb8b": {
+        "md5": "c2a2f3c5af9920b6f00310a93cf7fb8b",
+        "text": "Like a family. Me, Yupa, and Baby Hitler.",
+        "timestamp": "2020-01-16T05:54:05Z"
+    },
+    "2232037626b09642e0579ba31daab76c": {
+        "md5": "2232037626b09642e0579ba31daab76c",
+        "text": "Family huh?",
+        "timestamp": "2020-01-16T05:54:07Z"
+    },
+    "1a2dcbdd68ea9bdbad87d5e20dc3ed22": {
+        "md5": "1a2dcbdd68ea9bdbad87d5e20dc3ed22",
+        "text": "How touching... almost made me throw up.",
+        "timestamp": "2020-01-16T05:54:07Z"
+    },
+    "6818cdd22e2f505e8a61592aa3107e0a": {
+        "md5": "6818cdd22e2f505e8a61592aa3107e0a",
+        "text": "Alright, not sure if I can trust you this time,",
+        "timestamp": "2020-01-16T05:54:10Z"
+    },
+    "d9623303af87f076bf4aa23c6308f009": {
+        "md5": "d9623303af87f076bf4aa23c6308f009",
+        "text": "but I'll take my chances.",
+        "timestamp": "2020-01-16T05:54:12Z"
+    },
+    "4d2d917c433e83f125562f65539e7c97": {
+        "md5": "4d2d917c433e83f125562f65539e7c97",
+        "text": "Keep it a secret:",
+        "timestamp": "2020-01-16T05:54:13Z"
+    },
+    "954b6e82963540575a2a5f840869485f": {
+        "md5": "954b6e82963540575a2a5f840869485f",
+        "text": "To get in, the password is",
+        "timestamp": "2020-01-16T05:54:14Z"
+    },
+    "ef2d6d612e920d4100295045c878bf7b": {
+        "md5": "ef2d6d612e920d4100295045c878bf7b",
+        "text": "Same as the tavern's phone number.",
+        "timestamp": "2020-01-16T05:54:18Z"
+    },
+    "cd17c51603b20ff41fb90c7781a404ff": {
+        "md5": "cd17c51603b20ff41fb90c7781a404ff",
+        "text": "Thanks for your help...",
+        "timestamp": "2020-01-16T05:54:20Z"
+    },
+    "13f2316d2d1c9c6caad2d1956082ae89": {
+        "md5": "13f2316d2d1c9c6caad2d1956082ae89",
+        "text": "Once inside, to get to Baby Hitler,",
+        "timestamp": "2020-01-16T05:54:22Z"
+    },
+    "ec485ded019c66604c96d9c2422f130a": {
+        "md5": "ec485ded019c66604c96d9c2422f130a",
+        "text": "you'll have to deal with a man named Dick Ruber.",
+        "timestamp": "2020-01-16T05:54:23Z"
+    },
+    "15256298367bee6f7d953fd557c22c55": {
+        "md5": "15256298367bee6f7d953fd557c22c55",
+        "text": "He's the freaking gang boss.",
+        "timestamp": "2020-01-16T05:54:25Z"
+    },
+    "2f5ace5210d18a9cea715ce29161f801": {
+        "md5": "2f5ace5210d18a9cea715ce29161f801",
+        "text": "He won't let go of that kid, unless you beat him",
+        "timestamp": "2020-01-16T05:54:26Z"
+    },
+    "be2c3163b32c93dde458694989756222": {
+        "md5": "be2c3163b32c93dde458694989756222",
+        "text": "at a card game.",
+        "timestamp": "2020-01-16T05:54:28Z"
+    },
+    "2666175d80970f992096e1397dee04b9": {
+        "md5": "2666175d80970f992096e1397dee04b9",
+        "text": "Well then, I'll just have to be lucky.",
+        "timestamp": "2020-01-16T05:54:29Z"
+    },
+    "0bcf4826b736a4c42f9861b73ee0d362": {
+        "md5": "0bcf4826b736a4c42f9861b73ee0d362",
+        "text": "That game has nothing to do with luck.",
+        "timestamp": "2020-01-16T05:54:31Z"
+    },
+    "23fa69ff49391359233fd6cc6da3f132": {
+        "md5": "23fa69ff49391359233fd6cc6da3f132",
+        "text": "Here, take this with you.",
+        "timestamp": "2020-01-16T05:54:33Z"
+    },
+    "44c79d397839b0fd23352f359ac66132": {
+        "md5": "44c79d397839b0fd23352f359ac66132",
+        "text": "The ace of hearts.\nSomething's written on it.",
+        "timestamp": "2020-01-16T05:54:34Z"
+    },
+    "1c1b97211890520c3ae4f96fabd5eb1f": {
+        "md5": "1c1b97211890520c3ae4f96fabd5eb1f",
+        "text": "A playing card?",
+        "timestamp": "2020-01-16T05:54:36Z"
+    },
+    "60beaf2d1cad90d99e8d50a4e46a7cea": {
+        "md5": "60beaf2d1cad90d99e8d50a4e46a7cea",
+        "text": "What's that mark?",
+        "timestamp": "2020-01-16T05:54:36Z"
+    },
+    "522e8ee0ef67311962deb6d5693434d0": {
+        "md5": "522e8ee0ef67311962deb6d5693434d0",
+        "text": "Thank you. I'll be on my way.",
+        "timestamp": "2020-01-16T05:54:39Z"
+    },
+    "b9cc77ab3e06e4a34a49be68454d64a4": {
+        "md5": "b9cc77ab3e06e4a34a49be68454d64a4",
+        "text": "Good luck! You'll need it.",
+        "timestamp": "2020-01-16T05:54:40Z"
+    },
+    "74f8ecabc3d3e00fc506a8cf60622548": {
+        "md5": "74f8ecabc3d3e00fc506a8cf60622548",
+        "text": "I thought that game didn't involve any luck.",
+        "timestamp": "2020-01-16T05:54:41Z"
+    },
+    "570e78dcf35cd0ea855c337126f26adc": {
+        "md5": "570e78dcf35cd0ea855c337126f26adc",
+        "text": "I wasn't talking about the game,",
+        "timestamp": "2020-01-16T05:54:43Z"
+    },
+    "3ced7cc944b245cbdddd6e3213e3b956": {
+        "md5": "3ced7cc944b245cbdddd6e3213e3b956",
+        "text": "but what happens afterwards...",
+        "timestamp": "2020-01-16T05:54:45Z"
+    },
+    "809797d7e41981826f2ea1a07fbcf33e": {
+        "md5": "809797d7e41981826f2ea1a07fbcf33e",
+        "text": "LVL 4",
+        "timestamp": "2020-01-16T05:54:55Z"
+    },
+    "475ae71020f249ffbeaa621abfbefa6d": {
+        "md5": "475ae71020f249ffbeaa621abfbefa6d",
+        "text": "The tavern is for members only.",
+        "timestamp": "2020-01-16T06:05:07Z"
+    },
+    "7a435f2b77fbfeb6c447370252aeebe1": {
+        "md5": "7a435f2b77fbfeb6c447370252aeebe1",
+        "text": "Become a member",
+        "timestamp": "2020-01-16T06:05:10Z"
+    },
+    "a4689ddee2c38148bc84ff56d574e844": {
+        "md5": "a4689ddee2c38148bc84ff56d574e844",
+        "text": "Got the password",
+        "timestamp": "2020-01-16T06:05:10Z"
+    },
+    "3292ba6e8a4de8905f762e0a98b22b5c": {
+        "md5": "3292ba6e8a4de8905f762e0a98b22b5c",
+        "text": "Go ahead, enter the password.",
+        "timestamp": "2020-01-16T06:05:12Z"
+    },
+    "d0b31121a8f4bc842456d94b04e868df": {
+        "md5": "d0b31121a8f4bc842456d94b04e868df",
+        "text": "Look ova dere!",
+        "timestamp": "2020-01-16T06:08:18Z"
+    },
+    "d569efb9a8f299cab058e50e402cbe46": {
+        "md5": "d569efb9a8f299cab058e50e402cbe46",
+        "text": "That young boy over there, is that? ...",
+        "timestamp": "2020-01-16T06:08:26Z"
+    },
+    "4249f8aa7357634b8740ba430ac9fa41": {
+        "md5": "4249f8aa7357634b8740ba430ac9fa41",
+        "text": "Yeah, dat's Baby Hitla!",
+        "timestamp": "2020-01-16T06:08:30Z"
+    },
+    "729a51874fe901b092899e9e8b31c97a": {
+        "md5": "729a51874fe901b092899e9e8b31c97a",
+        "text": "Are you sure?",
+        "timestamp": "2020-01-16T06:08:39Z"
+    },
+    "98b3e2642603935acd1c1f23d099647b": {
+        "md5": "98b3e2642603935acd1c1f23d099647b",
+        "text": "He doesn't look at all like a future dictator...",
+        "timestamp": "2020-01-16T06:08:41Z"
+    },
+    "93f1deaa78a36fdeffd175ce3006c4c8": {
+        "md5": "93f1deaa78a36fdeffd175ce3006c4c8",
+        "text": "Yeah, I raconize dat hairstyle",
+        "timestamp": "2020-01-16T06:08:46Z"
+    },
+    "01f4f5b09317c09e5e8ab1edad6c16b3": {
+        "md5": "01f4f5b09317c09e5e8ab1edad6c16b3",
+        "text": "Definatly dats him.",
+        "timestamp": "2020-01-16T06:08:50Z"
+    },
+    "19ea3b31301e93b6bfcff12fc18e25c7": {
+        "md5": "19ea3b31301e93b6bfcff12fc18e25c7",
+        "text": "Ok... then that man sitting there.",
+        "timestamp": "2020-01-16T06:08:53Z"
+    },
+    "89d34d0fc25d5a7d61ec8d607047ce71": {
+        "md5": "89d34d0fc25d5a7d61ec8d607047ce71",
+        "text": "I bet you that's Dick Ruber.",
+        "timestamp": "2020-01-16T06:08:57Z"
+    },
+    "07f25ea652317b92bb951386998f0813": {
+        "md5": "07f25ea652317b92bb951386998f0813",
+        "text": "Looks like he's surrrounded by two\nbodyguards,",
+        "timestamp": "2020-01-16T06:09:01Z"
+    },
+    "514d67549867323c25cda9fdc24dfc50": {
+        "md5": "514d67549867323c25cda9fdc24dfc50",
+        "text": "which might cause a bit of trouble.",
+        "timestamp": "2020-01-16T06:09:06Z"
+    },
+    "84c0180e64a9d7648bb5605d38147b01": {
+        "md5": "84c0180e64a9d7648bb5605d38147b01",
+        "text": "Let's first check out the room,",
+        "timestamp": "2020-01-16T06:09:10Z"
     }
 }
