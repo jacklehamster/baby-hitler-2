@@ -120,10 +120,16 @@ EOD;
     $offline_files[] = "index.html";
     $offline_files[] = "manifest.json";
     $offline_files[] = "translation.json";
-    $offline_files[] = "offline.html";    
+    $offline_files[] = "offline.html";
+
+//    $previous_offline_js = file_get_contents("offline_files.js", LOCK_EX);
 
     $offline_json = json_encode($offline_files, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
-    file_put_contents("offline_files.js", "const OFFLINE_FILES = $offline_json");
+    file_put_contents("offline_files.js", "const OFFLINE_FILES = $offline_json;\n", LOCK_EX);
+
+    $now = time();
+    file_put_contents('generated/version.js', "const VERSION = $now;\n");
+
 
 
     /**

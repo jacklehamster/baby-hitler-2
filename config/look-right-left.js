@@ -47,7 +47,7 @@ game.addScene(
 				offX: game => {
 					const period = 400, timeTurn = 7000;
 					if (game.now - game.sceneTime > timeTurn && (game.now - game.sceneTime - timeTurn) / period < Math.PI*2) {
-						const frame = Math.sin((game.now - game.sceneTime - timeTurn) / period) * .7;
+						const frame = Math.sin((game.now - game.sceneTime - timeTurn) / period) * 1.3;
 						return 7 - frame;
 					}
 					return 7;

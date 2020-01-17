@@ -344,6 +344,8 @@ const ASSETS = {
 	PANIC_EXIT_RUNNER_12: "assets/panic-exit-runner-4.png|rotate-colors|rotate-colors",
 	BRING_IT_ON: "assets/bring-it-on.png",
 	SCREEN_FRACTURE: "assets/screen-fracture.png",
+	SHOOT_OUT: "assets/shoot-out.png",
+	GANGSTA_FIGHTER: "assets/gangsta-fighter.png",
 };
 
 const SOUNDS = {

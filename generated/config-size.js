@@ -124,8 +124,8 @@ const CONFIG_FILES = {
   md5: 'fb97967c5ea97d9e3ff371187bb54e6a',
 },
 'final-fight.js' : {
-  size: 861,
-  md5: 'e1bf9b48ef5854cc8b167e5d3ca5a17f',
+  size: 2202,
+  md5: '03315a05d48c47ddc01f0f122344523c',
 },
 'final-planet-world.js' : {
   size: 30648,
@@ -220,8 +220,8 @@ const CONFIG_FILES = {
   md5: 'e0de42c9721d185888fb9a72748d5cc5',
 },
 'look-right-left.js' : {
-  size: 3610,
-  md5: 'b2adca7256c80d72049f983385703d7a',
+  size: 3611,
+  md5: 'fa6397650e02c64d6ab84839d83155bb',
 },
 'maze-2.js' : {
   size: 2832,

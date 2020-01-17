@@ -11,6 +11,7 @@ const OFFLINE_FILES = [
     "generated/spritesheets/sheet3.png",
     "generated/spritesheets/sheet4.png",
     "generated/spritesheets/spritesheet.js",
+    "generated/version.js",
     "sounds/alien.mp3",
     "sounds/animal-cry.mp3",
     "sounds/baby-cry.mp3",
@@ -102,4 +103,4 @@ const OFFLINE_FILES = [
     "manifest.json",
     "translation.json",
     "offline.html"
-]
+];

@@ -407,6 +407,10 @@ const FILE_SIZE = {
   size: 1152,
   md5: 'f4a5d88a76e7f78b2ce11de2983c6998',
 },
+'gangsta-fighter.png' : {
+  size: 6642,
+  md5: '50ddc666e237da9a88e45677648cb43e',
+},
 'gate-open.png' : {
   size: 359,
   md5: '6eb2eb12ba91cbd2b7a917d257486f55',
@@ -946,6 +950,10 @@ const FILE_SIZE = {
 'shifty-eyes.png' : {
   size: 476,
   md5: '74faa33f928ffbc3a997ff81c92f6906',
+},
+'shoot-out.png' : {
+  size: 8238,
+  md5: '68f72074e7edf5c1b06ad6fb7179976b',
 },
 'shoots.png' : {
   size: 256,
