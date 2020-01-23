@@ -354,6 +354,7 @@ const ASSETS = {
 	YUPA_HITMAN_AT_GUNPOINT: "assets/yupa-hitman-at-gunpoint.png",
 	BOY_GUNPOINT: "assets/boy-gunpoint.png",
 	STRANGER_REVEAL: "assets/stranger-reveal.png",
+	CREATOR: "assets/creator.png",
 };
 
 const SOUNDS = {

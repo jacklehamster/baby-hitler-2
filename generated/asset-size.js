@@ -235,6 +235,10 @@ const FILE_SIZE = {
   size: 1157,
   md5: '521816a335516657013db4f6c9955b87',
 },
+'creator.png' : {
+  size: 15006,
+  md5: '4981d6b3aad2db0f05ef3a5330a4acef',
+},
 'dancer.png' : {
   size: 441,
   md5: '855f071be74038f362db4688d33f2de3',

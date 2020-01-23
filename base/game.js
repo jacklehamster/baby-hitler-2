@@ -3122,7 +3122,9 @@ const Game = (() => {
 				} else {
 					this.displayTextLine(tempCtx, {msg: "GAME OVER",  x:11, y:20 });					
 				}
-				this.displayTextLine(tempCtx, {msg: "try again",  x:16, y:40 });
+				if (!this.sceneData.gameOverNoTry) {
+					this.displayTextLine(tempCtx, {msg: "try again",  x:16, y:40 });
+				}
 				this.displayTextLine(tempCtx, {msg: "start over", x:14, y:50 });
 				this.displayOutlinedImage(tempCtx.canvas, "black", 4, 2);
 			}
@@ -3766,11 +3768,12 @@ const Game = (() => {
 			this.data.gameOver = false;
 		}
 
-		gameOver(message, leaveTheme) {
+		gameOver(message, leaveTheme, noTry) {
 			if (!this.data.gameOver) {
 				this.waitCursor = true;
 				this.data.gameOver = this.now;
 				this.sceneData.gameOverMessage = message;
+				this.sceneData.gameOverNoTry = noTry;
 				this.hideCursor = false;
 				this.bagOpening = 0;
 				this.delayAction(game => {

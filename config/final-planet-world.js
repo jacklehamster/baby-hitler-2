@@ -339,6 +339,12 @@ game.addScene(
 					const time = game.now - game.sceneData.moonLand;
 					return Math.max(.001, 1 - Math.sqrt(time / timeArrive));
 				},
+				onRefresh: game => {
+					const time = game.now - game.sceneData.moonLand;
+					if (time > 25000) {
+						game.gotoScene("creator");
+					}
+				},
 				hidden: game => !game.sceneData.moonLand,
 			},
 			{

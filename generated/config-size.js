@@ -63,6 +63,10 @@ const CONFIG_FILES = {
   size: 919,
   md5: '2ec7897dcb823305a6cbac0a456d6c77',
 },
+'creator.js' : {
+  size: 269,
+  md5: '9789e5319613f56f4ea4984f4a2433b1',
+},
 'crowd.js' : {
   size: 2920,
   md5: '032f27661431d20a85dd3b1fec6ae396',
@@ -132,8 +136,8 @@ const CONFIG_FILES = {
   md5: '37cfa04249b3b45995b33fca3016ed8b',
 },
 'final-planet-world.js' : {
-  size: 30648,
-  md5: 'cfb0e2ed812462cb411d087bc8b1c490',
+  size: 30799,
+  md5: 'b62cc01d47d1e635b962d0b4446238e0',
 },
 'final-planet.js' : {
   size: 1112,
@@ -268,8 +272,8 @@ const CONFIG_FILES = {
   md5: '744ddc979660e619c1e3255d5ac97741',
 },
 'not-so-fast.js' : {
-  size: 28080,
-  md5: 'e0b4b5b78e717b201e24a00e49a8aa69',
+  size: 28715,
+  md5: 'ce1534fb475779712c1b0839cb0979ae',
 },
 'origin.js' : {
   size: 3780,

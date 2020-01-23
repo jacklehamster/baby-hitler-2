@@ -4,7 +4,8 @@ game.addScene(
 		onScene: game => {
 			game.sceneData.credits = `
 				You did it!
-				You found Baby Hitler!
+				You found
+				Baby Hitler!
 
 				What a champ! What a champ!
 
@@ -159,7 +160,7 @@ game.addScene(
 																	game.sceneData.showBoy = game.now;
 																	game.currentScene.startTalk(game, "boy", [
 																		"Don't SCREW with me, I'll SHOOT you for real!",
-																		"You have NO IDEA what I'm capable of.",
+																		"You don't have ANY IDEA, what I'm capable of.",
 																	], game => {
 																		game.sceneData.showBoy = 0;
 																		game.currentScene.startTalk(game, "human", [
@@ -407,7 +408,7 @@ game.addScene(
 			if (game.sceneData.credits.length * 6 + shift < -25) {
 				if (!game.sceneData.showGameOver) {
 					game.sceneData.showGameOver = game.now;
-					game.gameOver(" ", true);
+					game.gameOver(" ", true, true);
 				}
 			}
 		},
@@ -561,7 +562,7 @@ game.addScene(
 			game.sceneData.showStranger = game.now;
 			game.currentScene.startTalk(game, "stranger", [
 				"Well, to be honest,",
-				"I did not expect you two bozos to show up again either...",
+				"I did not expect you bozos to show up again either...",
 			], game => {
 				game.sceneData.showStranger = 0;
 				game.sceneData.yupaToHuman = game.now;
@@ -662,6 +663,19 @@ game.addScene(
 					return 0;
 				},
 			},
+			{
+				src: ASSETS.BEARD_SHAVED, col: 3, row: 3,
+				scale: .8,
+				offsetX: ({sceneData}) => sceneData.humanToYupa ? -11 : -12,
+				offsetY: game => -2,
+				index: ({sceneData, pendingTip, now}) => {
+					if (sceneData.surprise) {
+						return (pendingTip && pendingTip.talker === "both" && pendingTip.progress < 1 ? Math.floor(now / 100) % 4: 3);
+					}					
+					return pendingTip && pendingTip.progress < 1 && pendingTip.talker === "human" ? Math.floor(now / 100) % 4 : 0;
+				},
+				hidden: game => !game.sceneData.facing,
+			},			
 			{	//	overlay
 				src: ASSETS.YUPA_HITMAN_AT_GUNPOINT, col: 5, row: 5,
 				side: LEFT,
