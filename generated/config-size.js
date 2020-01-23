@@ -16,8 +16,8 @@ const CONFIG_FILES = {
   md5: '5d448d078ba970810f32a18d38d2185a',
 },
 'asteroid-field.js' : {
-  size: 17056,
-  md5: 'bfed69bc39e1bd3297c82f796ec2f1e5',
+  size: 17055,
+  md5: '74deb1ee9900a559b3ab62e782d25d38',
 },
 'birthday.js' : {
   size: 607,
@@ -29,7 +29,7 @@ const CONFIG_FILES = {
 },
 'bring-it-on.js' : {
   size: 1675,
-  md5: 'd9c84bac1fea496ff977d41c82dffc1d',
+  md5: '572176e8093ddc163552aac6681281ca',
 },
 'cake-face.js' : {
   size: 605,
@@ -91,6 +91,10 @@ const CONFIG_FILES = {
   size: 3066,
   md5: '444588c0437f60a0304332d22a73ea45',
 },
+'ending.js' : {
+  size: 2731,
+  md5: 'f94b17c9123f0703f8163e4b603583ff',
+},
 'ernest-card-dealing.js' : {
   size: 11529,
   md5: '1ef17a9ac6ceb373885208750151e338',
@@ -124,8 +128,8 @@ const CONFIG_FILES = {
   md5: 'fb97967c5ea97d9e3ff371187bb54e6a',
 },
 'final-fight.js' : {
-  size: 2202,
-  md5: '03315a05d48c47ddc01f0f122344523c',
+  size: 14503,
+  md5: '37cfa04249b3b45995b33fca3016ed8b',
 },
 'final-planet-world.js' : {
   size: 30648,
@@ -204,8 +208,8 @@ const CONFIG_FILES = {
   md5: '2348222837eee2fe742d4f2a330e2ab9',
 },
 'load-screen.js' : {
-  size: 4291,
-  md5: 'ed7a7932629ea504363e2a89719a5694',
+  size: 4344,
+  md5: '747692111fdd6e0c6f27e0a8fc30bab1',
 },
 'lock-zoom.js' : {
   size: 4529,
@@ -263,6 +267,10 @@ const CONFIG_FILES = {
   size: 4526,
   md5: '744ddc979660e619c1e3255d5ac97741',
 },
+'not-so-fast.js' : {
+  size: 28080,
+  md5: 'e0b4b5b78e717b201e24a00e49a8aa69',
+},
 'origin.js' : {
   size: 3780,
   md5: '4ef4d246954bcab6ddd674a85f9eaca0',
@@ -316,8 +324,8 @@ const CONFIG_FILES = {
   md5: 'ec57e6e42c17ee2f812025b900e7933a',
 },
 'stars.js' : {
-  size: 9448,
-  md5: '8f1f3ce5e6d43c5760120e2f367594cf',
+  size: 9559,
+  md5: 'b3d9ad925d4fe35bd8f47647c65a549f',
 },
 'start-screen.js' : {
   size: 9428,

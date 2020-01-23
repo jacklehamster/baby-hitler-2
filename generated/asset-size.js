@@ -12,8 +12,8 @@ const FILE_SIZE = {
   md5: '1bc1753c36624457779cae2a930694cb',
 },
 'alphabet.png' : {
-  size: 552,
-  md5: '5d126e58f5ff7b4fab1559de3c5c3dc5',
+  size: 1623,
+  md5: '905caf1f6d45ec0294d04decbcbd8818',
 },
 'amari-baby.png' : {
   size: 1046,
@@ -99,6 +99,10 @@ const FILE_SIZE = {
   size: 323,
   md5: 'd4abdff1c23846355bc3f579f32b45f7',
 },
+'boy-gunpoint.png' : {
+  size: 10545,
+  md5: 'c685474fa84b1dedca67cb202ef7e12a',
+},
 'boy-smile.png' : {
   size: 1006,
   md5: '34a83ce0216eab787834b9a8e39ee78e',
@@ -112,8 +116,8 @@ const FILE_SIZE = {
   md5: 'f37e6be41fd5c838b867a276f8d6e743',
 },
 'bring-it-on.png' : {
-  size: 2985,
-  md5: '89f818af40232ad0589fb444fb07c7c0',
+  size: 752,
+  md5: 'cda9441bef7ddfc2fd865e1c875c97e7',
 },
 'brusalien.png' : {
   size: 2526,
@@ -732,8 +736,8 @@ const FILE_SIZE = {
   md5: '33b70dd910da29de654cb5ea95f80f02',
 },
 'menu-bag.png' : {
-  size: 609,
-  md5: 'dfe43694b00ca09cf92c71b6f28fd315',
+  size: 113,
+  md5: '2092980483ea236c88b6bac7615df70d',
 },
 'menu-disk.png' : {
   size: 113,
@@ -824,8 +828,8 @@ const FILE_SIZE = {
   md5: '17a7d7235dcb6f411cac389fd9707aa9',
 },
 'panic-exit-background.png' : {
-  size: 1830,
-  md5: 'e918abb134a02e754e7262822ecf53a2',
+  size: 334,
+  md5: '8f80c0d6902f71b37dc02b9d4ffc9021',
 },
 'panic-exit-runner-1.png' : {
   size: 495,
@@ -944,16 +948,16 @@ const FILE_SIZE = {
   md5: '7824e7092ec611d96493e5b108a59e83',
 },
 'screen-fracture.png' : {
-  size: 360,
-  md5: 'd54d155df1d957d0232bfb0a881f1b35',
+  size: 158,
+  md5: 'e38eb237b7c9aa3c7cf581c170dc51fc',
 },
 'shifty-eyes.png' : {
   size: 476,
   md5: '74faa33f928ffbc3a997ff81c92f6906',
 },
 'shoot-out.png' : {
-  size: 8238,
-  md5: '68f72074e7edf5c1b06ad6fb7179976b',
+  size: 10662,
+  md5: '7884f1d5bfb0384567d399c81fec6c35',
 },
 'shoots.png' : {
   size: 256,
@@ -1030,6 +1034,10 @@ const FILE_SIZE = {
 'stats.png' : {
   size: 201,
   md5: 'a2924546c8bdb236a6a713884d8802a5',
+},
+'stranger-reveal.png' : {
+  size: 9096,
+  md5: '0a17652f8ef52f49b09f96ab30f3e201',
 },
 'super-punch.png' : {
   size: 1751,
@@ -1135,6 +1143,10 @@ const FILE_SIZE = {
   size: 812,
   md5: '51107a016ad3226287691309bc92290d',
 },
+'we-did-it-yupa.png' : {
+  size: 9276,
+  md5: 'd94fd089f8dcf75d1d6bb9fcde4ee836',
+},
 'wood.png' : {
   size: 206,
   md5: '955dbf4e12814ee3e3ff5c36cafa7b40',
@@ -1167,6 +1179,10 @@ const FILE_SIZE = {
   size: 2383,
   md5: 'd39ba86b9ede2599cab222274fdfcdb7',
 },
+'yupa-hitman-at-gunpoint.png' : {
+  size: 9501,
+  md5: 'a1027b4bbbaaa6f333b088690c5ec2c9',
+},
 'yupa-hottub.png' : {
   size: 189,
   md5: '82a938789d45f1472c69a44db08f65d2',
@@ -1196,8 +1212,8 @@ const FILE_SIZE = {
   md5: '853433fdb339ea7012eea55bb39798f7',
 },
 'zoom-arcade.png' : {
-  size: 735,
-  md5: '7690538f92d25732574d4666a742c16f',
+  size: 300,
+  md5: 'f55eae1b7034638d64483b00e10d7f16',
 },
 'zoom-dick-mad.png' : {
   size: 895,

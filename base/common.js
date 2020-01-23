@@ -346,6 +346,14 @@ const ASSETS = {
 	SCREEN_FRACTURE: "assets/screen-fracture.png",
 	SHOOT_OUT: "assets/shoot-out.png",
 	GANGSTA_FIGHTER: "assets/gangsta-fighter.png",
+	SHOOT_OUT_2: "assets/shoot-out.png|darken",
+	// GANGSTA_FIGHTER_2: "assets/gangsta-fighter.png|rotate-colors",
+	// SHOOT_OUT_3: "assets/shoot-out.png|rotate-colors|rotate-colors",
+	// GANGSTA_FIGHTER_3: "assets/gangsta-fighter.png|rotate-colors|rotate-colors",
+	WE_DID_IT: "assets/we-did-it-yupa.png",
+	YUPA_HITMAN_AT_GUNPOINT: "assets/yupa-hitman-at-gunpoint.png",
+	BOY_GUNPOINT: "assets/boy-gunpoint.png",
+	STRANGER_REVEAL: "assets/stranger-reveal.png",
 };
 
 const SOUNDS = {
@@ -399,6 +407,7 @@ const SOUNDS = {
 	WEAKPUNCH: "sounds/weakpunch.mp3",
 	ROBOT_VOICE: "sounds/robot-voice.mp3",
 	HUM_LADY: "sounds/hum-lady.mp3",
+	HUM_KID: "sounds/hum-kid.mp3",
 	TURTLE_SONG_THEME: "sounds/turtle-song.mp3",
 	HELLO_HUMAN: "sounds/hello-human.mp3",
 	INVALID_NUMBER: "sounds/invalid-number.mp3",
@@ -406,10 +415,12 @@ const SOUNDS = {
 	YES_BOSS: "sounds/yes-boss-low.mp3",
 	YES_SIR: "sounds/yes-boss.mp3",
 	GOOD_BAD_UGLIZ: "sounds/good-bad-ugliz.mp3",
+	WELCOME_TO_YOUR_DOOM: "sounds/welcome-to-your-doom.mp3",
+	BEEBOP_THEME:'sounds/beebop.mp3',
 };
 
 const ALPHAS = (() => {
-	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.,?'#@!♪()[]/-+_“”éè:© "
+	const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz.,?'#@!♪()[]/-+_“”éè:©% "
    	   + new Array(10).fill(null).map((a, index) => String.fromCharCode(1000 + index)).join("");
 	const array = [];
 	for(let c = 0; c < letters.length; c++) {

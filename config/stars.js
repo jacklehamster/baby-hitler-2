@@ -188,6 +188,7 @@ game.addScene(
 								options: [
 									{
 										msg: "I want a beer!", onSelect: (game, dialog) => {
+											game.data.love = "beer";
 											game.waitCursor = true;
 											game.currentScene.startTalk(game, "human", "Alectra, bring me a nice cold beer!", game => {
 												game.currentScene.startTalk(game, "alexa", "Okay.", game => {
@@ -201,7 +202,8 @@ game.addScene(
 										},
 									},
 									{
-										msg: "Bring me cider!", onSelect: (game, dialog) => {
+										msg: "Bring me cidah!", onSelect: (game, dialog) => {
+											game.data.love = "cidah";
 											game.waitCursor = true;
 											game.currentScene.startTalk(game, "human", "I want some sparklin' cidah! Gimme some!", game => {
 												game.currentScene.startTalk(game, "alexa", "Okay.", game => {
@@ -216,6 +218,7 @@ game.addScene(
 									},
 									{
 										msg: "Got Ramune?", onSelect: (game, dialog) => {
+											game.data.love = "ramune";
 											game.waitCursor = true;
 											game.currentScene.startTalk(game, "human", ["Do you know Ramune?", "I love that drink, bring me Ramune!"], game => {
 												game.currentScene.startTalk(game, "alexa", "Okay.", game => {

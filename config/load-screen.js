@@ -34,12 +34,14 @@ gameConfig.scenes.push(
 				},
 				hidden: game => game.currentScene.getProgress(game) < 1,
 				onClick: game => {
-					game.playSound(SOUNDS.RANDOM);
-					game.sceneData.gameStarted = game.now;
-					game.delayAction(game => {
-						game.gotoScene("start-screen");
-						game.save("clear");
-					}, 1000);
+					if (!game.sceneData.gameStarted) {
+						game.playSound(SOUNDS.RANDOM);
+						game.sceneData.gameStarted = game.now;
+						game.delayAction(game => {
+							game.gotoScene("start-screen");
+							game.save("clear");
+						}, 1000);
+					}
 				}
 			},
 			{

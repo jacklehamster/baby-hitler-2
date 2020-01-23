@@ -36,7 +36,7 @@ game.addScene(
 				src: ASSETS.BEARD_SHAVED, col: 3, row: 3,
 				scale: 1.4,
 				offsetX: 0,
-				offsetY: -17,
+				offsetY: -19,
 				index: game => game.pendingTip && game.pendingTip.progress < 1 ? Math.floor(game.now / 100) % 4 : 0,
 			},
 			{

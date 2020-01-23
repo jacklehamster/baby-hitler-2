@@ -3772,6 +3772,7 @@ const Game = (() => {
 				this.data.gameOver = this.now;
 				this.sceneData.gameOverMessage = message;
 				this.hideCursor = false;
+				this.bagOpening = 0;
 				this.delayAction(game => {
 					this.waitCursor = false;
 				}, 1000);
@@ -3840,7 +3841,9 @@ const Game = (() => {
 			if (!this.isBlocked(this.pos, 0, -1, true)) {
 				game.move(game.now, "backward", game => {
 					this.waitCursor = false;;
-					this.playTheme(battleTheme, {volume:.2});
+					if (battleTheme !== "none") {
+						this.playTheme(battleTheme, {volume:.2});
+					}
 					if (callback)
 						callback(this);					
 				});
@@ -3873,7 +3876,9 @@ const Game = (() => {
 				this.battle.foeDefeated = this.now;
 				this.useItem = null;
 				this.playSound(SOUNDS.FOE_DEFEAT);
-				this.playTheme(this.battle.theme || SOUNDS.CHIN_TOK_THEME, {volume:.2});
+				if (this.battle.theme !== "none") {
+					this.playTheme(this.battle.theme || SOUNDS.CHIN_TOK_THEME, {volume:.2});
+				}
 				if (this.battle.onWin) {
 					this.data.stats.state = {
 						ate: 0,

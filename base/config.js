@@ -1606,7 +1606,8 @@ function makeFoe(foe, src) {
 		onShot: (game, sprite) => {
 			const {battle, data} = game;
 			if (!battle.invincible) {
-				game.damageFoe(1000, {shot:true});
+				console.log(battle.gunDamage);
+				game.damageFoe(battle.gunDamage || 1000, {shot:true});
 			}
 		},
 		combine: (item, game) => {
@@ -1731,7 +1732,7 @@ function standardBattle() {
 			offsetY: 5,
 			hidden: game => {
 				const {battle, arrow, useItem, bagOpening} = game;
-				return !battle || game.data.gameOver || battle.foeDefeated || useItem || bagOpening;
+				return !battle || battle.preventEscape || game.data.gameOver || battle.foeDefeated || useItem || bagOpening;
 			},
 			onClick: (game, sprite) => {
 				if (!game.evaluate(sprite.canEscape)) {
@@ -1938,7 +1939,7 @@ function standardBattle() {
 				ctx.fillStyle = "#bbcc22";
 				ctx.fillRect(5, 61, 54 * stats.life / stats.maxLife, 1);
 
-				if (battle.dummyBattle) {
+				if (!battle || battle.dummyBattle) {
 					return;
 				}
 				ctx.fillStyle = "#333333";
@@ -1950,7 +1951,7 @@ function standardBattle() {
 				ctx.fillStyle = "#cc22bb";
 				ctx.fillRect(5, 3, 54 * battle.foeLife / battle.foeMaxLife, 1);
 			},
-			hidden: ({battle, data}) => !battle || data.stats.life <= 0 || battle.foeDefeated,
+			hidden: ({battle, data, sceneData}) => (!battle && !sceneData.showLifebar) || data.stats.life <= 0 || battle && battle.foeDefeated,
 		},
 		{
 			custom: (game, sprite, ctx) => {
@@ -1979,14 +1980,15 @@ const consumable = {
 	},
 	"fruit?": game => {
 		const { stats } = game.data;
-		if (game.data.stats.state.ate && !game.battle) {
+		game.useItem = null;
+		if (game.data.stats.state.ate && !game.battle && !game.sceneData.actionScequence) {
 			game.showTip("I'm not hungry.");
 			return false;
 		} else {
 			game.playSound(SOUNDS.EAT);
 			game.addToLife(100, "#663300");
 			game.data.stats.state.ate = game.now;
-			if (!game.battle) {
+			if (!game.battle && !game.sceneData.actionScequence) {
 				game.showTip("Delicious!");						
 			}
 			return true;
@@ -1994,7 +1996,8 @@ const consumable = {
 	},
 	"water bottle": game => {
 		const { stats } = game.data;
-		if (game.data.stats.state.drank && !game.battle) {
+		game.useItem = null;
+		if (game.data.stats.state.drank && !game.battle && !game.sceneData.actionScequence) {
 			game.showTip(["I'm not thirsty.", "Physical exercise usually gets me thirsty."]);
 			return false;
 		} else {
@@ -2002,7 +2005,7 @@ const consumable = {
 			game.addToInventory({item:"empty bottle", image:ASSETS.GRAB_BOTTLE});
 			game.addToLife(30, "#0099aa");
 			game.data.stats.state.drank = game.now;
-			if (!game.battle) {
+			if (!game.battle && !game.sceneData.actionScequence) {
 				game.showTip("Refreshing!");
 			}
 			return true;
