@@ -38,21 +38,21 @@ game.addScene(
 						const gains = 20;
 						game.addToInventory({item:"coin", count:gains, image:ASSETS.GRAB_COIN});
 						for (let i = 0; i < 3; i++) {
-							game.delayAction(game => game.playSound(SOUNDS.DUD), 50*i);
+							game.delayAction(game => game.playSound(SOUNDS.DUD), 50*i+1);
 						}
 						game.showTip(`Wow! I won ${gains}`, null, null, { removeLock:true });
 					} else if (game.situation.slots[0] === 1) {
 						const gains = 100;
 						game.addToInventory({item:"coin", count:gains, image:ASSETS.GRAB_COIN});
 						for (let i = 0; i < 10; i++) {
-							game.delayAction(game => game.playSound(SOUNDS.DUD), 50*i);
+							game.delayAction(game => game.playSound(SOUNDS.DUD), 50*i+1);
 						}
 						game.showTip(`Wow! I won ${gains}`, null, null, { removeLock:true });
 					} else if (game.situation.slots[0] === 2) {
 						const gains = 500;
 						game.addToInventory({item:"coin", count:gains, image:ASSETS.GRAB_COIN});
 						for (let i = 0; i < 20; i++) {
-							game.delayAction(game => game.playSound(SOUNDS.DUD), 50*i);
+							game.delayAction(game => game.playSound(SOUNDS.DUD), 50*i+1);
 						}
 						game.showTip(`Oh wow! I won ${gains}!`, null, null, { removeLock:true });
 					}

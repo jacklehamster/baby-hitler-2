@@ -152,6 +152,7 @@ game.addScene(
 					if (timeProgress > 30 && !game.sceneData.gameOver) {
 						game.sceneData.gameOver = game.now;
 						game.playTheme(null);
+						getMedal("Swallowed");
 						game.gameOver(" “Don't fack with\n       alien lady!”");
 					}
 				},

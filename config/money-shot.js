@@ -2,6 +2,7 @@ game.addScene(
 	{
 		name: "money-shot",
 		onScene: game => {
+			getMedal("Sharpshooter");
 			game.hideCursor = true;
 			game.playSound(SOUNDS.GOOD_BAD_UGLIZ);
 			game.delayAction(game => {

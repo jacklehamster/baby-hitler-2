@@ -2,6 +2,7 @@ game.addScene(
 	{
 		name: "origin",
 		onScene: game => {
+			game.data.gameBeginning = new Date().getTime();
 			game.playTheme(SOUNDS.F1, {volume:.2});
 			game.sceneData.credits = `
 				I'm a\nprofessional hitman.

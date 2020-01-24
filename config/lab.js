@@ -97,6 +97,9 @@ game.addScene(
 						};
 					});
 				},
+				onShot: game => {
+					game.situation.shotTank = game.now;
+				},
 			},
 			{
 				src: ASSETS.LAB_EXIT,

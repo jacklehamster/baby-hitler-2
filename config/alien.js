@@ -64,6 +64,7 @@ game.addScene(
 				}
 			} else {
 				if (!game.data.gameOver) {
+					getMedal("Death by alien");
 					game.gameOver(" “~That was\n             not cake!~”");
 				}
 			}

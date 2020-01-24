@@ -3821,6 +3821,8 @@ const Game = (() => {
 		}
 
 		escapeBattle(callback) {
+			this.data.stats.state.drank = 0;
+			this.data.stats.state.ate = 0;
 			if (this.currentScene.onEscapeBattle) {
 				this.currentScene.onEscapeBattle(this, callback);
 				return;
@@ -3876,6 +3878,8 @@ const Game = (() => {
 			const calcDamage = shot ? damage : damage * damage / Math.max(1, this.battle.foeDefense);
 			this.battle.foeLife = Math.max(blocked ? 1 : 0, this.battle.foeLife - calcDamage);
 			if (!this.battle.foeLife) {
+				this.data.stats.state.drank = 0;
+				this.data.stats.state.ate = 0;
 				this.battle.foeDefeated = this.now;
 				this.useItem = null;
 				this.playSound(SOUNDS.FOE_DEFEAT);

@@ -19,6 +19,7 @@ game.addScene(
 					}
 				} else {
 					if (!game.data.gameOver) {
+						getMedal("Flushed out");
 						game.gameOver("  “What a sad way\n         to die!”");
 					}
 				}

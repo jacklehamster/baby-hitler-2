@@ -23,6 +23,7 @@ game.addScene(
 					game.stopSound(SOUNDS.GOLDMAN_THEME, true);
 					game.playTheme(SOUNDS.GOLDMAN_THEME, {volume: .8});
 					game.sceneData.creditStart = game.now;
+					getMedal("REBORN ENDING");
 				}, 3000);
 			});
 

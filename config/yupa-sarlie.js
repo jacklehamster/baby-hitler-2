@@ -510,12 +510,12 @@ game.addScene(
 				offsetY: 5,
 				index: game => {
 					if (game.sceneData.looking) {
-						if (game.pendingTip && pendingTip.progress < 1 && game.pendingTip.talker==="doctar") {
+						if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker==="doctar") {
 							return Math.floor(game.now / 100) % 2 + 19;
 						}
 						return 19;
 					}
-					if (game.pendingTip && pendingTip.progress < 1 && game.pendingTip.talker==="doctar") {
+					if (game.pendingTip && game.pendingTip.progress < 1 && game.pendingTip.talker==="doctar") {
 						return Math.floor(game.now / 100) % 2 === 0 ? 6 : 21;
 					}
 					return 6;

@@ -70,6 +70,9 @@ game.addScene(
 			ctx.fill();
 		},
 		onScene: game => {
+			//	address bug
+			delete game.inventory["ticket"];
+
 			/** restore health */
 			game.data.stats.life = game.data.stats.maxLife;
 

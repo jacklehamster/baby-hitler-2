@@ -46,6 +46,8 @@
     //  minify JS
  
     $base_files = [
+      "lib/newgroundsio.min.js",
+      "lib/ng.js",
       "base/error-div.js",
       "base/common.js",
       "base/game.js",

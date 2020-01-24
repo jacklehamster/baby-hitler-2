@@ -354,6 +354,7 @@ game.addScene(
 														{
 															msg: "you're not?",
 															onSelect: game => {
+																game.sceneData.humanSurprised = game.now;
 																game.currentScene.startTalk(game, "human", [
 																	"You're not Baby Hitler?",
 																], game => {
@@ -602,6 +603,7 @@ game.addScene(
 									game.delayAction(game => {
 										game.playTheme(SOUNDS.BEEBOP_THEME, {volume: .7});
 										game.delayAction(game => {
+											getMedal("HITLER ENDING");
 											game.sceneData.creditStart = game.now;
 											game.hideCursor = true;
 										}, 5000);

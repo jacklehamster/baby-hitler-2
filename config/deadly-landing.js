@@ -21,6 +21,7 @@ game.addScene(
 			if (!game.data.yupa || game.data.yupa.inBottle) {
 				if (!game.sceneData.showGameOver && frame > 150) {
 					game.hideCursor = false;
+					getMedal("Deep dive");
 					game.gameOver(" “~You're no\n          Superman!”~");
 				}
 			} else {
@@ -31,6 +32,7 @@ game.addScene(
 
 					game.showTip("Whadda stupid...", game => {
 						game.hideCursor = false;
+						getMedal("Deep dive");
 						game.gameOver();
 					}, null, { talker: "yupa" });
 				}

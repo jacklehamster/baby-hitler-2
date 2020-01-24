@@ -1,4 +1,4 @@
-const JAVASCRIPT_FILES = window.debugMode ? [ 'base/error-div.js','base/common.js','base/game.js','base/config.js','generated/config-size.js','generated/spritesheets/spritesheet.js','config/load-screen.js','base/translation.js','base/starter.js' ] : [ "generated/game-engine.min.js" ];
+const JAVASCRIPT_FILES = window.debugMode ? [ 'lib/newgroundsio.min.js','lib/ng.js','base/error-div.js','base/common.js','base/game.js','base/config.js','generated/config-size.js','generated/spritesheets/spritesheet.js','config/load-screen.js','base/translation.js','base/starter.js' ] : [ "generated/game-engine.min.js" ];
 JAVASCRIPT_FILES.forEach(file => {
   document.write(`<script src="${file}"><\/script>`);
 });

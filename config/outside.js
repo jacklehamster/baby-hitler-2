@@ -40,6 +40,7 @@ game.addScene(
 							} ],
 							[ 9, 1, game => {
 								game.delayAction(game => {
+									getMedal("Nonchalant");
 									game.hideCursor = false;
 									game.gameOver(" “Discretion\n   ain't my forte.”");
 								}, 3000);

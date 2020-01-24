@@ -4,12 +4,12 @@ const CONFIG_FILES = {
   md5: '85c4f5d49c347550e1eb95e04c1e8978',
 },
 'alien.js' : {
-  size: 3046,
-  md5: 'd4eb77a08d67139971354417a07ce15f',
+  size: 3079,
+  md5: 'd1225fdddba641f2823b5804418cacf8',
 },
 'amari-baby.js' : {
-  size: 3642,
-  md5: '999d9943026ff53b6c61fb45b71f9b3f',
+  size: 3674,
+  md5: '51fc80a8c89c256c389eeef64e56dd8a',
 },
 'arcade-room.js' : {
   size: 1035,
@@ -64,16 +64,16 @@ const CONFIG_FILES = {
   md5: '2ec7897dcb823305a6cbac0a456d6c77',
 },
 'creator.js' : {
-  size: 269,
-  md5: '9789e5319613f56f4ea4984f4a2433b1',
+  size: 4047,
+  md5: '6039f36f439202287a6077c238e798a1',
 },
 'crowd.js' : {
   size: 2920,
   md5: '032f27661431d20a85dd3b1fec6ae396',
 },
 'deadly-landing.js' : {
-  size: 1882,
-  md5: 'f66fe33793d8de782579ccbc75e77317',
+  size: 1939,
+  md5: 'f57df972a168f2e19f28355d9b912ce5',
 },
 'disk-screen.js' : {
   size: 13125,
@@ -92,8 +92,8 @@ const CONFIG_FILES = {
   md5: '2166cd7313aacca4746dfdc22e81c95d',
 },
 'drink-yupa.js' : {
-  size: 3066,
-  md5: '444588c0437f60a0304332d22a73ea45',
+  size: 3108,
+  md5: 'fe221b868cd5d20ce64efe846ba6d4c4',
 },
 'ending.js' : {
   size: 2731,
@@ -120,8 +120,8 @@ const CONFIG_FILES = {
   md5: '98e001cd69d620310027a16121f614a0',
 },
 'final-credit.js' : {
-  size: 3429,
-  md5: '0dc760fdba7a066629e1361f0ec27d31',
+  size: 3458,
+  md5: 'd8e3e56a4ca56c277d7473dbb25fe171',
 },
 'final-doom.js' : {
   size: 625,
@@ -196,8 +196,8 @@ const CONFIG_FILES = {
   md5: '28aea68587987a311beb349607bc2bfd',
 },
 'lab.js' : {
-  size: 6572,
-  md5: 'cc8e4c23b85a2f731b3a0a2d31e927d4',
+  size: 6642,
+  md5: 'ae5fcd4f6c35faf84509b941ba05d8cc',
 },
 'land-planet.js' : {
   size: 163,
@@ -256,12 +256,12 @@ const CONFIG_FILES = {
   md5: '462386bacd9d771326e71d0fe516f901',
 },
 'money-shot.js' : {
-  size: 728,
-  md5: '730fbd7ee6992be4f7856d8ac692e76b',
+  size: 757,
+  md5: 'dc491e39a9d56e1f09f52553f1444b81',
 },
 'monster-in-space.js' : {
-  size: 5570,
-  md5: 'b56ff3ac3357fff426d8043989ebae05',
+  size: 5599,
+  md5: '0be5af632f7e58f293cdf81c0d1ebbeb',
 },
 'morning-after.js' : {
   size: 5640,
@@ -272,20 +272,20 @@ const CONFIG_FILES = {
   md5: '744ddc979660e619c1e3255d5ac97741',
 },
 'not-so-fast.js' : {
-  size: 28715,
-  md5: 'ce1534fb475779712c1b0839cb0979ae',
+  size: 28811,
+  md5: 'd56174260b3d8ffa8cd963d89a056b7f',
 },
 'origin.js' : {
-  size: 3780,
-  md5: '4ef4d246954bcab6ddd674a85f9eaca0',
+  size: 3831,
+  md5: '71c9a36afa0aa8544d6eeaaa92cb30cb',
 },
 'outside-carnage.js' : {
   size: 5916,
   md5: 'be2af1d1b05536abec74a34e93b0e0e1',
 },
 'outside.js' : {
-  size: 2551,
-  md5: '07bad79d27f925b849f537868bb2c01d',
+  size: 2584,
+  md5: '5abb2d202bcea6ac52059395a7c19edf',
 },
 'panic-exit.js' : {
   size: 1447,
@@ -316,12 +316,12 @@ const CONFIG_FILES = {
   md5: '063562eed39aac920378f25889a653bc',
 },
 'slots.js' : {
-  size: 5249,
-  md5: '340b57d60b6def11f833940c2e961af9',
+  size: 5255,
+  md5: '4f6614767bb3ca720e10cb09d8c19dd5',
 },
 'space-adventure.js' : {
-  size: 5676,
-  md5: '7268700129b2a2490def0d881e58b952',
+  size: 5731,
+  md5: 'c4383726248e6dee7dcf41eb84009c7a',
 },
 'space-travel.js' : {
   size: 1861,
@@ -376,8 +376,8 @@ const CONFIG_FILES = {
   md5: '49050c2a848cd2ca4e7772c2dfac8e90',
 },
 'toilet-monster.js' : {
-  size: 827,
-  md5: '19b495e0a34be59b9783081cfbabed15',
+  size: 858,
+  md5: '6b748fc085ceea5fe1bd58c0113a8fea',
 },
 'toilet-zoom.js' : {
   size: 874,
@@ -404,8 +404,8 @@ const CONFIG_FILES = {
   md5: '62e927080943b59aa7e58153a09b14ea',
 },
 'yupa-sarlie.js' : {
-  size: 17965,
-  md5: 'db3c051d9c73a444d4d3dab97fcc50c4',
+  size: 17975,
+  md5: 'da211bd00d74101123ead27ac3715890',
 },
 'zoom-arcade.js' : {
   size: 20791,

@@ -408,8 +408,8 @@ const FILE_SIZE = {
   md5: '9cb6eb9ceaf5393d75394d779e44a390',
 },
 'game-thumbnail.png' : {
-  size: 19410,
-  md5: '02861185bd313745b364e19d811a9cf4',
+  size: 38403,
+  md5: '6cc268049ffd771f21b0314443d7b901',
 },
 'gangsta-check-cards.png' : {
   size: 1152,

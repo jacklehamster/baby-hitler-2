@@ -2,6 +2,7 @@ game.addScene(
 	{
 		name: "final-credit",
 		onScene: game => {
+			getMedal("NOBLE ENDING");
 			game.playTheme(SOUNDS.SOFT_THEME, {volume: .8});
 			game.hideCursor = true;
 			game.sceneData.credits = `${game.title||" Where in Space is\n  BABY HITLER?"}
