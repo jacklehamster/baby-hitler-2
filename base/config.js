@@ -874,6 +874,7 @@ function standardMenu() {
 				game.useItem = null;
 				return true;
 			},
+			label: "save / load game",
 		},
 		{
 			menu_item: true,
@@ -888,6 +889,7 @@ function standardMenu() {
 				game.useItem = null;
 				return true;
 			},
+			label: "mute sound",
 		},
 		{
 			menu_item: true,
@@ -902,6 +904,7 @@ function standardMenu() {
 				game.useItem = null;
 				return true;
 			},
+			label: "turn on sound",
 		},
 		{
 			menu_item: true,
@@ -991,6 +994,7 @@ function standardMenu() {
 				game.useItem = null;
 				return true;
 			},
+			label: "game options",
 		},
 		{
 			menu_item: true,
@@ -1008,6 +1012,7 @@ function standardMenu() {
 				game.useItem = null;
 				return true;
 			},
+			label: game => game.data.stats.bonus ? "leveled up" : "profile",
 		},
 		{
 			menu_item: true,
@@ -1035,10 +1040,13 @@ function standardMenu() {
 				game.useItem = null;
 				return true;
 			},
+			label: "inventory",
 		},
 		{
-			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot) || game.hideCursor && game.frameIndex === 0 || game.battle,
-			custom: ({data, frameIndex, sceneData}, sprite, ctx)=> {
+			menu_item: true,
+			hidden: game => game.bagOpening || !game.menuOpening && (game.arrow !== MENU || game.sceneData.firstShot) || game.hideCursor && game.frameIndex === 0 || game.battle && !game.battle.foeDefeated,
+			custom: (game, sprite, ctx)=> {
+				const {data, frameIndex, sceneData} = game;
 				const { stats } = data;
 				const offsetX = frameIndex === 3 ? 0 : frameIndex === 2 ? 1 : -10;
 				ctx.fillStyle = "#110044";
@@ -1058,6 +1066,10 @@ function standardMenu() {
 						ctx.fillRect(51 + 10 * preValue / stats.maxLife, 3 + offsetX, 10 * (stats.life - preValue) / stats.maxLife, 1);
 					}
 				}
+
+				if (game.hoverSprite && game.hoverSprite.label) {
+					game.displayTextLine(ctx, {msg: game.evaluate(game.hoverSprite.label), x: 4, y: 9, alpha: .8});
+				}
 			},
 			onRefresh: game => {
 				if (game.sceneData.lifeIncrease) {
@@ -1068,6 +1080,15 @@ function standardMenu() {
 						game.sceneData.lifeIncrease = null;
 					}
 				}
+			},
+			label: game => `health: ~${Math.ceil(game.data.stats.life)}/${game.data.stats.maxLife}`,
+			onClick: game => {
+				game.sceneData.showStats = game.sceneData.showStats ? 0 : game.now;
+				game.openMenu(game.now);
+			},
+			combine: (item, game) => {
+				game.useItem = null;
+				return true;
 			},
 		},
 	];

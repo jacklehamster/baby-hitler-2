@@ -95,29 +95,13 @@
         "md5": "4994a8ffeba4ac3140beb89e8d41f174",
         "text": "Language"
     },
-    "88559a0cfd8250c9d65970cc145c92d4": {
-        "md5": "88559a0cfd8250c9d65970cc145c92d4",
-        "text": "OFF"
-    },
-    "90651ebea9a35ec4e018c8157492e17c": {
-        "md5": "90651ebea9a35ec4e018c8157492e17c",
-        "text": "ON"
-    },
     "6345a61cf1b0933f5659e540bceb9a43": {
         "md5": "6345a61cf1b0933f5659e540bceb9a43",
         "text": "Option not yet available"
     },
-    "aabc7d8cfc80e561c0d8779b6bafc46e": {
-        "md5": "aabc7d8cfc80e561c0d8779b6bafc46e",
-        "text": "Retro mode "
-    },
     "52ae6d688390fcf301b795bd61d853d8": {
         "md5": "52ae6d688390fcf301b795bd61d853d8",
         "text": "September, then"
-    },
-    "5cfe614e5c396bb200c83823ef3948f0": {
-        "md5": "5cfe614e5c396bb200c83823ef3948f0",
-        "text": "Sound "
     },
     "c9aeb81a741f599e701d0ef27bf9381e": {
         "md5": "c9aeb81a741f599e701d0ef27bf9381e",
@@ -5438,5 +5422,115 @@
         "md5": "778d2b8a573b173befcbd4d0356d5aaa",
         "text": "We did it Yupa! Let's go find Baby Hitler!",
         "timestamp": "2020-01-25T08:54:36Z"
+    },
+    "51561fa4cb67092d5e27726cdbb72875": {
+        "md5": "51561fa4cb67092d5e27726cdbb72875",
+        "text": "mute sound",
+        "timestamp": "2020-01-25T09:59:15Z"
+    },
+    "93da65a9fd0004d9477aeac024e08e15": {
+        "md5": "93da65a9fd0004d9477aeac024e08e15",
+        "text": "options",
+        "timestamp": "2020-01-25T09:59:15Z"
+    },
+    "5abace999e392ce1cf4c5b5757f13785": {
+        "md5": "5abace999e392ce1cf4c5b5757f13785",
+        "text": "save / load game",
+        "timestamp": "2020-01-25T09:59:16Z"
+    },
+    "7a1eabc3deb7fd02ceb1e16eafc41073": {
+        "md5": "7a1eabc3deb7fd02ceb1e16eafc41073",
+        "text": "inventory",
+        "timestamp": "2020-01-25T09:59:20Z"
+    },
+    "7d97481b1fe66f4b51db90da7e794d9f": {
+        "md5": "7d97481b1fe66f4b51db90da7e794d9f",
+        "text": "profile",
+        "timestamp": "2020-01-25T09:59:21Z"
+    },
+    "560a2522677c1b2050180ba5316f07a5": {
+        "md5": "560a2522677c1b2050180ba5316f07a5",
+        "text": "game options",
+        "timestamp": "2020-01-25T10:05:51Z"
+    },
+    "bc71742feffb80972d98237ee06b12bf": {
+        "md5": "bc71742feffb80972d98237ee06b12bf",
+        "text": "health: 55.7 / 120",
+        "timestamp": "2020-01-25T10:07:17Z"
+    },
+    "c4b84a651c0a8aa9a157ce990e078155": {
+        "md5": "c4b84a651c0a8aa9a157ce990e078155",
+        "text": "HP: ",
+        "timestamp": "2020-01-25T10:08:25Z"
+    },
+    "85ea6c85c4f75ea96b8691d540824f92": {
+        "md5": "85ea6c85c4f75ea96b8691d540824f92",
+        "text": "Health: ",
+        "timestamp": "2020-01-25T10:09:38Z"
+    },
+    "70fb2a6bd76caeefa28dd425de5dad56": {
+        "md5": "70fb2a6bd76caeefa28dd425de5dad56",
+        "text": "health: ",
+        "timestamp": "2020-01-25T10:11:25Z"
+    },
+    "151f11fdbf12e6eb444df7ddf8180557": {
+        "md5": "151f11fdbf12e6eb444df7ddf8180557",
+        "text": "leveled up",
+        "timestamp": "2020-01-25T10:11:25Z"
+    },
+    "2181e9e31df8ef57608ac269ba0d1088": {
+        "md5": "2181e9e31df8ef57608ac269ba0d1088",
+        "text": "turn on sound",
+        "timestamp": "2020-01-25T10:11:32Z"
+    },
+    "d3d2e617335f08df83599665eef8a418": {
+        "md5": "d3d2e617335f08df83599665eef8a418",
+        "text": "Close",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "d8fa3389b681e58e320c8fbef2d7af5d": {
+        "md5": "d8fa3389b681e58e320c8fbef2d7af5d",
+        "text": "Exit to menu",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "8a8e57b1911b99b924191503017760d7": {
+        "md5": "8a8e57b1911b99b924191503017760d7",
+        "text": "Full Screen",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "88559a0cfd8250c9d65970cc145c92d4": {
+        "md5": "88559a0cfd8250c9d65970cc145c92d4",
+        "text": "OFF",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "90651ebea9a35ec4e018c8157492e17c": {
+        "md5": "90651ebea9a35ec4e018c8157492e17c",
+        "text": "ON",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "aabc7d8cfc80e561c0d8779b6bafc46e": {
+        "md5": "aabc7d8cfc80e561c0d8779b6bafc46e",
+        "text": "Retro mode ",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "5cfe614e5c396bb200c83823ef3948f0": {
+        "md5": "5cfe614e5c396bb200c83823ef3948f0",
+        "text": "Sound ",
+        "timestamp": "2020-01-25T10:11:41Z"
+    },
+    "ea4788705e6873b424c65e91c2846b19": {
+        "md5": "ea4788705e6873b424c65e91c2846b19",
+        "text": "Cancel",
+        "timestamp": "2020-01-25T10:11:48Z"
+    },
+    "affb80ba1ecd753fa2570d1ef9a039e1": {
+        "md5": "affb80ba1ecd753fa2570d1ef9a039e1",
+        "text": "Confirm Exit",
+        "timestamp": "2020-01-25T10:11:48Z"
+    },
+    "9ab769d2aa421ffa41db8ea89c3e9664": {
+        "md5": "9ab769d2aa421ffa41db8ea89c3e9664",
+        "text": "Do you wanna exit?",
+        "timestamp": "2020-01-25T10:11:48Z"
     }
 }
