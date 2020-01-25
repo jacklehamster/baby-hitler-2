@@ -192,8 +192,8 @@ const CONFIG_FILES = {
   md5: 'af720eff952a07f431f94d0f67a35b44',
 },
 'jail-cell.js' : {
-  size: 17980,
-  md5: '28aea68587987a311beb349607bc2bfd',
+  size: 18047,
+  md5: '130c129f0420347dafc30ee55ab5eb88',
 },
 'lab.js' : {
   size: 6642,

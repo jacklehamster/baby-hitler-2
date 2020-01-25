@@ -309,7 +309,7 @@ game.addScene(
 						delete game.inventory[game.useItem];
 						game.useItem = null;						
 						game.data.cakelock = game.now;
-						if (!game.data.shot.lamp) {
+						if (!game.data.shot.lamp && !game.data.shot['left guard'] && !game.data.shot['right guard']) {
 							game.showTip("The guards look at me\nsuspiciously.");
 						}
 						return true;
