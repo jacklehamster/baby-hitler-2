@@ -115,6 +115,12 @@ game.addScene(
 				},
 				combine: (item, game) => {
 					if (item === "coin") {
+						if (game.getSituation("ecstacity").needToBuyWarpDrive && !game.countItem("warpdrive") && game.countItem("coin") - 1 < 1000) {
+							game.usteItem = null;
+							game.showTip("I need enough coins to buy the warpdrive.");							
+							return true;
+						}
+
 						game.sceneData.putCoin = game.now;
 						game.sceneData.coinSound = 0;
 						game.removeFromInventory(item);

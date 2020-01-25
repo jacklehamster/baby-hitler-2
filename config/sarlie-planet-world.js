@@ -201,7 +201,20 @@ game.addScene(
 								{
 									options: [
 										{
-											hidden: game => game.situation.gaveTicket,
+											hidden: game => !game.getSituation("ecstacity").wentToEcstaCity,
+											msg: game => "Hello",
+											onSelect: (game, dialog) => {
+												game.showTip([
+													"How was Ecstacity?",
+													"Come again next time! I give you discount!",
+												], game => {
+													game.sceneData.zoomOnPedro = 0;
+													game.dialog = null;
+												});
+											},
+										},
+										{
+											hidden: game => game.situation.gaveTicket || game.getSituation("ecstacity").wentToEcstaCity,
 											msg: game => "Hello",
 											onSelect: (game, dialog) => {
 												game.showTip([
@@ -216,7 +229,7 @@ game.addScene(
 											},
 										},
 										{
-											hidden: game => !game.situation.gaveTicket,
+											hidden: game => !game.situation.gaveTicket || game.getSituation("ecstacity").wentToEcstaCity,
 											msg: game => "Go to the party!",
 											onSelect: (game, dialog) => {
 												if (!game.getSituation("shopkeepa").askedWhereInSpace) {
@@ -472,7 +485,8 @@ game.addScene(
 							],
 							game => {
 								game.dialog = null;
-								console.log("TODO => GO TO ECSTA CITY");
+								game.gotoScene("ecstacity");
+								// console.log("TODO => GO TO ECSTA CITY");
 							}, 40, { talker:"pedro" });
 						}
 						return true;

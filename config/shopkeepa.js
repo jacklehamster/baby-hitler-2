@@ -157,7 +157,10 @@ game.addScene(
 								msg: game => game.sceneData.itemToBuy && game.sceneData.itemToBuy.item === "tip" ? "Yes, help me!" : "Sure",
 								onSelect: (game, dialog) => {
 									const {item, name, cost, src, available, msg, onBuy, count} = game.sceneData.itemToBuy;
-									if (cost <= game.countItem("coin")) {
+									if (item !== "warpdrive" && game.getSituation("ecstacity").needToBuyWarpDrive && !game.countItem("warpdrive") && game.countItem("coin") - cost < 1000) {
+										game.playErrorSound();
+										game.showTip("No... I should reserve 1000 to buy the\nwarpdrive at least.");
+									} else if (cost <= game.countItem("coin")) {
 										game.removeFromInventory("coin", cost);
 										if (item === "tip") {
 											game.sceneData.showStats = 0;
@@ -185,7 +188,15 @@ game.addScene(
 										}
 									} else {
 										game.playErrorSound();
-										game.showTip("I'm sorry, you can't afford this.", null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
+										if (item === "warpdrive") {
+											game.showTip([
+												"I'm sorry, you can't afford this.",
+												"Quite costly, I know. Maybe you can make some money in Ecstacity.",
+												"But don't party too hard, it's not good for your health.",
+											], null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
+										} else {
+											game.showTip("I'm sorry, you can't afford this.", null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
+										}
 									}
 
 									game.sceneData.showStats = 0;
@@ -799,7 +810,7 @@ game.addScene(
 							{
 								msg: "Sure",
 								onSelect: game => {
-									game.sceneData.soldTickets = game.now;
+									game.situation.soldTickets = game.now;
 									game.sceneData.shopkeepaSmiles = game.now;
 									game.currentScene.startTalk(game, "human", "Sure, that will do.", game => {
 										game.currentScene.startTalk(game, "shopkeepa2", [
@@ -1014,17 +1025,14 @@ game.addScene(
 			});
 		},
 		onScene: game => {
-			if (!game.situation.inventory) {
+//			if (!game.situation.inventory) {
 				game.situation.inventory = [
-					// { item: "tip",			name: "tip",			cost: 1,									available:true,
-					// 	msg: "Don't know what to do? I can give you a hint.",
-					// },
 					{ item: "bullet", 		name: "10 bullets", 	cost: 40,	src: ASSETS.GRAB_GUN,			available:true,
 						count: 10,
 						msg: "We sell amunition for your gun in packs of 10.",
 						hideFromInventory: true,
 					},
-					{ item: "compass",		name: "compass",		cost: 20,	src: ASSETS.GRAB_COMPASS,		available:true,
+					{ item: "compass",		name: "compass",		cost: 20,	src: ASSETS.GRAB_COMPASS,		available: game => !game.countItem("compass"),
 						msg: "The red arrow always points to the north.",
 					},
 					{ item: "superarm",	name: "superarm",			cost: 500,	available: game => game.data.leftHand !== "super",
@@ -1075,11 +1083,11 @@ game.addScene(
 							callback(game);
 						}
 					},
-					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available: game => game.situation.askedWhereInSpace,
+					{ item: "warpdrive",    name: "warpdrive",      cost: 1000, src: ASSETS.GRAB_WARP_DRIVE,	available: game => game.situation.askedWhereInSpace && !game.countItem("warpdrive"),
 						msg: "Travel to planets lightyears away!",
 					},
 				];
-			}
+//			}
 
 			if (game.useItem) {
 				game.currentScene.onStartDialog(game);
@@ -1184,7 +1192,7 @@ game.addScene(
 						});		
 						return true;
 					} else if (item === "ticket") {
-						if (game.sceneData.soldTickets) {
+						if (game.situation.soldTickets) {
 							game.currentScene.startTalk(game, "shopkeepa2", [
 								"Haha, thanks but I really can't afford a second ticket.",
 								"Why don't you go as well? It'll have fun!",

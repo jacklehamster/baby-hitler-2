@@ -95,6 +95,10 @@ const CONFIG_FILES = {
   size: 3108,
   md5: 'fe221b868cd5d20ce64efe846ba6d4c4',
 },
+'ecstacity.js' : {
+  size: 2609,
+  md5: 'bf384cc2b88f40308d4574e0eedd2ea5',
+},
 'ending.js' : {
   size: 2731,
   md5: 'f94b17c9123f0703f8163e4b603583ff',
@@ -300,8 +304,8 @@ const CONFIG_FILES = {
   md5: 'e871f78c0f7f081206f3e4b0ddfcf088',
 },
 'sarlie-planet-world.js' : {
-  size: 18346,
-  md5: 'ca1cdaa227a4bd1c00e69ca5ff8dda91',
+  size: 18915,
+  md5: '2274d285978536487468d0f04eb8d9cd',
 },
 'sarlie-planet.js' : {
   size: 6672,
@@ -312,12 +316,12 @@ const CONFIG_FILES = {
   md5: '9319a8b29a008e3419f727bfc1ac58c0',
 },
 'shopkeepa.js' : {
-  size: 49726,
-  md5: '063562eed39aac920378f25889a653bc',
+  size: 50326,
+  md5: 'a95bdf019e18dc9e17a32ee0811146e0',
 },
 'slots.js' : {
-  size: 5255,
-  md5: '4f6614767bb3ca720e10cb09d8c19dd5',
+  size: 5518,
+  md5: '878a83e6f8a76ee434c19c2f5b8ddd70',
 },
 'space-adventure.js' : {
   size: 5731,

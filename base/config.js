@@ -679,6 +679,9 @@ function standardBag() {
 				if (game.touchActive) {
 					return false;
 				}
+				if (battle) {
+					return false;
+				}
 				if (arrow === "BAG") {
 					const door = game.frontDoor();
 					if (door && door.lock && game.frameIndex === 0 && game.rotation % 2 === 0) {

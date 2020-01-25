@@ -764,6 +764,9 @@ const Game = (() => {
 					}
 				}
 			}
+			if (this.processingBag) {
+				return;
+			}
 			if (this.pendingTip && (this.pendingTip.progress < 1 || this.pendingTip.moreText) && !this.pendingTip.removeLock || this.waitCursor || this.hideCursor) {
 				return;
 			}
