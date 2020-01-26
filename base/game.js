@@ -2186,18 +2186,21 @@ const Game = (() => {
 		}
 
 		displayInventoryTips() {
-			if (this.hoverSprite && this.mouse && this.hoverSprite.bag && this.bagOpening&& (this.frameIndex === 2 || this.frameIndex === 3) && !this.pickedUp) {
+			if (this.hoverSprite && this.mouse && this.hoverSprite.bag && this.bagOpening && (this.frameIndex === 2 || this.frameIndex === 3) && !this.pickedUp) {
 				let tipItem = null;
 				for (let i in this.inventory) {
 					if (i !== this.useItem && (!this.pickedUp || i !== this.pickedUp.item)) {
-						const { item, image, count, col, row } = this.inventory[i];	
+						const { item, image, count, col, row } = this.inventory[i];
+						if (item === "bullet") {
+							continue;
+						}
 						if (this.isMouseHover({ src: image, index: this.frameIndex-1, col, row }, this.mouse)) {
 							tipItem = i;
 						}
 					}
 				}
 				if (tipItem) {
-					const { item, count } = this.inventory[tipItem];	
+					const { item, count } = this.inventory[tipItem];
 					const msg = item==="gun" ? `gun with ~${this.countItem('bullet')}~ bullet${this.countItem('bullet')>1?'s':''}` : (count||1) > 1 ? `${item} x${count}` : `${item}`;
 					ctx.fillStyle = "#000000aa";
 					const showAbove = this.mouse.y >= 55;
@@ -3400,7 +3403,9 @@ const Game = (() => {
 				for (let i in this.inventory) {
 					if (i !== this.useItem && (!this.pickedUp || i !== this.pickedUp.item)) {
 						const { item, image, col, row } = this.inventory[i];
-						this.displayImage(ctx, { src: image, col, row, index: this.frameIndex-1 });
+						if (item !== 'bullet') {
+							this.displayImage(ctx, { src: image, col, row, index: this.frameIndex-1 });
+						}
 					}
 				}
 			}
@@ -3580,8 +3585,10 @@ const Game = (() => {
 					for (let i in this.inventory) {
 						const { item, image, col, row } = this.inventory[i];
 						if (this.isMouseHover({src:image, index:this.frameIndex-1, col, row}, this.mouse)) {
-							this.useItem = item;
-							this.useItemTime = this.now;
+							if (item !== "bullet") {
+								this.useItem = item;
+								this.useItemTime = this.now;
+							}
 						}
 					}
 				}

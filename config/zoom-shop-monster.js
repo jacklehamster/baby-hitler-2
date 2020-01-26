@@ -83,7 +83,7 @@ game.addScene(
 					},
 					{ item: "bullet", 		name: "bullet", 		cost: 5,	src: ASSETS.GRAB_GUN,			available:true,
 						msg: "A bit expensive, but it'll help you out in a fight.",
-						hideFromInventory: true,
+//						hideFromInventory: true,
 					},
 					{ item: "access card", 	name: "access card", 	cost: 20,	src: ASSETS.GRAB_ACCESS_CARD,	available:false,
 						msg: "I warned you, you should have kept this. 20 coins to get it back.",
@@ -212,7 +212,7 @@ game.addScene(
 								{
 									msg: game => game.sceneData.itemToBuy && game.sceneData.itemToBuy.item === "tip" ? "Yes, help me!" : "Sure",
 									onSelect: (game, dialog) => {
-										const {item, name, cost, src, available, msg} = game.sceneData.itemToBuy;
+										const {item, name, cost, src, available, msg, hideFromInventory} = game.sceneData.itemToBuy;
 										if (cost <= game.countItem("coin")) {
 											game.removeFromInventory("coin", cost);
 											if (item === "tip") {
@@ -226,7 +226,7 @@ game.addScene(
 												}
 												return;
 											} else {
-												game.pickUp({item, image:src, onPicked: game => {
+												game.pickUp({item, image:src, hideFromInventory, onPicked: game => {
 													game.playSound(SOUNDS.WAITER);
 													game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"monster", removeLock: true });
 												}});

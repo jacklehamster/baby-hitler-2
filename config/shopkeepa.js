@@ -156,7 +156,7 @@ game.addScene(
 							{
 								msg: game => game.sceneData.itemToBuy && game.sceneData.itemToBuy.item === "tip" ? "Yes, help me!" : "Sure",
 								onSelect: (game, dialog) => {
-									const {item, name, cost, src, available, msg, onBuy, count} = game.sceneData.itemToBuy;
+									const {item, name, cost, src, available, msg, onBuy, count, hideFromInventory} = game.sceneData.itemToBuy;
 									if (item !== "warpdrive" && game.getSituation("ecstacity").needToBuyWarpDrive && !game.countItem("warpdrive") && game.countItem("coin") - cost < 1000) {
 										game.playErrorSound();
 										game.showTip("No... I should reserve 1000 to buy the\nwarpdrive at least.");
@@ -178,7 +178,7 @@ game.addScene(
 												game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
 											});
 										} else {
-											game.pickUp({item, image:src, count, onPicked: game => {
+											game.pickUp({item, image:src, count, hideFromInventory, onPicked: game => {
 												game.showTip("Nice doing business with you.", null, null, { x: 1, y: 15, speed: 60, talker:"shopkeepa", removeLock: true });
 											}});
 											const itemObj = game.situation.inventory.filter(obj=>obj.item === item)[0];

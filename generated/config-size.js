@@ -316,8 +316,8 @@ const CONFIG_FILES = {
   md5: '9319a8b29a008e3419f727bfc1ac58c0',
 },
 'shopkeepa.js' : {
-  size: 50326,
-  md5: 'a95bdf019e18dc9e17a32ee0811146e0',
+  size: 50364,
+  md5: 'd4ad6d5d41e1419cc1fd9d40a1272a56',
 },
 'slots.js' : {
   size: 5518,
@@ -428,8 +428,8 @@ const CONFIG_FILES = {
   md5: '8e000d7a3fe3983ad438f5bb79af387e',
 },
 'zoom-shop-monster.js' : {
-  size: 15320,
-  md5: '199a89326e9753a6e079dea28f651a0e',
+  size: 15360,
+  md5: 'c3d2ed355bc239aad2c3589aac9f19e6',
 },
 'zoom-vending-machine.js' : {
   size: 5026,

@@ -5757,5 +5757,40 @@
         "md5": "bcb8fb6d38822b15cabf7fdb2fd7b6af",
         "text": "I don't want to throw the empty bottle in that hole!",
         "timestamp": "2020-01-26T02:58:06Z"
+    },
+    "109580522dc285088787f089ce1b8fb9": {
+        "md5": "109580522dc285088787f089ce1b8fb9",
+        "text": "5 coins?",
+        "timestamp": "2020-01-26T03:18:53Z"
+    },
+    "7a61dff9a8b340fa1c10fa8c8375fe41": {
+        "md5": "7a61dff9a8b340fa1c10fa8c8375fe41",
+        "text": "A bit expensive, but it'll help you out in a fight.",
+        "timestamp": "2020-01-26T03:18:53Z"
+    },
+    "5e07791678e8e68d429e799c03177a1b": {
+        "md5": "5e07791678e8e68d429e799c03177a1b",
+        "text": "This rope might come handy.",
+        "timestamp": "2020-01-26T03:26:22Z"
+    },
+    "379e86ff8a80f711680f9fb5d4b9560e": {
+        "md5": "379e86ff8a80f711680f9fb5d4b9560e",
+        "text": "rope",
+        "timestamp": "2020-01-26T03:26:40Z"
+    },
+    "5cb6ce135a9f67c669dd79d9bc36d827": {
+        "md5": "5cb6ce135a9f67c669dd79d9bc36d827",
+        "text": "This should hold",
+        "timestamp": "2020-01-26T03:26:42Z"
+    },
+    "d144a3ae060471baf978ed4e28b28062": {
+        "md5": "d144a3ae060471baf978ed4e28b28062",
+        "text": "Go down",
+        "timestamp": "2020-01-26T03:26:43Z"
+    },
+    "81ae6f83dbae815aac8ab3c40f628582": {
+        "md5": "81ae6f83dbae815aac8ab3c40f628582",
+        "text": "+10xp",
+        "timestamp": "2020-01-26T03:26:53Z"
     }
 }
