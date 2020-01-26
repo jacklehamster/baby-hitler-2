@@ -1369,7 +1369,7 @@ function makeYupa() {
 									game.showTip([
 										"So you can turn into liquid goo.",
 										"That must come pretty handy",
-										"If you need to sneak under a door or something.",
+										"If you need to sneak under a door or\nsomething.",
 									], game => {
 										game.playSound(SOUNDS.YUPA);
 										game.showTip([
@@ -1383,11 +1383,10 @@ function makeYupa() {
 												game.playSound(SOUNDS.YUPA);
 												game.showTip([
 													"On ma planet, it good for transpartation.",
-													"We can fit hundredz Yupaz in a big truck.",
+													"We can fit\nhundredz Yupaz in a big truck.",
 													"Nat cunfortable but vury iconomic.",
 												], game => {
 													game.waitCursor = false;
-													dialog.index-=2;
 												}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
 											});
 										}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
@@ -1418,7 +1417,7 @@ function makeYupa() {
 													"Yupp...",
 												], game => {
 													game.waitCursor = false;
-													dialog.index-=2;
+													game.dialog = null;
 												}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
 											});
 										}, null, { x: 2, y: 22, speed: 80, talker:"yupa" });
