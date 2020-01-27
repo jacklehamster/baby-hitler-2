@@ -378,7 +378,7 @@ game.addScene(
 					game.sceneData.spaceshipTemplate = game.currentScene.getTemplate(game, 0, 1);
 				},
 				init: (game, sprite) => {
-					sprite.onRefresh(game);
+					sprite.onRefresh(game, sprite);
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.spaceshipTemplate;
@@ -659,7 +659,7 @@ game.addScene(
 					game.sceneData.treeTemplate = game.currentScene.getTemplate(game, Math.round((x) / 30) * 30, Math.round((y-15) / 30) * 30 + 15);
 				},
 				init: (game, sprite) => {
-					sprite.onRefresh(game);
+					sprite.onRefresh(game, sprite);
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.treeTemplate;
@@ -684,7 +684,7 @@ game.addScene(
 					game.sceneData.treeTemplate = game.currentScene.getTemplate(game, Math.round((x) / 30) * 30, Math.round((y-15) / 30) * 30 + 15);
 				},
 				init: (game, sprite) => {
-					sprite.onRefresh(game);
+					sprite.onRefresh(game, sprite);
 				},
 				index: game => {
 					const { dx, dy, scale } = game.sceneData.treeTemplate;
@@ -723,7 +723,7 @@ game.addScene(
 					game.sceneData.fountainTemplate = game.currentScene.getTemplate(game, Math.round((x) / 39) * 39, Math.round((y-15) / 39) * 39 + 7);
 				},
 				init: (game, sprite) => {
-					sprite.onRefresh(game);
+					sprite.onRefresh(game, sprite);
 				},
 				index: game => {
 					if (!game.sceneData.fountainTemplate) {

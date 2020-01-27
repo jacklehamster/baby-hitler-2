@@ -2,6 +2,10 @@ game.addScene(
 	{
 		name: "bring-it-on",
 		onScene: game => {
+			game.save();
+			/** restore health */
+			game.data.stats.life = game.data.stats.maxLife;
+
 			game.hideCursor = true;
 			game.playTheme(null);
 		},

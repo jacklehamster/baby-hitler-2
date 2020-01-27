@@ -28,8 +28,8 @@ const CONFIG_FILES = {
   md5: '57c5e6a38e08765a7913b3d9f98bb521',
 },
 'bring-it-on.js' : {
-  size: 1675,
-  md5: '572176e8093ddc163552aac6681281ca',
+  size: 1768,
+  md5: 'c56e3a9b0555cb68278a66f065493a75',
 },
 'cake-face.js' : {
   size: 605,
@@ -104,8 +104,8 @@ const CONFIG_FILES = {
   md5: 'f94b17c9123f0703f8163e4b603583ff',
 },
 'ernest-card-dealing.js' : {
-  size: 11529,
-  md5: '1ef17a9ac6ceb373885208750151e338',
+  size: 11745,
+  md5: 'cae1933c4a8ccdaba06e8101ef0bdd28',
 },
 'ernest.js' : {
   size: 3230,
@@ -136,12 +136,12 @@ const CONFIG_FILES = {
   md5: 'fb97967c5ea97d9e3ff371187bb54e6a',
 },
 'final-fight.js' : {
-  size: 14503,
-  md5: '37cfa04249b3b45995b33fca3016ed8b',
+  size: 14565,
+  md5: '283862d2257af8c83a137045603ae177',
 },
 'final-planet-world.js' : {
-  size: 30799,
-  md5: 'b62cc01d47d1e635b962d0b4446238e0',
+  size: 30831,
+  md5: '95bc5c81f76e3be7ae88f9b5f5edde31',
 },
 'final-planet.js' : {
   size: 1112,
@@ -316,8 +316,8 @@ const CONFIG_FILES = {
   md5: '9319a8b29a008e3419f727bfc1ac58c0',
 },
 'shopkeepa.js' : {
-  size: 50364,
-  md5: 'd4ad6d5d41e1419cc1fd9d40a1272a56',
+  size: 50413,
+  md5: '888555a9bf2d77a5652dfaa40a1795e9',
 },
 'slots.js' : {
   size: 5518,

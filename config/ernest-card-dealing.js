@@ -23,84 +23,89 @@ game.addScene(
 				});
 				return;
 			}
-			game.playSound(SOUNDS.HIT, {volume: .5});
-			game.sceneData.dealingDick = game.now;
-			game.delayAction(game => {
-				game.sceneData.dealingDick = 0;
+			if (!game.situation.waitForPickup) {
 				game.playSound(SOUNDS.HIT, {volume: .5});
-				game.sceneData.dealingHitman = game.now;
-			}, 600);
-			game.delayAction(game => {
-				game.sceneData.dealingHitman = 0;
+				game.sceneData.dealingDick = game.now;
 				game.delayAction(game => {
-					game.sceneData.turnToDick = game.now;
-				}, 3000);
-				game.currentScene.startTalk(game, "ernest", [
-					"Very well\ngentlemen. Is there anything else I can do for you?",
-				], game => {
-					game.sceneData.dickToErnest = game.now;
-					game.currentScene.startTalk(game, "dick", [
-						"Thank you Ernest, that'll be it for now.",
+					game.sceneData.dealingDick = 0;
+					game.playSound(SOUNDS.HIT, {volume: .5});
+					game.sceneData.dealingHitman = game.now;
+				}, 600);
+				game.delayAction(game => {
+					game.sceneData.dealingHitman = 0;
+					game.delayAction(game => {
+						game.sceneData.turnToDick = game.now;
+					}, 3000);
+					game.currentScene.startTalk(game, "ernest", [
+						"Very well\ngentlemen. Is there anything else I can do for you?",
 					], game => {
-						game.currentScene.startTalk(game, "ernest", [
-							"You are very\nwelcome.",
+						game.sceneData.dickToErnest = game.now;
+						game.currentScene.startTalk(game, "dick", [
+							"Thank you Ernest, that'll be it for now.",
 						], game => {
-							game.sceneData.turnToDick = 0;
-							game.delayAction(game => {
-								game.sceneData.dickToErnest = 0;
-							}, 200);
 							game.currentScene.startTalk(game, "ernest", [
-								"How about you sir?",
+								"You are very\nwelcome.",
 							], game => {
-								game.waitCursor = false;
-								game.startDialog({
-									conversation: [
-										{
-											options: [
-												{
-													msg: "Gimme an Ace",
-													onSelect: game => {
-														game.currentScene.startTalk(game, "human", [
-															"I wanna win this hand.",
-															"Can you give me an ace?",
-														], game => {
-															game.currentScene.startTalk(game, "ernest", [
-																"Perhaps I already did, sir.",
-															]);
-														});
-													},
-												},
-												{
-													msg: "That's all.",
-													onSelect: game => {
-														game.currentScene.startTalk(game, "human", [
-															"That'll be all. Thanks Ernest.",
-														], game => {
-															game.currentScene.startTalk(game, "ernest", [
-																"You are very\nwelcome, sir. Enjoy the game!",
+								game.sceneData.turnToDick = 0;
+								game.delayAction(game => {
+									game.sceneData.dickToErnest = 0;
+								}, 200);
+								game.currentScene.startTalk(game, "ernest", [
+									"How about you sir?",
+								], game => {
+									game.waitCursor = false;
+									game.startDialog({
+										conversation: [
+											{
+												options: [
+													{
+														msg: "Gimme an Ace",
+														onSelect: game => {
+															game.currentScene.startTalk(game, "human", [
+																"I wanna win this hand.",
+																"Can you give me an ace?",
 															], game => {
-																game.playTheme(SOUNDS.JAIL_CELL_THEME);
-																game.sceneData.ernestLeave = game.now;
-																game.dialog = null;
-																game.currentScene.startTalk(game, "dick", [
-																	"Are you ready to die?",
-																	"Pick up your card and let's show our hands",
+																game.currentScene.startTalk(game, "ernest", [
+																	"Perhaps I already did, sir.",
+																]);
+															});
+														},
+													},
+													{
+														msg: "That's all.",
+														onSelect: game => {
+															game.currentScene.startTalk(game, "human", [
+																"That'll be all. Thanks Ernest.",
+															], game => {
+																game.currentScene.startTalk(game, "ernest", [
+																	"You are very\nwelcome, sir. Enjoy the game!",
 																], game => {
-																	game.sceneData.waitForPickup = game.now;
+																	game.playTheme(SOUNDS.JAIL_CELL_THEME);
+																	game.situation.ernestLeave = game.now;
+																	game.dialog = null;
+																	game.currentScene.startTalk(game, "dick", [
+																		"Are you ready to die?",
+																		"Pick up your card and let's show our hands",
+																	], game => {
+																		game.situation.waitForPickup = game.now;
+																	});
 																});
 															});
-														});
+														},
 													},
-												},
-											],
-										},
-									],
-								});
-							});							
-						});						
+												],
+											},
+										],
+									});
+								});							
+							});						
+						});
 					});
-				});
-			}, 1500);
+				}, 1500);				
+			} else {
+				game.waitCursor = false;
+				game.playTheme(SOUNDS.JAIL_CELL_THEME);				
+			}
 		},
 		startTalk: (game, talker, msg, onDone, removeLock, speed) => {
 			let x, y;
@@ -129,8 +134,8 @@ game.addScene(
 				game.waitCursor = true;
 				game.currentScene.bodyguardShoot(game, true);
 				game.dialog = null;
-				if (!game.sceneData.ernestLeave) {
-					game.sceneData.ernestLeave = game.now;
+				if (!game.situation.ernestLeave) {
+					game.situation.ernestLeave = game.now;
 				}
 				game.delayAction(game => {
 					game.currentScene.startTalk(game, "bodyguard", [
@@ -145,7 +150,7 @@ game.addScene(
 					});
 				}, 800);
 			} else if (item === "ace of hearts") {
-				if (game.sceneData.waitForPickup) {
+				if (game.situation.waitForPickup) {
 					game.sceneData.switcharoo = game.now;
 					game.useItem = null;
 					game.delayAction(game => {
@@ -261,8 +266,8 @@ game.addScene(
 				},
 				side: LEFT,
 				offsetX: game => {
-					if (game.sceneData.ernestLeave) {
-						return Math.max(-30, - ((game.now - game.sceneData.ernestLeave) / 300));
+					if (game.situation.ernestLeave) {
+						return Math.max(-30, - ((game.now - game.situation.ernestLeave) / 300));
 					}
 					return 0;
 				},

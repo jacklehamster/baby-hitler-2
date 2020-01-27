@@ -325,6 +325,7 @@ game.addScene(
 								foeDamage: 10,
 								preventEscape: true,
 								gunDamage: 200,
+								nextAttack: game.now,
 								onWin: game => {
 									game.sceneData.defeatedBoss = game.now;
 									game.fadeToScene("ending");
@@ -375,7 +376,9 @@ game.addScene(
 					}
 				},
 				combine: (item, game) => {
-					game.battle.nextAttack =  Math.min(game.now + 3000, game.battle.nextAttack);
+					if (game.battle) {
+						game.battle.nextAttack =  Math.min(game.now + 3000, game.battle.nextAttack);
+					}
 					if (item === "gun") {
 						game.showTip("I'm out of ammo.", null, 50, {removeLock: true});
 					} else if (item === "photo") {

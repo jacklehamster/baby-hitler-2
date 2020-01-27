@@ -533,11 +533,12 @@ game.addScene(
 																	], game => {
 																		game.removeFromInventory("ticket", 2);
 																		game.pickUp({item:"warpdrive", image:ASSETS.GRAB_WARP_DRIVE, message:"Finally got it.", onPicked: game => {
-																			game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find find Baby Hitler!", game => {
-																				game.dialog = null;
-																				game.fadeToScene("space-adventure", null, 3000);
-																			});
-																		}});					
+																			game.dialog.index = 0;
+																			// game.currentScene.startTalk(game, "human", "We did it Yupa! Let's go find find Baby Hitler!", game => {
+																			// 	game.dialog = null;
+																			// 	game.fadeToScene("space-adventure", null, 3000);
+																			// });
+																		}});
 																	});
 																});
 															});
