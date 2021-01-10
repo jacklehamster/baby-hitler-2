@@ -92,12 +92,26 @@ gameConfig.scenes.push(
 				custom: (game, sprite, ctx) => {
 					ctx.globalAlpha = 1;
 
-					game.displayTextLine(ctx, {
-						msg: "Where in Space",
-						x: 8, y: 15});
-					game.displayTextLine(ctx, {
-						msg: "is Baby Hitler?",
-						x: 9, y: 22});
+					if (GAME_VERSION === 3) {
+						game.displayTextLine(ctx, {
+							msg: "Baby Hitler is",
+							x: 8, y: 12});
+						game.displayTextLine(ctx, {
+							msg: "OUT OF",
+							x: 18, y: 19});
+						game.displayTextLine(ctx, {
+							msg: "CONTROL!",
+							x: 14, y: 26});
+
+					} else {
+						game.displayTextLine(ctx, {
+							msg: "Where in Space",
+							x: 8, y: 15});
+						game.displayTextLine(ctx, {
+							msg: "is Baby Hitler?",
+							x: 9, y: 22});
+					}
+
 
 					ctx.globalAlpha = .2;
 					game.displayTextLine(ctx, {

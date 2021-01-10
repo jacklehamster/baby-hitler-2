@@ -1,4 +1,5 @@
 const DEMO = false;
+const GAME_VERSION = 3;
 
 const LEFT = 1, RIGHT = 2, FORWARD = 3, BACKWARD = 4, BAG = 5, DOOR = 6, FAR = 7, CLOSE = 8, FURTHER = 9, MENU = 10, BLOCK = 11;
 

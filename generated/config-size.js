@@ -216,8 +216,8 @@ const CONFIG_FILES = {
   md5: '2348222837eee2fe742d4f2a330e2ab9',
 },
 'load-screen.js' : {
-  size: 4344,
-  md5: '747692111fdd6e0c6f27e0a8fc30bab1',
+  size: 4650,
+  md5: '8b8813e926188bfafb09765c1ab4b510',
 },
 'lock-zoom.js' : {
   size: 4529,
@@ -334,6 +334,10 @@ const CONFIG_FILES = {
 'stars.js' : {
   size: 9559,
   md5: 'b3d9ad925d4fe35bd8f47647c65a549f',
+},
+'start-screen-bbh3.js' : {
+  size: 9320,
+  md5: '0fe8d6656b0ffd927c294dcb5aa8fb1e',
 },
 'start-screen.js' : {
   size: 9428,
